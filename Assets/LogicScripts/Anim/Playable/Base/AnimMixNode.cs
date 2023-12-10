@@ -264,8 +264,8 @@ namespace CustomPlayable
                     //再将原目标动画设为当前动画
                     //该处理 可避免切换过于突兀
                     dels.Add(curIndex);
-                }
                     curIndex = targetIndex;
+                }
             }
 
             //目标动画下标改变

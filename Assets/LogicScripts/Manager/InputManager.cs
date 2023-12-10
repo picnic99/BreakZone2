@@ -12,6 +12,14 @@ public class InputManager : Singleton<InputManager>, Manager
         return new Vector3(x, 0, z);
     }
 
+
+    /// <summary>
+    /// TODO 输入队列
+    /// 后续动画系统能够根据输入队列来预测玩家下一步是继续执行其它操作还是无操作切换为idle状态
+    /// 主要避免玩家每次状态结束后都会切回到idle状态 此时动画会立刻切换，若是两次连续攻击可能出现卡一帧的情况
+    /// 如 ATK1 Idle ATK2  应该是ATK1 ATK2 IDLE
+    /// </summary>
+
     public void OnUpdate()
     {
         if (GameContext.SelfRole == null) return;

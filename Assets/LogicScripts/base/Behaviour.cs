@@ -68,7 +68,7 @@ public abstract class Behaviour
             AnimManager.GetInstance().PlayAnim(character, name, translateTime);
         }
     }
-    public void PlayAnimByState(StateVO state, float translateTime = 0.15f)
+    public void PlayAnimByState(StateVO state, float translateTime = 0.3f)
     {
         if (state != null)
         {

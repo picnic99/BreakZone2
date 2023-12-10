@@ -45,6 +45,7 @@ public abstract class Skill : Behaviour
     //当前技能所处状态 前摇 施放 后摇
     public SkillInStateEnum skillState = SkillInStateEnum.FRONT;
 
+    public float curAnimLength = 0;
     public Character Character
     {
         get { return character; }
@@ -103,6 +104,9 @@ public abstract class Skill : Behaviour
 
         var cur_animName = skillData.GetAnimKeyBySkillIndex(StageNum);
         float animTime = AnimManager.GetInstance().GetAnimTime2(cur_animName);
+        var animCfg = AnimConfiger.GetInstance().GetAnimByAnimKey(cur_animName);
+        animTime = animTime * animCfg.animation.ValidLength;
+        curAnimLength = animTime;
         if (animTime == 0) animTime = stateDurationTime;
         //前摇时间 此时一般在播放抬手动画 抬手动画可以通过
         //暂时先不考虑抬手动作吧 理由：没有合适的取消施放按键
@@ -120,6 +124,11 @@ public abstract class Skill : Behaviour
         {
             OnBack();
         });
+        
+        //默认状态时间等于当前阶段的动画时间
+        stateDurationTime = curAnimLength;
+        //默认技能时间等于状态持续时间
+        skillDurationTime = stateDurationTime;
     }
 
     public override void OnUpdate()

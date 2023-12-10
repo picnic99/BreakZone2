@@ -72,58 +72,60 @@ public class FSM
             case StateType.DoSkill:
                 int skillId = (int)args[2];
                 //若玩家欲施法技能 需要判断当前状态组中是否含有施法状态且当前状态组可以切换到施法状态
-                //判断一下当前是否存在该技能未结束？不允许玩家同时含有两个相同的skill实例
-                if (skillId > 0 && BaseChangeStateCheck(stateName))
+                if (skillId <= 0)
                 {
-                    //正常状态切换流程
-
-                    //当前是否已经存在该技能 是否为再次触发？
-                    var existSkill = character.GetSkill(skillId);
-                    if (existSkill != null )
+                    Debug.LogError( $"技能id输入为空 请检查！！");
+                    break;
+                }
+                if (SkillManager.GetInstance().InCoolDown(skillId))
+                {
+                    var skillVO = SkillConfiger.GetInstance().GetSkillById(skillId);
+                    if (skillVO!=null)
                     {
+                        Debug.LogWarning($"[{character.characterData.characterName}]的技能[{skillVO.SkillName}] 在冷却中...");
+                    }
+                    else
+                    {
+                        Debug.LogError($"技能配置中找不到id[{skillId}]，请检查配置！");
+                    }
+                    break;
+                }
+
+                if (BaseChangeStateCheck(stateName))
+                {
+                    //【再次触发某技能】 当前是否已经存在该技能 是否为再次触发？
+                    var existSkill = character.GetSkill(skillId);
+                    if (existSkill != null)
+                    {
+                        //若当前技能已存在
                         if (existSkill.skillData.IsOnlySkill() && !existSkill.CanTriggerAgain)
                         {
-                            Debug.LogError($"[{existSkill.skillData.SkillName}]是唯一技能，当前已存在无法再次施放！！！");
-                            return;
-                        }
-                        if (existSkill.CanTriggerAgain)
-                        {
-                            AddState(stateName, existSkill.stateDurationTime, existSkill.skillData.Id);
-                            existSkill.OnEnter();
-                            break;
-                        }
-                    }
-                    if (!character.isDebug)
-                    {
-                        //实例化一个技能
-                        if (SkillManager.GetInstance().InCoolDown(skillId))
-                        {
-                            Debug.LogWarning("技能" + skillId + "在冷却中");
+                            //若当前技能为唯一技能且无法再次触发
+                            Debug.LogError($"技能创建失败： [{existSkill.skillData.SkillName}] 是唯一技能切不允许再次触发！！！");
                             break;
                         }
 
-                        var skill = SkillManager.GetInstance().CreateSkill(skillId, character, stateName);
-                        AddState(stateName, skill.stateDurationTime, skill.skillData.Id);
-                        skill.Character = character;
-                        character.eventDispatcher.Event(CharacterEvent.DO_SKILL, skill.skillData.Id);
+                        if (existSkill.CanTriggerAgain)
+                        {
+                            CreateStateAndSkill(skillId, stateName, existSkill);
+                            break;
+                        }
+                    }
+                    //【常规触发技能流程】
+                    //isDebug 是当时想做技能编辑器时生成的角色 该角色是不通过FSM驱动
+                    if (!character.isDebug)
+                    {
+                        CreateStateAndSkill(skillId,stateName);
                     }
                 }
+                //当不满足基础状态切换条件时，再判断当前技能是否支持后摇打断？
                 else if (skillId > 0 && CanSkillBackChangeState(skillId))
                 {
-                    //后摇打断逻辑
-                    if (SkillManager.GetInstance().InCoolDown(skillId))
-                    {
-                        Debug.LogWarning("技能" + skillId + "在冷却中");
-                        break;
-                    }
+                    //【触发后摇打断流程】
                     //后摇打断
                     myState.RemoveState(StateType.DoSkill);
                     //实例化一个技能
-                    var skill = SkillManager.GetInstance().CreateSkill(skillId, character);
-                    var state = AddState(stateName, skill.stateDurationTime);
-                    skill.Character = character;
-                    state.stateInfo = skill.skillData.Id;
-                    character.eventDispatcher.Event(CharacterEvent.DO_SKILL, skill.skillData.Id);
+                    CreateStateAndSkill(skillId, stateName);
                 }
 
                 break;
@@ -139,6 +141,44 @@ public class FSM
                 AddState(stateName);
                 break;
         }
+    }
+
+    /// <summary>
+    /// 创建一个状态以及对应的技能
+    /// </summary>
+    /// <param name="skillId">技能ID</param>
+    /// <param name="stateName">状态的名称</param>
+    /// <param name="existSkill">是否有已存在的技能（再次触发时）</param>
+    private void CreateStateAndSkill(int skillId, string stateName, Skill existSkill = null)
+    {
+        //实例化技能
+        Skill skill;
+        if(existSkill != null)
+        {
+            skill = existSkill;
+        }
+        else
+        {
+            skill = SkillManager.GetInstance().CreateSkill(skillId, character, stateName);
+        }
+        //实例化状态
+        var state = AddState(stateName, skill.stateDurationTime, skill.skillData.Id);
+        //
+        if (existSkill != null)
+        {
+            skill.OnEnter();
+        }
+        else
+        {
+            skill.Character = character;
+        }
+        state.stateInfo = skill.skillData.Id;
+        //设置状态的持续时间
+        state.durationTime = skill.stateDurationTime;
+        //此处可能会有隐患
+        //因为Buff有时候会监听你的技能施放次数 而攻击跳跃目前都算作技能 可能导致误触发
+        //而在inputManager中监听此时为重置方向
+        character.eventDispatcher.Event(CharacterEvent.DO_SKILL, skill.skillData.Id);
     }
 
     /// <summary>

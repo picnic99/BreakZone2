@@ -23,6 +23,7 @@ public sealed partial class Animation : Luban.BeanBase
         { if(!_buf["frontTime"].IsNumber) { throw new SerializationException(); }  FrontTime = _buf["frontTime"]; }
         { if(!_buf["backTime"].IsNumber) { throw new SerializationException(); }  BackTime = _buf["backTime"]; }
         { var __json0 = _buf["eventTimes"]; if(!__json0.IsArray) { throw new SerializationException(); } EventTimes = new System.Collections.Generic.List<string>(__json0.Count); foreach(JSONNode __e0 in __json0.Children) { string __v0;  { if(!__e0.IsString) { throw new SerializationException(); }  __v0 = __e0; }  EventTimes.Add(__v0); }   }
+        { if(!_buf["validLength"].IsNumber) { throw new SerializationException(); }  ValidLength = _buf["validLength"]; }
     }
 
     public static Animation DeserializeAnimation(JSONNode _buf)
@@ -39,6 +40,7 @@ public sealed partial class Animation : Luban.BeanBase
     public readonly float FrontTime;
     public readonly float BackTime;
     public readonly System.Collections.Generic.List<string> EventTimes;
+    public readonly float ValidLength;
    
     public const int __ID__ = -1172489372;
     public override int GetTypeId() => __ID__;
@@ -48,6 +50,7 @@ public sealed partial class Animation : Luban.BeanBase
         
         
         foreach (var _e in Clips) { _e?.ResolveRef(tables); }
+        
         
         
         
@@ -62,6 +65,7 @@ public sealed partial class Animation : Luban.BeanBase
         + "frontTime:" + FrontTime + ","
         + "backTime:" + BackTime + ","
         + "eventTimes:" + Luban.StringUtil.CollectionToString(EventTimes) + ","
+        + "validLength:" + ValidLength + ","
         + "}";
     }
 }

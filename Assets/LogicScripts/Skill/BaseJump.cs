@@ -4,7 +4,6 @@ public class BaseJump : Skill
 {
     public BaseJump()
     {
-        skillDurationTime = stateDurationTime = 99f;
         CanTriggerAgain = true;
     }
     public override void OnEnter()
@@ -15,6 +14,7 @@ public class BaseJump : Skill
             PlayAnim(skillData.GetAnimKey(1));
         });
         base.OnEnter();
+        skillDurationTime = stateDurationTime = 99f;
     }
 
     public override void OnTrigger()
