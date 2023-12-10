@@ -1,0 +1,10 @@
+[
+  {
+    "id": 1001,
+    "hp": 1000,
+    "atk": 100,
+    "defend": 10,
+    "moveSpeed": 2,
+    "atkSpeed": 1
+  }
+]
