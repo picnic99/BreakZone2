@@ -92,9 +92,6 @@ namespace CustomPlayable
             if (curIndex < 0 || targetIndex < 0) return;
 
             CheckWeight();
-
-            Debug.Log("hyy: CheckStart");
-
             //帧时长
             float deltaTime = info.deltaTime;
 
@@ -122,7 +119,6 @@ namespace CustomPlayable
                 }
                 var curW = AddWeight(curIndex, -curSpeed * deltaTime);
                 float tw = 1 - delTotalWeight - curW;
-                Debug.Log("hyy: " + this.GetType().Name + " delTotalWeight:" + delTotalWeight + " , curIndexW = " + curW + " , targetW = " + tw + " , curIndex = " + curIndex + "targetIndex =" + targetIndex + " , translateTime =" + translateTime);
                 SetWeight(targetIndex, tw);
                 return;
             }
@@ -130,12 +126,8 @@ namespace CustomPlayable
             GetAnimClipData(curIndex).able.Disable();
             //GetAnimClipData(targetIndex).able.Enable();
             curIndex = targetIndex;
-            Debug.Log("hyy: "+this.GetType().Name+" 130 Transition End CurIndex =" + curIndex);
-            Debug.Log("TEST001 hyy: "+this.GetType().Name+" 130 Transition End CurIndex =" + curIndex);
             targetIndex = -1;
             isTranlating = false;
-
-            Debug.Log("hyy: CheckEnd");
 
         }
 
