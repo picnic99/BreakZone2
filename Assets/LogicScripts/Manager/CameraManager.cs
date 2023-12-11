@@ -71,11 +71,16 @@ public class CameraManager:Singleton<CameraManager>,Manager
     {
         CinemachineImpulseSource imp = null;
         brain.TryGetComponent<CinemachineImpulseSource>(out imp);
-        if(imp == null)
+        if (imp == null)
         {
             imp = brain.gameObject.AddComponent<CinemachineImpulseSource>();
         }
+
+#if UNITY_2019_4_9
+
+#else
         imp.GenerateImpulseWithForce(force);
+#endif
     }
 
     private void OnUpdate()

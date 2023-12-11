@@ -17,9 +17,9 @@ public class GuRuoJingTangBuff : BuffGroup
         buff.AddEnd_TRIGGER_COUNT();
         buff.doBuffCall = (args) =>
         {
-            AddBuff(new Character[] { character}, new BuffVO("固若金汤免伤", 5f), (buff) =>
+            AddBuff(new Character[] { character}, new BuffVO("固若金汤免伤", 5f), (buff1) =>
             {
-                buff.AddBuffComponent(buff.AddPropertyBuff(5f, new PropertyBuffVO(PropertyType.PCTDEFEND, false, 0.5f)));
+                buff1.AddBuffComponent(buff1.AddPropertyBuff(5f, new PropertyBuffVO(PropertyType.PCTDEFEND, false, 0.5f)));
             });
         };
         AddBuffComponent(buff);

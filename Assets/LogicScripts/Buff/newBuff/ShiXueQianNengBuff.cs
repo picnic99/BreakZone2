@@ -24,7 +24,7 @@ public class ShiXueQianNengBuff : BuffGroup
             buff.AddEnd_DURATION_TIME(10);
             var hp = character.property.hp;
             float oldHpRate = hp.finalValue / hp.baseValue;
-            fun = (args) =>
+            fun = (args1) =>
             {
                 float newHpRate = hp.finalValue / hp.baseValue;
                 int gapRate = (int)Mathf.Floor(Math.Max((oldHpRate - newHpRate)*100, 0));
