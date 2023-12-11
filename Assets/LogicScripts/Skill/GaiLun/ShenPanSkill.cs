@@ -85,6 +85,7 @@ class ShenPanInstance
         skillInstance.transform.forward = character.trans.forward;
         skillInstance.transform.position = character.trans.position;
         skillInstance.transform.localScale = new Vector3(0.15f, 0.2f, 0.15f);
+        skillInstance.transform.SetParent(character.trans);
     }
 
     private void AddBehaviour()

@@ -18,8 +18,8 @@ public class LiQingAttack : BaseAttack
 
     public override void OnEnter()
     {
-        Hand_L = character.anim.GetBoneTransform(HumanBodyBones.RightHand).GetComponent<ColliderHelper>();
-        Hand_R = character.anim.GetBoneTransform(HumanBodyBones.LeftHand).GetComponent<ColliderHelper>();
+        Hand_L = character.anim.GetBoneTransform(HumanBodyBones.LeftHand).GetComponent<ColliderHelper>();
+        Hand_R = character.anim.GetBoneTransform(HumanBodyBones.RightHand).GetComponent<ColliderHelper>();
         Leg_L = character.anim.GetBoneTransform(HumanBodyBones.LeftLowerLeg).GetComponent<ColliderHelper>();
         Leg_R = character.anim.GetBoneTransform(HumanBodyBones.RightLowerLeg).GetComponent<ColliderHelper>();
         Hand_L.enabled = false;
@@ -27,12 +27,12 @@ public class LiQingAttack : BaseAttack
         Leg_L.enabled = false;
         Leg_R.enabled = false;
         base.OnEnter();
+
     }
 
     public override void OnTrigger()
     {
-        skillState = SkillInStateEnum.TRIGGER;
-        StageNum++;
+        base.OnTrigger();
         Atk();
     }
 
@@ -65,6 +65,10 @@ public class LiQingAttack : BaseAttack
         TimeManager.GetInstance().AddOnceTimer(this, 0.05f, () =>
         {
             character.anim.speed = 1;
+        });
+        TimeManager.GetInstance().AddOnceTimer(this, 0.5f, () =>
+        {
+            GameObject.Destroy(bloodEffect);
         });
         var dir = (character.trans.forward).normalized;
         dir.y = 0;

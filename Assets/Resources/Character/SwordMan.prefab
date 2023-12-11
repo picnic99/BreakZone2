@@ -1182,6 +1182,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9199155246775236303}
+  - component: {fileID: 4576154734225671606}
+  - component: {fileID: 3975954367647708942}
   m_Layer: 0
   m_Name: RightHand
   m_TagString: Untagged
@@ -1209,6 +1211,31 @@ Transform:
   m_Father: {fileID: 9199155247036833948}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &4576154734225671606
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9199155246775236302}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.1195878, y: 0.056829132, z: 0.8755087}
+  m_Center: {x: -0.15383281, y: -0.000000035997473, z: 0.48988888}
+--- !u!114 &3975954367647708942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9199155246775236302}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b837171f5b6b1b34fb67c0598fe55258, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &9199155246819228476
 GameObject:
   m_ObjectHideFlags: 0
@@ -7485,8 +7512,6 @@ GameObject:
   m_Component:
   - component: {fileID: 9199155247865646035}
   - component: {fileID: 9199155247865646044}
-  - component: {fileID: 8615091859101852323}
-  - component: {fileID: 2274349260250144987}
   m_Layer: 0
   m_Name: Sword_Hand
   m_TagString: Untagged
@@ -7563,31 +7588,6 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.12278109, y: 0.03235782, z: 0.37936133}
     m_Extent: {x: 0.087352715, y: 0.046244226, z: 0.5386299}
   m_DirtyAABB: 0
---- !u!114 &8615091859101852323
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9199155247865646034}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b837171f5b6b1b34fb67c0598fe55258, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!65 &2274349260250144987
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9199155247865646034}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 0.18230855, y: 1.0808107, z: 0.0433269}
-  m_Center: {x: -0.21036243, y: -0.3704589, z: -0.0054548196}
 --- !u!1 &9199155247879058598
 GameObject:
   m_ObjectHideFlags: 0

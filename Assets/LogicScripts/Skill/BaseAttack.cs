@@ -3,17 +3,22 @@ using UnityEngine;
 
 public class BaseAttack : Skill
 {
+    //再次触发最大等待时间
     public float maxWaitTime = 0.5f;
+
+    public ColliderHelper Hand_R;
 
     public BaseAttack()
     {
-        stateDurationTime = 0.8f;
-        skillDurationTime = stateDurationTime + maxWaitTime;
+        //允许再次触发
         CanTriggerAgain = true;
     }
 
     public override void OnEnter()
     {
+        Hand_R = character.anim.GetBoneTransform(HumanBodyBones.RightHand).GetComponent<ColliderHelper>();
+        Hand_R.enabled = false;
+
         if (StageNum >= 3)
         {
             StageNum = 0;
@@ -31,32 +36,54 @@ public class BaseAttack : Skill
             PlayAnim(skillData.GetAnimKey(StageNum));
         }
         base.OnEnter();
+
+        //stateDurationTime = curAnimLength;
         skillDurationTime = stateDurationTime + maxWaitTime;
+    }
+
+    bool triggered = false;
+    public void Atk()
+    {
+        triggered = false;
+        Hand_R.enabled = true;
+        Hand_R.OnTriggerEnterCall += DoDamage;
+    }
+
+    public void DoDamage(Collider col)
+    {
+        if (triggered) return;
+        var target = GameContext.GetCharacterByObj(col.gameObject);
+        if (target == null || target == character) return;
+        AddState(target, character, StateType.Injure);
+        DoDamage(target, character.property.Atk);
+        triggered = true;
+        Vector3 v = character.trans.position;
+        v = col.ClosestPointOnBounds(Hand_R.transform.position);
+
+        var bloodEffect = ResourceManager.GetInstance().GetObjInstance<GameObject>("Common/BloodEffect");
+        bloodEffect.transform.position = v;
+        character.eventDispatcher.Event(CharacterEvent.ATK, new Character[] { target });
+        //顿帧
+        character.anim.speed = 0f;
+        TimeManager.GetInstance().AddOnceTimer(this, 0.05f, () =>
+        {
+            character.anim.speed = 1;
+        });
+        TimeManager.GetInstance().AddOnceTimer(this, 0.5f, () =>
+        {
+            GameObject.Destroy(bloodEffect);
+        });
+
+        //受击位移
+/*        var dir = (character.trans.forward).normalized;
+        dir.y = 0;
+        target.physic.Move(dir.normalized * 0.1f, 0.1f);*/
     }
 
     public override void OnTrigger()
     {
         base.OnTrigger();
-        character.scan.ShowRange(90, 2f);
-        Character[] targets = character.scan.CheckShphere(character.trans.position, character.trans.forward, "-45,45", 2f, RangeType.ENEMY);
-        DoDamage(targets, character.property.Atk);
-        //EffectManager.GetInstance().PlayEffect("Skill/NearBaseAtk", 1f, null, character.trans.position, character.trans.forward, new Vector3(0.2f, 0.2f, 0.2f));
-        character.eventDispatcher.Event(CharacterEvent.ATK, targets);
-        if (targets.Length > 0)
-        {
-            //顿帧
-            character.anim.speed = 0f;
-            TimeManager.GetInstance().AddOnceTimer(this, 0.05f, () =>
-            {
-                character.anim.speed = 1;
-            });
-        }
-        foreach (var target in targets)
-        {
-            var dir = (character.trans.forward).normalized;
-            dir.y = 0;
-            target.physic.Move(dir.normalized * 0.1f, 0.1f);
-        }
+        Atk();
     }
 
     protected override void EndState()
@@ -68,6 +95,8 @@ public class BaseAttack : Skill
     {
         base.OnBack();
         character.anim.speed = 1;
+        Hand_R.OnTriggerEnterCall -= DoDamage;
+        Hand_R.enabled = false;
     }
 
     public override void OnExit()
