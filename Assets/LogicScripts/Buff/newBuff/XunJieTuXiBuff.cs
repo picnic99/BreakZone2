@@ -27,9 +27,9 @@ public class XunJieTuXiBuff : BuffGroup
                 if (action.from.character == character && action is DamageAction)
                 {
                     action.value.AddExAddValue(100);//数值可提取
-                    AddBuff(action.targets, new BuffVO("迅捷突袭减速", trigger_duration_time), (buff) =>
+                    AddBuff(action.targets, new BuffVO("迅捷突袭减速", trigger_duration_time), (buff1) =>
                     {
-                        buff.AddBuffComponent(buff.AddPropertyBuff(trigger_duration_time, new PropertyBuffVO(PropertyType.MOVESPEED, false, -0.3f)));//数值可提取
+                        buff1.AddBuffComponent(buff1.AddPropertyBuff(trigger_duration_time, new PropertyBuffVO(PropertyType.MOVESPEED, false, -0.3f)));//数值可提取
                     });
                     Debug.Log("[迅捷突袭] 触发成功 附加100点伤害以及30%的减速效果！");
                     buff.AddEnd_TRIGGER_COUNT(buff.curTriggerCtn + 1);

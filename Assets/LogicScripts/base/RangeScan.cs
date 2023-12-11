@@ -54,7 +54,7 @@ public class RangeScan
     public Character[] CheckShphere(Vector3 pos, Vector3 dir, string degree, float radius, RangeType type)
     {
         float[] degs = new float[2]; int i = 0;
-        foreach (var item in degree.Split(",")) degs[i++] = Convert.ToSingle(item);
+        foreach (var item in degree.Split(',')) degs[i++] = Convert.ToSingle(item);
         var left_border = Quaternion.AngleAxis(degs[0], Vector3.up) * dir;
         var right_border = Quaternion.AngleAxis(degs[1], Vector3.up) * dir;
         List<Character> result = new List<Character>();

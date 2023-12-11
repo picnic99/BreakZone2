@@ -29,10 +29,10 @@ public class CharacterVO
         else
         {
             //有状态动画覆盖
-            var list = character.StateAnims.Split(";");
+            var list = character.StateAnims.Split(';');
             for (int i = 0; i < list.Length; i++)
             {
-                var stateInfo = list[i].Split(":");
+                var stateInfo = list[i].Split(':');
                 //状态名称
                 var stateNameStr = stateInfo[0];
                 //动画key
