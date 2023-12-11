@@ -15,6 +15,8 @@ public class StateGroup
     //默认状态 状态列表为空时加入列表中
     public State defaultState;
 
+    public bool isInit = true;
+
     public StateGroup(Character character)
     {
         this.character = character;
@@ -79,9 +81,10 @@ public class StateGroup
     public void OnUpdate()
     {
         character.msg.curState = "\n";
-        if (states.Count <= 0)
+        if (states.Count <= 0 && isInit)
         {
             Add(defaultState);
+            isInit = false;
         }
         for (int i = 0; i < states.Count; i++)
         {
