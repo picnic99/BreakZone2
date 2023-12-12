@@ -411,6 +411,23 @@
     "validLength": 1
   },
   {
+    "key": "GAILUN_ZHENGYI",
+    "animType": 1,
+    "clips": [
+      {
+        "animPath": "GaiLun/Hard_Attk_4",
+        "x": 0,
+        "y": 0
+      }
+    ],
+    "frontTime": 0.5,
+    "backTime": 1,
+    "eventTimes": [
+      "0"
+    ],
+    "validLength": 1
+  },
+  {
     "key": "TIANYINBO_1",
     "animType": 1,
     "clips": [

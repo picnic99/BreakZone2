@@ -131,11 +131,13 @@
     "cd": 0,
     "tags": [],
     "IsInstantSkill": false,
-    "IsOnly": false,
+    "IsOnly": true,
     "mutexState": [],
     "backBreakSkills": [],
     "valueRules": "",
-    "animKeys": [],
+    "animKeys": [
+      "GAILUN_ZHENGYI"
+    ],
     "sounds": "",
     "effects": "",
     "extraParams": ""

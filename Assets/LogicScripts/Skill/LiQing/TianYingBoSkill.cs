@@ -36,7 +36,7 @@ public class TianYingBoSkill : Skill
         if (StageNum == 1)
         {
             //创建技能实体
-            new TianYingBo(this, character, BeTrigger1);
+            new TianYingBo(this, BeTrigger1);
         }
         else if (StageNum == 2)
         {
@@ -85,7 +85,6 @@ public class TianYingBoSkill : Skill
 class TianYingBo
 {
     Skill skill;
-    Character character;
     GameObject skillInstance;
     Transform triggerEffect;
     ColliderHelper collider;
@@ -93,10 +92,9 @@ class TianYingBo
     string path = "Skill/TianYinBo";
     float skillDurationTime = 1f;
     bool Triggered = false;
-    public TianYingBo(Skill skill, Character character, Action<Character[]> call)
+    public TianYingBo(Skill skill, Action<Character[]> call)
     {
         this.skill = skill;
-        this.character = character;
         this.call = call;
         skillInstance = ResourceManager.GetInstance().GetObjInstance<GameObject>(path);
         this.InitTransform();
@@ -105,8 +103,8 @@ class TianYingBo
 
     private void InitTransform()
     {
-        skillInstance.transform.forward = CameraManager.GetInstance().state == CameraState.ARM ? Camera.main.transform.forward : character.trans.forward; //CameraManager.GetInstance().curCam.transform.forward;//  character.trans.forward;
-        skillInstance.transform.position = character.trans.position;
+        skillInstance.transform.forward = CameraManager.GetInstance().state == CameraState.ARM ? Camera.main.transform.forward : skill.character.trans.forward; //CameraManager.GetInstance().curCam.transform.forward;//  character.trans.forward;
+        skillInstance.transform.position = skill.character.trans.position;
         triggerEffect = skillInstance.transform.Find("triggerEffect");
         collider = skillInstance.GetComponent<ColliderHelper>();
     }

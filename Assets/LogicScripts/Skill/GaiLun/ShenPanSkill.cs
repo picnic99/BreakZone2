@@ -8,7 +8,7 @@ public class ShenPanSkill : Skill
 
     public ShenPanSkill()
     {
-        skillDurationTime = stateDurationTime = 0.6f;
+
     }
 
     public override void OnEnter()
@@ -16,6 +16,7 @@ public class ShenPanSkill : Skill
         character.KeepMove = true;
         PlayAnim(skillData.GetAnimKey(0));
         base.OnEnter();
+        skillDurationTime = stateDurationTime = 0.6f;
     }
 
     public override void OnTrigger()
@@ -26,6 +27,7 @@ public class ShenPanSkill : Skill
         //character.scan.ShowRange(360, 2f, 1f);
         //EffectManager.GetInstance().PlayEffect("Skill/ShenPan", 0.7f, null, character.trans.position, character.trans.forward, new Vector3(0.15f, 0.2f, 0.15f));
         new ShenPanInstance(character, BeTrigger);
+        character.physic.Move(character.trans.forward.normalized * 2.5f, 0.3f);
     }
 
     /// <summary>
@@ -48,7 +50,8 @@ public class ShenPanSkill : Skill
         {
             var dir = (item.trans.position - character.trans.position).normalized;
             dir.y = 0;
-            item.physic.Move(dir.normalized * 0.2f, 0.1f);
+            //item.physic.Move(dir.normalized * 0.2f, 0.1f);
+            item.physic.Move(Vector3.up * 1f, 0.2f);
         }
     }
 

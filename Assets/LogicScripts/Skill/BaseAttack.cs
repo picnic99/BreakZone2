@@ -47,6 +47,7 @@ public class BaseAttack : Skill
         triggered = false;
         Hand_R.enabled = true;
         Hand_R.OnTriggerEnterCall += DoDamage;
+        character.eventDispatcher.Event(CharacterEvent.PRE_ATK);
     }
 
     public void DoDamage(Collider col)

@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 
-public class SkillInstance
+public class SkillInstance2
 {
     public Skill skill;
     public GameObject root;
 
-    public SkillInstance()
+    public SkillInstance2()
     {
 
     }

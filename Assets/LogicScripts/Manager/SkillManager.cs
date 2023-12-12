@@ -31,7 +31,7 @@ public class SkillManager : Singleton<SkillManager>, Manager
         }
     }
 
-    private Queue<SkillInstance> skillInsPool = new Queue<SkillInstance>();
+    private Queue<SkillInstance2> skillInsPool = new Queue<SkillInstance2>();
 
     private Dictionary<int, skillCD> skillCDRecordDic = new Dictionary<int, skillCD>();
 
@@ -92,12 +92,12 @@ public class SkillManager : Singleton<SkillManager>, Manager
     /// </summary>
     /// <param name="name"></param>
     /// <returns></returns>
-    public SkillInstance CreateSkillInstance(Skill skill, string name, Vector3 createPos, Vector3 moveTo, float moveSpeed)
+    public SkillInstance2 CreateSkillInstance(Skill skill, string name, Vector3 createPos, Vector3 moveTo, float moveSpeed)
     {
-        SkillInstance ins = null;
+        SkillInstance2 ins = null;
         if (skillInsPool.Count <= 0)
         {
-            ins = new SkillInstance();
+            ins = new SkillInstance2();
         }
         else
         {
@@ -112,7 +112,7 @@ public class SkillManager : Singleton<SkillManager>, Manager
         MonoBridge.GetInstance().AddCall(UpdateCD);
     }
 
-    public void RecoverSkillInstance(SkillInstance ins)
+    public void RecoverSkillInstance(SkillInstance2 ins)
     {
         skillInsPool.Enqueue(ins);
     }

@@ -2,13 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public struct StateEvent
-{
-    public string addStateName;
-    public string removeName;
-    public object[] args;
-}
-
 public class FSM
 {
     //归属角色

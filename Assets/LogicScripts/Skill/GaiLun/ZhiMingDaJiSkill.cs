@@ -22,7 +22,7 @@ public class ZhiMingDaJiSkill : Skill
         atkCover = new AnimCoverVO("GAILUN_SWORD_HARD_ATK");
 
         character.animCoverData.Add(StateType.Move, moveCover);
-        character.animCoverData.Add(StateType.Run, moveCover);
+        //character.animCoverData.Add(StateType.Run, moveCover);
         character.animCoverData.Add(StateType.DoAtk, atkCover);
         AddBuff(new Character[] { character }, new BuffVO("致命打击加移速", skillDurationTime), (buff) =>
         {
@@ -31,16 +31,16 @@ public class ZhiMingDaJiSkill : Skill
         {
             character.animCoverData.Remove(StateType.Move, moveCover);
             character.animCoverData.Remove(StateType.DoAtk, atkCover);
-            character.animCoverData.Remove(StateType.Run, atkCover);
+            //character.animCoverData.Remove(StateType.Run, atkCover);
         });
 
         //攻击施加沉默状态
-        character.eventDispatcher.On(CharacterEvent.ATK, ATK_BUFF);
+        character.eventDispatcher.On(CharacterEvent.PRE_ATK, ATK_BUFF);
     }
 
     protected override void OnEnd()
     {
-        character.eventDispatcher.Off(CharacterEvent.ATK, ATK_BUFF);
+        character.eventDispatcher.Off(CharacterEvent.PRE_ATK, ATK_BUFF);
         base.OnEnd();
     }
 
@@ -49,15 +49,15 @@ public class ZhiMingDaJiSkill : Skill
     {
         character.animCoverData.Remove(StateType.DoAtk, atkCover);
         character.animCoverData.Remove(StateType.Move, moveCover);
-        character.animCoverData.Remove(StateType.Run, moveCover);
-        EffectManager.GetInstance().PlayEffect("Skill/ZhiMingDaJi", 1f, null, character.trans.position, character.trans.forward, new Vector3(0.1f, 0.1f, 0.1f));
-        character.eventDispatcher.Off(CharacterEvent.ATK, ATK_BUFF);
+        //character.animCoverData.Remove(StateType.Run, moveCover);
+        EffectManager.GetInstance().PlayEffect("Skill/ZhiMingDaJi", 1.5f, null, character.trans.position + character.trans.forward * 2f, character.trans.forward, new Vector3(0.1f, 0.1f, 0.1f));
+        character.eventDispatcher.Off(CharacterEvent.PRE_ATK, ATK_BUFF);
+        skillDurationTime = 0f;
         if (target == null || target.Length <= 0) return;
         Character cTarget = target[0] as Character;
         //伤害公式 base + 0.4 * atk + 0.2 * maxHp + 0.1 * curHp + 0.2 * defend 
         DoDamage(new Character[] { cTarget }, 25);
         AddState(new Character[] { cTarget }, character, StateType.Silence, 1.5f);
-        skillDurationTime = 0f;
     }
 
     public override string GetDesc()
