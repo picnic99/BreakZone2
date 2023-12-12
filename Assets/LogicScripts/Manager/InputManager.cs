@@ -3,14 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-public struct StateEvent
-{
-    public string addStateName;
-    public string removeName;
-    public object[] args;
-}
-
 public class InputManager : Singleton<InputManager>, Manager
 {
     public bool HasSelfRole = false;

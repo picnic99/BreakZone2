@@ -1,12 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+
+public struct StateEvent
+{
+    public string addStateName;
+    public string removeName;
+    public object[] args;
+}
+
 public class FSM
 {
     //归属角色
     public Character character;
     //状态组
     public StateGroup myState;
+
+    //状态行为队列
+    public Queue<StateEvent> stateQueue = new Queue<StateEvent>();
 
     public FSM(Character c)
     {
@@ -60,6 +71,7 @@ public class FSM
         //状态名称
         string stateName = (string)args[1];
 
+        
         switch (stateName)
         {
             case StateType.Move:
@@ -75,7 +87,7 @@ public class FSM
                 if (skillId <= 0)
                 {
                     Debug.LogError( $"技能id输入为空 请检查！！");
-                    break;
+                    return;
                 }
                 if (SkillManager.GetInstance().InCoolDown(skillId))
                 {
@@ -88,7 +100,7 @@ public class FSM
                     {
                         Debug.LogError($"技能配置中找不到id[{skillId}]，请检查配置！");
                     }
-                    break;
+                    return;
                 }
 
                 if (BaseChangeStateCheck(stateName))
