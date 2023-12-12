@@ -134,7 +134,7 @@ public abstract class Skill : Behaviour
     public override void OnUpdate()
     {
         skillDurationTime -= Time.deltaTime;
-        Debug.Log($"当前技能为：{skillData.skill.Name},剩余时间：{skillDurationTime}");
+        //Debug.Log($"当前技能为：{skillData.skill.Name},剩余时间：{skillDurationTime}");
         if (skillDurationTime <= 0)
         {
             OnEnd();

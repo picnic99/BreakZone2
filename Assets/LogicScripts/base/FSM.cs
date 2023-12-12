@@ -16,8 +16,12 @@ public class FSM
     //状态组
     public StateGroup myState;
 
-    //状态行为队列
-    public Queue<StateEvent> stateQueue = new Queue<StateEvent>();
+    public string debugOutput = "";
+
+    //是否需要检查能否切换到下一个状态
+    public bool checkStateCanChange = true;
+
+    public object[] nextState;
 
     public FSM(Character c)
     {
@@ -35,6 +39,14 @@ public class FSM
     {
         var defaultState = new State(character, StateConfiger.GetInstance().GetStateByType(StateType.Idle));
         myState.SetDefault(defaultState);
+        DebugManager.Instance.AddMonitor(() => {
+        if (nextState != null && nextState.Length >= 2)
+            {
+                return "nextState：" + nextState[1];
+            }
+            return "";
+        });
+
     }
 
     private void AddEventListener()
@@ -48,35 +60,51 @@ public class FSM
         //改变状态时触发，此处是状态添加核心处理，主要由两种触发情况
         //1.玩家输入触发，玩家施放技能或者各种操作时 会通过这里来添加状态
         //2.技能或者buff触发，部分技能和buff在满足条件时会改变玩家状态 如眩晕 击飞 沉默 各种
-        character.eventDispatcher.On(CharacterEvent.CHANGE_STATE, StateHandler);
+        character.eventDispatcher.On(CharacterEvent.CHANGE_STATE, AddNextState);
 
     }
     private void RemoveEventListener()
     {
         character.eventDispatcher.Off(CharacterEvent.STATE_OVER, RemoveState);
-        character.eventDispatcher.Off(CharacterEvent.CHANGE_STATE, StateHandler);
+        character.eventDispatcher.Off(CharacterEvent.CHANGE_STATE, AddNextState);
     }
 
     public void OnUpdate()
     {
+        if (myState.states.Count <= 0 && nextState == null)
+        {
+            AddState(StateType.Idle);
+        }
+        if (nextState != null && checkStateCanChange)
+        {
+            Debug.LogError("StateHandler INVOKE");
+            StateHandler(nextState);
+        }
+
         //状态行为更新
         myState.OnUpdate();
     }
 
+    public void AddNextState(object[] args)
+    {
+        nextState = args;
+        checkStateCanChange = true;
+        Debug.LogError("nextState == args");
+    }
 
-    private void StateHandler(object[] args)
+    private State StateHandler(object[] args)
     {
         //改变者
         Character changeFrom = (Character)args[0];
         //状态名称
         string stateName = (string)args[1];
 
-        
+        State finalState = null;
         switch (stateName)
         {
             case StateType.Move:
             case StateType.Run:
-                AddState(stateName);
+                finalState = AddState(stateName);
                 break;
             case StateType.Jump:
             case StateType.DoAtk:
@@ -86,13 +114,13 @@ public class FSM
                 //若玩家欲施法技能 需要判断当前状态组中是否含有施法状态且当前状态组可以切换到施法状态
                 if (skillId <= 0)
                 {
-                    Debug.LogError( $"技能id输入为空 请检查！！");
-                    return;
+                    Debug.LogError($"技能id输入为空 请检查！！");
+                    break;
                 }
                 if (SkillManager.GetInstance().InCoolDown(skillId))
                 {
                     var skillVO = SkillConfiger.GetInstance().GetSkillById(skillId);
-                    if (skillVO!=null)
+                    if (skillVO != null)
                     {
                         Debug.LogWarning($"[{character.characterData.characterName}]的技能[{skillVO.SkillName}] 在冷却中...");
                     }
@@ -100,7 +128,7 @@ public class FSM
                     {
                         Debug.LogError($"技能配置中找不到id[{skillId}]，请检查配置！");
                     }
-                    return;
+                    break;
                 }
 
                 if (BaseChangeStateCheck(stateName))
@@ -119,7 +147,7 @@ public class FSM
 
                         if (existSkill.CanTriggerAgain)
                         {
-                            CreateStateAndSkill(skillId, stateName, existSkill);
+                            finalState = CreateStateAndSkill(skillId, stateName, existSkill);
                             break;
                         }
                     }
@@ -127,7 +155,7 @@ public class FSM
                     //isDebug 是当时想做技能编辑器时生成的角色 该角色是不通过FSM驱动
                     if (!character.isDebug)
                     {
-                        CreateStateAndSkill(skillId,stateName);
+                        finalState = CreateStateAndSkill(skillId, stateName);
                     }
                 }
                 //当不满足基础状态切换条件时，再判断当前技能是否支持后摇打断？
@@ -137,22 +165,30 @@ public class FSM
                     //后摇打断
                     myState.RemoveState(StateType.DoSkill);
                     //实例化一个技能
-                    CreateStateAndSkill(skillId, stateName);
+                    finalState = CreateStateAndSkill(skillId, stateName);
                 }
 
                 break;
             case StateType.Silence:
             case StateType.Dizzy:
             case StateType.Trap:
-                AddState(stateName, 0.8f);
+                finalState = AddState(stateName, 0.8f);
                 break;
             case StateType.Injure:
-                AddState(stateName, 0.5f);
+                finalState = AddState(stateName, 0.5f);
                 break;
             default:
-                AddState(stateName);
+                finalState = AddState(stateName);
                 break;
         }
+
+        if (finalState != null)
+        {
+            nextState = null;
+            Debug.LogError("nextState == NULL");
+        }
+        checkStateCanChange = false;
+        return finalState;
     }
 
     /// <summary>
@@ -161,11 +197,11 @@ public class FSM
     /// <param name="skillId">技能ID</param>
     /// <param name="stateName">状态的名称</param>
     /// <param name="existSkill">是否有已存在的技能（再次触发时）</param>
-    private void CreateStateAndSkill(int skillId, string stateName, Skill existSkill = null)
+    private State CreateStateAndSkill(int skillId, string stateName, Skill existSkill = null)
     {
         //实例化技能
         Skill skill;
-        if(existSkill != null)
+        if (existSkill != null)
         {
             skill = existSkill;
         }
@@ -191,6 +227,8 @@ public class FSM
         //因为Buff有时候会监听你的技能施放次数 而攻击跳跃目前都算作技能 可能导致误触发
         //而在inputManager中监听此时为重置方向
         character.eventDispatcher.Event(CharacterEvent.DO_SKILL, skill.skillData.Id);
+
+        return state;
     }
 
     /// <summary>
@@ -259,6 +297,7 @@ public class FSM
             string state = args[0] as string;
             myState.RemoveState(state);
         }
+        checkStateCanChange = true;
     }
 
 
