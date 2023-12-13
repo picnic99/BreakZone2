@@ -25,15 +25,17 @@ public abstract class SkillInstance
     /// <summary>
     /// 实例持续时间
     /// </summary>
-    float durationTime = 1f;
+    public float durationTime = 1f;
     /// <summary>
     /// 实例的回调 可能有多个 如触碰目标的回调 如实例结束的回调 如实例开始的回调 。。。
     /// </summary>
-    Action<object[]> call;
+    public Action<object[]> enterCall;
+    public Action<object[]> stayCall;
+    public Action<object[]> exitCall;
     /// <summary>
     /// 实例的范围检测碰撞器 也可能有多个
     /// </summary>
-    ColliderHelper collider;
+    public ColliderHelper collider;
 
     /// <summary>
     /// 初始化实例创建的位置信息

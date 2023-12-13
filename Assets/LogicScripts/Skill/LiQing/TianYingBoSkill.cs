@@ -24,7 +24,7 @@ public class TianYingBoSkill : Skill
 
     public override void OnEnter()
     {
-        if(StageNum == 0)
+        if (StageNum == 0)
         {
             PlayAnim(skillData.GetAnimKey(0));
         }
@@ -82,44 +82,43 @@ public class TianYingBoSkill : Skill
     }
 }
 
-class TianYingBo
+class TianYingBo : SkillInstance
 {
-    Skill skill;
-    GameObject skillInstance;
     Transform triggerEffect;
-    ColliderHelper collider;
     Action<Character[]> call;
-    string path = "Skill/TianYinBo";
-    float skillDurationTime = 1f;
     bool Triggered = false;
+
     public TianYingBo(Skill skill, Action<Character[]> call)
     {
-        this.skill = skill;
+        this.instancePath = "Skill/TianYinBo";
+        this.RootSkill = skill;
+        this.instanceObj = ResourceManager.GetInstance().GetObjInstance<GameObject>(instancePath);
+        this.durationTime = 1f;
+
         this.call = call;
-        skillInstance = ResourceManager.GetInstance().GetObjInstance<GameObject>(path);
         this.InitTransform();
         this.AddBehaviour();
     }
 
-    private void InitTransform()
+    public override void InitTransform()
     {
-        skillInstance.transform.forward = CameraManager.GetInstance().state == CameraState.ARM ? Camera.main.transform.forward : skill.character.trans.forward; //CameraManager.GetInstance().curCam.transform.forward;//  character.trans.forward;
-        skillInstance.transform.position = skill.character.trans.position;
-        triggerEffect = skillInstance.transform.Find("triggerEffect");
-        collider = skillInstance.GetComponent<ColliderHelper>();
+        this.instanceObj.transform.forward = CameraManager.GetInstance().state == CameraState.ARM ? Camera.main.transform.forward : this.RootSkill.character.trans.forward; //CameraManager.GetInstance().curCam.transform.forward;//  character.trans.forward;
+        this.instanceObj.transform.position = this.RootSkill.character.trans.position;
+        triggerEffect = this.instanceObj.transform.Find("triggerEffect");
+        collider = this.instanceObj.GetComponent<ColliderHelper>();
     }
 
-    private void AddBehaviour()
+    public override void AddBehaviour()
     {
         collider.SetInfo();
         //碰撞到角色时的回调
         collider.OnTriggerEnterCall += DoTrigger;
 
         //飞行道具位移
-        TimeManager.GetInstance().AddFrameLoopTimer(this, 0, skillDurationTime,
+        TimeManager.GetInstance().AddFrameLoopTimer(this, 0, durationTime,
         () =>
         {
-            skillInstance.transform.position += skillInstance.transform.forward * Time.deltaTime * 20f;
+            this.instanceObj.transform.position += this.instanceObj.transform.forward * Time.deltaTime * 20f;
         },
         () =>
         {
@@ -150,28 +149,28 @@ class TianYingBo
         triggerEffectObj = GameObject.Instantiate<GameObject>(triggerEffect.gameObject, col.transform);
         triggerEffectObj.SetActive(true);
 
-        skill.EventDispatcher.On(TianYingBoSkill.HUIYINJI_TRIGGERED, RemoveTriggerEffect);
-        TimeManager.GetInstance().AddOnceTimer(triggerEffectObj, skill.skillDurationTime, () =>
+        this.RootSkill.EventDispatcher.On(TianYingBoSkill.HUIYINJI_TRIGGERED, RemoveTriggerEffect);
+        TimeManager.GetInstance().AddOnceTimer(triggerEffectObj, this.RootSkill.skillDurationTime, () =>
         {
             if (triggerEffectObj != null)
             {
                 RemoveTriggerEffect(null);
             }
         });
-        skillDurationTime = 0;
+        durationTime = 0;
     }
 
     private GameObject triggerEffectObj;
     private void RemoveTriggerEffect(object[] args)
     {
         GameObject.Destroy(triggerEffectObj);
-        skill.EventDispatcher.Off(TianYingBoSkill.HUIYINJI_TRIGGERED, RemoveTriggerEffect);
+        this.RootSkill.EventDispatcher.Off(TianYingBoSkill.HUIYINJI_TRIGGERED, RemoveTriggerEffect);
     }
 
     private void End()
     {
         TimeManager.GetInstance().RemoveAllTimer(this);
-        GameObject.Destroy(skillInstance);
+        GameObject.Destroy(instanceObj);
     }
 }
 
