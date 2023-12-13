@@ -95,7 +95,7 @@
       }
     ],
     "frontTime": 0,
-    "backTime": 0,
+    "backTime": 0.8,
     "eventTimes": [
       "0"
     ],
@@ -112,7 +112,7 @@
       }
     ],
     "frontTime": 0,
-    "backTime": 0,
+    "backTime": 0.8,
     "eventTimes": [
       "0"
     ],
@@ -129,7 +129,7 @@
       }
     ],
     "frontTime": 0,
-    "backTime": 0,
+    "backTime": 0.8,
     "eventTimes": [
       "0"
     ],
@@ -437,8 +437,8 @@
         "y": 0
       }
     ],
-    "frontTime": 0,
-    "backTime": 0,
+    "frontTime": 0.3,
+    "backTime": 1,
     "eventTimes": [
       "0"
     ],
@@ -454,8 +454,8 @@
         "y": 0
       }
     ],
-    "frontTime": 0,
-    "backTime": 0,
+    "frontTime": 0.3,
+    "backTime": 1,
     "eventTimes": [
       "0"
     ],
@@ -471,8 +471,8 @@
         "y": 0
       }
     ],
-    "frontTime": 0,
-    "backTime": 0,
+    "frontTime": 0.4,
+    "backTime": 1,
     "eventTimes": [
       "0"
     ],
@@ -488,8 +488,8 @@
         "y": 0
       }
     ],
-    "frontTime": 0,
-    "backTime": 0,
+    "frontTime": 0.2,
+    "backTime": 1,
     "eventTimes": [
       "0"
     ],
