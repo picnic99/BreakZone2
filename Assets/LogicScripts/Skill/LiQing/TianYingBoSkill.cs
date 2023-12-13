@@ -24,11 +24,18 @@ public class TianYingBoSkill : Skill
 
     public override void OnEnter()
     {
+        base.OnEnter();
         if (StageNum == 0)
         {
             PlayAnim(skillData.GetAnimKey(0));
+            stateDurationTime = 1f;
+            skillDurationTime = 2f;
+        }else if (StageNum == 1)
+        {
+            PlayAnim(skillData.GetAnimKey(1),0.3f);
+            stateDurationTime = 99f;
+            skillDurationTime = 3f;
         }
-        base.OnEnter();
     }
     public override void OnTrigger()
     {
@@ -42,7 +49,7 @@ public class TianYingBoSkill : Skill
         {
             //第二段为族弟啊触发
             CanTriggerAgain = false;
-            new HuiYinJi(this, character, target, BeTrigger2);
+            new HuiYinJi(this, target, BeTrigger2);
         }
     }
 
@@ -52,7 +59,7 @@ public class TianYingBoSkill : Skill
         //该技能需要特殊处理 或者后续统一处理掉
         //为什么这么写？ 1、需求是后摇时可以通过其它状态打断 最好能支持配置
         //2、改技能需要留有时间处理后续内容，如球飞的过程击中敌人以及二段踢等 按理来说 该技能虽然脱手 状态也消失了 但技能任然需要存在
-        EndState();
+        //EndState();
     }
 
     /// <summary>
@@ -86,7 +93,6 @@ class TianYingBo : SkillInstance
 {
     Transform triggerEffect;
     Action<Character[]> call;
-    bool Triggered = false;
 
     public TianYingBo(Skill skill, Action<Character[]> call)
     {
@@ -94,59 +100,43 @@ class TianYingBo : SkillInstance
         this.RootSkill = skill;
         this.instanceObj = ResourceManager.GetInstance().GetObjInstance<GameObject>(instancePath);
         this.durationTime = 1f;
-
         this.call = call;
-        this.InitTransform();
-        this.AddBehaviour();
+
+        this.Init();
     }
 
     public override void InitTransform()
     {
+        //根据玩家是否瞄准 初始化飞行的方向
         this.instanceObj.transform.forward = CameraManager.GetInstance().state == CameraState.ARM ? Camera.main.transform.forward : this.RootSkill.character.trans.forward; //CameraManager.GetInstance().curCam.transform.forward;//  character.trans.forward;
         this.instanceObj.transform.position = this.RootSkill.character.trans.position;
+        //击中后的特效
         triggerEffect = this.instanceObj.transform.Find("triggerEffect");
-        collider = this.instanceObj.GetComponent<ColliderHelper>();
     }
 
     public override void AddBehaviour()
     {
-        collider.SetInfo();
-        //碰撞到角色时的回调
-        collider.OnTriggerEnterCall += DoTrigger;
-
         //飞行道具位移
         TimeManager.GetInstance().AddFrameLoopTimer(this, 0, durationTime,
+        //每帧执行
         () =>
         {
             this.instanceObj.transform.position += this.instanceObj.transform.forward * Time.deltaTime * 20f;
         },
+        //结束时回调
         () =>
         {
-            if (!Triggered)
-            {
-                End();
-            }
+            End();
         });
     }
 
-    private void DoTrigger(Collider col)
+    public override void InvokeEnterTrigger(Character target)
     {
-        var target = GameContext.GetCharacterByObj(col.gameObject);
-        if (target == null) return;
-        if (target.state != collider.info.TriggerType)
-        {
-            return;
-        }
-
-        Triggered = true;
-        collider.OnTriggerEnterCall -= DoTrigger;
-        End();
-
         //通知技能击中
         call.Invoke(new Character[] { target });
 
         //展示击中特效
-        triggerEffectObj = GameObject.Instantiate<GameObject>(triggerEffect.gameObject, col.transform);
+        triggerEffectObj = GameObject.Instantiate<GameObject>(triggerEffect.gameObject, target.trans);
         triggerEffectObj.SetActive(true);
 
         this.RootSkill.EventDispatcher.On(TianYingBoSkill.HUIYINJI_TRIGGERED, RemoveTriggerEffect);
@@ -157,9 +147,7 @@ class TianYingBo : SkillInstance
                 RemoveTriggerEffect(null);
             }
         });
-        durationTime = 0;
     }
-
     private GameObject triggerEffectObj;
     private void RemoveTriggerEffect(object[] args)
     {
@@ -167,56 +155,54 @@ class TianYingBo : SkillInstance
         this.RootSkill.EventDispatcher.Off(TianYingBoSkill.HUIYINJI_TRIGGERED, RemoveTriggerEffect);
     }
 
-    private void End()
+    public override void End()
     {
-        TimeManager.GetInstance().RemoveAllTimer(this);
-        GameObject.Destroy(instanceObj);
+        this.RootSkill.EventDispatcher.Off(TianYingBoSkill.HUIYINJI_TRIGGERED, RemoveTriggerEffect);
+        base.End();
     }
 }
 
-class HuiYinJi
+class HuiYinJi: SkillInstance
 {
-    Skill skill;
-    Character character;
     Character target;
     Action call;
-    //string path = "Skill/ChaoFuHe";
-    float skillDurationTime = 3f;
-    public HuiYinJi(Skill skill, Character character, Character target, Action call)
+
+    public HuiYinJi(Skill skill,Character target, Action flyEndCall)
     {
-        this.skill = skill;
-        this.character = character;
+        this.RootSkill = skill;
         this.target = target;
-        this.call = call;
-        this.InitTransform();
-        this.AddBehaviour();
+        this.call = flyEndCall;
+        this.durationTime = 3f;
+        this.maxTriggerTarget = 1;
+        this.needTriggerCheck = false;
+
+        this.Init();
     }
 
-    private void InitTransform()
+    public override void InitTransform()
     {
 
     }
 
-    private void AddBehaviour()
+    public override void AddBehaviour()
     {
+        var character = RootSkill.character;
         character.trans.forward = target.trans.position - character.trans.position;
         character.canRotate = false;
         CameraManager.GetInstance().ShowFeatureCam(character);
-        character.physic.MoveFollow(target, 20f, DoTrigger);
-        skill.PlayAnim(skill.skillData.GetAnimKey(1), 0.7f);
+        character.physic.MoveFollow(target, 20f, OnFlyEnd);
     }
 
     bool triggered = false;
-    private void DoTrigger()
+    private void OnFlyEnd()
     {
         if (triggered) return;
-        skill.EventDispatcher.Event(TianYingBoSkill.HUIYINJI_TRIGGERED);
+        RootSkill.EventDispatcher.Event(TianYingBoSkill.HUIYINJI_TRIGGERED);
         call.Invoke();
-        skillDurationTime = 0;
         triggered = true;
-        character.canRotate = true;
-        CameraManager.GetInstance().ShowMainCam(character);
-        TimeManager.GetInstance().RemoveAllTimer(this);
-        skill.OnBack();
+        RootSkill.character.canRotate = true;
+        CameraManager.GetInstance().ShowMainCam(RootSkill.character);
+        //RootSkill.OnBack();
+        End();
     }
 }

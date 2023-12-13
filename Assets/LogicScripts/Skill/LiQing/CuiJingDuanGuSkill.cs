@@ -7,7 +7,7 @@ public class CuiJingDuanGuSkill : Skill
 
     public CuiJingDuanGuSkill()
     {
-        skillDurationTime = stateDurationTime = 1f;
+
     }
 
     public override void OnEnter()
@@ -18,7 +18,6 @@ public class CuiJingDuanGuSkill : Skill
     public override void OnTrigger()
     {
         base.OnTrigger();
-        //TweenManager.GetInstance().MoveTo(character.trans, character.trans.position + character.trans.forward * 10f, durationTime);
         new CuiJingDuanGu(character, BeTrigger);
         CameraManager.GetInstance().EventImpulse();
     }

@@ -36,6 +36,48 @@ public abstract class SkillInstance
     /// 实例的范围检测碰撞器 也可能有多个
     /// </summary>
     public ColliderHelper collider;
+    /// <summary>
+    /// 角色死亡时技能移除
+    /// </summary>
+    public bool IsCharacterDeadRemove;
+    /// <summary>
+    /// 技能是否结束
+    /// </summary>
+    public bool IsEnd = false;
+    /// <summary>
+    /// 最大触发目标数
+    /// </summary>
+    public int maxTriggerTarget = 1;
+    /// <summary>
+    /// 当前触发目标数
+    /// </summary>
+    protected int curTriggerTarget = 0;
+    /// <summary>
+    /// 是否需要碰撞器检测
+    /// </summary>
+    protected bool needTriggerCheck = true;
+
+    public virtual void Init(string layerName = "Character", CharacterState TriggerType = CharacterState.ENEMY)
+    {
+        InitTransform();
+        AddBehaviour();
+        if (needTriggerCheck)
+        {
+            //碰撞盒
+            collider = this.instanceObj.GetComponent<ColliderHelper>();
+            SetTriggerInfo(layerName, TriggerType);
+            collider.OnTriggerEnterCall += OnEnterTrigger;
+            collider.OnTriggerStayCall += OnStayTrigger;
+            collider.OnTriggerExitCall += OnExitTrigger;
+        }
+    }
+
+    public virtual void SetTriggerInfo(string layerName, CharacterState TriggerType)
+    {
+        var layer = LayerMask.NameToLayer(layerName);
+        //设置检测的层以及目标
+        collider.SetInfo(layer, TriggerType);
+    }
 
     /// <summary>
     /// 初始化实例创建的位置信息
@@ -45,4 +87,50 @@ public abstract class SkillInstance
     /// 添加实例的行为 如移动 炸裂 旋转 等等
     /// </summary>
     public abstract void AddBehaviour();
+    /// <summary>
+    /// 触发时逻辑
+    /// </summary>
+    public virtual void OnEnterTrigger(Collider col)
+    {
+        var target = GameContext.GetCharacterByObj(col.gameObject);
+        if (target == null) return;
+        if (target.state != collider.info.TriggerType)
+        {
+            return;
+        }
+        curTriggerTarget++;
+
+        InvokeEnterTrigger(target);
+
+        if (curTriggerTarget >= maxTriggerTarget)
+        {
+            End();
+        }
+    }
+    public virtual void OnStayTrigger(Collider col)
+    {
+
+    }
+    public virtual void OnExitTrigger(Collider col)
+    {
+
+    }
+
+    public virtual void InvokeEnterTrigger(Character target) { }
+    public virtual void InvokeStayTrigger(Character target) { }
+    public virtual void InvokeExitTrigger(Character target) { }
+
+    public virtual void End()
+    {
+        IsEnd = true;
+        durationTime = 0;
+        if (needTriggerCheck)
+        {
+            collider.OnTriggerEnterCall -= OnEnterTrigger;
+            collider.OnTriggerStayCall -= OnStayTrigger;
+            collider.OnTriggerExitCall -= OnExitTrigger;
+        }
+        TimeManager.GetInstance().RemoveAllTimer(this);
+        GameObject.Destroy(instanceObj);
+    }
 }

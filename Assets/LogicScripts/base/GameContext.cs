@@ -12,6 +12,9 @@ public enum GameMode
 public class GameContext
 {
     public static GameMode GameMode = GameMode.NEW;
+
+    public static bool OpenRangeShow = true;
+
     //当前操纵的角色
     public static Character SelfRole;
     //场景中全部角色

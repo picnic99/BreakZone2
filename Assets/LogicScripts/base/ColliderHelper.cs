@@ -78,6 +78,7 @@ public class ColliderHelper : MonoBehaviour
     // Update is called once per frame
     void OnRenderObject()
     {
+        if (!GameContext.OpenRangeShow) return;
         var colliders = gameObject.GetComponents<BoxCollider>();
         if (colliders == null)
         {
