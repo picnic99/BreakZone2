@@ -17,9 +17,7 @@ public class TianYingBoSkill : Skill
 
     public TianYingBoSkill()
     {
-        //skill存在时间
-        stateDurationTime = 1f;
-        skillDurationTime = 2f;
+
     }
 
     public override void OnEnter()
@@ -28,13 +26,13 @@ public class TianYingBoSkill : Skill
         if (StageNum == 0)
         {
             PlayAnim(skillData.GetAnimKey(0));
-            stateDurationTime = 1f;
-            skillDurationTime = 2f;
+            stateDurationTime = curAnimLength;
+            skillDurationTime = 3f;
         }else if (StageNum == 1)
         {
             PlayAnim(skillData.GetAnimKey(1),0.3f);
             stateDurationTime = 99f;
-            skillDurationTime = 3f;
+            skillDurationTime = 99f;
         }
     }
     public override void OnTrigger()
@@ -63,7 +61,7 @@ public class TianYingBoSkill : Skill
     }
 
     /// <summary>
-    /// 第一段触发
+    /// 第一段触发 检测目标
     /// </summary>
     /// <param name="target"></param>
     public void BeTrigger1(Character[] target)
@@ -75,7 +73,7 @@ public class TianYingBoSkill : Skill
     }
 
     /// <summary>
-    /// 第二段触发
+    /// 第二段触发 飞向目标
     /// </summary>
     /// <param name="target"></param>
     public void BeTrigger2()
@@ -202,7 +200,6 @@ class HuiYinJi: SkillInstance
         triggered = true;
         RootSkill.character.canRotate = true;
         CameraManager.GetInstance().ShowMainCam(RootSkill.character);
-        //RootSkill.OnBack();
         End();
     }
 }

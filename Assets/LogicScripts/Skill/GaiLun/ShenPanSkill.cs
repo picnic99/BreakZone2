@@ -72,7 +72,7 @@ class ShenPanInstance
     Character character;
     GameObject skillInstance;
     Action<Character[]> call;
-    string path = "Skill/ShenPan";
+    string path = "Skill/ShenPan2";
     float skillDurationTime = 0.6f;
     public ShenPanInstance(Character character, Action<Character[]> call)
     {
@@ -87,7 +87,8 @@ class ShenPanInstance
     {
         skillInstance.transform.forward = character.trans.forward;
         skillInstance.transform.position = character.trans.position;
-        skillInstance.transform.localScale = new Vector3(0.15f, 0.2f, 0.15f);
+        //skillInstance.transform.localScale = new Vector3(0.15f, 0.2f, 0.15f); //shenpan1
+        skillInstance.transform.localScale = new Vector3(1, 1, 1); //shenpan2
         skillInstance.transform.SetParent(character.trans);
     }
 

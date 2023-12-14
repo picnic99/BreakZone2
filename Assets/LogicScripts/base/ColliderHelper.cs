@@ -20,6 +20,8 @@ public class ColliderHelper : MonoBehaviour
     public Action<Collision> OnCollisionExitCall;
     public Action<Collision> OnCollisionStayCall;
 
+    public bool isActive = true;
+
     /// <summary>
     /// …Ë÷√ºÏ≤‚–≈œ¢
     /// </summary>
@@ -37,6 +39,11 @@ public class ColliderHelper : MonoBehaviour
         info = new SkillColliderInfo();
         info.layer = LayerMask.NameToLayer("Character");
         info.TriggerType = CharacterState.ENEMY;
+    }
+
+    public void SetActive(bool b)
+    {
+        this.isActive = b;
     }
 
     public SkillColliderInfo GetInfo()
@@ -78,7 +85,7 @@ public class ColliderHelper : MonoBehaviour
     // Update is called once per frame
     void OnRenderObject()
     {
-        if (!GameContext.OpenRangeShow) return;
+        if (!GameContext.OpenRangeShow || !isActive) return;
         var colliders = gameObject.GetComponents<BoxCollider>();
         if (colliders == null)
         {

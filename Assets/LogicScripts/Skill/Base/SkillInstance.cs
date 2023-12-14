@@ -26,6 +26,8 @@ public abstract class SkillInstance
     /// 实例持续时间
     /// </summary>
     public float durationTime = 1f;
+
+    public float maxDurationTime = 10f;
     /// <summary>
     /// 实例的回调 可能有多个 如触碰目标的回调 如实例结束的回调 如实例开始的回调 。。。
     /// </summary>
@@ -57,8 +59,11 @@ public abstract class SkillInstance
     /// </summary>
     protected bool needTriggerCheck = true;
 
+    protected bool IsEndRemoveObj = true;
+
     public virtual void Init(string layerName = "Character", CharacterState TriggerType = CharacterState.ENEMY)
     {
+        maxDurationTime = durationTime;
         InitTransform();
         AddBehaviour();
         if (needTriggerCheck)
@@ -93,7 +98,7 @@ public abstract class SkillInstance
     public virtual void OnEnterTrigger(Collider col)
     {
         var target = GameContext.GetCharacterByObj(col.gameObject);
-        if (target == null) return;
+        if (target == null || target == RootSkill.character) return;
         if (target.state != collider.info.TriggerType)
         {
             return;
@@ -130,7 +135,18 @@ public abstract class SkillInstance
             collider.OnTriggerStayCall -= OnStayTrigger;
             collider.OnTriggerExitCall -= OnExitTrigger;
         }
+        collider.SetActive(false);
         TimeManager.GetInstance().RemoveAllTimer(this);
-        GameObject.Destroy(instanceObj);
+        if (IsEndRemoveObj)
+        {
+            GameObject.Destroy(instanceObj);
+        }
+        else
+        {
+            TimeManager.GetInstance().AddOnceTimer(this, maxDurationTime, () => { 
+                GameObject.Destroy(instanceObj);
+                instanceObj = null; 
+            });
+        }
     }
 }

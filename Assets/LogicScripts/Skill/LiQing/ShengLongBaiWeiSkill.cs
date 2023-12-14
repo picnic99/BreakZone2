@@ -7,20 +7,20 @@ public class ShengLongBaiWeiSkill : Skill
 
     public ShengLongBaiWeiSkill()
     {
-        skillDurationTime = stateDurationTime = 1f;
     }
 
     public override void OnEnter()
     {
-        PlayAnim("SHENGLONGBAIWEI");
+        PlayAnim(skillData.GetAnimKey(0));
         base.OnEnter();
+        skillDurationTime = stateDurationTime = 1f;
         Time.timeScale = 0.4f;
         CameraManager.GetInstance().ShowFeatureCam(character);
     }
     public override void OnTrigger()
     {
         base.OnTrigger();
-        new ShengLongBaiWei(character,BeTrigger);
+        new ShengLongBaiWei(this, BeTrigger);
         CameraManager.GetInstance().ShowMainCam(character);
         Time.timeScale = 1f;
     }
@@ -34,60 +34,48 @@ public class ShengLongBaiWeiSkill : Skill
         DoDamage(target, 150);
         foreach (var item in target)
         {
-            //Vector3 dir = (item.trans.position - character.trans.position).normalized;
-            //TweenManager.GetInstance().MoveTo(item.trans, item.trans.position + offest * 10f, 1f);
-
             item.physic.Move(character.trans.forward.normalized * 5f, 0.25f);
         }
     }
 
-    class ShengLongBaiWei
+    class ShengLongBaiWei : SkillInstance
     {
-        Character character;
-        GameObject skillInstance;
         Action<Character[]> call;
-        string path = "Skill/ShengLongBaiWei";
-        float skillDurationTime = 2f;
-        public ShengLongBaiWei(Character character, Action<Character[]> call)
+        public ShengLongBaiWei(Skill skill, Action<Character[]> call)
         {
-            this.character = character;
+            this.RootSkill = skill;
+            this.instancePath = "Skill/ShengLongBaiWei";
+            this.durationTime = 2f;
+            this.maxTriggerTarget = 99;
+            this.IsEndRemoveObj = false;
             this.call = call;
-            skillInstance = ResourceManager.GetInstance().GetObjInstance<GameObject>(path);
-            this.InitTransform();
-            this.AddBehaviour();
+            this.instanceObj = ResourceManager.GetInstance().GetObjInstance<GameObject>(instancePath);
+
+            this.Init();
         }
 
-        private void InitTransform()
+        public override void InvokeEnterTrigger(Character target)
         {
-            skillInstance.transform.forward = character.trans.forward;
-            skillInstance.transform.position = character.trans.position + character.trans.forward*1f;
+            call.Invoke(new Character[] { target });
         }
 
-        private void AddBehaviour()
+        public override void InitTransform()
         {
-            skillInstance.GetComponent<ColliderHelper>().OnTriggerEnterCall += DoTrigger;
+            instanceObj.transform.forward = RootSkill.character.trans.forward;
+            instanceObj.transform.position = RootSkill.character.trans.position + RootSkill.character.trans.forward * 1f;
+        }
+
+        public override void AddBehaviour()
+        {
             TimeManager.GetInstance().AddLoopTimer(this, 0.02f, () =>
             {
-                if (skillDurationTime <= 0)
+                if (durationTime <= 0)
                 {
-                    TimeManager.GetInstance().RemoveAllTimer(this);
-                    GameObject.Destroy(skillInstance);
+                    End();
                     return;
                 }
-                skillDurationTime -= 0.02f;
+                durationTime -= 0.02f;
             });
-        }
-
-       // bool triggered = false;
-        private void DoTrigger(Collider col)
-        {
-            //if (triggered) return;
-            var target = GameContext.GetCharacterByObj(col.gameObject);
-            if (target == null || target == character) return;
-
-            call.Invoke(new Character[] { target });
-
-            //triggered = true;
         }
     }
 }
