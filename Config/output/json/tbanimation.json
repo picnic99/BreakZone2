@@ -318,7 +318,7 @@
         "y": 0
       }
     ],
-    "frontTime": 0,
+    "frontTime": 0.15,
     "backTime": 1,
     "eventTimes": [
       "0"
@@ -335,7 +335,7 @@
         "y": 0
       }
     ],
-    "frontTime": 0,
+    "frontTime": 0.15,
     "backTime": 1,
     "eventTimes": [
       "0"
@@ -352,7 +352,7 @@
         "y": 0
       }
     ],
-    "frontTime": 0,
+    "frontTime": 0.35,
     "backTime": 1,
     "eventTimes": [
       "0"

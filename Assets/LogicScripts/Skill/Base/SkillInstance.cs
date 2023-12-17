@@ -69,7 +69,15 @@ public abstract class SkillInstance
         if (needTriggerCheck)
         {
             //碰撞盒
-            collider = this.instanceObj.GetComponent<ColliderHelper>();
+            SetCollider(layerName, TriggerType);
+;        }
+    }
+
+    public virtual void SetCollider(string layerName, CharacterState TriggerType)
+    {
+        this.instanceObj.TryGetComponent<ColliderHelper>(out collider);
+        if (collider != null)
+        {
             SetTriggerInfo(layerName, TriggerType);
             collider.OnTriggerEnterCall += OnEnterTrigger;
             collider.OnTriggerStayCall += OnStayTrigger;
@@ -129,7 +137,7 @@ public abstract class SkillInstance
     {
         IsEnd = true;
         durationTime = 0;
-        if (needTriggerCheck)
+        if (needTriggerCheck && collider != null)
         {
             collider.OnTriggerEnterCall -= OnEnterTrigger;
             collider.OnTriggerStayCall -= OnStayTrigger;

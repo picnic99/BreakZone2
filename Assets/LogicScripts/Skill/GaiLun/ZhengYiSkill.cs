@@ -8,7 +8,7 @@ public class ZhengYiSkill : Skill
         //播放正义动画
         PlayAnim(skillData.GetAnimKey(0));
         base.OnEnter();
-        stateDurationTime = skillDurationTime = 1f;
+        stateDurationTime = skillDurationTime = 1.5f;
     }
 
     public override void OnTrigger()
@@ -17,7 +17,7 @@ public class ZhengYiSkill : Skill
         //character.scan.ShowRange(360, 1.5f);
         Character[] enemys = character.scan.CheckShphere(character.trans.position, character.trans.forward, "0,360", 1.5f, RangeType.ENEMY);
         DoDamage(enemys, 100);
-        EffectManager.GetInstance().PlayEffect("Skill/ZhengYi", 1f, null, character.trans.position, character.trans.forward, new Vector3(0.3f, 0.3f, 0.3f));
+        EffectManager.GetInstance().PlayEffect("Skill/ZhengYi", 3f, null, character.trans.position + character.trans.forward * 7f, character.trans.forward, new Vector3(1f, 1f, 1f));
         foreach (var target in enemys)
         {
             var dir = (target.trans.position - character.trans.position).normalized;

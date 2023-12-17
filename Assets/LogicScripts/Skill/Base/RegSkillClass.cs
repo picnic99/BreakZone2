@@ -23,6 +23,7 @@ public class RegSkillClass
         dic.Add(SkillEnum.BASE_JUMP, typeof(BaseJump));
         dic.Add(SkillEnum.BASE_ROLL, typeof(BaseRoll));
 
+        dic.Add(SkillEnum.GAILUN_ATK, typeof(GaiLunAttack));
         dic.Add(SkillEnum.ZHIMINGDAJI, typeof(ZhiMingDaJiSkill));
         dic.Add(SkillEnum.YONGQI, typeof(YongQiSkill));
         dic.Add(SkillEnum.SHENPAN, typeof(ShenPanSkill));

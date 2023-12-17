@@ -1,7 +1,7 @@
 [
   {
     "id": 9999,
-    "name": "盖伦普通攻击",
+    "name": "普通攻击",
     "cd": 0,
     "tags": [
       1
@@ -22,9 +22,11 @@
   },
   {
     "id": 8001,
-    "name": "普通攻击",
+    "name": "李青普通攻击",
     "cd": 0,
-    "tags": [],
+    "tags": [
+      1
+    ],
     "IsInstantSkill": false,
     "IsOnly": true,
     "mutexState": [],
@@ -34,6 +36,27 @@
       "DEFAULT_ATK1",
       "DEFAULT_ATK2",
       "DEFAULT_ATK3"
+    ],
+    "sounds": "",
+    "effects": "",
+    "extraParams": ""
+  },
+  {
+    "id": 8002,
+    "name": "盖伦普通攻击",
+    "cd": 0,
+    "tags": [
+      1
+    ],
+    "IsInstantSkill": false,
+    "IsOnly": true,
+    "mutexState": [],
+    "backBreakSkills": [],
+    "valueRules": "damage：atk",
+    "animKeys": [
+      "GAILUN_ATK1",
+      "GAILUN_ATK2",
+      "GAILUN_ATK3"
     ],
     "sounds": "",
     "effects": "",

@@ -4,6 +4,7 @@
     public static int BASE_JUMP = 9998;
     public static int BASE_ROLL = 9997;
     //盖伦
+    public static int GAILUN_ATK = 8002;
     public static int ZHIMINGDAJI = 1001;//致命打击
     public static int YONGQI = 1002;//勇气
     public static int SHENPAN = 1003;//审判

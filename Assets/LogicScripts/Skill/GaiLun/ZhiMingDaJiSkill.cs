@@ -50,7 +50,7 @@ public class ZhiMingDaJiSkill : Skill
         character.animCoverData.Remove(StateType.DoAtk, atkCover);
         character.animCoverData.Remove(StateType.Move, moveCover);
         //character.animCoverData.Remove(StateType.Run, moveCover);
-        EffectManager.GetInstance().PlayEffect("Skill/ZhiMingDaJi", 1.5f, null, character.trans.position + character.trans.forward * 2f, character.trans.forward, new Vector3(0.1f, 0.1f, 0.1f));
+        EffectManager.GetInstance().PlayEffect("Skill/ZhiMingDaJi", 3f, null, character.trans.position + character.trans.forward * 3f, character.trans.forward, new Vector3(0.3f, 0.3f, 0.3f));
         character.eventDispatcher.Off(CharacterEvent.PRE_ATK, ATK_BUFF);
         skillDurationTime = 0f;
         if (target == null || target.Length <= 0) return;

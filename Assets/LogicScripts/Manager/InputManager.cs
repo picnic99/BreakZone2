@@ -175,6 +175,6 @@ public class InputManager : Singleton<InputManager>, Manager
     private void OnDoSkill(object[] args)
     {
         int id = (int)args[0];
-        LookForward();
+        //LookForward();
     }
 }
