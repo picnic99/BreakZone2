@@ -51,7 +51,7 @@ public class ShenPanSkill : Skill
             var dir = (item.trans.position - character.trans.position).normalized;
             dir.y = 0;
             //item.physic.Move(dir.normalized * 0.2f, 0.1f);
-            item.physic.Move(Vector3.up * 1f, 0.2f);
+            //item.physic.Move(Vector3.up * 1f, 0.2f);
         }
     }
 
@@ -73,7 +73,8 @@ class ShenPanInstance
     GameObject skillInstance;
     Action<Character[]> call;
     string path = "Skill/ShenPan2";
-    float skillDurationTime = 0.6f;
+    float skillDurationTime1 = 0.4f;
+    float skillDurationTime2 = 0.6f;
     public ShenPanInstance(Character character, Action<Character[]> call)
     {
         this.character = character;
@@ -95,18 +96,33 @@ class ShenPanInstance
     private void AddBehaviour()
     {
         skillInstance.GetComponent<ColliderHelper>().OnTriggerStayCall += DoTrigger;
-        TimeManager.GetInstance().AddFrameLoopTimer(this, 0f ,0.61f, () =>
+        float triggerCD = 0.1f;
+        TimeManager.GetInstance().AddFrameLoopTimer(this, 0f ,skillDurationTime1 + skillDurationTime2, () =>
         {
-            if (skillDurationTime % 0.2f == 0)
+            if (skillDurationTime1 > 0)
+            {
+                skillDurationTime1 -= Time.deltaTime;
+            }else if(skillDurationTime2 > 0)
+            {
+                skillInstance.transform.SetParent(null);
+                SelfMove();
+            }
+            if (triggerCD <= 0)
             {
                 canTrigger = true;
+                triggerCD = 0.2f;
             }
-            skillDurationTime -= 0.02f;
+            triggerCD -= Time.deltaTime;
         },()=>
         {
             TimeManager.GetInstance().RemoveAllTimer(this);
             GameObject.Destroy(skillInstance);
         });
+    }
+
+    private void SelfMove()
+    {
+        this.skillInstance.transform.position += this.skillInstance.transform.forward * Time.deltaTime * 20f;
     }
 
     bool canTrigger = false;

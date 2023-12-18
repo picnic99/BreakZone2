@@ -74,7 +74,7 @@ public abstract class Skill : Behaviour
     /// </summary>
     protected virtual void EndState()
     {
-        character.eventDispatcher.Event(CharacterEvent.STATE_OVER, StateType.DoSkill);
+        character.eventDispatcher.Event(CharacterEvent.STATE_OVER, belongState);
     }
 
     /// <summary>

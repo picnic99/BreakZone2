@@ -1,4 +1,6 @@
 //致命打击 提升移动速度 移除所有减速效果 下次攻击附带额外伤害以及沉默效果
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ZhiMingDaJiSkill : Skill
@@ -49,19 +51,88 @@ public class ZhiMingDaJiSkill : Skill
     {
         character.animCoverData.Remove(StateType.DoAtk, atkCover);
         character.animCoverData.Remove(StateType.Move, moveCover);
-        //character.animCoverData.Remove(StateType.Run, moveCover);
-        EffectManager.GetInstance().PlayEffect("Skill/ZhiMingDaJi", 3f, null, character.trans.position + character.trans.forward * 3f, character.trans.forward, new Vector3(0.3f, 0.3f, 0.3f));
+
+        new ZhiMingDaJiInstance(this, DoTrigger, 0);
+        new ZhiMingDaJiInstance(this, DoTrigger, 15);
+        new ZhiMingDaJiInstance(this, DoTrigger, -15);
         character.eventDispatcher.Off(CharacterEvent.PRE_ATK, ATK_BUFF);
         skillDurationTime = 0f;
-        if (target == null || target.Length <= 0) return;
-        Character cTarget = target[0] as Character;
-        //伤害公式 base + 0.4 * atk + 0.2 * maxHp + 0.1 * curHp + 0.2 * defend 
-        DoDamage(new Character[] { cTarget }, 25);
-        AddState(new Character[] { cTarget }, character, StateType.Silence, 1.5f);
+    }
+
+    public void DoTrigger(Character target)
+    {
+        DoDamage(new Character[] { target }, 25);
     }
 
     public override string GetDesc()
     {
         return "当前技能为：致命打击，剩余时间为：" + skillDurationTime.ToString("F2");
+    }
+}
+
+public class ZhiMingDaJiInstance : SkillInstance
+{
+    //飞轮有两道伤害
+    List<Character> triggeredCharacterList = new List<Character>();
+
+    float moveOffset = 0;
+    float maxTime = 2;
+
+    public ZhiMingDaJiInstance(Skill skill,Action<Character> call, float moveOffset)
+    {
+        this.RootSkill = skill;
+        this.instancePath = "Skill/ZhiMingDaJi";
+        this.durationTime = maxTime;
+        this.maxTriggerTarget = 99;
+        this.enterCall = call;
+        this.instanceObj = ResourceManager.GetInstance().GetObjInstance<GameObject>(instancePath);
+        this.instanceObj.SetActive(false);
+        this.moveOffset = moveOffset;
+        this.Init();
+    }
+
+    public override void AddBehaviour()
+    {
+        TimeManager.GetInstance().AddLoopTimer(this, 0.25f, () =>
+        {
+            if (durationTime <= 0)
+            {
+                End();
+                return;
+            }
+            DoMove();
+            durationTime -= Time.deltaTime;
+        });
+    }
+
+    private void DoMove()
+    {
+        this.instanceObj.SetActive(true);
+
+        // TODO 返回时追踪角色位置
+        if (this.durationTime <= maxTime / 2)
+        {
+            this.instanceObj.transform.position -= this.instanceObj.transform.forward * Time.deltaTime * 30f;
+            this.instanceObj.transform.localScale -= Vector3.one * Time.deltaTime * 3f;
+        }
+        else
+        {
+            this.instanceObj.transform.position += this.instanceObj.transform.forward * Time.deltaTime * 30f;
+            this.instanceObj.transform.localScale += Vector3.one * Time.deltaTime * 3f;
+        }
+    }
+
+
+
+    public override void InitTransform()
+    {
+        instanceObj.transform.position = RootSkill.character.trans.position + RootSkill.character.trans.forward * 1f;
+        instanceObj.transform.forward = RootSkill.character.trans.forward;
+        instanceObj.transform.RotateAround(instanceObj.transform.position,Vector3.up,moveOffset);
+    }
+
+    public override void InvokeEnterTrigger(Character target)
+    {
+        enterCall.Invoke(target);
     }
 }

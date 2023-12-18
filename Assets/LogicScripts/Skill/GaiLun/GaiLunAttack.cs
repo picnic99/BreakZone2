@@ -13,16 +13,16 @@ public class GaiLunAttack : BaseAttack
     public override void OnEnter()
     {
         base.OnEnter();
+        if (Character.GetSkill(SkillEnum.ZHIMINGDAJI) != null)
+        {
+            durationTime = 0;
+            return;
+        }
         int index = StageNum + 1;
         TimeManager.GetInstance().AddOnceTimer(this, skillData.GetFrontTime(StageNum), () =>
           {
             new GaiLunAtkInstance(this, index, DoDamage);
           });
-    }
-
-    public override void OnTrigger()
-    {
-        base.OnTrigger();
     }
 
     public void DoDamage(Character target)
@@ -39,11 +39,6 @@ public class GaiLunAttack : BaseAttack
         dir.y = 0;
         target.physic.Move(dir.normalized * 0.1f, 0.1f);
         character.eventDispatcher.Event(CharacterEvent.ATK, new Character[] { target });
-    }
-
-    protected override void EndState()
-    {
-        character.eventDispatcher.Event(CharacterEvent.STATE_OVER, StateType.DoAtk);
     }
 
 

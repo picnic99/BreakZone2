@@ -52,9 +52,4 @@ public class BaseRoll : Skill
         return animIndex;
 
     }
-
-    protected override void EndState()
-    {
-        character.eventDispatcher.Event(CharacterEvent.STATE_OVER, StateType.Roll);
-    }
 }

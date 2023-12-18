@@ -87,11 +87,6 @@ public class BaseAttack : Skill
         Atk();
     }
 
-    protected override void EndState()
-    {
-        character.eventDispatcher.Event(CharacterEvent.STATE_OVER, StateType.DoAtk);
-    }
-
     public override void OnBack()
     {
         base.OnBack();

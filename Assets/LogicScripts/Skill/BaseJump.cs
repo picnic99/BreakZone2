@@ -48,12 +48,6 @@ public class BaseJump : Skill
         });
     }
 
-
-    protected override void EndState()
-    {
-        character.eventDispatcher.Event(CharacterEvent.STATE_OVER, StateType.Jump);
-    }
-
     public override void OnExit()
     {
         base.OnExit();

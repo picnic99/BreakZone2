@@ -9987,7 +9987,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 1, b: 1, a: 1}
+      maxColor: {r: 0.43921566, g: 0.6804828, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -24734,6 +24734,18 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5921197867377932128, guid: ea3e45cbfcff1304fbb56b2a2fd59854, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5921197867377932128, guid: ea3e45cbfcff1304fbb56b2a2fd59854, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.5223286
+      objectReference: {fileID: 0}
+    - target: {fileID: 5921197867377932128, guid: ea3e45cbfcff1304fbb56b2a2fd59854, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5921197867377932135, guid: ea3e45cbfcff1304fbb56b2a2fd59854, type: 3}
       propertyPath: m_Materials.Array.size
       value: 1
@@ -24793,6 +24805,18 @@ PrefabInstance:
     - target: {fileID: 5921197868504070949, guid: ea3e45cbfcff1304fbb56b2a2fd59854, type: 3}
       propertyPath: m_Materials.Array.size
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5921197868504070950, guid: ea3e45cbfcff1304fbb56b2a2fd59854, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5921197868504070950, guid: ea3e45cbfcff1304fbb56b2a2fd59854, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.6855712
+      objectReference: {fileID: 0}
+    - target: {fileID: 5921197868504070950, guid: ea3e45cbfcff1304fbb56b2a2fd59854, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ea3e45cbfcff1304fbb56b2a2fd59854, type: 3}

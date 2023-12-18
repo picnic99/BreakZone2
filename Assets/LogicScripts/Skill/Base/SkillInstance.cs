@@ -31,9 +31,9 @@ public abstract class SkillInstance
     /// <summary>
     /// 实例的回调 可能有多个 如触碰目标的回调 如实例结束的回调 如实例开始的回调 。。。
     /// </summary>
-    public Action<object[]> enterCall;
-    public Action<object[]> stayCall;
-    public Action<object[]> exitCall;
+    public Action<Character> enterCall;
+    public Action<Character> stayCall;
+    public Action<Character> exitCall;
     /// <summary>
     /// 实例的范围检测碰撞器 也可能有多个
     /// </summary>
