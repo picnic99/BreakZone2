@@ -49,7 +49,7 @@ public abstract class SkillInstance
     /// <summary>
     /// 最大触发目标数
     /// </summary>
-    public int maxTriggerTarget = 1;
+    public int maxTriggerTarget = 99;
     /// <summary>
     /// 当前触发目标数
     /// </summary>
@@ -129,9 +129,24 @@ public abstract class SkillInstance
 
     }
 
-    public virtual void InvokeEnterTrigger(Character target) { }
-    public virtual void InvokeStayTrigger(Character target) { }
-    public virtual void InvokeExitTrigger(Character target) { }
+    public virtual void InvokeEnterTrigger(Character target) {
+        if(enterCall != null)
+        {
+            enterCall.Invoke(target);
+        }
+    }
+    public virtual void InvokeStayTrigger(Character target) {
+        if (stayCall != null)
+        {
+            stayCall.Invoke(target);
+        }
+    }
+    public virtual void InvokeExitTrigger(Character target) {
+        if (exitCall != null)
+        {
+            exitCall.Invoke(target);
+        }
+    }
 
     public virtual void End()
     {
@@ -142,8 +157,8 @@ public abstract class SkillInstance
             collider.OnTriggerEnterCall -= OnEnterTrigger;
             collider.OnTriggerStayCall -= OnStayTrigger;
             collider.OnTriggerExitCall -= OnExitTrigger;
+            collider.SetActive(false);
         }
-        collider.SetActive(false);
         TimeManager.GetInstance().RemoveAllTimer(this);
         if (IsEndRemoveObj)
         {

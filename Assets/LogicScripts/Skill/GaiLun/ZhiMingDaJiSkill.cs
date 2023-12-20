@@ -83,7 +83,6 @@ public class ZhiMingDaJiInstance : SkillInstance
         this.RootSkill = skill;
         this.instancePath = "Skill/ZhiMingDaJi";
         this.durationTime = maxTime;
-        this.maxTriggerTarget = 99;
         this.enterCall = call;
         this.instanceObj = ResourceManager.GetInstance().GetObjInstance<GameObject>(instancePath);
         this.instanceObj.SetActive(false);

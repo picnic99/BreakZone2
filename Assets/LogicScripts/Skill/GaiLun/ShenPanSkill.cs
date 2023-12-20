@@ -42,17 +42,15 @@ public class ShenPanSkill : Skill
     /// 被触发 超负荷在飞行过程中碰到敌人后会调用这里
     /// </summary>
     /// <param name="target"></param>
-    public void BeTrigger(Character[] target)
+    public void BeTrigger(Character target)
     {
         float damageValue = 50;// baseDamage[skillLevel] + 0.5f * character.property.atk;
         DoDamage(target, damageValue);
-        foreach (var item in target)
-        {
-            var dir = (item.trans.position - character.trans.position).normalized;
-            dir.y = 0;
-            //item.physic.Move(dir.normalized * 0.2f, 0.1f);
-            //item.physic.Move(Vector3.up * 1f, 0.2f);
-        }
+        var dir = (target.trans.position - character.trans.position).normalized;
+        dir.y = 0;
+        //item.physic.Move(dir.normalized * 0.2f, 0.1f);
+        //item.physic.Move(Vector3.up * 1f, 0.2f);
+        
     }
 
     protected override void OnEnd()
@@ -71,11 +69,11 @@ class ShenPanInstance
 {
     Character character;
     GameObject skillInstance;
-    Action<Character[]> call;
+    Action<Character> call;
     string path = "Skill/ShenPan2";
     float skillDurationTime1 = 0.4f;
     float skillDurationTime2 = 0.6f;
-    public ShenPanInstance(Character character, Action<Character[]> call)
+    public ShenPanInstance(Character character, Action<Character> call)
     {
         this.character = character;
         this.call = call;
@@ -132,7 +130,7 @@ class ShenPanInstance
         var target = GameContext.GetCharacterByObj(col.gameObject);
         if (target == null || target == character) return;
 
-        call.Invoke(new Character[] { target });
+        call.Invoke(target);
         canTrigger = false;
     }
 }
