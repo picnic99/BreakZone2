@@ -88,6 +88,11 @@ public class PhysicController
         });
     }
 
+    public void AtkFly(float height, float durationTime)
+    {
+        Move(Vector3.up * height, durationTime);
+    }
+
     /// <summary>
     /// 跟随目标位移 按速度来 默认每秒位移1m
     /// </summary>

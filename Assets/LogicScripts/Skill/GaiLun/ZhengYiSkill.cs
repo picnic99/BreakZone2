@@ -53,6 +53,8 @@ class ZhenYiInstance : SkillInstance
     private float damageCD = 0.3f;//伤害间隔
     private int maxDamageCtn = 9;//最大伤害次数
 
+    private GameObject atkFlyCheck;
+
     public ZhenYiInstance(Skill skill, Action<Character> call)
     {
         this.RootSkill = skill;
@@ -66,6 +68,8 @@ class ZhenYiInstance : SkillInstance
 
     public override void AddBehaviour()
     {
+        //击飞
+
         TimeManager.GetInstance().AddLoopTimer(this, 0, () =>
         {
             if (durationTime <= 0)
@@ -82,4 +86,6 @@ class ZhenYiInstance : SkillInstance
         instanceObj.transform.position = RootSkill.character.trans.position + RootSkill.character.trans.forward * 7f;
         instanceObj.transform.forward = RootSkill.character.trans.forward;
     }
+
+
 }
