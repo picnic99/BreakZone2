@@ -49,7 +49,7 @@ public class ShenPanSkill : Skill
         var dir = (target.trans.position - character.trans.position).normalized;
         dir.y = 0;
         //item.physic.Move(dir.normalized * 0.2f, 0.1f);
-        //item.physic.Move(Vector3.up * 1f, 0.2f);
+        target.physic.Move(Vector3.up * 1f, 0.2f);
         
     }
 
@@ -126,7 +126,7 @@ class ShenPanInstance
     bool canTrigger = false;
     private void DoTrigger(Collider col)
     {
-        if (canTrigger == false) return;
+        //if (canTrigger == false) return;
         var target = GameContext.GetCharacterByObj(col.gameObject);
         if (target == null || target == character) return;
 

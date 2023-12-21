@@ -319,7 +319,7 @@
       }
     ],
     "frontTime": 0.15,
-    "backTime": 1,
+    "backTime": 0.6,
     "eventTimes": [
       "0"
     ],
@@ -336,7 +336,7 @@
       }
     ],
     "frontTime": 0.15,
-    "backTime": 1,
+    "backTime": 0.6,
     "eventTimes": [
       "0"
     ],
@@ -353,7 +353,7 @@
       }
     ],
     "frontTime": 0.35,
-    "backTime": 1,
+    "backTime": 0.6,
     "eventTimes": [
       "0"
     ],
