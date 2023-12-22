@@ -125,14 +125,14 @@ class ZhenYiInstance : SkillInstance
     {
         var target = GameContext.GetCharacterByObj(col.gameObject);
         if (target == null || target == RootSkill.character) return;
-        target.physic.AtkFly(2, 0.5f);
+        target.physic.AtkFly(1, 1f);
     }
 
     public void FeiWuAtk(Collider col)
     {
         var target = GameContext.GetCharacterByObj(col.gameObject);
         if (target == null || target == RootSkill.character) return;
-        target.physic.Move(this.instanceObj.transform.position - target.trans.position, 0.5f);
+        target.physic.Move((this.instanceObj.transform.position - target.trans.position) * 0.3f, 0.5f);
         enterCall.Invoke(target);
     }
 

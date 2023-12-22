@@ -7,13 +7,10 @@ public class PhysicController
     public Character character;
     //private Rigidbody rb;
     private CharacterController cc;
-    private Transform trans;
-
     /// <summary>
     /// 重力加速度
     /// </summary>
     public readonly float gravity = 20f;
-
     /// <summary>
     /// 是否在地面上
     /// </summary>
@@ -26,6 +23,10 @@ public class PhysicController
     /// 玩家能否控制
     /// </summary>
     private bool CanControl = true;
+    /// <summary>
+    /// 玩家是否允许移动
+    /// </summary>
+    private bool CanMove = true;
     /// <summary>
     /// 是否在跳跃中
     /// </summary>
@@ -50,7 +51,6 @@ public class PhysicController
     public PhysicController(Character character)
     {
         this.character = character;
-        trans = this.character.trans;
         cc = this.character.trans.GetComponent<CharacterController>();
         DebugManager.Instance.AddMonitor(() => { return "DeltaPosValue：" + deltaPosValue.finalValue.ToString(); });
         DebugManager.Instance.AddMonitor(() => { return "IsJump：" + IsJump; });
@@ -73,24 +73,70 @@ public class PhysicController
     /// <summary>
     /// 给定目标位置和所需时间进行位移
     /// </summary>
-    /// <param name="targetPos"></param>
-    /// <param name="durationTime"></param>
-    public void Move(Vector3 targetPos, float durationTime)
+    /// <param name="posOffset">位移量</param>
+    /// <param name="durationTime">位移时间</param>
+    /// <param name="isOverride">是否覆盖位移</param>
+    public void Move(Vector3 posOffset, float durationTime, bool isOverride = false, bool canCtrl = true)
     {
         //此处可以曲线控制 如先快后慢 先慢后快 之类的
-        Vector3 deltaPos = targetPos / durationTime;
+        Vector3 deltaPos = posOffset / durationTime;
         //curDeltaPos += deltaPos;
-        ValueModifier<Vector3> mod = deltaPosValue.AddModifier(deltaPos);
-        TimeManager.GetInstance().AddOnceTimer(this, 2f * durationTime, () =>
+        if (isOverride)
         {
-            //curDeltaPos -= deltaPos;
+            this.StopMove();
+        }
+
+        CanControl = canCtrl;
+
+        if (posOffset.y > 0)
+        {
+            GravityOffset = 0;
+            IsGravityEffect = false;
+            //CanControl = false;
+            TimeManager.GetInstance().AddOnceTimer(this, durationTime, () =>
+            {
+                IsGravityEffect = true;
+                //CanControl = true;
+            });
+        }
+
+        ValueModifier<Vector3> mod = deltaPosValue.AddModifier(deltaPos);
+        TimeManager.GetInstance().AddOnceTimer(this, durationTime, () =>
+        {
             deltaPosValue.RemoveModifier(mod);
+            if (!canCtrl)
+            {
+                CanControl = true;
+            }
         });
     }
 
+    /// <summary>
+    /// 停止移动
+    /// </summary>
+    public void StopMove()
+    {
+        deltaPosValue.ClearAll();
+    }
+    /// <summary>
+    /// 冻结移动
+    /// </summary>
+    public void FreezonMove(float maxTime)
+    {
+        GravityOffset = 0;
+        IsGravityEffect = false;
+        StopMove();
+        TimeManager.GetInstance().AddOnceTimer(this, maxTime, () =>
+        {
+            IsGravityEffect = true;
+        });
+
+    }
+
+
     public void AtkFly(float height, float durationTime)
     {
-        Move(Vector3.up * height, durationTime);
+        Move(Vector3.up * height, durationTime, true, false);
     }
 
     /// <summary>

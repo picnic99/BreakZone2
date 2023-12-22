@@ -11,6 +11,7 @@ public class VectorValue : ValueBase<Vector3>
     public void ClearAll()
     {
         modGroups = new ModifierGroup<Vector3>();
+        UpdateValue();
     }
 
     public override Vector3 GetGroupTotalValue(ModifierGroup<Vector3> groups)

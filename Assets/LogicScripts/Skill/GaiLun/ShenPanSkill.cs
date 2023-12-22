@@ -13,7 +13,6 @@ public class ShenPanSkill : Skill
 
     public override void OnEnter()
     {
-        character.KeepMove = true;
         PlayAnim(skillData.GetAnimKey(0));
         base.OnEnter();
         skillDurationTime = stateDurationTime = 0.6f;
@@ -22,20 +21,7 @@ public class ShenPanSkill : Skill
     public override void OnTrigger()
     {
         base.OnTrigger();
-        //播放审判动画
-        //人物保持正常移动
-        //character.scan.ShowRange(360, 2f, 1f);
-        //EffectManager.GetInstance().PlayEffect("Skill/ShenPan", 0.7f, null, character.trans.position, character.trans.forward, new Vector3(0.15f, 0.2f, 0.15f));
-        new ShenPanInstance(character, BeTrigger);
-        character.physic.Move(character.trans.forward.normalized * 2.5f, 0.3f);
-    }
-
-    /// <summary>
-    /// 强制中断处理
-    /// </summary>
-    public override void ForceStop()
-    {
-        base.ForceStop();
+       new ShenPanInstance(character, BeTrigger);
     }
 
     /// <summary>
@@ -46,11 +32,7 @@ public class ShenPanSkill : Skill
     {
         float damageValue = 50;// baseDamage[skillLevel] + 0.5f * character.property.atk;
         DoDamage(target, damageValue);
-        var dir = (target.trans.position - character.trans.position).normalized;
-        dir.y = 0;
-        //item.physic.Move(dir.normalized * 0.2f, 0.1f);
-        target.physic.Move(Vector3.up * 1f, 0.2f);
-        
+        target.physic.Move(Vector3.up * 0.5f, 1f);
     }
 
     protected override void OnEnd()
@@ -93,6 +75,7 @@ class ShenPanInstance
 
     private void AddBehaviour()
     {
+        character.physic.Move(character.trans.forward.normalized * 2.5f, 0.3f);
         skillInstance.GetComponent<ColliderHelper>().OnTriggerStayCall += DoTrigger;
         float triggerCD = 0.1f;
         TimeManager.GetInstance().AddFrameLoopTimer(this, 0f ,skillDurationTime1 + skillDurationTime2, () =>
