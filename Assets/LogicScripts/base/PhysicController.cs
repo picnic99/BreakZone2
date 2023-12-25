@@ -1,6 +1,67 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+
+public enum PhysicActionType
+{
+    /// <summary>
+    /// 叠加
+    /// </summary>
+    ADD,
+    /// <summary>
+    /// 覆盖
+    /// </summary>
+    OVERRIDE
+}
+
+/// <summary>
+/// 物理行动
+/// </summary>
+public class PhysicAction
+{
+    /// <summary>
+    /// 总位移
+    /// </summary>
+    public Vector3 totalOffset;
+    /// <summary>
+    /// 期望时间
+    /// </summary>
+    public float time;
+    /// <summary>
+    /// 物理行动类型
+    /// </summary>
+    public PhysicActionType type;
+
+    private float endTime;
+
+    public bool IsEnd
+    {
+        get
+        {
+            return Time.time >= this.endTime;
+        }
+    }
+
+    public Vector3 FrameOffset
+    {
+        get
+        {
+            return totalOffset / time;
+        }
+
+        private set { }
+    }
+
+    public PhysicAction(Vector3 totalOffset, float time, PhysicActionType type)
+    {
+        this.totalOffset = totalOffset;
+        this.time = time;
+        this.type = type;
+        this.endTime = Time.time + this.time;
+    }
+}
+
 
 public class PhysicController
 {
@@ -46,28 +107,96 @@ public class PhysicController
     /// 每帧的运动偏移量 XZ表示位移  Y表示高度
     /// </summary>
     //private Vector3 curDeltaPos = Vector3.zero;
-    private VectorValue deltaPosValue = new VectorValue(Vector3.zero);
+    //private VectorValue deltaPosValue = new VectorValue(Vector3.zero);
     private Vector3 totalMove = Vector3.zero;
+
+    private List<PhysicAction> actionList = new List<PhysicAction>();
+
     public PhysicController(Character character)
     {
         this.character = character;
         cc = this.character.trans.GetComponent<CharacterController>();
-        DebugManager.Instance.AddMonitor(() => { return "DeltaPosValue：" + deltaPosValue.finalValue.ToString(); });
-        DebugManager.Instance.AddMonitor(() => { return "IsJump：" + IsJump; });
-        DebugManager.Instance.AddMonitor(() => { return "GravityOffset：" + GravityOffset; });
-        DebugManager.Instance.AddMonitor(() => { return "isGround：" + isGround; });
-        DebugManager.Instance.AddMonitor(() => { return "totalMove：" + totalMove.ToString(); });
-        DebugManager.Instance.AddMonitor(() => { return "velocity：" + cc.velocity; });
+        DebugManager.Instance.AddMonitor(() => { return "[PhysicController]frameActionOffset：" + GetFrameAction().ToString(); });
+        DebugManager.Instance.AddMonitor(() => { return "[PhysicController]IsJump：" + IsJump; });
+        DebugManager.Instance.AddMonitor(() => { return "[PhysicController]GravityOffset：" + GravityOffset; });
+        DebugManager.Instance.AddMonitor(() => { return "[PhysicController]isGround：" + isGround; });
+        DebugManager.Instance.AddMonitor(() => { return "[PhysicController]totalMove：" + totalMove.ToString(); });
+        DebugManager.Instance.AddMonitor(() => { return "[PhysicController]velocity：" + cc.velocity; });
     }
 
-    public void Jump(float force = 8)
+    /// <summary>
+    /// 添加一个物理行为
+    /// </summary>
+    /// <param name="action"></param>
+    public void AddAction(PhysicAction action)
     {
-        float yOffset = force;
-        Vector3 offset = new Vector3(0, yOffset, 0);
-        //curDeltaPos = offset;
-        GravityOffset = 0;
-        ValueModifier<Vector3> mod = deltaPosValue.AddModifier(offset);
-        IsJump = true;
+        if (action.type == PhysicActionType.OVERRIDE)
+        {
+            actionList.Clear();
+        }
+        actionList.Add(action);
+    }
+
+    public void CheckAction()
+    {
+        List<PhysicAction> dirtyActions = new List<PhysicAction>();
+        for (int i = 0; i < actionList.Count; i++)
+        {
+            var item = actionList[i];
+            if (item.IsEnd)
+            {
+                dirtyActions.Add(item);
+            }
+        }
+
+        for (int j = 0; j < dirtyActions.Count; j++)
+        {
+            actionList.Remove(dirtyActions[j]);
+        }
+    }
+
+
+    public void ClearAllAction()
+    {
+        actionList.Clear();
+    }
+
+    /// <summary>
+    /// 移除物理行为的某个轴向的偏移
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <param name="z"></param>
+    public void RemoveActionAxis(bool x,bool y,bool z)
+    {
+        foreach (var item in actionList)
+        {
+            if (x)
+            {
+                item.totalOffset.x = 0;
+            }else if (y)
+            {
+                item.totalOffset.y = 0;
+            }else if (z)
+            {
+                item.totalOffset.z = 0;
+            }
+        }
+    }
+
+    /// <summary>
+    /// 获取当前帧物理行为总偏移量
+    /// </summary>
+    /// <returns></returns>
+    public Vector3 GetFrameAction()
+    {
+        CheckAction();
+        Vector3 result = Vector3.zero;
+        foreach (var item in actionList)
+        {
+            result += item.FrameOffset;
+        }
+        return result;
     }
 
     /// <summary>
@@ -78,16 +207,8 @@ public class PhysicController
     /// <param name="isOverride">是否覆盖位移</param>
     public void Move(Vector3 posOffset, float durationTime, bool isOverride = false, bool canCtrl = true)
     {
-        //此处可以曲线控制 如先快后慢 先慢后快 之类的
-        Vector3 deltaPos = posOffset / durationTime;
-        //curDeltaPos += deltaPos;
-        if (isOverride)
-        {
-            this.StopMove();
-        }
-
         CanControl = canCtrl;
-
+/*
         if (posOffset.y > 0)
         {
             GravityOffset = 0;
@@ -98,9 +219,11 @@ public class PhysicController
                 IsGravityEffect = true;
                 //CanControl = true;
             });
-        }
+        }*/
 
-        ValueModifier<Vector3> mod = deltaPosValue.AddModifier(deltaPos);
+        AddAction(new PhysicAction(posOffset, durationTime, PhysicActionType.ADD));
+
+/*        ValueModifier<Vector3> mod = deltaPosValue.AddModifier(deltaPos);
         TimeManager.GetInstance().AddOnceTimer(this, durationTime, () =>
         {
             deltaPosValue.RemoveModifier(mod);
@@ -108,7 +231,19 @@ public class PhysicController
             {
                 CanControl = true;
             }
-        });
+        });*/
+    }
+
+
+    /// <summary>
+    /// 跳跃
+    /// </summary>
+    /// <param name="force"></param>
+    public void Jump(float force = 8)
+    {
+        Vector3 offset = new Vector3(0, force, 0);
+        AddAction(new PhysicAction(offset, float.MaxValue, PhysicActionType.ADD));
+        IsJump = true;
     }
 
     /// <summary>
@@ -116,27 +251,39 @@ public class PhysicController
     /// </summary>
     public void StopMove()
     {
-        deltaPosValue.ClearAll();
+        ClearAllAction();
     }
     /// <summary>
     /// 冻结移动
     /// </summary>
     public void FreezonMove(float maxTime)
     {
-        GravityOffset = 0;
-        IsGravityEffect = false;
         StopMove();
+        CanMove = false;
         TimeManager.GetInstance().AddOnceTimer(this, maxTime, () =>
         {
-            IsGravityEffect = true;
+            GravityOffset = 0;
+            CanMove = true;
         });
 
     }
 
-
+    /// <summary>
+    /// 击飞
+    /// </summary>
+    /// <param name="height"></param>
+    /// <param name="durationTime"></param>
     public void AtkFly(float height, float durationTime)
     {
         Move(Vector3.up * height, durationTime, true, false);
+    }
+
+    /// <summary>
+    /// 击退
+    /// </summary>
+    public void AtkBack(Vector3 offset,float durationTime)
+    {
+
     }
 
     /// <summary>
@@ -162,6 +309,7 @@ public class PhysicController
 
     public void OnUpdate()
     {
+        Vector3 actionOffset = GetFrameAction();
         CheckIsGround();
         if (!isGround)
         {
@@ -178,7 +326,7 @@ public class PhysicController
                 GravityOffset -= gravity * Time.deltaTime * multiply;
             }
 
-            if (deltaPosValue.finalValue.y >= GravityOffset)
+            if (actionOffset.y >= GravityOffset)
             {
                 //上升状态
             }
@@ -200,26 +348,32 @@ public class PhysicController
                     IsJump = false;
                     EventDispatcher.GetInstance().Event(EventDispatcher.PLAYER_JUMPED);
                 }
-                deltaPosValue = new VectorValue(Vector3.zero);
+                RemoveActionAxis(false, true, false);
             }
             //重力偏移重置
             GravityOffset = 0;
         }
 
 
+        if (!CanMove) return;
+
         Vector3 dir = Vector3.zero;
         //滞空移动
-        if (CanControl && deltaPosValue.finalValue.magnitude > 0)
+        if (CanControl && !isGround && actionOffset.magnitude > 0)
         {
             dir = GameContext.GetDirByInput(character, false) * 5f;
         }
 
-        totalMove = (deltaPosValue.finalValue + new Vector3(0, GravityOffset, 0) + dir) * Time.deltaTime * multiply;
+        //当前帧总偏移 = （行为总偏移 + 重力偏移 + 滞空移动偏移） * 当前帧时间 * 倍数
+        totalMove = (actionOffset + new Vector3(0, GravityOffset, 0) + dir) * Time.deltaTime * multiply;
+
         cc.Move(totalMove);
 
     }
 
-
+    /// <summary>
+    /// 检查是否在地面上
+    /// </summary>
     private void CheckIsGround()
     {
         lastIsGround = isGround;
