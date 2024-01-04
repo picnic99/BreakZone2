@@ -24,7 +24,7 @@ public class BaseJump : Skill
         {
             CanTriggerAgain = false;
         }
-        character.physic.Jump(10);
+        character.physic.Jump();
         /*        character.physic.Move( (GameContext.GetDirByInput(character) + Vector3.up) * 5f,0.5f);
 
                 TimeManager.GetInstance().AddLoopTimer(this, 0.5f, () => {

@@ -137,9 +137,14 @@ public class PhysicController
         actionList.Add(action);
     }
 
+    /// <summary>
+    /// 检查物理行为
+    /// </summary>
     public void CheckAction()
     {
+        //已经结束的行为
         List<PhysicAction> dirtyActions = new List<PhysicAction>();
+
         for (int i = 0; i < actionList.Count; i++)
         {
             var item = actionList[i];
@@ -149,6 +154,7 @@ public class PhysicController
             }
         }
 
+        //移除行为
         for (int j = 0; j < dirtyActions.Count; j++)
         {
             actionList.Remove(dirtyActions[j]);
@@ -242,7 +248,7 @@ public class PhysicController
     public void Jump(float force = 8)
     {
         Vector3 offset = new Vector3(0, force, 0);
-        AddAction(new PhysicAction(offset, float.MaxValue, PhysicActionType.ADD));
+        AddAction(new PhysicAction(offset, 1, PhysicActionType.ADD));
         IsJump = true;
     }
 
@@ -359,7 +365,7 @@ public class PhysicController
 
         Vector3 dir = Vector3.zero;
         //滞空移动
-        if (CanControl && !isGround && actionOffset.magnitude > 0)
+        if (CanControl && !isGround && actionOffset.magnitude > 0 && GameContext.SelfRole == character)
         {
             dir = GameContext.GetDirByInput(character, false) * 5f;
         }

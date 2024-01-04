@@ -22241,6 +22241,7 @@ GameObject:
   - component: {fileID: 4831071081214594923}
   - component: {fileID: 2400441839541743359}
   - component: {fileID: 1513695222172066324}
+  - component: {fileID: 1782873665615073560}
   m_Layer: 0
   m_Name: SwordWoman
   m_TagString: Untagged
@@ -22808,6 +22809,20 @@ MonoBehaviour:
   spineBend: 2
   spineSpeed: 3
   spine: []
+--- !u!114 &1782873665615073560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8409424418515088357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30d45c665a36def478b82925d824d837, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weapons:
+  - {fileID: 2574441485091756701}
 --- !u!1 &8416030178729937671
 GameObject:
   m_ObjectHideFlags: 0

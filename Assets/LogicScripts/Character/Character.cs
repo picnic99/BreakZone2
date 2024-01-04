@@ -50,6 +50,8 @@ public class Character{
 	public bool KeepMove;
 	public bool canRotate = true;
 
+
+	public List<GameObject> weapons;
 	public AnimCoverData animCoverData;
 
 	public Character(CharacterVO vo,GameObject obj)
@@ -84,6 +86,7 @@ public class Character{
 		msg = new MSG();
 		animCoverData = new AnimCoverData(this);
 		stateBar = new CommonStateBar(this);
+		weapons = trans.GetComponent<Binding>().weapons;
 		if (characterData.id == 99) property.hp.AddExAddValue(999999);
 		AddEventListener();
     }
@@ -132,9 +135,9 @@ public class Character{
 		}
 	}
 
-	public Transform GetWeapon()
+	public GameObject GetWeapon(int index = 0)
     {
-		return trans.Find("weaponPos");
+		return weapons[index];
     }
 
 	public void AddSkillBehaviour(Skill skill)

@@ -18,6 +18,7 @@ public class ZhengYiSkill : Skill
     public override void OnEnter()
     {
         //播放正义动画
+        character.canRotate = false;
         PlayAnim(skillData.GetAnimKey(0));
         base.OnEnter();
         stateDurationTime = skillDurationTime = 2f;
@@ -37,20 +38,15 @@ public class ZhengYiSkill : Skill
         target.physic.Move(dir.normalized * 0.2f, 0.1f);
     }
 
-    /*    protected override void OnEnd()
-        {
-            //移除掉来自技能施加的所有buff效果
-            BuffManager.GetInstance().RemoveAllBuffFromSkill(character, this);
-            SetReleaseOver();
-            base.OnEnd();
-        }*/
+    protected override void OnEnd()
+    {
+        character.canRotate = true;
+        base.OnEnd();
+    }
 }
 
 class ZhenYiInstance : SkillInstance
 {
-    private float atkFlyTimePoint = 1f; //击飞时间点
-    private float startDamageTimePoint = 2f; //伤害开始时间点
-    private float damageCD = 0.3f;//伤害间隔
     private int maxDamageCtn = 9;//最大伤害次数
 
     private ColliderHelper atkFlyCheck;
@@ -86,20 +82,6 @@ class ZhenYiInstance : SkillInstance
         float cd = totalTime / maxDamageCtn;
         JianWuCheck.OnTriggerEnterCall += FeiWuAtk;
         //剑舞
-/*        for (int i = 0; i < maxDamageCtn; i++)
-        {
-            var triggerTime = 1f+i * cd;
-            Debug.Log("第" + i + "次剑舞攻击" + "攻击时间" + triggerTime + "结束时间" + triggerTime + Time.deltaTime);
-            TimeManager.GetInstance().AddOnceTimer(this, triggerTime, () =>
-            {
-                JianWuCheck.gameObject.SetActive(true);
-            });
-            TimeManager.GetInstance().AddOnceTimer(this, triggerTime + 0.02f, () =>
-            {
-               JianWuCheck.gameObject.SetActive(false);
-            });
-        }*/
-
         TimeManager.GetInstance().AddTimeByDurationCtn(this, totalTime, maxDamageCtn, () =>
          {
              JianWuCheck.gameObject.SetActive(true);

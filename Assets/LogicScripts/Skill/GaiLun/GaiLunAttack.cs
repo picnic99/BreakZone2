@@ -37,7 +37,7 @@ public class GaiLunAttack : BaseAttack
         });
         var dir = (character.trans.forward).normalized;
         dir.y = 0;
-        target.physic.Move(dir.normalized * 0.1f, 0.1f);
+        target.physic.Move(dir.normalized * 1f, 0.2f);
         character.eventDispatcher.Event(CharacterEvent.ATK, new Character[] { target });
     }
 
@@ -79,7 +79,7 @@ class GaiLunAtkInstance : SkillInstance
     public override void OnEnterTrigger(Collider col)
     {
         base.OnEnterTrigger(col);
-        Vector3 v = col.ClosestPointOnBounds(RootSkill.Character.trans.position);
+        Vector3 v = col.ClosestPointOnBounds(RootSkill.character.GetWeapon().transform.position);
         var bloodEffect = ResourceManager.GetInstance().GetObjInstance<GameObject>("Common/BloodEffect");
         bloodEffect.transform.position = v;
         TimeManager.GetInstance().AddOnceTimer(this, 0.5f, () =>

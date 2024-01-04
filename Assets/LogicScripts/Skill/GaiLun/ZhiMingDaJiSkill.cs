@@ -20,18 +20,17 @@ public class ZhiMingDaJiSkill : Skill
         BuffManager.GetInstance().RemoveBuff(character);
 
         //动画覆盖 更改后续的移动动画和攻击动画
-        moveCover = new AnimCoverVO("GAILUN_SWORD_RUN");
+        //moveCover = new AnimCoverVO("GAILUN_SWORD_RUN");
         atkCover = new AnimCoverVO("GAILUN_SWORD_HARD_ATK");
 
-        character.animCoverData.Add(StateType.Move, moveCover);
-        //character.animCoverData.Add(StateType.Run, moveCover);
+        //character.animCoverData.Add(StateType.Move, moveCover);
         character.animCoverData.Add(StateType.DoAtk, atkCover);
         AddBuff(new Character[] { character }, new BuffVO("致命打击加移速", skillDurationTime), (buff) =>
         {
             buff.AddBuffComponent(buff.AddPropertyBuff(skillDurationTime, new PropertyBuffVO(PropertyType.MOVESPEED, false, 0.35f)));
         }, (args) =>
         {
-            character.animCoverData.Remove(StateType.Move, moveCover);
+            //character.animCoverData.Remove(StateType.Move, moveCover);
             character.animCoverData.Remove(StateType.DoAtk, atkCover);
             //character.animCoverData.Remove(StateType.Run, atkCover);
         });
@@ -50,7 +49,7 @@ public class ZhiMingDaJiSkill : Skill
     private void ATK_BUFF(object[] target)
     {
         character.animCoverData.Remove(StateType.DoAtk, atkCover);
-        character.animCoverData.Remove(StateType.Move, moveCover);
+        //character.animCoverData.Remove(StateType.Move, moveCover);
 
         new ZhiMingDaJiInstance(this, DoTrigger, 0);
         new ZhiMingDaJiInstance(this, DoTrigger, 15);
@@ -73,10 +72,12 @@ public class ZhiMingDaJiSkill : Skill
 public class ZhiMingDaJiInstance : SkillInstance
 {
     //飞轮有两道伤害
-    List<Character> triggeredCharacterList = new List<Character>();
+    List<Character> triggeredTargets = new List<Character>();
 
     float moveOffset = 0;
     float maxTime = 2;
+
+    bool isBack = false;
 
     public ZhiMingDaJiInstance(Skill skill,Action<Character> call, float moveOffset)
     {
@@ -111,6 +112,11 @@ public class ZhiMingDaJiInstance : SkillInstance
         // TODO 返回时追踪角色位置
         if (this.durationTime <= maxTime / 2)
         {
+            if (!isBack)
+            {
+                isBack = true;
+                triggeredTargets.Clear();
+            }
             this.instanceObj.transform.position -= this.instanceObj.transform.forward * Time.deltaTime * 30f;
             this.instanceObj.transform.localScale -= Vector3.one * Time.deltaTime * 3f;
         }
@@ -132,6 +138,13 @@ public class ZhiMingDaJiInstance : SkillInstance
 
     public override void InvokeEnterTrigger(Character target)
     {
-        enterCall.Invoke(target);
+        var crt = RootSkill.character;
+        if (target == null || target == crt) return;
+        if (triggeredTargets.IndexOf(target) != -1)
+        {
+            return;
+        }
+        triggeredTargets.Add(target);
+        base.InvokeEnterTrigger(target);
     }
 }
