@@ -13,6 +13,22 @@ public class ZhiMingDaJiSkill : Skill
         skillDurationTime = 3f;
     }
 
+    public void ShowWeaponEffect()
+    {
+        var obj = ResourceManager.GetInstance().GetObjInstance<GameObject>("Skill/ZhiMingDaJi_XuLi");
+        obj.transform.parent = character.GetWeapon().transform;
+        obj.transform.localPosition = new Vector3(-0.084F, 0, 0.033F);
+        obj.transform.localRotation = Quaternion.identity;
+        obj.transform.localScale = new Vector3(0.05F, 0.05F, 0.05F);
+
+    }
+
+    public override void OnEnter()
+    {
+        base.OnEnter();
+        ShowWeaponEffect();
+    }
+
     public override void OnTrigger()
     {
         base.OnTrigger();
@@ -79,7 +95,7 @@ public class ZhiMingDaJiInstance : SkillInstance
 
     bool isBack = false;
 
-    public ZhiMingDaJiInstance(Skill skill,Action<Character> call, float moveOffset)
+    public ZhiMingDaJiInstance(Skill skill, Action<Character> call, float moveOffset)
     {
         this.RootSkill = skill;
         this.instancePath = "Skill/ZhiMingDaJi";
@@ -97,8 +113,11 @@ public class ZhiMingDaJiInstance : SkillInstance
         {
             if (durationTime <= 0)
             {
-                End();
-                return;
+                if (isBack && Vector3.Distance(this.instanceObj.transform.position, this.RootSkill.character.trans.position) <= 0.1f)
+                {
+                    End();
+                    return;
+                }
             }
             DoMove();
             durationTime -= Time.deltaTime;
@@ -118,7 +137,9 @@ public class ZhiMingDaJiInstance : SkillInstance
                 triggeredTargets.Clear();
             }
             this.instanceObj.transform.position -= this.instanceObj.transform.forward * Time.deltaTime * 30f;
-            this.instanceObj.transform.localScale -= Vector3.one * Time.deltaTime * 3f;
+            var scale = this.instanceObj.transform.localScale - Vector3.one * Time.deltaTime * 3f;
+            this.instanceObj.transform.localScale = scale.x < 0.2f ? new Vector3(0.2f, 0.2f, 0.2f) : scale;
+            this.instanceObj.transform.forward = -(this.RootSkill.character.trans.position - this.instanceObj.transform.position);
         }
         else
         {
@@ -133,7 +154,7 @@ public class ZhiMingDaJiInstance : SkillInstance
     {
         instanceObj.transform.position = RootSkill.character.trans.position + RootSkill.character.trans.forward * 1f;
         instanceObj.transform.forward = RootSkill.character.trans.forward;
-        instanceObj.transform.RotateAround(instanceObj.transform.position,Vector3.up,moveOffset);
+        instanceObj.transform.RotateAround(instanceObj.transform.position, Vector3.up, moveOffset);
     }
 
     public override void InvokeEnterTrigger(Character target)

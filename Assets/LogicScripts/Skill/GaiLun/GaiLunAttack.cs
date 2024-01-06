@@ -30,22 +30,16 @@ public class GaiLunAttack : BaseAttack
         AddState(target, character, StateType.Injure);
         DoDamage(target, character.property.Atk);
         //顿帧
-        character.anim.speed = 0f;
-        TimeManager.GetInstance().AddOnceTimer(this, 0.05f, () =>
+        character.characterAnimator.SetSpeed(0);
+        TimeManager.GetInstance().AddOnceTimer(this, 0.02f, () =>
         {
-            character.anim.speed = 1;
+            //character.anim.speed = 1;
+            character.characterAnimator.SetSpeed(1);
         });
         var dir = (character.trans.forward).normalized;
         dir.y = 0;
         target.physic.Move(dir.normalized * 1f, 0.2f);
         character.eventDispatcher.Event(CharacterEvent.ATK, new Character[] { target });
-    }
-
-
-    public override void OnExit()
-    {
-        base.OnExit();
-        character.anim.speed = 1;
     }
 }
 
@@ -67,6 +61,7 @@ class GaiLunAtkInstance : SkillInstance
         this.curAtk = this.instanceObj.transform.Find("atk" + index).gameObject;
         this.curAtk.SetActive(true);
         this.Init();
+        CameraManager.GetInstance().HorizontalShake(0.05f);
     }
 
     public override void SetCollider(string layerName, CharacterState TriggerType)
@@ -91,6 +86,19 @@ class GaiLunAtkInstance : SkillInstance
     public override void InvokeEnterTrigger(Character target)
     {
         call.Invoke(target);
+        //特效顿帧
+        var lzEffect = this.curAtk.GetComponentsInChildren<ParticleSystem>();
+        foreach (var item in lzEffect)
+        {
+            item.Pause();
+        }
+        TimeManager.GetInstance().AddOnceTimer(this, 0.02f, () =>
+        {
+            foreach (var item in lzEffect)
+            {
+                item.Play();
+            }
+        });
     }
 
     public override void InitTransform()
