@@ -93,7 +93,7 @@ namespace CustomPlayable
 
             CheckWeight();
             //帧时长
-            float deltaTime = info.deltaTime;
+            float deltaTime = info.deltaTime * rootAnimtor.Speed;
 
             //剩余切换时长大于0
             if (translateTime >= 0)
