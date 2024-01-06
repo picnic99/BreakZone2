@@ -249,6 +249,7 @@ public class PhysicController
     {
         Vector3 offset = new Vector3(0, force, 0);
         AddAction(new PhysicAction(offset, 1, PhysicActionType.ADD));
+        GravityOffset = 0;
         IsJump = true;
     }
 
@@ -357,7 +358,7 @@ public class PhysicController
                 RemoveActionAxis(false, true, false);
             }
             //重力偏移重置
-            GravityOffset = 0;
+            //GravityOffset = 0;
         }
 
 
