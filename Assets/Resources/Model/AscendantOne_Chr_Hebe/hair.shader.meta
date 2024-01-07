@@ -2,7 +2,9 @@ fileFormatVersion: 2
 guid: 4f66eb21100718844b654e10e3586267
 ShaderImporter:
   externalObjects: {}
-  defaultTextures: []
+  defaultTextures:
+  - _Hebe_Hair_Alb: {instanceID: 0}
+  - _texcoord: {instanceID: 0}
   nonModifiableTextures: []
   preprocessorOverride: 0
   userData: 
