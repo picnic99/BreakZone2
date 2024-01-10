@@ -21,7 +21,7 @@ public class GaiLunAttack : BaseAttack
         int index = StageNum + 1;
         TimeManager.GetInstance().AddOnceTimer(this, skillData.GetFrontTime(StageNum), () =>
           {
-            new GaiLunAtkInstance(this, index, DoDamage);
+              new GaiLunAtkInstance(this, index, DoDamage);
           });
     }
 
@@ -29,6 +29,7 @@ public class GaiLunAttack : BaseAttack
     {
         AddState(target, character, StateType.Injure);
         DoDamage(target, character.property.Atk);
+        AudioManager.GetInstance().Play("atk_3", false);
         //顿帧
         character.characterAnimator.SetSpeed(0);
         TimeManager.GetInstance().AddOnceTimer(this, 0.02f, () =>
@@ -48,7 +49,7 @@ class GaiLunAtkInstance : SkillInstance
     public GameObject curAtk;
 
     Action<Character> call;
-    public GaiLunAtkInstance(Skill skill, int index ,Action<Character> call)
+    public GaiLunAtkInstance(Skill skill, int index, Action<Character> call)
     {
         this.RootSkill = skill;
         this.instancePath = "Skill/GaiLunAtk";
