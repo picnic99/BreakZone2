@@ -46,6 +46,11 @@ public class ResourceManager : Singleton<ResourceManager>,Manager
         return obj;
     }
 
+    public AudioClip GetAudioClip(string name)
+    {
+        var obj = LoadResource<AudioClip>("Sounds/" + name);
+        return obj;
+    }
 
     public void LoadResourceAsyn<T>(string name,Action<T> finishCall) where T : Object
     {

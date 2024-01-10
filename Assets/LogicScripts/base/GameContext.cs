@@ -113,4 +113,14 @@ public class GameContext
         if (character == null) character = GameContext.SelfRole;
         return character.characterData.GetSkillArr()[index];
     }
+
+    public static AudioSource GetLoopAudio()
+    {
+       return  MonoBridge.GetInstance().transform.Find("LoopAudio").GetComponent<AudioSource>();
+    }
+
+    public static AudioSource GetOnceAudio()
+    {
+        return MonoBridge.GetInstance().transform.Find("OnceAudio").GetComponent<AudioSource>();
+    }
 }
