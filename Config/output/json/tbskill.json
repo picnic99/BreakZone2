@@ -1,7 +1,7 @@
 [
   {
     "id": 9999,
-    "name": "盖伦普通攻击",
+    "name": "普通攻击",
     "cd": 0,
     "tags": [
       1
@@ -22,9 +22,11 @@
   },
   {
     "id": 8001,
-    "name": "普通攻击",
+    "name": "李青普通攻击",
     "cd": 0,
-    "tags": [],
+    "tags": [
+      1
+    ],
     "IsInstantSkill": false,
     "IsOnly": true,
     "mutexState": [],
@@ -40,9 +42,30 @@
     "extraParams": ""
   },
   {
+    "id": 8002,
+    "name": "盖伦普通攻击",
+    "cd": 0,
+    "tags": [
+      1
+    ],
+    "IsInstantSkill": false,
+    "IsOnly": true,
+    "mutexState": [],
+    "backBreakSkills": [],
+    "valueRules": "damage：atk",
+    "animKeys": [
+      "GAILUN_ATK1",
+      "GAILUN_ATK2",
+      "GAILUN_ATK3"
+    ],
+    "sounds": "",
+    "effects": "",
+    "extraParams": ""
+  },
+  {
     "id": 9998,
     "name": "基础跳跃",
-    "cd": 0,
+    "cd": 2,
     "tags": [],
     "IsInstantSkill": false,
     "IsOnly": true,
@@ -81,7 +104,7 @@
   {
     "id": 1001,
     "name": "致命打击",
-    "cd": 0,
+    "cd": 2,
     "tags": [],
     "IsInstantSkill": true,
     "IsOnly": false,
@@ -96,7 +119,7 @@
   {
     "id": 1002,
     "name": "勇气",
-    "cd": 0,
+    "cd": 2,
     "tags": [],
     "IsInstantSkill": true,
     "IsOnly": false,
@@ -111,7 +134,7 @@
   {
     "id": 1003,
     "name": "审判",
-    "cd": 0,
+    "cd": 2,
     "tags": [],
     "IsInstantSkill": false,
     "IsOnly": true,
@@ -128,14 +151,16 @@
   {
     "id": 1004,
     "name": "正义",
-    "cd": 0,
+    "cd": 2,
     "tags": [],
     "IsInstantSkill": false,
-    "IsOnly": false,
+    "IsOnly": true,
     "mutexState": [],
     "backBreakSkills": [],
     "valueRules": "",
-    "animKeys": [],
+    "animKeys": [
+      "GAILUN_ZHENGYI"
+    ],
     "sounds": "",
     "effects": "",
     "extraParams": ""
@@ -143,7 +168,7 @@
   {
     "id": 1005,
     "name": "阿尔法突袭",
-    "cd": 0,
+    "cd": 2,
     "tags": [],
     "IsInstantSkill": false,
     "IsOnly": false,
@@ -158,7 +183,7 @@
   {
     "id": 1006,
     "name": "冥想",
-    "cd": 0,
+    "cd": 2,
     "tags": [],
     "IsInstantSkill": false,
     "IsOnly": false,
@@ -173,7 +198,7 @@
   {
     "id": 1007,
     "name": "无极剑道",
-    "cd": 0,
+    "cd": 2,
     "tags": [],
     "IsInstantSkill": false,
     "IsOnly": false,
@@ -188,7 +213,7 @@
   {
     "id": 1008,
     "name": "高原血统",
-    "cd": 0,
+    "cd": 2,
     "tags": [],
     "IsInstantSkill": false,
     "IsOnly": false,
@@ -203,7 +228,7 @@
   {
     "id": 1009,
     "name": "超负荷",
-    "cd": 0,
+    "cd": 2,
     "tags": [],
     "IsInstantSkill": false,
     "IsOnly": false,
@@ -218,7 +243,7 @@
   {
     "id": 1010,
     "name": "符文禁锢",
-    "cd": 0,
+    "cd": 2,
     "tags": [],
     "IsInstantSkill": false,
     "IsOnly": false,
@@ -233,7 +258,7 @@
   {
     "id": 1011,
     "name": "法术涌动",
-    "cd": 0,
+    "cd": 2,
     "tags": [],
     "IsInstantSkill": false,
     "IsOnly": false,
@@ -248,7 +273,7 @@
   {
     "id": 1012,
     "name": "曲境折跃",
-    "cd": 0,
+    "cd": 2,
     "tags": [],
     "IsInstantSkill": false,
     "IsOnly": false,
@@ -263,7 +288,7 @@
   {
     "id": 1013,
     "name": "天音波",
-    "cd": 0,
+    "cd": 2,
     "tags": [],
     "IsInstantSkill": false,
     "IsOnly": false,
@@ -281,7 +306,7 @@
   {
     "id": 1014,
     "name": "金钟罩",
-    "cd": 0,
+    "cd": 2,
     "tags": [],
     "IsInstantSkill": false,
     "IsOnly": false,
@@ -296,7 +321,7 @@
   {
     "id": 1015,
     "name": "崔筋断骨",
-    "cd": 0,
+    "cd": 2,
     "tags": [],
     "IsInstantSkill": false,
     "IsOnly": false,
@@ -313,7 +338,7 @@
   {
     "id": 1016,
     "name": "神龙摆尾",
-    "cd": 0,
+    "cd": 2,
     "tags": [],
     "IsInstantSkill": false,
     "IsOnly": false,
@@ -330,7 +355,7 @@
   {
     "id": 1017,
     "name": "折翼之舞",
-    "cd": 0,
+    "cd": 2,
     "tags": [
       1,
       5

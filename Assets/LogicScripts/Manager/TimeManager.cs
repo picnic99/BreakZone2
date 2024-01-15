@@ -18,7 +18,7 @@ public class TimeVO
     public Action call;
     public Action endCall;
 
-    public TimeVO(object caller, int type, float delayTime, float durationTime, Action call,Action endCall = null)
+    public TimeVO(object caller, int type, float delayTime, float durationTime, Action call, Action endCall = null)
     {
         this.caller = caller;
         this.type = type;
@@ -29,7 +29,7 @@ public class TimeVO
     }
 }
 
-public class TimeManager:Singleton<TimeManager>,Manager
+public class TimeManager : Singleton<TimeManager>, Manager
 {
     public List<TimeVO> vos = new List<TimeVO>();
 
@@ -38,15 +38,15 @@ public class TimeManager:Singleton<TimeManager>,Manager
         MonoBridge.GetInstance().StartCoroutine(Coroutine());
     }
 
-    public void AddOnceTimer(object caller,float delayTime,Action call)
+    public void AddOnceTimer(object caller, float delayTime, Action call)
     {
-       TimeVO vo = new TimeVO(caller,TimeVO.ONCE, delayTime,0, call);
+        TimeVO vo = new TimeVO(caller, TimeVO.ONCE, delayTime, 0, call);
         vos.Add(vo);
     }
 
-    public void AddFrameLoopTimer(object caller,float delayTime,float durationTime, Action call,Action endCall)
+    public void AddFrameLoopTimer(object caller, float delayTime, float durationTime, Action call, Action endCall)
     {
-        TimeVO vo = new TimeVO(caller,TimeVO.FRAME, delayTime, durationTime, call, endCall);
+        TimeVO vo = new TimeVO(caller, TimeVO.FRAME, delayTime, durationTime, call, endCall);
         vos.Add(vo);
     }
 
@@ -62,7 +62,7 @@ public class TimeManager:Singleton<TimeManager>,Manager
         for (int i = 0; i < vos.Count; i++)
         {
             TimeVO vo = vos[i];
-            if(vo.caller == caller && vo.call == call)
+            if (vo.caller == caller && vo.call == call)
             {
                 vos.Remove(vo);
                 return;
@@ -88,6 +88,55 @@ public class TimeManager:Singleton<TimeManager>,Manager
         }
     }
 
+    /// <summary>
+    /// 持续时间触发N次
+    /// </summary>
+    /// <param name="durationTime">持续时间</param>
+    /// <param name="triggerCtn">触发次数</param>
+    /// <param name="call">触发的函数</param>
+    /// <param name="triggerTime">触发时间点 默认为平均时间 time/ctn </param>
+    public void AddTimeByDurationCtn(object caller, float durationTime, int triggerCtn, Action call, bool immediateInvoke = false, float[] triggerTime = null)
+    {
+        List<float> tTimes = new List<float>();
+        float cd = durationTime / triggerCtn;
+        if (triggerTime == null)
+        {
+            float offSetTime = immediateInvoke ? 0 : cd;
+            for (int i = 0; i < triggerCtn; i++)
+            {
+                tTimes.Add(cd * i + offSetTime);
+            }
+        }
+        else
+        {
+            tTimes = new List<float>(triggerTime);
+        }
+
+        foreach (var item in tTimes)
+        {
+            AddOnceTimer(caller, item, call);
+        }
+    }
+
+    /// <summary>
+    /// 下一帧调用
+    /// </summary>
+    /// <param name="call"></param>
+    public void AddFixedFrameCall(Action call, int frameCtn = 1)
+    {
+        MonoBridge.GetInstance().StartCoroutine(WaitFixedFrame(call, frameCtn));
+    }
+
+    IEnumerator WaitFixedFrame(Action call, int frameCtn)
+    {
+        for (int i = 0; i < frameCtn; i++)
+        {
+            yield return new WaitForEndOfFrame();
+        }
+        call();
+    }
+
+
 
     IEnumerator Coroutine()
     {
@@ -107,7 +156,7 @@ public class TimeManager:Singleton<TimeManager>,Manager
                     vo.durationTime -= Time.deltaTime;
                     if (vo.durationTime <= 0)
                     {
-                        if(vo.type != TimeVO.FOREVER)
+                        if (vo.type != TimeVO.FOREVER)
                         {
                             vo.endCall?.Invoke();
                             vos.Remove(vo);

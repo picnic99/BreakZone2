@@ -93,7 +93,7 @@ namespace CustomPlayable
 
             CheckWeight();
             //帧时长
-            float deltaTime = info.deltaTime;
+            float deltaTime = info.deltaTime * rootAnimtor.Speed;
 
             //剩余切换时长大于0
             if (translateTime >= 0)
@@ -251,7 +251,12 @@ namespace CustomPlayable
             //若当前真正转换中 且上一个目标动画不为此次转换的动画
             if (isTranlating && tarIndex != targetIndex)
             {
-                if (GetWeight(curIndex) > GetWeight(targetIndex))
+                //极限情况 在目标下标未当前下标时且权重大于上个目标权重有BUG
+                //这种情况直接交换即可
+                if(curIndex == tarIndex)
+                {
+                    curIndex = targetIndex;
+                }else if (GetWeight(curIndex) > GetWeight(targetIndex))
                 {
                     //当前动画权重 大于 目标动画权重
                     //将上一个目标动画存入待递减动画数组

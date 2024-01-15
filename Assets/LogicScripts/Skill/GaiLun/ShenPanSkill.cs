@@ -1,55 +1,44 @@
-﻿//审判技能
-using System;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
+
+/// <summary>
+/// 审判 temp
+/// 角色挥动武器向前旋转 召唤龙卷风向前飞去
+/// 对命中的敌人造成伤害和击飞效果
+/// </summary>
 public class ShenPanSkill : Skill
 {
-    private float damageFrequency = 0f;
-
     public ShenPanSkill()
     {
-        skillDurationTime = stateDurationTime = 0.6f;
+
     }
 
     public override void OnEnter()
     {
-        character.KeepMove = true;
         PlayAnim(skillData.GetAnimKey(0));
         base.OnEnter();
+        skillDurationTime = stateDurationTime = 0.6f;
+        AudioEventDispatcher.GetInstance().Event(MomentType.DoSkill, this, "start", this.character.trans.gameObject);
+
     }
 
     public override void OnTrigger()
     {
         base.OnTrigger();
-        //播放审判动画
-        //人物保持正常移动
-        //character.scan.ShowRange(360, 2f, 1f);
-        //EffectManager.GetInstance().PlayEffect("Skill/ShenPan", 0.7f, null, character.trans.position, character.trans.forward, new Vector3(0.15f, 0.2f, 0.15f));
-        new ShenPanInstance(character, BeTrigger);
-    }
-
-    /// <summary>
-    /// 强制中断处理
-    /// </summary>
-    public override void ForceStop()
-    {
-        base.ForceStop();
+        new ShenPanInstance(this, BeTrigger);
     }
 
     /// <summary>
     /// 被触发 超负荷在飞行过程中碰到敌人后会调用这里
     /// </summary>
     /// <param name="target"></param>
-    public void BeTrigger(Character[] target)
+    public void BeTrigger(Character target)
     {
         float damageValue = 50;// baseDamage[skillLevel] + 0.5f * character.property.atk;
         DoDamage(target, damageValue);
-        foreach (var item in target)
-        {
-            var dir = (item.trans.position - character.trans.position).normalized;
-            dir.y = 0;
-            item.physic.Move(dir.normalized * 0.2f, 0.1f);
-        }
+        target.physic.AtkFly(5f, 1f);
     }
 
     protected override void OnEnd()
@@ -64,55 +53,58 @@ public class ShenPanSkill : Skill
     }
 }
 
-class ShenPanInstance
+class ShenPanInstance : SkillInstance
 {
-    Character character;
-    GameObject skillInstance;
-    Action<Character[]> call;
-    string path = "Skill/ShenPan";
-    float skillDurationTime = 0.6f;
-    public ShenPanInstance(Character character, Action<Character[]> call)
+    float skillDurationTime1 = 0.4f;
+    float skillDurationTime2 = 0.6f;
+
+    List<Character> triggeredTargets = new List<Character>();
+    public ShenPanInstance(Skill skill, Action<Character> call)
     {
-        this.character = character;
-        this.call = call;
-        skillInstance = ResourceManager.GetInstance().GetObjInstance<GameObject>(path);
-        this.InitTransform();
-        this.AddBehaviour();
+        this.RootSkill = skill;
+        this.enterCall = call;
+        this.instancePath = "Skill/ShenPan2";
+        this.instanceObj = ResourceManager.GetInstance().GetObjInstance<GameObject>(instancePath);
+        this.Init();
     }
 
-    private void InitTransform()
+    public override void InitTransform()
     {
-        skillInstance.transform.forward = character.trans.forward;
-        skillInstance.transform.position = character.trans.position;
-        skillInstance.transform.localScale = new Vector3(0.15f, 0.2f, 0.15f);
-        skillInstance.transform.SetParent(character.trans);
+        var crt = RootSkill.character;
+        instanceObj.transform.forward = crt.trans.forward;
+        instanceObj.transform.position = crt.trans.position;
+        instanceObj.transform.localScale = new Vector3(0.7f, 0.7f, 0.7f); //shenpan2
+        instanceObj.transform.SetParent(crt.trans);
     }
 
-    private void AddBehaviour()
+    public override void AddBehaviour()
     {
-        skillInstance.GetComponent<ColliderHelper>().OnTriggerStayCall += DoTrigger;
-        TimeManager.GetInstance().AddFrameLoopTimer(this, 0f ,0.61f, () =>
+        var crt = RootSkill.character;
+        crt.physic.Move(crt.trans.forward.normalized * 2.5f, 0.3f);
+        TimeManager.GetInstance().AddFrameLoopTimer(this, 0f, skillDurationTime1 + skillDurationTime2, () =>
         {
-            if (skillDurationTime % 0.2f == 0)
+            if (skillDurationTime1 > 0)
             {
-                canTrigger = true;
+                skillDurationTime1 -= Time.deltaTime;
             }
-            skillDurationTime -= 0.02f;
-        },()=>
-        {
-            TimeManager.GetInstance().RemoveAllTimer(this);
-            GameObject.Destroy(skillInstance);
-        });
+            else if (skillDurationTime2 > 0)
+            {
+                instanceObj.transform.SetParent(null);
+                instanceObj.transform.position += instanceObj.transform.forward * Time.deltaTime * 20f;
+            }
+        },
+        End);
     }
 
-    bool canTrigger = false;
-    private void DoTrigger(Collider col)
+    public override void InvokeEnterTrigger(Character target)
     {
-        if (canTrigger == false) return;
-        var target = GameContext.GetCharacterByObj(col.gameObject);
-        if (target == null || target == character) return;
-
-        call.Invoke(new Character[] { target });
-        canTrigger = false;
+        var crt = RootSkill.character;
+        if (target == null || target == crt) return;
+        if (triggeredTargets.IndexOf(target) != -1)
+        {
+            return;
+        }
+        triggeredTargets.Add(target);
+        base.InvokeEnterTrigger(target);
     }
 }

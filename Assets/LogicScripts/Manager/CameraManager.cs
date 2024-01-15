@@ -4,9 +4,9 @@ using UnityEngine;
 
 public enum CameraState
 {
-    MAIN,FEATURE,ARM
+    MAIN, FEATURE, ARM
 }
-public class CameraManager:Singleton<CameraManager>,Manager
+public class CameraManager : Singleton<CameraManager>, Manager
 {
     public CameraState state = CameraState.MAIN;
 
@@ -25,6 +25,24 @@ public class CameraManager:Singleton<CameraManager>,Manager
     private float _cinemachineTargetPitchY;
     private float _cinemachineTargetPitchX;
     private const float _threshold = 0.01f;
+
+
+    private CinemachineImpulseSource _impulse;
+    private CinemachineImpulseSource Impulse
+    {
+        get
+        {
+            if (_impulse == null)
+            {
+                brain.TryGetComponent<CinemachineImpulseSource>(out _impulse);
+                if (_impulse == null)
+                {
+                    _impulse = brain.gameObject.AddComponent<CinemachineImpulseSource>();
+                }
+            }
+            return _impulse;
+        }
+    }
 
     public void Init()
     {
@@ -67,19 +85,30 @@ public class CameraManager:Singleton<CameraManager>,Manager
 
     }
 
-    public void EventImpulse(float force = 1)
+    public void HorizontalShake(float force = 1)
     {
-        CinemachineImpulseSource imp = null;
-        brain.TryGetComponent<CinemachineImpulseSource>(out imp);
-        if (imp == null)
-        {
-            imp = brain.gameObject.AddComponent<CinemachineImpulseSource>();
-        }
-
 #if UNITY_2019_4_9
 
 #else
-        imp.GenerateImpulseWithForce(force);
+        Impulse.GenerateImpulseWithVelocity(new Vector3(force, 0, 0));
+#endif
+    }
+
+    public void VerticalShake(float force = 1)
+    {
+#if UNITY_2019_4_9
+
+#else
+        Impulse.GenerateImpulseWithVelocity(new Vector3(0, force, 0));
+#endif
+    }
+
+    public void EventImpulse(float force = 1)
+    {
+#if UNITY_2019_4_9
+
+#else
+        Impulse.GenerateImpulseWithForce(force);
 #endif
     }
 
@@ -97,15 +126,15 @@ public class CameraManager:Singleton<CameraManager>,Manager
         Vector2 look = new Vector2(mouseX * rotationSpeed, -mouseY * rotationSpeed);
 
 
-            if (look.sqrMagnitude >= _threshold)
-            {
+        if (look.sqrMagnitude >= _threshold)
+        {
             //cmvCamManager.playerController.RotationVelocity = look.x;
             _cinemachineTargetPitchY += look.y;
             _cinemachineTargetPitchX = 0;
             //_cinemachineTargetPitch = ClampAngle(_cinemachineTargetPitch, bottomClamp_3rd, topClamp_3rd);
             curLookCharacter.trans.Find("armTarget").localRotation = Quaternion.Euler(_cinemachineTargetPitchY, _cinemachineTargetPitchX, 0.0f);
             curLookCharacter.trans.Rotate(Vector3.up * look.x);
-            }
-        
+        }
+
     }
 }

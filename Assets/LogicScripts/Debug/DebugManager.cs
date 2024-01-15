@@ -124,6 +124,10 @@ public class DebugManager : MonoBehaviour
         //if (vo.id == 99) obj = tmp_fakeMan_obj;
         var c_obj = obj;
         var character = new Character(vo, c_obj);
+        if (vo.id == 99 && GameContext.SelfRole != null)
+        {
+            character.physic.Move(GameContext.SelfRole.trans.position + GameContext.SelfRole.trans.forward * 3f,0.1f);
+        }
 /*        character.trans.gameObject.AddComponent<FullBodyBipedIK>();
         character.trans.gameObject.AddComponent<GrounderFBBIK>();*/
         debugRoleView.AddRole(character);

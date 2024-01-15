@@ -9,6 +9,7 @@ public class BaseJump : Skill
     public override void OnEnter()
     {
         PlayAnim(skillData.GetAnimKey(0));
+        AudioEventDispatcher.GetInstance().Event(MomentType.DoSkill, this, "jumpStart", this.character.trans.gameObject);
         float len = AnimManager.GetInstance().GetAnimTime2(skillData.GetAnimKey(0));
         TimeManager.GetInstance().AddOnceTimer(this, len, () => {
             PlayAnim(skillData.GetAnimKey(1));
@@ -24,7 +25,7 @@ public class BaseJump : Skill
         {
             CanTriggerAgain = false;
         }
-        character.physic.Jump(10);
+        character.physic.Jump();
         /*        character.physic.Move( (GameContext.GetDirByInput(character) + Vector3.up) * 5f,0.5f);
 
                 TimeManager.GetInstance().AddLoopTimer(this, 0.5f, () => {
@@ -41,17 +42,13 @@ public class BaseJump : Skill
     public void EndJump(object[] args)
     {
         PlayAnim(skillData.GetAnimKey(2));
+        AudioEventDispatcher.GetInstance().Event(MomentType.DoSkill, this, "jumpEnd", this.character.trans.gameObject);
+        //AudioManager.GetInstance().Play("jump_end", false);
         skillDurationTime = 0.5f;
         EventDispatcher.GetInstance().Off(EventDispatcher.PLAYER_JUMPED, EndJump);
         TimeManager.GetInstance().AddOnceTimer(this, 0.2f, () => {
             CameraManager.GetInstance().EventImpulse(0.5f);           
         });
-    }
-
-
-    protected override void EndState()
-    {
-        character.eventDispatcher.Event(CharacterEvent.STATE_OVER, StateType.Jump);
     }
 
     public override void OnExit()

@@ -1,9 +1,18 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class InputManager : Singleton<InputManager>, Manager
 {
     public bool HasSelfRole = false;
+
+    public float thresholdMove = 0f;
+
+    public void Init()
+    {
+
+    }
 
     public Vector3 GetPlayInput()
     {
@@ -12,18 +21,11 @@ public class InputManager : Singleton<InputManager>, Manager
         return new Vector3(x, 0, z);
     }
 
-
-    /// <summary>
-    /// TODO 输入队列
-    /// 后续动画系统能够根据输入队列来预测玩家下一步是继续执行其它操作还是无操作切换为idle状态
-    /// 主要避免玩家每次状态结束后都会切回到idle状态 此时动画会立刻切换，若是两次连续攻击可能出现卡一帧的情况
-    /// 如 ATK1 Idle ATK2  应该是ATK1 ATK2 IDLE
-    /// </summary>
-
     public void OnUpdate()
     {
         if (GameContext.SelfRole == null) return;
-        if(HasSelfRole == false)
+
+        if (HasSelfRole == false)
         {
             AddEventListener();
             HasSelfRole = true;
@@ -31,7 +33,7 @@ public class InputManager : Singleton<InputManager>, Manager
 
         var moveDelta = GetPlayInput();
         //移动与奔跑
-        if (moveDelta.magnitude > 0 && (Input.GetKey(KeyCode.W)|| Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D)))
+        if (moveDelta.magnitude >= thresholdMove && (Input.GetKey(KeyCode.W)|| Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D)))
         {
             if (GameContext.CharacterIncludeState(StateType.Move))
             {
@@ -40,7 +42,7 @@ public class InputManager : Singleton<InputManager>, Manager
                     if (!GameContext.CharacterIncludeState(StateType.Run))
                     {
                         ChangeState(GameContext.SelfRole, StateType.Run);
-                        GameContext.SelfRole.eventDispatcher.Event(CharacterEvent.STATE_OVER, StateType.Move);
+                        StopState(StateType.Move);
                     }
                 }
             }
@@ -51,7 +53,7 @@ public class InputManager : Singleton<InputManager>, Manager
                     if (!GameContext.CharacterIncludeState(StateType.Move))
                     {
                         ChangeState(GameContext.SelfRole, StateType.Move);
-                        GameContext.SelfRole.eventDispatcher.Event(CharacterEvent.STATE_OVER, StateType.Run);
+                        StopState(StateType.Run);
                     }
                 }
             }
@@ -60,11 +62,11 @@ public class InputManager : Singleton<InputManager>, Manager
                 if (Input.GetKeyDown(KeyCode.LeftShift))
                 {
                     ChangeState(GameContext.SelfRole, StateType.Run);
+
                 }
                 else
                 {
                     ChangeState(GameContext.SelfRole, StateType.Move);
-                    Debug.Log("go to move");
                 }
             }
 
@@ -72,21 +74,19 @@ public class InputManager : Singleton<InputManager>, Manager
         }
         else
         {
-            //ChangeState(GameContext.selfRole, StateType.DoSkill, 2);
             if (GameContext.CharacterIncludeState(StateType.Move))
             {
-                GameContext.SelfRole.eventDispatcher.Event(CharacterEvent.STATE_OVER, StateType.Move);
+                StopState(StateType.Move);
             }
             if (GameContext.CharacterIncludeState(StateType.Run))
             {
-                GameContext.SelfRole.eventDispatcher.Event(CharacterEvent.STATE_OVER, StateType.Run);
+                StopState(StateType.Run);
             }
         }
-
-
         if (Input.GetMouseButtonDown(0))
         {
             ChangeState(GameContext.SelfRole, StateType.DoAtk, GameContext.GetCharacterSkillIdByIndex(0));
+
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -98,7 +98,6 @@ public class InputManager : Singleton<InputManager>, Manager
         }
         if (Input.GetMouseButtonDown(1))
         {
-            //ChangeState(GameContext.SelfRole, StateType.DoSkill, GameContext.GetCharacterSkillIdByIndex(3));
             //瞄准
             CameraManager.GetInstance().ShowArmCam(GameContext.SelfRole);
             GameContext.SelfRole.physic.multiply = 0.1f;
@@ -116,7 +115,9 @@ public class InputManager : Singleton<InputManager>, Manager
         if (Input.GetKeyDown(KeyCode.LeftControl))
         {
             if(moveDelta.magnitude > 0)
+            {
                 ChangeState(GameContext.SelfRole, StateType.Roll, GameContext.GetCharacterSkillIdByIndex(2));
+            }
         }
         if (Input.GetKeyDown(KeyCode.E))
         {
@@ -155,27 +156,25 @@ public class InputManager : Singleton<InputManager>, Manager
         }
         character.eventDispatcher.Event(CharacterEvent.CHANGE_STATE, objs);
     }
-    public void Init()
-    {
 
+    public void StopState(string state)
+    {
+        GameContext.SelfRole.eventDispatcher.Event(CharacterEvent.STATE_OVER, state);
     }
 
     public void AddEventListener()
     {
         GameContext.SelfRole.eventDispatcher.On(CharacterEvent.DO_SKILL, OnDoSkill);
-
     }
 
     public void RemoveEventListener()
     {
         GameContext.SelfRole.eventDispatcher.On(CharacterEvent.DO_SKILL, OnDoSkill);
-
     }
-
 
     private void OnDoSkill(object[] args)
     {
         int id = (int)args[0];
-        LookForward();
+        //LookForward();
     }
 }

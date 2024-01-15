@@ -6,7 +6,7 @@ public class BaseAttack : Skill
     //再次触发最大等待时间
     public float maxWaitTime = 0.5f;
 
-    public ColliderHelper Hand_R;
+    //public ColliderHelper Hand_R;
 
     public BaseAttack()
     {
@@ -16,8 +16,8 @@ public class BaseAttack : Skill
 
     public override void OnEnter()
     {
-        Hand_R = character.anim.GetBoneTransform(HumanBodyBones.RightHand).GetComponent<ColliderHelper>();
-        Hand_R.enabled = false;
+        //Hand_R = character.anim.GetBoneTransform(HumanBodyBones.RightHand).GetComponent<ColliderHelper>();
+        //Hand_R.enabled = false;
 
         if (StageNum >= 3)
         {
@@ -45,8 +45,9 @@ public class BaseAttack : Skill
     public void Atk()
     {
         triggered = false;
-        Hand_R.enabled = true;
-        Hand_R.OnTriggerEnterCall += DoDamage;
+        //Hand_R.enabled = true;
+        //Hand_R.OnTriggerEnterCall += DoDamage;
+        character.eventDispatcher.Event(CharacterEvent.PRE_ATK);
     }
 
     public void DoDamage(Collider col)
@@ -58,7 +59,7 @@ public class BaseAttack : Skill
         DoDamage(target, character.property.Atk);
         triggered = true;
         Vector3 v = character.trans.position;
-        v = col.ClosestPointOnBounds(Hand_R.transform.position);
+        //v = col.ClosestPointOnBounds(Hand_R.transform.position);
 
         var bloodEffect = ResourceManager.GetInstance().GetObjInstance<GameObject>("Common/BloodEffect");
         bloodEffect.transform.position = v;
@@ -86,17 +87,12 @@ public class BaseAttack : Skill
         Atk();
     }
 
-    protected override void EndState()
-    {
-        character.eventDispatcher.Event(CharacterEvent.STATE_OVER, StateType.DoAtk);
-    }
-
     public override void OnBack()
     {
         base.OnBack();
         character.anim.speed = 1;
-        Hand_R.OnTriggerEnterCall -= DoDamage;
-        Hand_R.enabled = false;
+        //Hand_R.OnTriggerEnterCall -= DoDamage;
+        //Hand_R.enabled = false;
     }
 
     public override void OnExit()

@@ -28,6 +28,12 @@ namespace CustomPlayable
             }
         }
 
+        public override void Execute(Playable playable, FrameData info)
+        {
+            able.SetSpeed(rootAnimtor.Speed);
+        }
+
+
         public override void Disable()
         {
             base.Disable();

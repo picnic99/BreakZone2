@@ -11,7 +11,7 @@ public class StateGroup
     //归属角色
     private Character character;
     //状态列表
-    private List<State> states = new List<State>();
+    public List<State> states = new List<State>();
     //默认状态 状态列表为空时加入列表中
     public State defaultState;
 
@@ -79,10 +79,7 @@ public class StateGroup
     public void OnUpdate()
     {
         character.msg.curState = "\n";
-        if (states.Count <= 0)
-        {
-            Add(defaultState);
-        }
+
         for (int i = 0; i < states.Count; i++)
         {
             var item = states[i];
@@ -92,6 +89,7 @@ public class StateGroup
     }
 
 
+
     /// <summary>
     /// 能够切换到下一个状态？
     /// </summary>
@@ -99,27 +97,11 @@ public class StateGroup
     /// <returns></returns>
     public bool CanChangeTo(StateVO vo)
     {
-
-/*        if((IncludeState(StateType.DoSkill) && vo.stateName == StateType.DoSkill))
-        {
-            if (CheckSkillBackChange(vo.stateName))
-            {
-                return true;
-            }
-            return false;
-        }*/
-
         for (int i = 0; i < states.Count; i++)
         {
             var item = states[i];
             if (item.stateData.GetMutexList().IndexOf(vo.id) != -1)
             {
-                //特例 若互斥的状态为技能状态 则继续判断是否满足后摇强制退出
-/*                if (item.stateData.stateName == StateType.DoSkill && vo.stateName != StateType.Idle && CheckSkillBackChange(vo.stateName))
-                {
-                    RemoveState(StateType.DoSkill);
-                    return true;
-                }*/
                 return false;
             }
         }
@@ -202,8 +184,8 @@ public class StateGroup
         {
             State state = new State(character, vo, time);
             state.stateInfo = stateInfo;
-            Add(state);
             //移除掉所以的互斥状态
+            Add(state);
             RemoveMutexState(state);
             SortStates();
             character.eventDispatcher.Event(CharacterEvent.ADD_STATE, state);

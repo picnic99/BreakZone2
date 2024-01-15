@@ -12,6 +12,9 @@ public enum GameMode
 public class GameContext
 {
     public static GameMode GameMode = GameMode.NEW;
+
+    public static bool OpenRangeShow = true;
+
     //当前操纵的角色
     public static Character SelfRole;
     //场景中全部角色
@@ -109,5 +112,20 @@ public class GameContext
     {
         if (character == null) character = GameContext.SelfRole;
         return character.characterData.GetSkillArr()[index];
+    }
+
+    public static AudioSource GetLoopAudio()
+    {
+       return  MonoBridge.GetInstance().transform.Find("LoopAudio").GetComponent<AudioSource>();
+    }
+
+    public static AudioSource GetOnceAudio()
+    {
+        return MonoBridge.GetInstance().transform.Find("OnceAudio").GetComponent<AudioSource>();
+    }
+
+    public static GameObject GetAudiosMain()
+    {
+        return MonoBridge.GetInstance().transform.Find("AudiosMain").gameObject;
     }
 }

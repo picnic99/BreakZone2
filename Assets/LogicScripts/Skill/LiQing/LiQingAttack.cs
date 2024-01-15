@@ -74,12 +74,6 @@ public class LiQingAttack : BaseAttack
         dir.y = 0;
         target.physic.Move(dir.normalized * 0.1f, 0.1f);
     }
-
-    protected override void EndState()
-    {
-        character.eventDispatcher.Event(CharacterEvent.STATE_OVER, StateType.DoAtk);
-    }
-
     public override void OnBack()
     {
         base.OnBack();

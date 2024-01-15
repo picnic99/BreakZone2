@@ -5,21 +5,17 @@ using UnityEngine;
 public class CuiJingDuanGuSkill : Skill
 {
 
-    public CuiJingDuanGuSkill()
-    {
-        skillDurationTime = stateDurationTime = 1f;
-    }
+    public CuiJingDuanGuSkill(){}
 
     public override void OnEnter()
     {
-        PlayAnim("CUIJINGDUANGU");
+        PlayAnim(skillData.GetAnimKey(0));
         base.OnEnter();
     }
     public override void OnTrigger()
     {
         base.OnTrigger();
-        //TweenManager.GetInstance().MoveTo(character.trans, character.trans.position + character.trans.forward * 10f, durationTime);
-        new CuiJingDuanGu(character, BeTrigger);
+        new CuiJingDuanGu(this, BeTrigger);
         CameraManager.GetInstance().EventImpulse();
     }
 
@@ -37,53 +33,45 @@ public class CuiJingDuanGuSkill : Skill
         }
     }
 
-    class CuiJingDuanGu
+    class CuiJingDuanGu : SkillInstance
     {
-        Character character;
-        GameObject skillInstance;
         Action<Character[]> call;
-        string path = "Skill/CuiJingDuanGu";
-        float skillDurationTime = 2f;
-        public CuiJingDuanGu(Character character, Action<Character[]> call)
+
+        public CuiJingDuanGu(Skill skill,Action<Character[]> call)
         {
-            this.character = character;
+            this.instancePath = "Skill/CuiJingDuanGu";
+            this.durationTime = 2f;
+            this.maxTriggerTarget = 1;
+            this.RootSkill = skill;
+            this.IsEndRemoveObj = false;
             this.call = call;
-            skillInstance = ResourceManager.GetInstance().GetObjInstance<GameObject>(path);
-            this.InitTransform();
-            this.AddBehaviour();
+            this.instanceObj = ResourceManager.GetInstance().GetObjInstance<GameObject>(instancePath);
+            
+            this.Init();
         }
 
-        private void InitTransform()
+        public override void InitTransform()
         {
-            skillInstance.transform.forward = character.trans.forward;
-            skillInstance.transform.position = character.trans.position;
+            instanceObj.transform.forward = RootSkill.character.trans.forward;
+            instanceObj.transform.position = RootSkill.character.trans.position;
         }
 
-        private void AddBehaviour()
+        public override void AddBehaviour()
         {
-            skillInstance.GetComponent<ColliderHelper>().OnTriggerEnterCall += DoTrigger;
             TimeManager.GetInstance().AddLoopTimer(this, 0.02f, () =>
             {
-                if (skillDurationTime <= 0)
+                if (durationTime <= 0)
                 {
-                    TimeManager.GetInstance().RemoveAllTimer(this);
-                    GameObject.Destroy(skillInstance);
+                    End();
                     return;
                 }
-                skillDurationTime -= 0.02f;
+                durationTime -= 0.02f;
             });
         }
 
-        bool triggered = false;
-        private void DoTrigger(Collider col)
+        public override void InvokeEnterTrigger(Character target)
         {
-            if (triggered) return;
-            var target = GameContext.GetCharacterByObj(col.gameObject);
-            if (target == null || target == character) return;
-
             call.Invoke(new Character[] { target });
-
-            triggered = true;
         }
     }
 

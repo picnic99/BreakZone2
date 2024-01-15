@@ -23,8 +23,21 @@ public class GameMain : MonoBehaviour
         var z = Input.GetAxis("Vertical");
         //GameContext.SelfRole.characterAnimator.moveBlendMixer.SetPointer(x,z);
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.M))
         {
+            GameContext.SelfRole.physic.Move(Vector3.up, 2f);
+            GameContext.SelfRole.physic.Move(-Vector3.forward, 2f);
+
+            //toClearConsole();
+            //InputManager.GetInstance().ChangeState(GameContext.SelfRole, StateType.Roll);
+            //InputManager.GetInstance().ChangeState(GameContext.SelfRole, StateType.Move);
+            //InputManager.GetInstance().ChangeState(GameContext.SelfRole, StateType.Roll);
+        }
+
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            GameContext.SelfRole.physic.FreezonMove(5f);
+
             //toClearConsole();
             //InputManager.GetInstance().ChangeState(GameContext.SelfRole, StateType.Roll);
             //InputManager.GetInstance().ChangeState(GameContext.SelfRole, StateType.Move);

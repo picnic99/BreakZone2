@@ -17,10 +17,10 @@
   {
     "id": 1,
     "name": "盖伦",
-    "modePath": "SwordMan",
+    "modePath": "SwordWoman",
     "propertyId": 1001,
     "skills": [
-      9999,
+      8002,
       9998,
       9997,
       1001,
