@@ -73,6 +73,15 @@ public abstract class Behaviour
         if (state != null)
         {
             AnimManager.GetInstance().PlayStateAnim(character, state, translateTime);
+            //AudioManager.GetInstance().Stop(true);
+            if (state.state.Type == StateType.Run)
+            {
+                //AudioManager.GetInstance().Play("run", true);
+            }
+            if (state.state.Type == StateType.Move)
+            {
+                //AudioManager.GetInstance().Play("move", true);
+            }
         }
     }
 

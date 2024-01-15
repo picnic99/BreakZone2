@@ -123,4 +123,9 @@ public class GameContext
     {
         return MonoBridge.GetInstance().transform.Find("OnceAudio").GetComponent<AudioSource>();
     }
+
+    public static GameObject GetAudiosMain()
+    {
+        return MonoBridge.GetInstance().transform.Find("AudiosMain").gameObject;
+    }
 }

@@ -216,7 +216,7 @@
     "type": "block",
     "name": "格挡",
     "animKey": "",
-    "exitType": 1,
+    "exitType": 2,
     "order": 0,
     "mutexState": [
       1,

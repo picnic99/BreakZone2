@@ -22,6 +22,7 @@ public class GaiLunAttack : BaseAttack
         TimeManager.GetInstance().AddOnceTimer(this, skillData.GetFrontTime(StageNum), () =>
           {
               new GaiLunAtkInstance(this, index, DoDamage);
+              AudioEventDispatcher.GetInstance().Event(MomentType.DoSkill, this, "atk");
           });
     }
 
@@ -29,7 +30,9 @@ public class GaiLunAttack : BaseAttack
     {
         AddState(target, character, StateType.Injure);
         DoDamage(target, character.property.Atk);
-        AudioManager.GetInstance().Play("atk_3", false);
+        AudioManager.GetInstance().Play("sword_damage1", false);
+        AudioManager.GetInstance().Play("sword_damage2", false);
+
         //顿帧
         character.characterAnimator.SetSpeed(0);
         TimeManager.GetInstance().AddOnceTimer(this, 0.02f, () =>

@@ -9,6 +9,7 @@ public class BaseJump : Skill
     public override void OnEnter()
     {
         PlayAnim(skillData.GetAnimKey(0));
+        //AudioManager.GetInstance().Play("jump_start", false);
         float len = AnimManager.GetInstance().GetAnimTime2(skillData.GetAnimKey(0));
         TimeManager.GetInstance().AddOnceTimer(this, len, () => {
             PlayAnim(skillData.GetAnimKey(1));
@@ -41,6 +42,7 @@ public class BaseJump : Skill
     public void EndJump(object[] args)
     {
         PlayAnim(skillData.GetAnimKey(2));
+        //AudioManager.GetInstance().Play("jump_end", false);
         skillDurationTime = 0.5f;
         EventDispatcher.GetInstance().Off(EventDispatcher.PLAYER_JUMPED, EndJump);
         TimeManager.GetInstance().AddOnceTimer(this, 0.2f, () => {

@@ -25,7 +25,7 @@ public class Character{
 	//记录角色属性数值
 	public Property property;
 	//范围检测器
-	public RangeScan scan;
+	//public RangeScan scan;
 	//物理控制器
 	public PhysicController physic;
 
@@ -78,7 +78,7 @@ public class Character{
 		SkillBehaviour = new List<Skill>();
 		BuffBehaviour = new List<Buff>();
 		property = new Property(this);
-		scan = new RangeScan(this);
+		//scan = new RangeScan(this);
 		physic = new PhysicController(this);
 		characterAnimator = new CharacterAnimator();
 		characterAnimator.Init(anim,this);
@@ -89,7 +89,9 @@ public class Character{
 		weapons = trans.GetComponent<Binding>().weapons;
 		if (characterData.id == 99) property.hp.AddExAddValue(999999);
 		AddEventListener();
-    }
+		AudioManager.GetInstance().Play("wuman_breath", false);
+
+	}
 
 	public void AddEventListener()
     {

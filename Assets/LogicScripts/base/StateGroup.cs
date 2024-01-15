@@ -184,8 +184,8 @@ public class StateGroup
         {
             State state = new State(character, vo, time);
             state.stateInfo = stateInfo;
-            Add(state);
             //移除掉所以的互斥状态
+            Add(state);
             RemoveMutexState(state);
             SortStates();
             character.eventDispatcher.Event(CharacterEvent.ADD_STATE, state);

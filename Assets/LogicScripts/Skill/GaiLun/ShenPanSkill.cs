@@ -20,6 +20,8 @@ public class ShenPanSkill : Skill
         PlayAnim(skillData.GetAnimKey(0));
         base.OnEnter();
         skillDurationTime = stateDurationTime = 0.6f;
+        AudioManager.GetInstance().Play("xuanfeng", false);
+        AudioManager.GetInstance().Play("atk_2", false);
     }
 
     public override void OnTrigger()
