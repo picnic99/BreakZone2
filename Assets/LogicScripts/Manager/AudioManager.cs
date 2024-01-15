@@ -62,7 +62,8 @@ public class AudioManager : Singleton<AudioManager>, Manager
         if (target != null)
         {
             string sourceName = "";
-            if (data.SourceType == cfg.AudioSourceType.CHARACTER_BODY)
+
+/*            if (data.SourceType == cfg.AudioSourceType.CHARACTER_BODY)
             {
                 sourceName = "bodyAudioSourceMain";
             }
@@ -74,6 +75,8 @@ public class AudioManager : Singleton<AudioManager>, Manager
             {
                 sourceName = "skillAudioSourceMain";
             }
+*/
+            sourceName = "AudioSourceMain_" + (int)data.SourceType;
 
             var sourceMain = target.transform.Find(sourceName);
             if (sourceMain == null)
@@ -138,7 +141,7 @@ public class AudioManager : Singleton<AudioManager>, Manager
         if (!data.Loop)
         {
             //播放完消失
-            float playTime = clip.length / audioSource.pitch;
+            float playTime = (clip.length / audioSource.pitch) + data.Delay;
             TimeManager.GetInstance().AddOnceTimer(this, playTime, () =>
             {
                 pool.Recover(audioSource);

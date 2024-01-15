@@ -29,6 +29,10 @@ namespace cfg
         /// 音源来自技能
         /// </summary>
         SKILL = 4,
+        /// <summary>
+        /// 音源来自角色脚
+        /// </summary>
+        CHARACTER_FOOT = 5,
     }
 
 } 
