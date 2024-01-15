@@ -27,7 +27,7 @@ public class ZhengYiSkill : Skill
     public override void OnTrigger()
     {
         base.OnTrigger();
-        AudioManager.GetInstance().Play("hard_time", false);
+        AudioEventDispatcher.GetInstance().Event(MomentType.DoSkill, this, "start", this.character.trans.gameObject);
 
         new ZhenYiInstance(this, BeTrigger);
     }
@@ -89,10 +89,12 @@ class ZhenYiInstance : SkillInstance
          {
              JianWuCheck.gameObject.SetActive(true);
              TimeManager.GetInstance().AddOnceTimer(this,0.3f,()=> {
-                 AudioManager.GetInstance().Play("atk_style1_3", false);
+                 AudioEventDispatcher.GetInstance().Event(MomentType.DoSkill, this.RootSkill, "sword_dance", this.instanceObj);
+
              });
              TimeManager.GetInstance().AddOnceTimer(this, 0.5f, () => {
-                 AudioManager.GetInstance().Play("atk_style1_3", false);
+                 AudioEventDispatcher.GetInstance().Event(MomentType.DoSkill, this.RootSkill, "sword_dance", this.instanceObj);
+
              });
              //AudioManager.GetInstance().Play("atk_1", false);
              TimeManager.GetInstance().AddFixedFrameCall(() =>

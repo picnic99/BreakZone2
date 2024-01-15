@@ -31,7 +31,7 @@
     "audioDatas": [
       {
         "audioName": "move",
-        "sourceType": 3,
+        "sourceType": 5,
         "playType": 1,
         "volume": 1,
         "speed": 1,
@@ -53,7 +53,7 @@
     "audioDatas": [
       {
         "audioName": "move",
-        "sourceType": 3,
+        "sourceType": 5,
         "playType": 1,
         "volume": 0,
         "speed": 0,
@@ -75,7 +75,7 @@
     "audioDatas": [
       {
         "audioName": "move",
-        "sourceType": 3,
+        "sourceType": 5,
         "playType": 1,
         "volume": 1,
         "speed": 1.7,
@@ -97,7 +97,7 @@
     "audioDatas": [
       {
         "audioName": "move",
-        "sourceType": 3,
+        "sourceType": 5,
         "playType": 1,
         "volume": 0,
         "speed": 0,
@@ -145,16 +145,16 @@
   },
   {
     "id": 1003,
-    "characterId": 1,
-    "skillId": 0,
-    "stateId": 3,
-    "keyword": "enter",
+    "characterId": 0,
+    "skillId": 9998,
+    "stateId": 0,
+    "keyword": "jumpStart",
     "playMode": 1,
     "audioDatas": [
       {
         "audioName": "jump_start",
         "sourceType": 3,
-        "playType": 1,
+        "playType": 2,
         "volume": 1,
         "speed": 1,
         "loop": false,
@@ -167,16 +167,16 @@
   },
   {
     "id": 1004,
-    "characterId": 1,
-    "skillId": 0,
-    "stateId": 3,
-    "keyword": "exit",
+    "characterId": 0,
+    "skillId": 9998,
+    "stateId": 0,
+    "keyword": "jumpEnd",
     "playMode": 1,
     "audioDatas": [
       {
         "audioName": "jump_end",
         "sourceType": 3,
-        "playType": 1,
+        "playType": 2,
         "volume": 1,
         "speed": 1,
         "loop": false,
@@ -192,7 +192,7 @@
     "characterId": 1,
     "skillId": 0,
     "stateId": 5,
-    "keyword": "",
+    "keyword": "enter",
     "playMode": 2,
     "audioDatas": [
       {
@@ -359,6 +359,120 @@
         "audioName": "atk_style1_3",
         "sourceType": 4,
         "playType": 1,
+        "volume": 1,
+        "speed": 1,
+        "loop": false,
+        "onlySelf": false,
+        "delay": 0,
+        "weight": 1,
+        "maxLoopTime": 0
+      }
+    ]
+  },
+  {
+    "id": 1005,
+    "characterId": 0,
+    "skillId": 1003,
+    "stateId": 0,
+    "keyword": "start",
+    "playMode": 1,
+    "audioDatas": [
+      {
+        "audioName": "1/hei2",
+        "sourceType": 2,
+        "playType": 1,
+        "volume": 1,
+        "speed": 1,
+        "loop": false,
+        "onlySelf": false,
+        "delay": 0,
+        "weight": 1,
+        "maxLoopTime": 0
+      },
+      {
+        "audioName": "rotate",
+        "sourceType": 3,
+        "playType": 2,
+        "volume": 1,
+        "speed": 1,
+        "loop": false,
+        "onlySelf": false,
+        "delay": 0,
+        "weight": 1,
+        "maxLoopTime": 0
+      },
+      {
+        "audioName": "xuanfeng",
+        "sourceType": 3,
+        "playType": 2,
+        "volume": 1,
+        "speed": 1,
+        "loop": false,
+        "onlySelf": false,
+        "delay": 0.2,
+        "weight": 1,
+        "maxLoopTime": 0
+      },
+      {
+        "audioName": "atk_2",
+        "sourceType": 3,
+        "playType": 2,
+        "volume": 1,
+        "speed": 1,
+        "loop": false,
+        "onlySelf": false,
+        "delay": 0,
+        "weight": 1,
+        "maxLoopTime": 0
+      }
+    ]
+  },
+  {
+    "id": 1006,
+    "characterId": 0,
+    "skillId": 1004,
+    "stateId": 0,
+    "keyword": "start",
+    "playMode": 1,
+    "audioDatas": [
+      {
+        "audioName": "hard_time",
+        "sourceType": 3,
+        "playType": 2,
+        "volume": 1,
+        "speed": 1,
+        "loop": false,
+        "onlySelf": false,
+        "delay": 0,
+        "weight": 1,
+        "maxLoopTime": 0
+      },
+      {
+        "audioName": "1/hei4",
+        "sourceType": 2,
+        "playType": 1,
+        "volume": 1,
+        "speed": 1,
+        "loop": false,
+        "onlySelf": false,
+        "delay": 0.2,
+        "weight": 1,
+        "maxLoopTime": 0
+      }
+    ]
+  },
+  {
+    "id": 1007,
+    "characterId": 0,
+    "skillId": 1004,
+    "stateId": 0,
+    "keyword": "sword_dance",
+    "playMode": 1,
+    "audioDatas": [
+      {
+        "audioName": "atk_style1_3",
+        "sourceType": 4,
+        "playType": 2,
         "volume": 1,
         "speed": 1,
         "loop": false,
