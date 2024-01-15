@@ -16,6 +16,8 @@ public class ZhiMingDaJiSkill : Skill
     public void ShowWeaponEffect()
     {
         var obj = ResourceManager.GetInstance().GetObjInstance<GameObject>("Skill/ZhiMingDaJi_XuLi");
+        //AudioManager.GetInstance().Play("sword_power", false);
+        AudioEventDispatcher.GetInstance().Event(MomentType.DoSkill, this, "weaponFillPower");
         obj.transform.parent = character.GetWeapon().transform;
         obj.transform.localPosition = new Vector3(-0.084F, 0, 0.033F);
         obj.transform.localRotation = Quaternion.identity;
@@ -67,9 +69,12 @@ public class ZhiMingDaJiSkill : Skill
         character.animCoverData.Remove(StateType.DoAtk, atkCover);
         //character.animCoverData.Remove(StateType.Move, moveCover);
 
+        AudioEventDispatcher.GetInstance().Event(MomentType.DoSkill, this, "hardAtk");
+
         new ZhiMingDaJiInstance(this, DoTrigger, 0);
         new ZhiMingDaJiInstance(this, DoTrigger, 15);
         new ZhiMingDaJiInstance(this, DoTrigger, -15);
+
         character.eventDispatcher.Off(CharacterEvent.PRE_ATK, ATK_BUFF);
         skillDurationTime = 0f;
     }
@@ -105,6 +110,7 @@ public class ZhiMingDaJiInstance : SkillInstance
         this.instanceObj.SetActive(false);
         this.moveOffset = moveOffset;
         this.Init();
+        AudioEventDispatcher.GetInstance().Event(MomentType.DoSkill, this.RootSkill, "flywheel",this.instanceObj);
     }
 
     public override void AddBehaviour()

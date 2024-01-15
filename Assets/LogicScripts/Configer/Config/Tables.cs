@@ -19,6 +19,7 @@ public partial class Tables
     public TbSkill TbSkill {get; }
     public TbAnimation TbAnimation {get; }
     public TbState TbState {get; }
+    public TbAudio TbAudio {get; }
 
     public Tables(System.Func<string, JSONNode> loader)
     {
@@ -27,6 +28,7 @@ public partial class Tables
         TbSkill = new TbSkill(loader("tbskill"));
         TbAnimation = new TbAnimation(loader("tbanimation"));
         TbState = new TbState(loader("tbstate"));
+        TbAudio = new TbAudio(loader("tbaudio"));
         ResolveRef();
     }
     
@@ -37,6 +39,7 @@ public partial class Tables
         TbSkill.ResolveRef(this);
         TbAnimation.ResolveRef(this);
         TbState.ResolveRef(this);
+        TbAudio.ResolveRef(this);
     }
 }
 

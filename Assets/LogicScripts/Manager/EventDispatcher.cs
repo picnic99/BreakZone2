@@ -15,6 +15,8 @@ public class EventDispatcher : Singleton<EventDispatcher>,Manager
     public static string PLAYER_JUMPED = "EventDispatcher_PLAYER_JUMPED";
     //玩家操作减少状态持续时间
     public static string OPT_REDUCE_STATE_TIME = "EventDispatcher_OPT_REDUCE_STATE_TIME";
+    //有对象销毁时
+    public static string OBJ_DESTROY = "EventDispatcher_OBJ_DESTROY";
 
     public Dictionary<string, Delegate> events = new Dictionary<string, Delegate>();
 

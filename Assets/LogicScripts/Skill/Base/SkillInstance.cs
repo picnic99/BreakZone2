@@ -10,6 +10,7 @@ using UnityEngine;
 /// </summary>
 public abstract class SkillInstance
 {
+    public EventDispatcher dispatcher;
     /// <summary>
     /// 所属技能
     /// </summary>
@@ -64,6 +65,7 @@ public abstract class SkillInstance
     public virtual void Init(string layerName = "Character", CharacterState TriggerType = CharacterState.ENEMY)
     {
         maxDurationTime = durationTime;
+        dispatcher = new EventDispatcher();
         InitTransform();
         AddBehaviour();
         if (needTriggerCheck)
@@ -162,12 +164,12 @@ public abstract class SkillInstance
         TimeManager.GetInstance().RemoveAllTimer(this);
         if (IsEndRemoveObj)
         {
-            GameObject.Destroy(instanceObj);
+            MonoBridge.GetInstance().DestroyOBJ(instanceObj);
         }
         else
         {
-            TimeManager.GetInstance().AddOnceTimer(this, maxDurationTime, () => { 
-                GameObject.Destroy(instanceObj);
+            TimeManager.GetInstance().AddOnceTimer(this, maxDurationTime, () => {
+                MonoBridge.GetInstance().DestroyOBJ(instanceObj);
                 instanceObj = null; 
             });
         }
