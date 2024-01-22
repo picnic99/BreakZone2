@@ -66,20 +66,20 @@ public class DebugManager : MonoBehaviour
         debugRecordView = new DebugRecordView(tmp_record.gameObject, recordView.gameObject);
         debugAnimView = new DebugAnimView(tmp_anim.gameObject);
 
-        UIBinding.GetInstance().btn_skillEditor.onClick.AddListener(() => {
-            UIBinding.GetInstance().obj_opt.SetActive(false);
-            UIBinding.GetInstance().obj_skillEditor.SetActive(true);
-            UIBinding.GetInstance().obj_skillEditorStage.SetActive(true);
+        DebugUIBinding.GetInstance().btn_skillEditor.onClick.AddListener(() => {
+            DebugUIBinding.GetInstance().obj_opt.SetActive(false);
+            DebugUIBinding.GetInstance().obj_skillEditor.SetActive(true);
+            DebugUIBinding.GetInstance().obj_skillEditorStage.SetActive(true);
         });
 
-        UIBinding.GetInstance().btn_backScene.onClick.AddListener(() => {
+        DebugUIBinding.GetInstance().btn_backScene.onClick.AddListener(() => {
 
-            UIBinding.GetInstance().obj_opt.SetActive(true);
-            UIBinding.GetInstance().obj_skillEditor.SetActive(false);
-            UIBinding.GetInstance().obj_skillEditorStage.SetActive(false);
+            DebugUIBinding.GetInstance().obj_opt.SetActive(true);
+            DebugUIBinding.GetInstance().obj_skillEditor.SetActive(false);
+            DebugUIBinding.GetInstance().obj_skillEditorStage.SetActive(false);
         });
 
-        UIBinding.GetInstance().animDebugBtn.onClick.AddListener(() => {
+        DebugUIBinding.GetInstance().animDebugBtn.onClick.AddListener(() => {
             animView.gameObject.SetActive(!animView.gameObject.activeInHierarchy);
         });
 

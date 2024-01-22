@@ -10,7 +10,7 @@ public class GameMain : MonoBehaviour
     void Start()
     {
         //Time.timeScale = 0.2f;
-
+        UIManager.GetInstance().ShowUI(RegUIClass.SelectRoleUI);
     }
 
     // Update is called once per frame

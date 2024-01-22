@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIBinding : MonoBehaviour {
+public class DebugUIBinding : MonoBehaviour {
 
     public Button btn_skillEditor;
     public Button btn_backScene;
@@ -28,7 +28,7 @@ public class UIBinding : MonoBehaviour {
 
 
 
-    public static UIBinding _instance;
+    public static DebugUIBinding _instance;
 
     private void Awake()
     {
@@ -38,7 +38,7 @@ public class UIBinding : MonoBehaviour {
         }
     }
 
-    public static UIBinding GetInstance()
+    public static DebugUIBinding GetInstance()
     {
         return _instance;
     }
