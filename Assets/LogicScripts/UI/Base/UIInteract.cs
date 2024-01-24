@@ -26,46 +26,46 @@ public class UIInteract : MonoBehaviour,
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        beginDragCall.Invoke(eventData);
+        beginDragCall?.Invoke(eventData);
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        DragingCall.Invoke(eventData);
+        DragingCall?.Invoke(eventData);
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        endDragCall.Invoke(eventData);
+        endDragCall?.Invoke(eventData);
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        clickCall.Invoke(eventData);
+        clickCall?.Invoke(eventData);
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        downCall.Invoke(eventData);
+        downCall?.Invoke(eventData);
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        enterCall.Invoke(eventData);
+        enterCall?.Invoke(eventData);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        exitCall.Invoke(eventData);
+        exitCall?.Invoke(eventData);
     }
 
     public void OnPointerMove(PointerEventData eventData)
     {
-        moveCall.Invoke(eventData);
+        moveCall?.Invoke(eventData);
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        upCall.Invoke(eventData);
+        upCall?.Invoke(eventData);
     }
 }

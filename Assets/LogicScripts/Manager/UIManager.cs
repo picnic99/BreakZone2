@@ -37,9 +37,9 @@ public class UIManager : Singleton<UIManager>, Manager
         {
             UIBase ui = (UIBase)type.Assembly.CreateInstance(type.Name);
             var cvs = rootCvs.GetCvsByLayer(ui.layer);
-            ui.UIRoot.transform.SetParent(cvs.UIRoot.transform);
-            ui.UIRoot.GetComponent<RectTransform>().offsetMax = new Vector2(0, 0);
-            ui.UIRoot.GetComponent<RectTransform>().offsetMin = new Vector2(0, 0);
+            ui.Root.transform.SetParent(cvs.Root.transform);
+            ui.Root.GetComponent<RectTransform>().offsetMax = new Vector2(0, 0);
+            ui.Root.GetComponent<RectTransform>().offsetMin = new Vector2(0, 0);
           UIDic.Add(uiName,ui);
             ui.OnLoad();
         }

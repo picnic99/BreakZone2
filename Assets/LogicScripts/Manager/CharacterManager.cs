@@ -1,4 +1,6 @@
-﻿public class CharacterManager : Singleton<CharacterManager>, Manager
+﻿using UnityEngine;
+
+public class CharacterManager : Singleton<CharacterManager>, Manager
 {
     public void Init()
     {
@@ -13,6 +15,13 @@
         //armTarget
         //...
         return null;
+    }
+
+    public ShowCharacter AddShowRole(CharacterVO vo)
+    {
+        var obj = ResourceManager.GetInstance().GetCharacterInstance<GameObject>(vo.modelName);
+        var character = new ShowCharacter(vo, obj);
+        return character;
     }
 
 }

@@ -17,16 +17,16 @@ public class RootCanvas : UIBase
     public override void OnLoad()
     {
         base.OnLoad();
-        var bottomCvsUI = this.UIRoot.transform.Find("BottomCvs");
-        var middleCvsUI = this.UIRoot.transform.Find("MiddleCvs");
-        var frontCvsUI = this.UIRoot.transform.Find("FrontCvs");
-        var systemCvsUI = this.UIRoot.transform.Find("SystemCvs");
+        var bottomCvsUI = this.Root.transform.Find("BottomCvs");
+        var middleCvsUI = this.Root.transform.Find("MiddleCvs");
+        var frontCvsUI = this.Root.transform.Find("FrontCvs");
+        var systemCvsUI = this.Root.transform.Find("SystemCvs");
         BottomCvs = new BaseCanvas(bottomCvsUI.gameObject);
         MiddleCvs = new BaseCanvas(middleCvsUI.gameObject);
         FrontCvs = new BaseCanvas(frontCvsUI.gameObject);
         SystemCvs = new BaseCanvas(systemCvsUI.gameObject);
 
-        GameObject.DontDestroyOnLoad(this.UIRoot);
+        GameObject.DontDestroyOnLoad(this.Root);
     }
 
     public BaseCanvas GetCvsByLayer(UILayers layer)
