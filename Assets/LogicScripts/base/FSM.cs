@@ -32,7 +32,7 @@ public class FSM
     {
         var defaultState = new State(character, StateConfiger.GetInstance().GetStateByType(StateType.Idle));
         myState.SetDefault(defaultState);
-        DebugManager.Instance.AddMonitor(() => {
+        DebugManager.Instance?.AddMonitor(() => {
         if (nextState != null && nextState.Length >= 2)
             {
                 return "nextState：" + nextState[1];

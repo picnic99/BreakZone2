@@ -11,9 +11,9 @@ namespace CustomPlayable
         public AnimBlendRootNode(PlayableGraph graph, playableAnimator animator) : base(graph, animator)
         {
             Init();
-            DebugManager.Instance.AddMonitor(() => { return "BlendRoot CurIndex = " + curIndex; });
-            DebugManager.Instance.AddMonitor(() => { return "BlendRoot TargetIndex = " + targetIndex; });
-            DebugManager.Instance.AddMonitor(() => { return "BlendRoot translateTime = " + translateTime; });
+            DebugManager.Instance?.AddMonitor(() => { return "BlendRoot CurIndex = " + curIndex; });
+            DebugManager.Instance?.AddMonitor(() => { return "BlendRoot TargetIndex = " + targetIndex; });
+            DebugManager.Instance?.AddMonitor(() => { return "BlendRoot translateTime = " + translateTime; });
         }
 
         /// <summary>

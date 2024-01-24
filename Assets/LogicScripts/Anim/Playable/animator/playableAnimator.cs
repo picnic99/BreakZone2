@@ -15,7 +15,7 @@ public class playableAnimator
     protected PlayableGraph graph;
     private AnimationPlayableOutput output;
     private Animator _anim;
-    public Character character;
+    public Character character { get; set; }
 
     /// <summary>
     /// 状态机的速度

@@ -24,7 +24,7 @@ public class DebugTargetItem
     public void Remove()
     {
         if (this.character == null) return;
-        DebugManager.Instance.RemoveTarget(this);
+        DebugManager.Instance?.RemoveTarget(this);
         GameObject.Destroy(this.Root);
     }
 }

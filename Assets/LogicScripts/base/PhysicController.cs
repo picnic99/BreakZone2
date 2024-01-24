@@ -116,12 +116,12 @@ public class PhysicController
     {
         this.character = character;
         cc = this.character.trans.GetComponent<CharacterController>();
-        DebugManager.Instance.AddMonitor(() => { return "[PhysicController]frameActionOffset：" + GetFrameAction().ToString(); });
-        DebugManager.Instance.AddMonitor(() => { return "[PhysicController]IsJump：" + IsJump; });
-        DebugManager.Instance.AddMonitor(() => { return "[PhysicController]GravityOffset：" + GravityOffset; });
-        DebugManager.Instance.AddMonitor(() => { return "[PhysicController]isGround：" + isGround; });
-        DebugManager.Instance.AddMonitor(() => { return "[PhysicController]totalMove：" + totalMove.ToString(); });
-        DebugManager.Instance.AddMonitor(() => { return "[PhysicController]velocity：" + cc.velocity; });
+        DebugManager.Instance?.AddMonitor(() => { return "[PhysicController]frameActionOffset：" + GetFrameAction().ToString(); });
+        DebugManager.Instance?.AddMonitor(() => { return "[PhysicController]IsJump：" + IsJump; });
+        DebugManager.Instance?.AddMonitor(() => { return "[PhysicController]GravityOffset：" + GravityOffset; });
+        DebugManager.Instance?.AddMonitor(() => { return "[PhysicController]isGround：" + isGround; });
+        DebugManager.Instance?.AddMonitor(() => { return "[PhysicController]totalMove：" + totalMove.ToString(); });
+        DebugManager.Instance?.AddMonitor(() => { return "[PhysicController]velocity：" + cc.velocity; });
     }
 
     /// <summary>
@@ -173,17 +173,19 @@ public class PhysicController
     /// <param name="x"></param>
     /// <param name="y"></param>
     /// <param name="z"></param>
-    public void RemoveActionAxis(bool x,bool y,bool z)
+    public void RemoveActionAxis(bool x, bool y, bool z)
     {
         foreach (var item in actionList)
         {
             if (x)
             {
                 item.totalOffset.x = 0;
-            }else if (y)
+            }
+            else if (y)
             {
                 item.totalOffset.y = 0;
-            }else if (z)
+            }
+            else if (z)
             {
                 item.totalOffset.z = 0;
             }
@@ -214,30 +216,30 @@ public class PhysicController
     public void Move(Vector3 posOffset, float durationTime, bool isOverride = false, bool canCtrl = true)
     {
         CanControl = canCtrl;
-/*
-        if (posOffset.y > 0)
-        {
-            GravityOffset = 0;
-            IsGravityEffect = false;
-            //CanControl = false;
-            TimeManager.GetInstance().AddOnceTimer(this, durationTime, () =>
-            {
-                IsGravityEffect = true;
-                //CanControl = true;
-            });
-        }*/
+        /*
+                if (posOffset.y > 0)
+                {
+                    GravityOffset = 0;
+                    IsGravityEffect = false;
+                    //CanControl = false;
+                    TimeManager.GetInstance().AddOnceTimer(this, durationTime, () =>
+                    {
+                        IsGravityEffect = true;
+                        //CanControl = true;
+                    });
+                }*/
 
         AddAction(new PhysicAction(posOffset, durationTime, PhysicActionType.ADD));
 
-/*        ValueModifier<Vector3> mod = deltaPosValue.AddModifier(deltaPos);
-        TimeManager.GetInstance().AddOnceTimer(this, durationTime, () =>
-        {
-            deltaPosValue.RemoveModifier(mod);
-            if (!canCtrl)
-            {
-                CanControl = true;
-            }
-        });*/
+        /*        ValueModifier<Vector3> mod = deltaPosValue.AddModifier(deltaPos);
+                TimeManager.GetInstance().AddOnceTimer(this, durationTime, () =>
+                {
+                    deltaPosValue.RemoveModifier(mod);
+                    if (!canCtrl)
+                    {
+                        CanControl = true;
+                    }
+                });*/
     }
 
 
@@ -288,7 +290,7 @@ public class PhysicController
     /// <summary>
     /// 击退
     /// </summary>
-    public void AtkBack(Vector3 offset,float durationTime)
+    public void AtkBack(Vector3 offset, float durationTime)
     {
 
     }

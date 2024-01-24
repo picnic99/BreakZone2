@@ -48,18 +48,18 @@ public class DebugCharacter
     public void Change()
     {
         if (character == null) return;
-        DebugManager.Instance.SetMainRole(this);
+        DebugManager.Instance?.SetMainRole(this);
     }
 
     public void Select()
     {
         if (character == null) return;
-        DebugManager.Instance.SelectTarget(character);
+        DebugManager.Instance?.SelectTarget(character);
     }
 
     public void del()
     {
-        DebugManager.Instance.DelRole(this);
+        DebugManager.Instance?.DelRole(this);
         GameObject.Destroy(Root);
     }
 
