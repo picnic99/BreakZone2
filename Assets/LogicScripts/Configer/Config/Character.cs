@@ -24,6 +24,7 @@ public sealed partial class Character : Luban.BeanBase
         { var __json0 = _buf["skills"]; if(!__json0.IsArray) { throw new SerializationException(); } Skills = new System.Collections.Generic.List<int>(__json0.Count); foreach(JSONNode __e0 in __json0.Children) { int __v0;  { if(!__e0.IsNumber) { throw new SerializationException(); }  __v0 = __e0; }  Skills.Add(__v0); }   }
         { if(!_buf["stateAnims"].IsString) { throw new SerializationException(); }  StateAnims = _buf["stateAnims"]; }
         { if(!_buf["desc"].IsString) { throw new SerializationException(); }  Desc = _buf["desc"]; }
+        { if(!_buf["isFake"].IsBoolean) { throw new SerializationException(); }  IsFake = _buf["isFake"]; }
     }
 
     public static Character DeserializeCharacter(JSONNode _buf)
@@ -56,12 +57,17 @@ public sealed partial class Character : Luban.BeanBase
     /// 角色描述
     /// </summary>
     public readonly string Desc;
+    /// <summary>
+    /// 是否为假人
+    /// </summary>
+    public readonly bool IsFake;
    
     public const int __ID__ = -726803703;
     public override int GetTypeId() => __ID__;
 
     public  void ResolveRef(Tables tables)
     {
+        
         
         
         
@@ -81,6 +87,7 @@ public sealed partial class Character : Luban.BeanBase
         + "skills:" + Luban.StringUtil.CollectionToString(Skills) + ","
         + "stateAnims:" + StateAnims + ","
         + "desc:" + Desc + ","
+        + "isFake:" + IsFake + ","
         + "}";
     }
 }

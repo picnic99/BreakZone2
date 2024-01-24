@@ -12,7 +12,8 @@
       9999
     ],
     "stateAnims": "",
-    "desc": ""
+    "desc": "",
+    "isFake": true
   },
   {
     "id": 1,
@@ -29,7 +30,8 @@
       1004
     ],
     "stateAnims": "idle:GAILUN_IDLE",
-    "desc": "这是盖伦"
+    "desc": "这是盖伦",
+    "isFake": false
   },
   {
     "id": 2,
@@ -46,7 +48,8 @@
       1008
     ],
     "stateAnims": "",
-    "desc": "这是剑圣"
+    "desc": "这是剑圣",
+    "isFake": false
   },
   {
     "id": 3,
@@ -63,7 +66,8 @@
       1012
     ],
     "stateAnims": "",
-    "desc": "这是瑞兹"
+    "desc": "这是瑞兹",
+    "isFake": false
   },
   {
     "id": 4,
@@ -80,6 +84,7 @@
       1016
     ],
     "stateAnims": "",
-    "desc": "这是盲僧"
+    "desc": "这是盲僧",
+    "isFake": false
   }
 ]

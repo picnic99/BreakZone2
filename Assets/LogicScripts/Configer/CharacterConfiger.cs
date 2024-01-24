@@ -21,4 +21,22 @@ public class CharacterConfiger : Singleton<CharacterConfiger>, Manager
         var vo = List.Find((item) => { return item.character.Id == id; });
         return vo;
     }
+
+    public CharacterVO[] GetAllCharacter()
+    {
+        return List.ToArray();
+    }
+
+    public CharacterVO[] GetRealCharacters()
+    {
+        List<CharacterVO> result = new List<CharacterVO>();
+        foreach (var item in List)
+        {
+            if (!item.character.IsFake)
+            {
+                result.Add(item);
+            }
+        }
+        return result.ToArray();
+    }
 }
