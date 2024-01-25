@@ -25,7 +25,7 @@ public class DataDriverTest : MonoBehaviour
 
         //实例化一个character
         Character character = DebugManager.Instance?.AddRoleReturn();
-        character.isDebug = true;
+        character.baseInfo.isDebug = true;
 
         //实例化一个数据驱动技能
         var skill = new DataDriverSkill();

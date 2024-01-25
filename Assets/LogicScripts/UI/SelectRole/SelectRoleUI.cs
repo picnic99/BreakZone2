@@ -18,6 +18,8 @@ public class SelectRoleUI : UIBase
 
     private List<RoleTabItem> roleTabs;
 
+    private Character curCrt;
+
     public SelectRoleUI()
     {
         uiPath = RegPrefabs.SelectRoleUI;
@@ -57,8 +59,11 @@ public class SelectRoleUI : UIBase
         foreach (var item in roleTabs)
         {
             item.IsSelect = item == tab;
-            updateRightInfo(vo);
-            updateRole(vo);
+            if (item.IsSelect)
+            {
+                updateRightInfo(vo);
+                updateRole(vo);
+            }
         }
         updateTabs();
     }
@@ -73,8 +78,14 @@ public class SelectRoleUI : UIBase
 
     private void updateRole(CharacterVO vo)
     {
-        ShowCharacter crt = CharacterManager.GetInstance().AddShowRole(vo);
-        crt.trans.parent = GameObject.Find("RolePos").transform;
+        curCrt?.OnDestory();
+        Character crt = CharacterManager.GetInstance().CreateCharacter(vo);
+        curCrt = crt;
+        curCrt.trans.SetParent(GameObject.Find("RolePos").transform);
+        curCrt.trans.localPosition = Vector3.zero;
+
+        GameContext.SelfRole = crt;
+
     }
 
     private void updateRightInfo(CharacterVO vo)

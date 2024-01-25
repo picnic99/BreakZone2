@@ -66,7 +66,10 @@ namespace CustomPlayable
         {
             mixer = AnimationMixerPlayable.Create(graph);
             AddRootInput(mixer);
-            DebugManager.Instance?.AddAnimMonitor(this);
+            if(GameContext.GameMode == GameMode.DEBUG)
+            {
+                DebugManager.Instance?.AddAnimMonitor(this);
+            }
         }
 
         protected bool ExistAnim(string animName)

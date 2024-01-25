@@ -32,14 +32,16 @@ public class FSM
     {
         var defaultState = new State(character, StateConfiger.GetInstance().GetStateByType(StateType.Idle));
         myState.SetDefault(defaultState);
-        DebugManager.Instance?.AddMonitor(() => {
-        if (nextState != null && nextState.Length >= 2)
-            {
-                return "nextState：" + nextState[1];
-            }
-            return "";
-        });
-
+        if(GameContext.GameMode == GameMode.DEBUG)
+        {
+            DebugManager.Instance?.AddMonitor(() => {
+            if (nextState != null && nextState.Length >= 2)
+                {
+                    return "nextState：" + nextState[1];
+                }
+                return "";
+            });
+        }
     }
 
     private void AddEventListener()
@@ -146,7 +148,7 @@ public class FSM
                     }
                     //【常规触发技能流程】
                     //isDebug 是当时想做技能编辑器时生成的角色 该角色是不通过FSM驱动
-                    if (!character.isDebug)
+                    if (!character.baseInfo.isDebug)
                     {
                         finalState = CreateStateAndSkill(skillId, stateName);
                     }

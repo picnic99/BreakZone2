@@ -11,11 +11,18 @@ public class GameMain : MonoBehaviour
     {
         //Time.timeScale = 0.2f;
         UIManager.GetInstance().ShowUI(RegUIClass.SelectRoleUI);
+        DontDestroyOnLoad(this);
     }
 
     // Update is called once per frame
     void Update()
     {
+        foreach (var item in GameContext.AllCharacter)
+        {
+            item.OnUpdate();
+        }
+
+        return;
         if (GameContext.SelfRole == null) return;
 
 

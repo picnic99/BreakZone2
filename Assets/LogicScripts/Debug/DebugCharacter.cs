@@ -48,18 +48,27 @@ public class DebugCharacter
     public void Change()
     {
         if (character == null) return;
-        DebugManager.Instance?.SetMainRole(this);
+        if (GameContext.GameMode == GameMode.DEBUG)
+        {
+            DebugManager.Instance?.SetMainRole(this);
+        }
     }
 
     public void Select()
     {
         if (character == null) return;
-        DebugManager.Instance?.SelectTarget(character);
+        if (GameContext.GameMode == GameMode.DEBUG)
+        {
+            DebugManager.Instance?.SelectTarget(character);
+        }
     }
 
     public void del()
     {
-        DebugManager.Instance?.DelRole(this);
+        if (GameContext.GameMode == GameMode.DEBUG)
+        {
+            DebugManager.Instance?.DelRole(this);
+        }
         GameObject.Destroy(Root);
     }
 
@@ -80,7 +89,7 @@ public class DebugCharacter
 
     public void SetMainRole(bool b)
     {
-        Root.GetComponent<Image>().color = b? Color.yellow :Color.white;
+        Root.GetComponent<Image>().color = b ? Color.yellow : Color.white;
     }
 }
 

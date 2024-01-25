@@ -87,6 +87,7 @@ public class UIBinding : MonoBehaviour
             if (item.FieldType == typeof(GameObject)) value = GetItem(item.Name) as GameObject;
             if (item.FieldType == typeof(Text)) value = GetItem(item.Name) as Text;
             if (item.FieldType == typeof(RawImage)) value = GetItem(item.Name) as RawImage;
+            if (item.FieldType == typeof(RectTransform)) value = GetItem(item.Name) as RectTransform;
 
             if (value == null) {
                 Debug.LogError(item.FieldType.Name + "类型尚不支持自动绑定！");

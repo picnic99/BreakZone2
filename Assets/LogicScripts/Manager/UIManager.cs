@@ -45,6 +45,17 @@ public class UIManager : Singleton<UIManager>, Manager
         }
     }
 
+    public void ClearAllUI()
+    {
+        foreach (var item in UIDic)
+        {
+            var ui = item.Value;
+            ui.OnUnLoad();
+        }
+
+        UIDic.Clear();
+    }
+
     public void ShowUI(string uiName)
     {
         ShowUI(new object[] { uiName });

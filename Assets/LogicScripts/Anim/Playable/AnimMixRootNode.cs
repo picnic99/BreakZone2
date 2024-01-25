@@ -9,10 +9,12 @@ public class AnimMixRootNode : AnimMixNode
     public AnimMixRootNode(PlayableGraph graph, playableAnimator animator) : base(graph, animator)
     {
         Init();
-        DebugManager.Instance?.AddMonitor(() => { return "MixRoot CurIndex = " + curIndex; });
-        DebugManager.Instance?.AddMonitor(() => { return "MixRoot TargetIndex = " + targetIndex; });
-        DebugManager.Instance?.AddMonitor(() => { return "MixRoot translateTime = " + translateTime; });
-
+        if(GameContext.GameMode == GameMode.DEBUG)
+        {
+            DebugManager.Instance?.AddMonitor(() => { return "MixRoot CurIndex = " + curIndex; });
+            DebugManager.Instance?.AddMonitor(() => { return "MixRoot TargetIndex = " + targetIndex; });
+            DebugManager.Instance?.AddMonitor(() => { return "MixRoot translateTime = " + translateTime; });
+        }
     }
 
     /// <summary>

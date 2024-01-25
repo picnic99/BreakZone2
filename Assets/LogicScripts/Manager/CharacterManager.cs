@@ -8,20 +8,13 @@ public class CharacterManager : Singleton<CharacterManager>, Manager
     }
 
     public Character CreateCharacter(int id) {
-        //创建一个角色
-        //原生模型只需要包括模型即可
-        //此处将添加游戏中所需要的所以模块
-        //IK
-        //armTarget
-        //...
-        return null;
+        CharacterVO vo = CharacterConfiger.GetInstance().GetCharacterById(id);
+        return CreateCharacter(vo);
     }
-
-    public ShowCharacter AddShowRole(CharacterVO vo)
+    public Character CreateCharacter(CharacterVO vo)
     {
-        var obj = ResourceManager.GetInstance().GetCharacterInstance<GameObject>(vo.modelName);
-        var character = new ShowCharacter(vo, obj);
-        return character;
+        GameObject characterObj = ResourceManager.GetInstance().GetCharacterInstance<GameObject>(vo.character.ModePath);
+        return new Character(vo, characterObj); ;
     }
 
 }
