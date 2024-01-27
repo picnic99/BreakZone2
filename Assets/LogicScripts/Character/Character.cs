@@ -16,6 +16,21 @@ public class CharacterBaseInfo
     public bool canControl = false;
     public bool needControl = false;
     public bool isNeedStateBar = false;
+
+    public static CharacterBaseInfo GetShowBaseInfo()
+    {
+        CharacterBaseInfo info = new CharacterBaseInfo();
+        return info;
+    }
+
+    public static CharacterBaseInfo GetFightBaseInfo()
+    {
+        CharacterBaseInfo info = new CharacterBaseInfo();
+        info.canControl = true;
+        info.needControl = true;
+        //info.isNeedStateBar = true;
+        return info;
+    }
 }
 
 /// <summary>
@@ -80,6 +95,7 @@ public class Character
         InitCharacter();
         GameContext.AllCharacter.Add(this);
         msg.characterName = vo.characterName;
+
     }
 
     /// <summary>
@@ -91,7 +107,7 @@ public class Character
         SkillBehaviour = new List<Skill>();
         BuffBehaviour = new List<Buff>();
         property = new Property(this);
-        if(baseInfo.needControl) physic = new PhysicController(this);
+        if (baseInfo.needControl) physic = new PhysicController(this);
         characterAnimator = new CharacterAnimator();
         characterAnimator.Init(anim, this);
         fsm = new FSM(this);
@@ -227,7 +243,11 @@ public class Character
     public void OnDestory()
     {
         RemoveEventListener();
-        MonoBridge.GetInstance().DestroyOBJ(trans.gameObject);
+        if(trans != null)
+        {
+            MonoBridge.GetInstance().DestroyOBJ(trans.gameObject);
+        }
+        //EventDispatcher.GetInstance().Event(EventDispatcher.CHARACTER_DESTORY, this);
         fsm.OnDestory();
         physic?.OnDestory();
         physic = null;

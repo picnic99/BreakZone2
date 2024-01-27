@@ -119,12 +119,12 @@ public class PhysicController
         cc.enabled = true;
         if (GameContext.GameMode == GameMode.DEBUG)
         {
-            DebugManager.Instance?.AddMonitor(() => { return "[PhysicController]frameActionOffset：" + GetFrameAction().ToString(); });
-            DebugManager.Instance?.AddMonitor(() => { return "[PhysicController]IsJump：" + IsJump; });
-            DebugManager.Instance?.AddMonitor(() => { return "[PhysicController]GravityOffset：" + GravityOffset; });
-            DebugManager.Instance?.AddMonitor(() => { return "[PhysicController]isGround：" + isGround; });
-            DebugManager.Instance?.AddMonitor(() => { return "[PhysicController]totalMove：" + totalMove.ToString(); });
-            DebugManager.Instance?.AddMonitor(() => { return "[PhysicController]velocity：" + cc.velocity; });
+            DebugManager.GetInstance().AddMonitor(() => { return "[PhysicController]frameActionOffset：" + GetFrameAction().ToString(); });
+            DebugManager.GetInstance().AddMonitor(() => { return "[PhysicController]IsJump：" + IsJump; });
+            DebugManager.GetInstance().AddMonitor(() => { return "[PhysicController]GravityOffset：" + GravityOffset; });
+            DebugManager.GetInstance().AddMonitor(() => { return "[PhysicController]isGround：" + isGround; });
+            DebugManager.GetInstance().AddMonitor(() => { return "[PhysicController]totalMove：" + totalMove.ToString(); });
+            DebugManager.GetInstance().AddMonitor(() => { return "[PhysicController]velocity：" + cc.velocity; });
         }
     }
 
@@ -372,7 +372,7 @@ public class PhysicController
 
         Vector3 dir = Vector3.zero;
         //滞空移动
-        if (CanControl && !isGround && actionOffset.magnitude > 0 && GameContext.SelfRole == character)
+        if (CanControl && !isGround && actionOffset.magnitude > 0 && GameContext.CurRole == character)
         {
             dir = GameContext.GetDirByInput(character, false) * 5f;
         }

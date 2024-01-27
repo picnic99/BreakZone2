@@ -62,11 +62,11 @@ public class DebugSkillItem
     {
         if (this.skillIndex >= 0)
         {
-            InputManager.GetInstance().ChangeState(GameContext.SelfRole, stateName, this.skillIndex);
+            InputManager.GetInstance().ChangeState(GameContext.CurRole, stateName, this.skillIndex);
         }
         else
         {
-            InputManager.GetInstance().ChangeState(GameContext.SelfRole, stateName);
+            InputManager.GetInstance().ChangeState(GameContext.CurRole, stateName);
         }
     }
 }

@@ -13,9 +13,9 @@ namespace CustomPlayable
             Init();
             if(GameContext.GameMode == GameMode.DEBUG)
             {
-                DebugManager.Instance?.AddMonitor(() => { return "BlendRoot CurIndex = " + curIndex; });
-                DebugManager.Instance?.AddMonitor(() => { return "BlendRoot TargetIndex = " + targetIndex; });
-                DebugManager.Instance?.AddMonitor(() => { return "BlendRoot translateTime = " + translateTime; });
+                DebugManager.GetInstance().AddMonitor(() => { return "BlendRoot CurIndex = " + curIndex; });
+                DebugManager.GetInstance().AddMonitor(() => { return "BlendRoot TargetIndex = " + targetIndex; });
+                DebugManager.GetInstance().AddMonitor(() => { return "BlendRoot translateTime = " + translateTime; });
             }
         }
 

@@ -3,14 +3,15 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AudioManager : Singleton<AudioManager>, Manager
+public class AudioManager :Manager<AudioManager>
 {
     private AudioSourcePool pool;
     private AudioSource loopAudio { get { return GameContext.GetLoopAudio(); } }
     private AudioSource onceAudio { get { return GameContext.GetOnceAudio(); } }
-    public void Init()
+    public override void Init()
     {
         pool = new AudioSourcePool();
+        base.Init();
     }
 
     public void Play(string clipName, bool isLoop)

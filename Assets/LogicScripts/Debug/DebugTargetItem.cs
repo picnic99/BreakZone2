@@ -26,7 +26,7 @@ public class DebugTargetItem
         if (this.character == null) return;
         if(GameContext.GameMode == GameMode.DEBUG)
         {
-            DebugManager.Instance?.RemoveTarget(this);
+            DebugManager.GetInstance().RemoveTarget(this);
         }
         GameObject.Destroy(this.Root);
     }

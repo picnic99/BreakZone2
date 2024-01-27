@@ -31,14 +31,17 @@ public class RoleInfoView : UIItemBase
 
     public void EnterRoom(object[] args)
     {
-        SceneManager.GetInstance().ChangeScene("GameRoom",()=>
-        {
-            var go = new GameObject();
-            Character crt = CharacterManager.GetInstance().CreateCharacter(vo);
-            crt.trans.SetParent(go.transform);
-            crt.trans.localPosition = Vector3.zero;
+        /*        SceneManager.GetInstance().ChangeScene("GameRoom",()=>
+                {
+                    var go = new GameObject();
+                    Character crt = CharacterManager.GetInstance().CreateCharacter(vo);
+                    crt.trans.SetParent(go.transform);
+                    crt.trans.localPosition = Vector3.zero;
 
-        });
+                });*/
+
+        GameSceneManager.GetInstance().SwitchScene(RegSceneClass.GameRoomScene);
+
     }
 
     public void UpdateData(CharacterVO vo)

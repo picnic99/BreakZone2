@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class TweenManager : Singleton<TweenManager>,Manager
+public class TweenManager : Manager<TweenManager>
 {
     public List<Tweener> tweens = new List<Tweener>();
 

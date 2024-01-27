@@ -29,13 +29,14 @@ public class TimeVO
     }
 }
 
-public class TimeManager : Singleton<TimeManager>, Manager
+public class TimeManager : Manager<TimeManager>
 {
     public List<TimeVO> vos = new List<TimeVO>();
 
-    public void Init()
+    public override void Init()
     {
         MonoBridge.GetInstance().StartCoroutine(Coroutine());
+        base.Init();
     }
 
     public void AddOnceTimer(object caller, float delayTime, Action call)

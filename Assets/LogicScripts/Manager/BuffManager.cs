@@ -7,7 +7,7 @@ using System.Reflection;
 /// Buff管理器
 /// 负责处理添加删除buff的行为
 /// </summary>
-public class BuffManager : Singleton<BuffManager>,Manager
+public class BuffManager : Manager<BuffManager>
 {
 
     internal void RemoveBuff(Character character)
@@ -87,11 +87,6 @@ public class BuffManager : Singleton<BuffManager>,Manager
     }
 
     internal void RemoveAllBuffFromSkill(Character character, Skill yongQiSkill)
-    {
-
-    }
-
-    public void Init()
     {
 
     }

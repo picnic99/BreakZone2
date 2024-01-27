@@ -3,7 +3,7 @@
 /// <summary>
 /// 状态的数据解析类
 /// </summary>
-public class StateConfiger : Singleton<StateConfiger>, Manager
+public class StateConfiger : Singleton<StateConfiger>
 {
     private List<StateVO> List;
 

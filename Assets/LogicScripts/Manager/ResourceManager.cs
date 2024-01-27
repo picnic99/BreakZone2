@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-public class ResourceManager : Singleton<ResourceManager>,Manager
+public class ResourceManager : Manager<ResourceManager>
 {
     private float maxLoadTime = 3f;
     public T LoadResource<T>(string name) where T : Object
@@ -75,10 +75,5 @@ public class ResourceManager : Singleton<ResourceManager>,Manager
         {
             finishCall((T)asset.asset);
         }
-    }
-
-    public void Init()
-    {
-
     }
 }

@@ -187,7 +187,7 @@ class HuiYinJi: SkillInstance
         var character = RootSkill.character;
         character.trans.forward = target.trans.position - character.trans.position;
         character.canRotate = false;
-        CameraManager.GetInstance().ShowFeatureCam(character);
+        CameraManager.GetInstance().ShowFeatureCam();
         character.physic.MoveFollow(target, 20f, OnFlyEnd);
     }
 
@@ -199,7 +199,7 @@ class HuiYinJi: SkillInstance
         call.Invoke();
         triggered = true;
         RootSkill.character.canRotate = true;
-        CameraManager.GetInstance().ShowMainCam(RootSkill.character);
+        CameraManager.GetInstance().ShowMainCam();
         End();
     }
 }

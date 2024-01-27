@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UIManager : Singleton<UIManager>, Manager
+public class UIManager : Manager<UIManager>
 {
     public static string SHOW_UI = "UIManager_SHOW_UI";
     public static string HIDE_UI = "UIManager_HIDE_UI";
@@ -15,24 +15,26 @@ public class UIManager : Singleton<UIManager>, Manager
 
     private Dictionary<string, UIBase> UIDic;
 
-    public void Init()
+    public override void Init()
     {
         UIDic = new Dictionary<string, UIBase>();
         eventer = new EventDispatcher();
-        eventer.On(UIManager.SHOW_UI,ShowUI);
-        eventer.On(UIManager.HIDE_UI, HideUI);
-        eventer.On(UIManager.CLOSE_UI, CloseUI);
+        /*       eventer.On(UIManager.SHOW_UI,ShowUI);
+                eventer.On(UIManager.HIDE_UI, HideUI);
+                eventer.On(UIManager.CLOSE_UI, CloseUI);*/
 
         //´´½¨RootCanvas
         rootCvs = new RootCanvas();
         rootCvs.OnLoad();
         rootCvs.Init();
+
+        base.Init();
     }
 
-    public void ShowUI(object[] args)
+    public UIBase ShowUI(object[] args)
     {
         string uiName = (string)args[0];
-        Type type = ((RegUIClass)RegUIClass.GetInstance()).GetUIType(uiName);
+        Type type = ((RegUIClass)RegUIClass.GetInstance()).Get(uiName);
         if (type != null)
         {
             UIBase ui = (UIBase)type.Assembly.CreateInstance(type.Name);
@@ -40,9 +42,13 @@ public class UIManager : Singleton<UIManager>, Manager
             ui.Root.transform.SetParent(cvs.Root.transform);
             ui.Root.GetComponent<RectTransform>().offsetMax = new Vector2(0, 0);
             ui.Root.GetComponent<RectTransform>().offsetMin = new Vector2(0, 0);
-          UIDic.Add(uiName,ui);
+            UIDic.Add(uiName, ui);
             ui.OnLoad();
+            GameContext.CurScene.SceneUIs.Add(uiName);
+            return ui;
         }
+
+        return null;
     }
 
     public void ClearAllUI()
@@ -56,9 +62,9 @@ public class UIManager : Singleton<UIManager>, Manager
         UIDic.Clear();
     }
 
-    public void ShowUI(string uiName)
+    public UIBase ShowUI(string uiName)
     {
-        ShowUI(new object[] { uiName });
+        return ShowUI(new object[] { uiName });
     }
 
     public void HideUI(object[] args)
@@ -74,6 +80,16 @@ public class UIManager : Singleton<UIManager>, Manager
     public void CloseUI(object[] args)
     {
         string uiName = (string)args[0];
+        if (UIDic.ContainsKey(uiName))
+        {
+            var ui = UIDic[uiName];
+            ui.OnUnLoad();
+            UIDic.Remove(uiName);
+        }
+    }
+
+    public void CloseUI(string uiName)
+    {
         if (UIDic.ContainsKey(uiName))
         {
             var ui = UIDic[uiName];

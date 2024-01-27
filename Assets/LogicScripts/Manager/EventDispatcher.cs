@@ -6,17 +6,21 @@ using UnityEngine;
 /// 事件管理器
 /// 实现基础的监听触发功能
 /// </summary>
-public class EventDispatcher : Singleton<EventDispatcher>,Manager
+public class EventDispatcher : Manager<EventDispatcher>
 {
-    public static string ADD_RECORD = "EventDispatcher_ADD_RECORD";
+    public static string ADD_RECORD { get { return GetInstance().GetType().Name + "ADD_RECORD"; } }
 
-    public static string MAIN_ROLE_CHANGE = "EventDispatcher_MAIN_ROLE_CHANGE";
+    public static string MAIN_ROLE_CHANGE { get { return GetInstance().GetType().Name + "MAIN_ROLE_CHANGE"; } }
 
-    public static string PLAYER_JUMPED = "EventDispatcher_PLAYER_JUMPED";
+    public static string PLAYER_JUMPED { get { return GetInstance().GetType().Name + "PLAYER_JUMPED"; } }
     //玩家操作减少状态持续时间
-    public static string OPT_REDUCE_STATE_TIME = "EventDispatcher_OPT_REDUCE_STATE_TIME";
+    public static string OPT_REDUCE_STATE_TIME { get { return GetInstance().GetType().Name + "OPT_REDUCE_STATE_TIME"; } }
     //有对象销毁时
-    public static string OBJ_DESTROY = "EventDispatcher_OBJ_DESTROY";
+    public static string OBJ_DESTROY { get { return GetInstance().GetType().Name + "OBJ_DESTROY"; } }
+    //
+    public static string SCENE_CHANGE { get { return GetInstance().GetType().Name + "SCENE_CHANGE"; } }
+
+    public static string CHARACTER_DESTORY { get { return GetInstance().GetType().Name + "CHARACTER_DESTORY"; } }
 
     public Dictionary<string, Delegate> events = new Dictionary<string, Delegate>();
 
@@ -70,11 +74,6 @@ public class EventDispatcher : Singleton<EventDispatcher>,Manager
         {
             ((Action<object[]>)call).Invoke(args);
         }
-
-    }
-
-    public void Init()
-    {
 
     }
 }

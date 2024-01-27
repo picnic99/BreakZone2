@@ -22,7 +22,7 @@ public class RegisterBase<T,K,V> where T: RegisterBase<T, K, V>, new()
         regDic = new Dictionary<K, V>();
     }
 
-    public V Get(K key)
+    public virtual V Get(K key)
     {
         if (regDic.ContainsKey(key))
         {

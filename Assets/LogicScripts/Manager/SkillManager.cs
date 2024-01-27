@@ -6,7 +6,7 @@ using UnityEngine;
 /// <summary>
 /// 技能管理器
 /// </summary>
-public class SkillManager : Singleton<SkillManager>, Manager
+public class SkillManager : Manager<SkillManager>
 {
     public class skillCD
     {
@@ -107,9 +107,10 @@ public class SkillManager : Singleton<SkillManager>, Manager
         return ins;
     }
 
-    public void Init()
+    public override void Init()
     {
         MonoBridge.GetInstance().AddCall(UpdateCD);
+        base.Init();
     }
 
     public void RecoverSkillInstance(SkillInstance2 ins)

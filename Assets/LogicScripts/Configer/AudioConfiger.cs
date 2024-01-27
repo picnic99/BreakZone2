@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-public class AudioConfiger : Singleton<AudioConfiger>, Manager
+public class AudioConfiger : Singleton<AudioConfiger>
 {
     private List<AudioVO> List;
 

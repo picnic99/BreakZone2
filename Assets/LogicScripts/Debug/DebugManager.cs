@@ -6,9 +6,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DebugManager : MonoBehaviour
+public class DebugManager : Manager<DebugManager>
 {
-    public static DebugManager Instance;
     public Cinemachine.CinemachineFreeLook cameraCtrl;
 
     private Transform charaterView;
@@ -33,21 +32,33 @@ public class DebugManager : MonoBehaviour
 
     public DebugCharacter mainRole;
 
+    public DebugUI debugUI;
+
     private List<Func<string>> monitors = new List<Func<string>>();
 
-    private void Awake()
+    public void ShowPanel()
     {
-        if (Instance == null) Instance = this;
-    }
+        if (debugUI != null)
+        {
+            if (debugUI.Root.activeSelf)
+            {
+                debugUI.Hide();
+            }
+            else
+            {
+                debugUI.Show();
+            }
+            return;
+        }
 
-    private void Start()
-    {
-        charaterView = transform.Find("bg/characterArea");
-        recordView = transform.Find("bg/recordView");
-        skillView = transform.Find("bg/skillPanel");
-        globalOptView = transform.Find("bg/globalOptView");
-        animView = transform.Find("bg/AnimView");
-        monitorTips = transform.Find("bg/monitor/monitorTips").GetComponent<Text>();
+        debugUI = (DebugUI)UIManager.GetInstance().ShowUI(RegUIClass.DebugUI);
+        var uiRoot = debugUI.Root;
+        charaterView = uiRoot.transform.Find("bg/characterArea");
+        recordView = uiRoot.transform.Find("bg/recordView");
+        skillView = uiRoot.transform.Find("bg/skillPanel");
+        globalOptView = uiRoot.transform.Find("bg/globalOptView");
+        animView = uiRoot.transform.Find("bg/AnimView");
+        monitorTips = uiRoot.transform.Find("bg/monitor/monitorTips").GetComponent<Text>();
 
         tmp_character = charaterView.Find("character");
         tmp_record = recordView.Find("Viewport/Content/record");
@@ -66,23 +77,23 @@ public class DebugManager : MonoBehaviour
         debugRecordView = new DebugRecordView(tmp_record.gameObject, recordView.gameObject);
         debugAnimView = new DebugAnimView(tmp_anim.gameObject);
 
-        DebugUIBinding.GetInstance().btn_skillEditor.onClick.AddListener(() => {
-            DebugUIBinding.GetInstance().obj_opt.SetActive(false);
-            DebugUIBinding.GetInstance().obj_skillEditor.SetActive(true);
-            DebugUIBinding.GetInstance().obj_skillEditorStage.SetActive(true);
-        });
+        /*        DebugUIBinding.GetInstance().btn_skillEditor.onClick.AddListener(() => {
+                    DebugUIBinding.GetInstance().obj_opt.SetActive(false);
+                    DebugUIBinding.GetInstance().obj_skillEditor.SetActive(true);
+                    DebugUIBinding.GetInstance().obj_skillEditorStage.SetActive(true);
+                });
 
-        DebugUIBinding.GetInstance().btn_backScene.onClick.AddListener(() => {
+                DebugUIBinding.GetInstance().btn_backScene.onClick.AddListener(() => {
 
-            DebugUIBinding.GetInstance().obj_opt.SetActive(true);
-            DebugUIBinding.GetInstance().obj_skillEditor.SetActive(false);
-            DebugUIBinding.GetInstance().obj_skillEditorStage.SetActive(false);
-        });
+                    DebugUIBinding.GetInstance().obj_opt.SetActive(true);
+                    DebugUIBinding.GetInstance().obj_skillEditor.SetActive(false);
+                    DebugUIBinding.GetInstance().obj_skillEditorStage.SetActive(false);
+                });
 
-        DebugUIBinding.GetInstance().animDebugBtn.onClick.AddListener(() => {
-            animView.gameObject.SetActive(!animView.gameObject.activeInHierarchy);
-        });
-
+                DebugUIBinding.GetInstance().animDebugBtn.onClick.AddListener(() => {
+                    animView.gameObject.SetActive(!animView.gameObject.activeInHierarchy);
+                });
+        */
     }
 
     public void AddMonitor(Func<string> valueGet)
@@ -124,9 +135,9 @@ public class DebugManager : MonoBehaviour
         //if (vo.id == 99) obj = tmp_fakeMan_obj;
         var c_obj = obj;
         var character = new Character(vo, c_obj);
-        if (vo.id == 99 && GameContext.SelfRole != null)
+        if (vo.id == 99 && GameContext.CurRole != null)
         {
-            character.physic.Move(GameContext.SelfRole.trans.position + GameContext.SelfRole.trans.forward * 3f,0.1f);
+            character.physic.Move(GameContext.CurRole.trans.position + GameContext.CurRole.trans.forward * 3f,0.1f);
         }
 /*        character.trans.gameObject.AddComponent<FullBodyBipedIK>();
         character.trans.gameObject.AddComponent<GrounderFBBIK>();*/
@@ -166,14 +177,14 @@ public class DebugManager : MonoBehaviour
         if (mainRole != null)
         {
             mainRole.SetMainRole(true);
-            GameContext.SelfRole = mainRole.character;
-            CameraManager.GetInstance().ShowMainCam(GameContext.SelfRole);
+            GameContext.CurRole = mainRole.character;
+            CameraManager.GetInstance().ShowMainCam();
 /*            foreach (var c in GameContext.AllCharacter)
             {
                 if (c == GameContext.SelfRole) c.state = CharacterState.FRIEND;
                 else c.state = CharacterState.ENEMY;
             }*/
-            EventDispatcher.GetInstance().Event(EventDispatcher.MAIN_ROLE_CHANGE);
+            //EventDispatcher.GetInstance().Event(EventDispatcher.MAIN_ROLE_CHANGE);
         }
     }
 

@@ -15,13 +15,13 @@ public class ShengLongBaiWeiSkill : Skill
         base.OnEnter();
         skillDurationTime = stateDurationTime = 1f;
         Time.timeScale = 0.4f;
-        CameraManager.GetInstance().ShowFeatureCam(character);
+        CameraManager.GetInstance().ShowFeatureCam();
     }
     public override void OnTrigger()
     {
         base.OnTrigger();
         new ShengLongBaiWei(this, BeTrigger);
-        CameraManager.GetInstance().ShowMainCam(character);
+        CameraManager.GetInstance().ShowMainCam();
         Time.timeScale = 1f;
     }
 

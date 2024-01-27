@@ -84,8 +84,8 @@ public class SelectRoleUI : UIBase
         curCrt.trans.SetParent(GameObject.Find("RolePos").transform);
         curCrt.trans.localPosition = Vector3.zero;
 
-        GameContext.SelfRole = crt;
-
+        //GameContext.CurRole = crt;
+        GameContext.SelectCrtId = vo.id;
     }
 
     private void updateRightInfo(CharacterVO vo)
@@ -99,6 +99,7 @@ public class SelectRoleUI : UIBase
 
     public override void OnUnLoad()
     {
+        CharacterManager.GetInstance().RemoveCharacter(curCrt);
         base.OnUnLoad();
     }
 }

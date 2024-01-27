@@ -68,7 +68,7 @@ namespace CustomPlayable
             AddRootInput(mixer);
             if(GameContext.GameMode == GameMode.DEBUG)
             {
-                DebugManager.Instance?.AddAnimMonitor(this);
+                DebugManager.GetInstance().AddAnimMonitor(this);
             }
         }
 

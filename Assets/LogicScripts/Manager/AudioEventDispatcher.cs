@@ -2,7 +2,7 @@
 using System;
 using UnityEngine;
 
-public class AudioEventDispatcher: Singleton<AudioEventDispatcher>, Manager
+public class AudioEventDispatcher: Singleton<AudioEventDispatcher>
 {
     public EventDispatcher dispatcher;
 

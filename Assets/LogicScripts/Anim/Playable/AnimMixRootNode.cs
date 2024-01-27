@@ -11,9 +11,9 @@ public class AnimMixRootNode : AnimMixNode
         Init();
         if(GameContext.GameMode == GameMode.DEBUG)
         {
-            DebugManager.Instance?.AddMonitor(() => { return "MixRoot CurIndex = " + curIndex; });
-            DebugManager.Instance?.AddMonitor(() => { return "MixRoot TargetIndex = " + targetIndex; });
-            DebugManager.Instance?.AddMonitor(() => { return "MixRoot translateTime = " + translateTime; });
+            DebugManager.GetInstance().AddMonitor(() => { return "MixRoot CurIndex = " + curIndex; });
+            DebugManager.GetInstance().AddMonitor(() => { return "MixRoot TargetIndex = " + targetIndex; });
+            DebugManager.GetInstance().AddMonitor(() => { return "MixRoot translateTime = " + translateTime; });
         }
     }
 

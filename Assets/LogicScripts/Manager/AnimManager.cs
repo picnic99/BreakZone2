@@ -5,7 +5,7 @@ using UnityEngine;
 /// 动画管理器
 /// 先考虑用animator 后续改用playable
 /// </summary>
-public class AnimManager : Singleton<AnimManager>, Manager
+public class AnimManager : Manager<AnimManager>
 {
     /// <summary>
     /// 为某个角色播放一个动画
@@ -63,10 +63,5 @@ public class AnimManager : Singleton<AnimManager>, Manager
             len = clip.length;
         }
         return len;
-    }
-
-    public void Init()
-    {
-
     }
 }

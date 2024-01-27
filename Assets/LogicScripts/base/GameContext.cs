@@ -15,17 +15,50 @@ public class GameContext
 
     public static bool OpenRangeShow = true;
 
+    public static int SelectCrtId = 1;
+
+    private static Character _curRole;
     //当前操纵的角色
-    public static Character SelfRole;
+    public static Character CurRole 
+    {
+        get { return _curRole; }
+        set
+        {
+            _curRole = value;
+            EventDispatcher.GetInstance().Event(EventDispatcher.MAIN_ROLE_CHANGE, value);
+        }
+    }
+
     //场景中全部角色
     public static List<Character> AllCharacter = new List<Character>();
+
+    private static GameScene _curScene;
+    public static GameScene LastScene;
+    public static GameScene CurScene
+    {
+        get { return _curScene; }
+        set
+        {
+            if(LastScene == null)
+            {
+                LastScene = value;
+            }
+            else
+            {
+                LastScene = _curScene;
+            }
+            _curScene = value;
+            EventDispatcher.GetInstance().Event(EventDispatcher.SCENE_CHANGE, value);
+        }
+    }
+
 
     public static Character GetCharacterByObj(GameObject obj)
     {
         for (int i = 0; i < AllCharacter.Count; i++)
         {
             var character = AllCharacter[i];
-            if (character.trans.gameObject == obj)
+            if (character.trans != null && character.trans.gameObject == obj)
             {
                 return character;
             }
@@ -96,7 +129,7 @@ public class GameContext
     {
         if (defalutCharacterIsSelf)
         {
-            character = GameContext.SelfRole;
+            character = GameContext.CurRole;
         }
 
         if (character == null || character.fsm == null || character.fsm.myState == null)
@@ -110,7 +143,7 @@ public class GameContext
 
     public static int GetCharacterSkillIdByIndex(int index, Character character = null)
     {
-        if (character == null) character = GameContext.SelfRole;
+        if (character == null) character = GameContext.CurRole;
         return character.characterData.GetSkillArr()[index];
     }
 

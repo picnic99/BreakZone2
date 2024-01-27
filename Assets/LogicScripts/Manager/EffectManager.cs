@@ -6,13 +6,8 @@ using UnityEngine;
 /// 负责特效的创建与回收
 /// 如施法技能时附带的特效 角色身上的特效 各种特效
 /// </summary>
-public class EffectManager:Singleton<EffectManager>,Manager
+public class EffectManager:Manager<EffectManager>
 {
-    public void Init()
-    {
-
-    }
-
     public GameObject PlayEffect(string name, float durationTime, Transform parant, Vector3 pos, Vector3 dir, Vector3 scale)
     {
         GameObject asset = ResourceManager.GetInstance().LoadResource<GameObject>("Effect/" + name);

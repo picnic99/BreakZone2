@@ -2,7 +2,7 @@
 /// <summary>
 /// 角色的数据配置解析类
 /// </summary>
-public class CharacterConfiger : Singleton<CharacterConfiger>, Manager
+public class CharacterConfiger : Singleton<CharacterConfiger>
 {
     private List<CharacterVO> List;
 

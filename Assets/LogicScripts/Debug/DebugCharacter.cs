@@ -50,7 +50,7 @@ public class DebugCharacter
         if (character == null) return;
         if (GameContext.GameMode == GameMode.DEBUG)
         {
-            DebugManager.Instance?.SetMainRole(this);
+            DebugManager.GetInstance().SetMainRole(this);
         }
     }
 
@@ -59,7 +59,7 @@ public class DebugCharacter
         if (character == null) return;
         if (GameContext.GameMode == GameMode.DEBUG)
         {
-            DebugManager.Instance?.SelectTarget(character);
+            DebugManager.GetInstance().SelectTarget(character);
         }
     }
 
@@ -67,7 +67,7 @@ public class DebugCharacter
     {
         if (GameContext.GameMode == GameMode.DEBUG)
         {
-            DebugManager.Instance?.DelRole(this);
+            DebugManager.GetInstance().DelRole(this);
         }
         GameObject.Destroy(Root);
     }

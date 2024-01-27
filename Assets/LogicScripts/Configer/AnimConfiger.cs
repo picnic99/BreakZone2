@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-public class AnimConfiger : Singleton<AnimConfiger>, Manager
+public class AnimConfiger : Singleton<AnimConfiger>
 {
     private List<AnimationVO> List;
 

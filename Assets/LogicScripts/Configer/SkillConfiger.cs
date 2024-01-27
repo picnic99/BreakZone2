@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-public class SkillConfiger : Singleton<SkillConfiger>, Manager
+public class SkillConfiger : Singleton<SkillConfiger>
 {
     private List<SkillVO> List;
 

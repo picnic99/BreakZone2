@@ -11,7 +11,7 @@
 /// 然后再去问一下接收者 是否有buff或者属性能够减少该数值？ 如我的属性有30%的伤害减免，又或者我有一个buff可以免疫下一次受到的伤害
 /// 然后两者进行结合 得到最终伤害数值，写入接收者的属性中
 /// </summary>
-public class ActionManager : Singleton<ActionManager>, Manager
+public class ActionManager : Manager<ActionManager>
 {
 
     //public Queue<BaseAction> actionQueue = new Queue<BaseAction>();
@@ -24,17 +24,12 @@ public class ActionManager : Singleton<ActionManager>, Manager
         //actionQueue.Enqueue(action);
     }
 
-    public void Init()
-    {
-
-    }
-
     /// <summary>
     /// 每帧结束时进行各类数值结算
     /*    public void SettleInFreameEnd()
         {
-            return;
             if (actionQueue.Count <= 0) return;
+            return;
             for (int i = 0; i < actionQueue.Count; i++)
             {
                 BaseAction action = actionQueue.Dequeue();

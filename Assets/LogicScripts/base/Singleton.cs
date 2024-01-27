@@ -2,7 +2,7 @@
 /// 单例工具类
 /// </summary>
 /// <typeparam name="T"></typeparam>
-public class Singleton<T> where T: Manager,new() 
+public class Singleton<T> where T : new()
 {
     private static T _instance;
 
@@ -11,7 +11,7 @@ public class Singleton<T> where T: Manager,new()
         if (_instance == null)
         {
             _instance = new T();
-            _instance.Init();
+            typeof(T).GetMethod("Init").Invoke(_instance, null);
         }
         return _instance;
     }

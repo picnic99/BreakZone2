@@ -6,7 +6,7 @@ public enum CameraState
 {
     MAIN, FEATURE, ARM
 }
-public class CameraManager : Singleton<CameraManager>, Manager
+public class CameraManager : Manager<CameraManager>
 {
     public CameraState state = CameraState.MAIN;
 
@@ -16,6 +16,8 @@ public class CameraManager : Singleton<CameraManager>, Manager
     public CinemachineVirtualCameraBase armCam;
 
     public CinemachineVirtualCameraBase curCam;
+
+    public GameObject camRoot;
 
     public Character curLookCharacter;
 
@@ -44,39 +46,64 @@ public class CameraManager : Singleton<CameraManager>, Manager
         }
     }
 
-    public void Init()
+    public void SetTarget(object[] args)
     {
-        brain = Camera.main.GetComponent<CinemachineBrain>();
-        mainCam = GameObject.Find("CAM_main").GetComponent<CinemachineVirtualCameraBase>();
-        featureCam = GameObject.Find("CAM_feature").GetComponent<CinemachineVirtualCameraBase>();
-        armCam = GameObject.Find("CAM_arm").GetComponent<CinemachineVirtualCameraBase>();
-
-        MonoBridge.GetInstance().AddCall(OnUpdate);
+        Character crt = args[0] as Character;
+        curLookCharacter = crt;
+        ShowMainCam();
     }
 
-    public void ShowMainCam(Character character)
+    public override void AddEventListener()
     {
-        mainCam.Follow = character.trans;
-        mainCam.LookAt = character.anim.GetBoneTransform(HumanBodyBones.Spine);
+        base.AddEventListener();
+        EventDispatcher.GetInstance().On(EventDispatcher.MAIN_ROLE_CHANGE, SetTarget);
+    }
+
+    public override void Init()
+    {
+        var cam = GameMain.GetInstance().transform.Find("CrtCamera").transform;
+        camRoot = cam.gameObject;
+        brain = cam.GetComponent<CinemachineBrain>();
+        mainCam = cam.Find("CAM_main").GetComponent<CinemachineVirtualCameraBase>();
+        featureCam = cam.Find("CAM_feature").GetComponent<CinemachineVirtualCameraBase>();
+        armCam = cam.Find("CAM_arm").GetComponent<CinemachineVirtualCameraBase>();
+
+        MonoBridge.GetInstance().AddCall(OnUpdate);
+        base.Init();
+    }
+
+    public void ShowCam()
+    {
+        camRoot.SetActive(true);
+    }
+
+    public void CloseCam()
+    {
+        camRoot.SetActive(false);
+    }
+
+    public void ShowMainCam()
+    {
+        mainCam.Follow = curLookCharacter.trans;
+        mainCam.LookAt = curLookCharacter.anim.GetBoneTransform(HumanBodyBones.Spine);
         mainCam.Priority = ++priority;
         state = CameraState.MAIN;
         curCam = mainCam;
     }
 
-    public void ShowFeatureCam(Character character)
+    public void ShowFeatureCam()
     {
-        featureCam.Follow = character.trans;
-        featureCam.LookAt = character.anim.GetBoneTransform(HumanBodyBones.Spine);
+        featureCam.Follow = curLookCharacter.trans;
+        featureCam.LookAt = curLookCharacter.anim.GetBoneTransform(HumanBodyBones.Spine);
         featureCam.Priority = ++priority;
         state = CameraState.FEATURE;
         curCam = featureCam;
 
     }
-    public void ShowArmCam(Character character)
+    public void ShowArmCam()
     {
-        armCam.Follow = character.trans.Find("armTarget");
-        armCam.LookAt = character.trans.Find("armTarget");
-        curLookCharacter = character;
+        armCam.Follow = curLookCharacter.trans.Find("armTarget");
+        armCam.LookAt = curLookCharacter.trans.Find("armTarget");
         state = CameraState.ARM;
         armCam.Priority = ++priority;
         curCam = armCam;
@@ -112,7 +139,7 @@ public class CameraManager : Singleton<CameraManager>, Manager
 #endif
     }
 
-    private void OnUpdate()
+    public override void OnUpdate()
     {
         ArmRotate();
     }

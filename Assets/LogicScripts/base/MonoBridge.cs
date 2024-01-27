@@ -60,8 +60,8 @@ public class MonoBridge : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (GameContext.SelfRole == null) return;
+/*        if (GameContext.SelfRole == null) return;
         Gizmos.color = Color.blue;
-        Gizmos.DrawWireCube(GameContext.SelfRole.trans.position, new Vector3(0.3f, 0.1f, 0.3f));
+        Gizmos.DrawWireCube(GameContext.SelfRole.trans.position, new Vector3(0.3f, 0.1f, 0.3f));*/
     }
 }

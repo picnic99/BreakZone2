@@ -34,7 +34,7 @@ public class FSM
         myState.SetDefault(defaultState);
         if(GameContext.GameMode == GameMode.DEBUG)
         {
-            DebugManager.Instance?.AddMonitor(() => {
+            DebugManager.GetInstance().AddMonitor(() => {
             if (nextState != null && nextState.Length >= 2)
                 {
                     return "nextState：" + nextState[1];

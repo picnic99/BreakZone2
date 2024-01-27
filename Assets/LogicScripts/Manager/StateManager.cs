@@ -4,13 +4,8 @@ using System;
 /// <summary>
 /// ×´Ì¬¹ÜÀíÆ÷
 /// </summary>
-public class StateManager : Singleton<StateManager>,Manager
+public class StateManager : Manager<StateManager>
 {
-    public void Init()
-    {
-
-    }
-
     internal void AddState(Character from, Character[] targets, params object[] args)
     {
         if (targets == null || targets.Length <= 0) return;

@@ -35,7 +35,7 @@ public class RangeScan
 
     public void UpdateRangeScan(object[] args)
     {
-        if (character == GameContext.SelfRole) character.state = CharacterState.FRIEND;
+        if (character == GameContext.CurRole) character.state = CharacterState.FRIEND;
         else character.state = CharacterState.ENEMY;
         if (character.state == CharacterState.FRIEND) drawer.color = RangeDrawer.FRIEND_COLOR;
         if (character.state == CharacterState.ENEMY) drawer.color = RangeDrawer.ENEMY_COLOR;

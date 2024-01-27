@@ -3,16 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InputManager : Singleton<InputManager>, Manager
+public class InputManager : Manager<InputManager>
 {
     public bool HasSelfRole = false;
 
     public float thresholdMove = 0f;
-
-    public void Init()
-    {
-
-    }
 
     public Vector3 GetPlayInput()
     {
@@ -21,9 +16,9 @@ public class InputManager : Singleton<InputManager>, Manager
         return new Vector3(x, 0, z);
     }
 
-    public void OnUpdate()
+    public override void OnUpdate()
     {
-        if (GameContext.SelfRole == null) return;
+        if (GameContext.CurRole == null) return;
 
         if (HasSelfRole == false)
         {
@@ -41,7 +36,7 @@ public class InputManager : Singleton<InputManager>, Manager
                 {
                     if (!GameContext.CharacterIncludeState(StateType.Run))
                     {
-                        ChangeState(GameContext.SelfRole, StateType.Run);
+                        ChangeState(GameContext.CurRole, StateType.Run);
                         StopState(StateType.Move);
                     }
                 }
@@ -52,7 +47,7 @@ public class InputManager : Singleton<InputManager>, Manager
                 {
                     if (!GameContext.CharacterIncludeState(StateType.Move))
                     {
-                        ChangeState(GameContext.SelfRole, StateType.Move);
+                        ChangeState(GameContext.CurRole, StateType.Move);
                         StopState(StateType.Run);
                     }
                 }
@@ -61,12 +56,12 @@ public class InputManager : Singleton<InputManager>, Manager
             {
                 if (Input.GetKeyDown(KeyCode.LeftShift))
                 {
-                    ChangeState(GameContext.SelfRole, StateType.Run);
+                    ChangeState(GameContext.CurRole, StateType.Run);
 
                 }
                 else
                 {
-                    ChangeState(GameContext.SelfRole, StateType.Move);
+                    ChangeState(GameContext.CurRole, StateType.Move);
                 }
             }
 
@@ -85,28 +80,28 @@ public class InputManager : Singleton<InputManager>, Manager
         }
         if (Input.GetMouseButtonDown(0))
         {
-            ChangeState(GameContext.SelfRole, StateType.DoAtk, GameContext.GetCharacterSkillIdByIndex(0));
+            ChangeState(GameContext.CurRole, StateType.DoAtk, GameContext.GetCharacterSkillIdByIndex(0));
 
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            ChangeState(GameContext.SelfRole, StateType.Jump, GameContext.GetCharacterSkillIdByIndex(1));
+            ChangeState(GameContext.CurRole, StateType.Jump, GameContext.GetCharacterSkillIdByIndex(1));
         }
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            ChangeState(GameContext.SelfRole, StateType.DoSkill, GameContext.GetCharacterSkillIdByIndex(3));
+            ChangeState(GameContext.CurRole, StateType.DoSkill, GameContext.GetCharacterSkillIdByIndex(3));
         }
         if (Input.GetMouseButtonDown(1))
         {
             //瞄准
-            CameraManager.GetInstance().ShowArmCam(GameContext.SelfRole);
-            GameContext.SelfRole.physic.multiply = 0.1f;
+            CameraManager.GetInstance().ShowArmCam();
+            GameContext.CurRole.physic.multiply = 0.1f;
 
         }
         else if (Input.GetMouseButtonUp(1))
         {
-            CameraManager.GetInstance().ShowMainCam(GameContext.SelfRole);
-            GameContext.SelfRole.physic.multiply = 1f;
+            CameraManager.GetInstance().ShowMainCam();
+            GameContext.CurRole.physic.multiply = 1f;
         }
         if (Input.GetMouseButton(1))
         {
@@ -116,26 +111,26 @@ public class InputManager : Singleton<InputManager>, Manager
         {
             if(moveDelta.magnitude > 0)
             {
-                ChangeState(GameContext.SelfRole, StateType.Roll, GameContext.GetCharacterSkillIdByIndex(2));
+                ChangeState(GameContext.CurRole, StateType.Roll, GameContext.GetCharacterSkillIdByIndex(2));
             }
         }
         if (Input.GetKeyDown(KeyCode.E))
         {
-            ChangeState(GameContext.SelfRole, StateType.DoSkill, GameContext.GetCharacterSkillIdByIndex(5));
+            ChangeState(GameContext.CurRole, StateType.DoSkill, GameContext.GetCharacterSkillIdByIndex(5));
         }
         if (Input.GetKeyDown(KeyCode.F))
         {
-            ChangeState(GameContext.SelfRole, StateType.DoSkill, GameContext.GetCharacterSkillIdByIndex(6));
+            ChangeState(GameContext.CurRole, StateType.DoSkill, GameContext.GetCharacterSkillIdByIndex(6));
         }
     }
 
 
     private void LookForward() {
         if (CameraManager.GetInstance().state != CameraState.MAIN) return;
-        Vector3 dir = GameContext.SelfRole.trans.position - CameraManager.GetInstance().curCam.transform.position;
-        if (GameContext.SelfRole.canRotate)
+        Vector3 dir = GameContext.CurRole.trans.position - CameraManager.GetInstance().curCam.transform.position;
+        if (GameContext.CurRole.canRotate)
         {
-            GameContext.SelfRole.trans.forward = new Vector3(dir.x, 0, dir.z);
+            GameContext.CurRole.trans.forward = new Vector3(dir.x, 0, dir.z);
         }
     }
 
@@ -159,17 +154,17 @@ public class InputManager : Singleton<InputManager>, Manager
 
     public void StopState(string state)
     {
-        GameContext.SelfRole.eventDispatcher.Event(CharacterEvent.STATE_OVER, state);
+        GameContext.CurRole.eventDispatcher.Event(CharacterEvent.STATE_OVER, state);
     }
 
     public void AddEventListener()
     {
-        GameContext.SelfRole.eventDispatcher.On(CharacterEvent.DO_SKILL, OnDoSkill);
+        GameContext.CurRole.eventDispatcher.On(CharacterEvent.DO_SKILL, OnDoSkill);
     }
 
     public void RemoveEventListener()
     {
-        GameContext.SelfRole.eventDispatcher.On(CharacterEvent.DO_SKILL, OnDoSkill);
+        GameContext.CurRole.eventDispatcher.On(CharacterEvent.DO_SKILL, OnDoSkill);
     }
 
     private void OnDoSkill(object[] args)
