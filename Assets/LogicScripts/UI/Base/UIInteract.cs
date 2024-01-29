@@ -10,7 +10,11 @@ public class UIInteract : MonoBehaviour,
     IPointerEnterHandler,
     IPointerExitHandler,
     IPointerUpHandler,
+#if UNITY_2019_4_9
+
+#else
     IPointerMoveHandler,
+#endif
     IDragHandler,IBeginDragHandler,IEndDragHandler
 {
 
