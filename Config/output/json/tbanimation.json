@@ -17,6 +17,23 @@
     "validLength": 1
   },
   {
+    "key": "DEFAULT_DIE",
+    "animType": 1,
+    "clips": [
+      {
+        "animPath": "Default/die/die",
+        "x": 0,
+        "y": 0
+      }
+    ],
+    "frontTime": 0,
+    "backTime": 0,
+    "eventTimes": [
+      "0"
+    ],
+    "validLength": 1
+  },
+  {
     "key": "DEFAULT_START_JUMP",
     "animType": 1,
     "clips": [

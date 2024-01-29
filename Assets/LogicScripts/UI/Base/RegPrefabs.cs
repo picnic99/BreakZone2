@@ -8,4 +8,5 @@ public class RegPrefabs
     public static string RootCanvas = "Base/RootCanvas";
     public static string DebugUI = "Base/DebugUI";
     public static string BaseInfoOptUI = "Base/BaseInfoOptUI";
+    public static string PopValue = "Base/PopValue";
 }

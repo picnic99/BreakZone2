@@ -3,9 +3,36 @@ using UnityEngine;
 
 public class CharacterManager : Manager<CharacterManager>
 {
+    /// <summary>
+    /// 角色 死亡
+    /// </summary>
+    public static string CHARACTER_DIE { get { return GetInstance().GetType().Name + "CHARACTER_DIE"; } }
+
     public List<Character> characters = new List<Character>();
 
-    public Character CreateCharacter(CharacterVO vo,CharacterBaseInfo info = null)
+
+    public override void AddEventListener()
+    {
+        base.AddEventListener();
+        Eventer.On(CHARACTER_DIE, OnCharacterDie);
+    }
+
+
+    public override void RemoveEventListener()
+    {
+        base.RemoveEventListener();
+        Eventer.Off(CHARACTER_DIE, OnCharacterDie);
+    }
+    public void OnCharacterDie(object[] args)
+    {
+        Character crt = args[0] as Character;
+        if (crt != null)
+        {
+            crt.eventDispatcher.Event(CharacterEvent.CHANGE_STATE, crt, StateType.Die);
+        }
+    }
+
+    public Character CreateCharacter(CharacterVO vo, CharacterBaseInfo info = null)
     {
         GameObject characterObj = ResourceManager.GetInstance().GetCharacterInstance<GameObject>(vo.character.ModePath);
         Character c = new Character(vo, characterObj, info);
@@ -16,7 +43,7 @@ public class CharacterManager : Manager<CharacterManager>
     public Character CreateCharacter(int id)
     {
         var vo = CharacterConfiger.GetInstance().GetCharacterById(id);
-        if(vo != null)
+        if (vo != null)
         {
             return CreateCharacter(vo);
         }
@@ -26,7 +53,7 @@ public class CharacterManager : Manager<CharacterManager>
     public Character CreateFightCharacter(int id)
     {
         var vo = CharacterConfiger.GetInstance().GetCharacterById(id);
-        if(vo != null)
+        if (vo != null)
         {
             GameObject characterObj = ResourceManager.GetInstance().GetCharacterInstance<GameObject>(vo.character.ModePath);
             Character c = new Character(vo, characterObj, CharacterBaseInfo.GetFightBaseInfo());

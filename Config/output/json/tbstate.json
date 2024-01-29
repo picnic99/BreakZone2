@@ -248,5 +248,18 @@
     ],
     "exceptSkills": [],
     "isSkill": false
+  },
+  {
+    "id": 16,
+    "type": "die",
+    "name": "死亡",
+    "animKey": "DEFAULT_DIE",
+    "exitType": 2,
+    "order": 0,
+    "mutexState": [
+      1
+    ],
+    "exceptSkills": [],
+    "isSkill": false
   }
 ]

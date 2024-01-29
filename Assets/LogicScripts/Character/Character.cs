@@ -28,7 +28,7 @@ public class CharacterBaseInfo
         CharacterBaseInfo info = new CharacterBaseInfo();
         info.canControl = true;
         info.needControl = true;
-        //info.isNeedStateBar = true;
+        info.isNeedStateBar = true;
         return info;
     }
 }
@@ -113,7 +113,7 @@ public class Character
         fsm = new FSM(this);
         msg = new MSG();
         animCoverData = new AnimCoverData(this);
-        if (baseInfo.isNeedStateBar) stateBar = new CommonStateBar(this);
+        stateBar = new CommonStateBar(this);
 
         weapons = trans.GetComponent<Binding>().weapons;
         if (characterData.id == 99) property.hp.AddExAddValue(999999);
@@ -130,13 +130,15 @@ public class Character
 
     }
 
+    private bool hadDie = false;
     /// <summary>
     /// 每帧执行
     /// </summary>
     public void OnUpdate()
     {
+
         //状态更新
-        if (baseInfo.canControl)
+        if (GameContext.CurRole == this && baseInfo.canControl)
         {
             var X = Input.GetAxis("Horizontal");
             var Z = Input.GetAxis("Vertical");
@@ -146,7 +148,34 @@ public class Character
 
         physic?.OnUpdate();
         fsm?.OnUpdate();
-        stateBar?.OnUpdate();
+        //是否死亡
+        if (property.IsDie())
+        {
+            if (!hadDie)
+            {
+                hadDie = true;
+                physic.cc.enabled = false;
+                stateBar.Hide();
+                CharacterManager.Eventer.Event(CharacterManager.CHARACTER_DIE, this);
+            }
+            return;
+        }
+
+        if (baseInfo.isNeedStateBar)
+        {
+            if (!stateBar.Root.activeSelf)
+            {
+                stateBar.Show();
+            }
+            stateBar.OnUpdate();
+        }
+        else
+        {
+            if (stateBar.Root.activeSelf)
+            {
+                stateBar.Hide();
+            }
+        }
 
         //msg 信息记录
         msg.characterProperty = property.GetDesc();
@@ -243,7 +272,7 @@ public class Character
     public void OnDestory()
     {
         RemoveEventListener();
-        if(trans != null)
+        if (trans != null)
         {
             MonoBridge.GetInstance().DestroyOBJ(trans.gameObject);
         }

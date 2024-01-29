@@ -40,6 +40,11 @@ public class ResourceManager : Manager<ResourceManager>
         return obj;
     }
 
+    public Sprite GetIcon(string path)
+    {
+       return GetObjectInstance<Sprite>("Icons/" + path);
+    }
+
     public AnimationClip GetAnimatinClip(string name)
     {
         var obj = LoadResource<AnimationClip>("Anims/" + name);

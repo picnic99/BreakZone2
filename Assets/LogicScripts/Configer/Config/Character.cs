@@ -19,6 +19,7 @@ public sealed partial class Character : Luban.BeanBase
     {
         { if(!_buf["id"].IsNumber) { throw new SerializationException(); }  Id = _buf["id"]; }
         { if(!_buf["name"].IsString) { throw new SerializationException(); }  Name = _buf["name"]; }
+        { if(!_buf["headIcon"].IsString) { throw new SerializationException(); }  HeadIcon = _buf["headIcon"]; }
         { if(!_buf["modePath"].IsString) { throw new SerializationException(); }  ModePath = _buf["modePath"]; }
         { if(!_buf["propertyId"].IsNumber) { throw new SerializationException(); }  PropertyId = _buf["propertyId"]; }
         { var __json0 = _buf["skills"]; if(!__json0.IsArray) { throw new SerializationException(); } Skills = new System.Collections.Generic.List<int>(__json0.Count); foreach(JSONNode __e0 in __json0.Children) { int __v0;  { if(!__e0.IsNumber) { throw new SerializationException(); }  __v0 = __e0; }  Skills.Add(__v0); }   }
@@ -37,6 +38,10 @@ public sealed partial class Character : Luban.BeanBase
     /// 角色名称
     /// </summary>
     public readonly string Name;
+    /// <summary>
+    /// 角色头像地址
+    /// </summary>
+    public readonly string HeadIcon;
     /// <summary>
     /// 角色模型
     /// </summary>
@@ -75,6 +80,7 @@ public sealed partial class Character : Luban.BeanBase
         
         
         
+        
     }
 
     public override string ToString()
@@ -82,6 +88,7 @@ public sealed partial class Character : Luban.BeanBase
         return "{ "
         + "id:" + Id + ","
         + "name:" + Name + ","
+        + "headIcon:" + HeadIcon + ","
         + "modePath:" + ModePath + ","
         + "propertyId:" + PropertyId + ","
         + "skills:" + Luban.StringUtil.CollectionToString(Skills) + ","

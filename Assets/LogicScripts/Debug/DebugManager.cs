@@ -103,7 +103,7 @@ public class DebugManager : Manager<DebugManager>
 
     public void AddAnimMonitor(AnimMixNode node)
     {
-        debugAnimView.AddAnimMonitor(node);
+        //debugAnimView.AddAnimMonitor(node);
     }
 
     /// <summary>

@@ -22,9 +22,22 @@ public class GameSceneManager : Manager<GameSceneManager>
         Type type = RegSceneClass.GetInstance().Get(sceneName);
         if (type != null)
         {
-
             GameScene scene = (GameScene)type.Assembly.CreateInstance(type.Name);
             SwitchingScene = scene;
+            if (GameContext.CurScene != null && GameContext.CurScene != SwitchingScene)
+            {
+                GameContext.CurScene.OnExit();
+                //移除上个场景的UI
+                foreach (var item in GameContext.CurScene.SceneUIs)
+                {
+                    UIManager.GetInstance().CloseUI(item);
+                }
+
+                foreach (var item in GameContext.CurScene.SceneCrts)
+                {
+                    CharacterManager.GetInstance().RemoveCharacter(item);
+                }
+            }
             LoadScene(sceneName);
         }
 
@@ -43,13 +56,5 @@ public class GameSceneManager : Manager<GameSceneManager>
     private void DoneCall()
     {
         SwitchingScene.OnEnter();
-        //移除上个场景的UI
-        if(GameContext.LastScene != null && GameContext.LastScene != GameContext.CurScene)
-        {
-            foreach (var item in GameContext.LastScene.SceneUIs)
-            {
-                UIManager.GetInstance().CloseUI(item);
-            }
-        }
     }
 }

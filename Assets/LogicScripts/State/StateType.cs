@@ -60,4 +60,8 @@
     /// 滞空
     /// </summary>
     public const string StayAir = "stayAir";
+    /// <summary>
+    /// 死亡
+    /// </summary>
+    public const string Die = "die";
 }

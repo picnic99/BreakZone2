@@ -2,6 +2,7 @@
   {
     "id": 99,
     "name": "假人",
+    "headIcon": "Character/99",
     "modePath": "FakeMan",
     "propertyId": 0,
     "skills": [
@@ -18,6 +19,7 @@
   {
     "id": 1,
     "name": "盖伦",
+    "headIcon": "Character/1",
     "modePath": "SwordWoman",
     "propertyId": 1001,
     "skills": [
@@ -36,6 +38,7 @@
   {
     "id": 2,
     "name": "剑圣",
+    "headIcon": "Character/2",
     "modePath": "SwordMan",
     "propertyId": 1001,
     "skills": [
@@ -54,6 +57,7 @@
   {
     "id": 3,
     "name": "瑞兹",
+    "headIcon": "Character/3",
     "modePath": "MagicMan",
     "propertyId": 1001,
     "skills": [
@@ -72,6 +76,7 @@
   {
     "id": 4,
     "name": "盲僧",
+    "headIcon": "Character/4",
     "modePath": "PounceMan",
     "propertyId": 1001,
     "skills": [

@@ -11,7 +11,7 @@ public class Singleton<T> where T : new()
         if (_instance == null)
         {
             _instance = new T();
-            typeof(T).GetMethod("Init").Invoke(_instance, null);
+            typeof(T).GetMethod("Init")?.Invoke(_instance, null);
         }
         return _instance;
     }

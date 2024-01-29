@@ -26,6 +26,7 @@ public class DamageAction : BaseAction
             {
                 target.eventDispatcher.Event(CharacterEvent.GET_DAMAGE, from, value);
                 damageRecord += " -对[" + target.characterData.characterName + "]造成了<color=#ff0000>[" + finalMakeValue + "]</color>点伤害\n";
+                CharacterManager.Eventer.Event(CharacterEvent.PROPERTY_CHANGE, PropertyType.HP, value, target);
             }
 
             string name = "未知";

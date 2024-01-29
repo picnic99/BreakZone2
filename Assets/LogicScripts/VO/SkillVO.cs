@@ -110,4 +110,9 @@ public class SkillVO
         return skill.BackBreakSkills;
     }
 
+    public string GetSkillIcon()
+    {
+        return skill.Icon;
+    }
+
 }

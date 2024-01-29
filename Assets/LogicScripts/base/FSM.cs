@@ -170,6 +170,7 @@ public class FSM
                 finalState = AddState(stateName, 0.8f);
                 break;
             case StateType.Injure:
+            case StateType.Die:
                 finalState = AddState(stateName, 0.5f);
                 break;
             default:

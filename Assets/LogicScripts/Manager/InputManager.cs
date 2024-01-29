@@ -65,7 +65,10 @@ public class InputManager : Manager<InputManager>
                 }
             }
 
-            LookForward();
+            if (!GameContext.CharacterIncludeState(StateType.Roll))
+            {
+                LookForward();
+            }
         }
         else
         {
@@ -154,17 +157,17 @@ public class InputManager : Manager<InputManager>
 
     public void StopState(string state)
     {
-        GameContext.CurRole.eventDispatcher.Event(CharacterEvent.STATE_OVER, state);
+        GameContext.CurRole?.eventDispatcher.Event(CharacterEvent.STATE_OVER, state);
     }
 
-    public void AddEventListener()
+    public override void AddEventListener()
     {
-        GameContext.CurRole.eventDispatcher.On(CharacterEvent.DO_SKILL, OnDoSkill);
+        GameContext.CurRole?.eventDispatcher.On(CharacterEvent.DO_SKILL, OnDoSkill);
     }
 
-    public void RemoveEventListener()
+    public override void RemoveEventListener()
     {
-        GameContext.CurRole.eventDispatcher.On(CharacterEvent.DO_SKILL, OnDoSkill);
+        GameContext.CurRole?.eventDispatcher.On(CharacterEvent.DO_SKILL, OnDoSkill);
     }
 
     private void OnDoSkill(object[] args)

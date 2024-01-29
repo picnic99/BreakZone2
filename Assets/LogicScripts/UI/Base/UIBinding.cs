@@ -35,7 +35,8 @@ public class UIBinding : MonoBehaviour
         }
     }
 
-    [SerializeField]
+    //[SerializeField]
+    [HideInInspector]
     public List<Bind> bindList = new List<Bind>();
 
     public UnityEngine.Object GetItem(string name)

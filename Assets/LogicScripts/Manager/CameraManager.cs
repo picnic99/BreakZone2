@@ -72,7 +72,7 @@ public class CameraManager : Manager<CameraManager>
         base.Init();
     }
 
-    public void ShowCam()
+    public void OpenCam()
     {
         camRoot.SetActive(true);
     }

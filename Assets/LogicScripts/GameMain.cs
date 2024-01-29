@@ -39,13 +39,13 @@ public class GameMain : MonoBehaviour
 
     void Update()
     {
+        RegSystemHotKey();
         UpdateManager();
     }
 
 
     public void UpdateManager()
     {
-        RegSystemHotKey();
         foreach (var item in managers)
         {
             item.OnUpdate();
@@ -62,6 +62,14 @@ public class GameMain : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F2))
         {
             DebugManager.GetInstance().ShowPanel();
+        }
+
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            foreach (var item in GameContext.CurScene.SceneCrts)
+            {
+                CharacterManager.GetInstance().RemoveCharacter(item);
+            }
         }
     }
 } 

@@ -67,7 +67,7 @@ public class PhysicController
 {
     public Character character;
     //private Rigidbody rb;
-    private CharacterController cc;
+    public CharacterController cc;
     /// <summary>
     /// 重力加速度
     /// </summary>

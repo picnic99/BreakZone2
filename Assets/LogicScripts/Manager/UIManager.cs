@@ -8,8 +8,7 @@ public class UIManager : Manager<UIManager>
     public static string SHOW_UI = "UIManager_SHOW_UI";
     public static string HIDE_UI = "UIManager_HIDE_UI";
     public static string CLOSE_UI = "UIManager_CLOSE_UI";
-
-    public EventDispatcher eventer;
+    public static string ADD_POP_VALUE = "UIManager_ADD_POP_VALUE";
 
     public RootCanvas rootCvs;
 
@@ -18,7 +17,6 @@ public class UIManager : Manager<UIManager>
     public override void Init()
     {
         UIDic = new Dictionary<string, UIBase>();
-        eventer = new EventDispatcher();
         /*       eventer.On(UIManager.SHOW_UI,ShowUI);
                 eventer.On(UIManager.HIDE_UI, HideUI);
                 eventer.On(UIManager.CLOSE_UI, CloseUI);*/
@@ -29,6 +27,31 @@ public class UIManager : Manager<UIManager>
         rootCvs.Init();
 
         base.Init();
+    }
+
+    public override void AddEventListener()
+    {
+        base.AddEventListener();
+        CharacterManager.Eventer.On(CharacterEvent.PROPERTY_CHANGE, OnCrtValueChange);
+    }
+
+    public override void RemoveEventListener()
+    {
+        base.RemoveEventListener();
+    }
+
+    private void OnCrtValueChange(object[] args)
+    {
+        Eventer.Event(ADD_POP_VALUE, args);
+    }
+
+    public override void OnUpdate()
+    {
+        base.OnUpdate();
+        foreach (var item in UIDic)
+        {
+            item.Value.OnUpdate();
+        }
     }
 
     public UIBase ShowUI(object[] args)

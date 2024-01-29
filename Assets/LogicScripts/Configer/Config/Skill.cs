@@ -22,6 +22,7 @@ public sealed partial class Skill : Luban.BeanBase
         { if(!_buf["cd"].IsNumber) { throw new SerializationException(); }  Cd = _buf["cd"]; }
         { if(!_buf["isShow"].IsBoolean) { throw new SerializationException(); }  IsShow = _buf["isShow"]; }
         { if(!_buf["desc"].IsString) { throw new SerializationException(); }  Desc = _buf["desc"]; }
+        { if(!_buf["icon"].IsString) { throw new SerializationException(); }  Icon = _buf["icon"]; }
         { var __json0 = _buf["tags"]; if(!__json0.IsArray) { throw new SerializationException(); } Tags = new System.Collections.Generic.List<SkillTags>(__json0.Count); foreach(JSONNode __e0 in __json0.Children) { SkillTags __v0;  { if(!__e0.IsNumber) { throw new SerializationException(); }  __v0 = (SkillTags)__e0.AsInt; }  Tags.Add(__v0); }   }
         { if(!_buf["IsInstantSkill"].IsBoolean) { throw new SerializationException(); }  IsInstantSkill = _buf["IsInstantSkill"]; }
         { if(!_buf["IsOnly"].IsBoolean) { throw new SerializationException(); }  IsOnly = _buf["IsOnly"]; }
@@ -56,6 +57,10 @@ public sealed partial class Skill : Luban.BeanBase
     /// 描述
     /// </summary>
     public readonly string Desc;
+    /// <summary>
+    /// 技能icon
+    /// </summary>
+    public readonly string Icon;
     /// <summary>
     /// 技能标签 需要枚举
     /// </summary>
@@ -117,6 +122,7 @@ public sealed partial class Skill : Luban.BeanBase
         
         
         
+        
     }
 
     public override string ToString()
@@ -127,6 +133,7 @@ public sealed partial class Skill : Luban.BeanBase
         + "cd:" + Cd + ","
         + "isShow:" + IsShow + ","
         + "desc:" + Desc + ","
+        + "icon:" + Icon + ","
         + "tags:" + Luban.StringUtil.CollectionToString(Tags) + ","
         + "IsInstantSkill:" + IsInstantSkill + ","
         + "IsOnly:" + IsOnly + ","

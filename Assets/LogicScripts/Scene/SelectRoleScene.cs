@@ -14,6 +14,7 @@ public class SelectRoleScene : GameScene
         base.OnEnter();
         //º”‘ÿUI
         UIManager.GetInstance().ShowUI(RegUIClass.SelectRoleUI);
+        CameraManager.GetInstance().CloseCam();
     }
 
 }

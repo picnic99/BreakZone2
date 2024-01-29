@@ -11,7 +11,7 @@ public enum GameMode
 
 public class GameContext
 {
-    public static GameMode GameMode = GameMode.NEW;
+    public static GameMode GameMode = GameMode.DEBUG;
 
     public static bool OpenRangeShow = true;
 

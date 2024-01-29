@@ -6,7 +6,7 @@ using UnityEngine;
 /// 事件管理器
 /// 实现基础的监听触发功能
 /// </summary>
-public class EventDispatcher : Manager<EventDispatcher>
+public class EventDispatcher : Singleton<EventDispatcher>
 {
     public static string ADD_RECORD { get { return GetInstance().GetType().Name + "ADD_RECORD"; } }
 
@@ -21,6 +21,9 @@ public class EventDispatcher : Manager<EventDispatcher>
     public static string SCENE_CHANGE { get { return GetInstance().GetType().Name + "SCENE_CHANGE"; } }
 
     public static string CHARACTER_DESTORY { get { return GetInstance().GetType().Name + "CHARACTER_DESTORY"; } }
+    //数值发生改变
+    public static string VALUE_CHANGE { get { return GetInstance().GetType().Name + "VALUE_CHANGE"; } }
+
 
     public Dictionary<string, Delegate> events = new Dictionary<string, Delegate>();
 

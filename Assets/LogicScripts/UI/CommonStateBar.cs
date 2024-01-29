@@ -1,11 +1,12 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class CommonStateBar:UIBase
 {
-    private Image HPprogress;
-    private TMPro.TextMeshProUGUI simpleStateTxt;
-    private TMPro.TextMeshProUGUI fullMsg;
+    private RectTransform HPprogress { get { return UIBase.GetBind<GameObject>(Root, "progress").GetComponent<RectTransform>(); } }
+    private TextMeshProUGUI simpleStateTxt { get { return UIBase.GetBind<TextMeshProUGUI>(Root, "simpleStateTxt"); } }
+    private TextMeshProUGUI fullMsg { get { return UIBase.GetBind<TextMeshProUGUI>(Root, "fullTxt"); } }
 
     private Character character;
 
@@ -18,8 +19,6 @@ public class CommonStateBar:UIBase
 
     private void InitUI()
     {
-        this.Root.transform.parent = this.character.trans;
-        this.Root.transform.position = Vector3.zero + Vector3.up * 2f;
         if (character == null)
         {
             Debug.LogError(this.GetType().Name + "£∫CharacterŒ¥…Ë÷√£°");
@@ -30,18 +29,16 @@ public class CommonStateBar:UIBase
             Debug.LogError(this.GetType().Name + "£∫UIRoot == NULL£°");
             return;
         }
-
-        simpleStateTxt = Root.transform.Find("simpleStateTxt").GetComponent<TMPro.TextMeshProUGUI>();
-        fullMsg = Root.transform.Find("fullState/fullTxt").GetComponent<TMPro.TextMeshProUGUI>();
-        HPprogress = Root.transform.Find("HPBar/progress").GetComponent<Image>();
+        this.Root.transform.parent = this.character.trans;
+        this.Root.transform.position = Vector3.zero + Vector3.up * 2f;
     }
 
-    public void OnUpdate()
+    public override void OnUpdate()
     {
         //≥ØœÚ…„œÒª˙
         Root.transform.forward = Root.transform.position - CameraManager.GetInstance().mainCam.transform.position;
         fullMsg.text = this.character.msg.ShowSimpleMsg();
         simpleStateTxt.text = "";
-        HPprogress.fillAmount = this.character.property.hp.finalValue / this.character.property.hp.baseValue;
+        HPprogress.sizeDelta = new Vector2(this.character.property.hp.finalValue / this.character.property.hp.baseValue * 100, HPprogress.sizeDelta.y);
     }
 }

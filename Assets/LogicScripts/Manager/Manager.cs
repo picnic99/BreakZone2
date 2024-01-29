@@ -2,9 +2,18 @@
 
 public class Manager<T> : Singleton<T>, IManager where T : new()
 {
+    private static EventDispatcher _eventer;
+    public static EventDispatcher Eventer
+    {
+        get
+        {
+            if (_eventer == null) _eventer = new EventDispatcher();
+            return _eventer;
+        }
+    }
+
     public Manager()
     {
-
     }
 
     public virtual void AddEventListener()

@@ -80,7 +80,7 @@ public class Property
         }
         if (mod != null)
         {
-            character.eventDispatcher.Event(CharacterEvent.PROPERTY_CHANGE, vo.propertyType,pv);
+            character.eventDispatcher.Event(CharacterEvent.PROPERTY_CHANGE, vo.propertyType,pv,character);
             Debug.Log(character.characterData.characterName + " PROPERTY_CHANGE");
         }
         return mod;
@@ -148,6 +148,12 @@ public class Property
         }
         return value;
     }
+
+    public bool IsDie()
+    {
+        return hp.finalValue <= 0;
+    }
+
 
     public string GetDesc()
     {

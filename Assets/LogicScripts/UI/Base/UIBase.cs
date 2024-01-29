@@ -32,6 +32,8 @@ public class UIBase
         this.root = obj;
     }
 
+    public virtual void OnUpdate() { }
+
     public virtual void OnLoad()
     {
         Show();
