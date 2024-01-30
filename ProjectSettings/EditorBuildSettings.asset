@@ -6,9 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Release/SelectRole.unity
+    path: Assets/Resources/Res/Scene/SelectRole.unity
     guid: 6ee3619e1b4f02444800e1d4edd14aed
   - enabled: 1
-    path: Assets/Scenes/Release/GameRoom.unity
+    path: Assets/Resources/Res/Scene/GameRoom.unity
     guid: 7c26f54a0e9d02c4d82fd9112d874bf7
   m_configObjects: {}

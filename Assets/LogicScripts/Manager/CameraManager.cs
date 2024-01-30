@@ -19,6 +19,8 @@ public class CameraManager : Manager<CameraManager>
 
     public GameObject camRoot;
 
+    public Camera CamRoot { get { return camRoot.GetComponent<Camera>(); } }
+
     public Character curLookCharacter;
 
     private int priority = 1;

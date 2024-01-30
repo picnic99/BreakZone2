@@ -9,4 +9,5 @@ public class RegPrefabs
     public static string DebugUI = "Base/DebugUI";
     public static string BaseInfoOptUI = "Base/BaseInfoOptUI";
     public static string PopValue = "Base/PopValue";
+    public static string LimitTimePracticeUI = "Base/LimitTimePracticeUI";
 }

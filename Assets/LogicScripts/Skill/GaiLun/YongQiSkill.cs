@@ -18,7 +18,7 @@ public class YongQiSkill : Skill
             buff.AddBuffComponent(buff.AddPropertyBuff(skillDurationTime, new PropertyBuffVO(PropertyType.PCTDEFEND, false, 0.3f)));
             buff.AddBuffComponent(buff.AddPropertyBuff(1f, new PropertyBuffVO(PropertyType.SHIELD, false, 200f)));
         });
-        EffectManager.GetInstance().PlayEffect("Skill/YongQi", 5f, character.trans, character.trans.position, character.trans.forward, new Vector3(0.6f, 0.6f, 0.6f));
+        //EffectManager.GetInstance().PlayEffect("Skill/YongQi", 5f, character.trans, character.trans.position, character.trans.forward, new Vector3(0.6f, 0.6f, 0.6f));
     }
 
     public override string GetDesc()

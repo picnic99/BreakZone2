@@ -63,6 +63,12 @@ public class CharacterManager : Manager<CharacterManager>
         return null;
     }
 
+    public Character CreateTestCharacter()
+    {
+        return CreateFightCharacter(98);
+
+    }
+
 
 
     public void RemoveCharacter(Character c)

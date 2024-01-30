@@ -281,5 +281,11 @@ public class Character
         physic?.OnDestory();
         physic = null;
         fsm = null;
+        //清理技能
+        foreach (var item in SkillBehaviour)
+        {
+            item.OnDestroy();
+        }
+        //清理BUFF
     }
 }

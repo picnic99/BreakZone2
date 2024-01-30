@@ -39,13 +39,13 @@ public class CuiJingDuanGuSkill : Skill
 
         public CuiJingDuanGu(Skill skill,Action<Character[]> call)
         {
-            this.instancePath = "Skill/CuiJingDuanGu";
+            this.instancePath = "CuiJingDuanGu";
             this.durationTime = 2f;
             this.maxTriggerTarget = 1;
             this.RootSkill = skill;
             this.IsEndRemoveObj = false;
             this.call = call;
-            this.instanceObj = ResourceManager.GetInstance().GetObjInstance<GameObject>(instancePath);
+            this.instanceObj = ResourceManager.GetInstance().GetSkillInstance(instancePath);
             
             this.Init();
         }

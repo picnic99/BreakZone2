@@ -5,15 +5,23 @@
 public class CharacterConfiger : Singleton<CharacterConfiger>
 {
     private List<CharacterVO> List;
+    private List<PropertyVO> propertyList;
 
     public void Init()
     {
         if(List == null) List = new List<CharacterVO>();
+        if(propertyList == null) propertyList = new List<PropertyVO>();
         foreach (var item in Configer.Tables.TbCharacter.DataList)
         {
             var anim = new CharacterVO();
             anim.character = item;
             List.Add(anim);
+        }
+        foreach (var item in Configer.Tables.TbProperty.DataList)
+        {
+            var p = new PropertyVO();
+            p.property = item;
+            propertyList.Add(p);
         }
     }
     public CharacterVO GetCharacterById(int id)
@@ -25,6 +33,17 @@ public class CharacterConfiger : Singleton<CharacterConfiger>
     public CharacterVO[] GetAllCharacter()
     {
         return List.ToArray();
+    }
+
+    public PropertyVO GetPropertyById(int id)
+    {
+        CharacterVO cVO = GetCharacterById(id);
+        if(cVO != null)
+        {
+            var vo = propertyList.Find((item) => { return item.property.Id == cVO.character.PropertyId; });
+            return vo;
+        }
+        return null;
     }
 
     public CharacterVO[] GetRealCharacters()

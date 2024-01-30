@@ -10,7 +10,7 @@ public class EffectManager:Manager<EffectManager>
 {
     public GameObject PlayEffect(string name, float durationTime, Transform parant, Vector3 pos, Vector3 dir, Vector3 scale)
     {
-        GameObject asset = ResourceManager.GetInstance().LoadResource<GameObject>("Effect/" + name);
+/*        GameObject asset = ResourceManager.GetInstance().LoadResource<GameObject>("Effect/" + name);
         if (asset)
         {
             GameObject obj = GameObject.Instantiate<GameObject>(asset);
@@ -23,7 +23,7 @@ public class EffectManager:Manager<EffectManager>
                 GameObject.Destroy(obj);
             });
             return obj;
-        }
+        }*/
         return null;
     }
 }

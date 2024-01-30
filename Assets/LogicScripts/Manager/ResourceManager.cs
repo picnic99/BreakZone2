@@ -5,10 +5,13 @@ using Object = UnityEngine.Object;
 
 public class ResourceManager : Manager<ResourceManager>
 {
+    public static string RESOURCE_PREFIX = "Res/";
+
+
     private float maxLoadTime = 3f;
     public T LoadResource<T>(string name) where T : Object
     {
-        return Resources.Load<T>(name);
+        return Resources.Load<T>(RESOURCE_PREFIX + name);
     }
 
     public T GetObjInstance<T>(string name) where T : Object
@@ -32,7 +35,7 @@ public class ResourceManager : Manager<ResourceManager>
     }
     public T GetCharacterInstance<T>(string name) where T : Object
     {
-        var obj = LoadResource<T>("Character/" + name);
+        var obj = LoadResource<T>("prefabs/Character/" + name);
         if (obj != null)
         {
             obj = GameObject.Instantiate<T>(obj);
@@ -40,9 +43,29 @@ public class ResourceManager : Manager<ResourceManager>
         return obj;
     }
 
+    public GameObject GetSkillInstance(string name)
+    {
+        var obj = LoadResource<GameObject>("prefabs/Skill/" + name);
+        if (obj != null)
+        {
+            obj = Object.Instantiate(obj);
+        }
+        return obj;
+    }
+
+    public GameObject GetEffectInstance(string name)
+    {
+        var obj = LoadResource<GameObject>("prefabs/Effect/" + name);
+        if (obj != null)
+        {
+            obj = Object.Instantiate(obj);
+        }
+        return obj;
+    }
+
     public Sprite GetIcon(string path)
     {
-       return GetObjectInstance<Sprite>("Icons/" + path);
+       return GetObjectInstance<Sprite>("picture/Icons/" + path);
     }
 
     public AnimationClip GetAnimatinClip(string name)

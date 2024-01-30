@@ -13,6 +13,7 @@ public class BaseInfoOptUI : UIBase
     private GameObject buffItem { get { return UIBase.GetBind<GameObject>(Root, "buffItem"); } }
     private GameObject exitBtn { get { return UIBase.GetBind<GameObject>(Root, "exitBtn"); } }
     private GameObject PopValuePanel { get { return UIBase.GetBind<GameObject>(Root, "PopValuePanel"); } }
+    private GameObject practiceBtn { get { return UIBase.GetBind<GameObject>(Root, "practiceBtn"); } }
 
     CharacterVO vo;
 
@@ -48,6 +49,7 @@ public class BaseInfoOptUI : UIBase
 
         //操作按钮部分处理
         AddClick(exitBtn, OnExitBtnClick);
+        AddClick(practiceBtn, OnPracticeClick);
         //小地图开发
 
         //返回选择页面
@@ -112,5 +114,16 @@ public class BaseInfoOptUI : UIBase
     public void OnExitBtnClick(object[] args)
     {
         GameSceneManager.GetInstance().SwitchScene(RegSceneClass.SelectRoleScene);
+    }
+    public void OnPracticeClick(object[] args)
+    {
+        if (UIManager.GetInstance().IsUIShow(RegUIClass.LimitTimePracticeUI))
+        {
+            UIManager.GetInstance().CloseUI(RegUIClass.LimitTimePracticeUI);
+        }
+        else
+        {
+            UIManager.GetInstance().ShowUI(RegUIClass.LimitTimePracticeUI);
+        }
     }
 }

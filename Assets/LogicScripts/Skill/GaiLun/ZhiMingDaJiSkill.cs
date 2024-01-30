@@ -15,7 +15,7 @@ public class ZhiMingDaJiSkill : Skill
 
     public void ShowWeaponEffect()
     {
-        var obj = ResourceManager.GetInstance().GetObjInstance<GameObject>("Skill/ZhiMingDaJi_XuLi");
+        var obj = ResourceManager.GetInstance().GetSkillInstance("ZhiMingDaJi_XuLi");
         //AudioManager.GetInstance().Play("sword_power", false);
         AudioEventDispatcher.GetInstance().Event(MomentType.DoSkill, this, "weaponFillPower");
         obj.transform.parent = character.GetWeapon().transform;
@@ -103,10 +103,10 @@ public class ZhiMingDaJiInstance : SkillInstance
     public ZhiMingDaJiInstance(Skill skill, Action<Character> call, float moveOffset)
     {
         this.RootSkill = skill;
-        this.instancePath = "Skill/ZhiMingDaJi";
+        this.instancePath = "ZhiMingDaJi";
         this.durationTime = maxTime;
         this.enterCall = call;
-        this.instanceObj = ResourceManager.GetInstance().GetObjInstance<GameObject>(instancePath);
+        this.instanceObj = ResourceManager.GetInstance().GetSkillInstance(instancePath);
         this.instanceObj.SetActive(false);
         this.moveOffset = moveOffset;
         this.Init();

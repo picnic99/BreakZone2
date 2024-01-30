@@ -1,4 +1,5 @@
 
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -36,6 +37,8 @@ public abstract class Skill : Behaviour
     protected bool IsExitRemoveBuff = false;
     //技能能否再次触发
     public bool CanTriggerAgain = false;
+
+    public List<SkillInstance> instanceList = new List<SkillInstance>();
     //当前技能阶段
     public int StageNum = 0;
     /// <summary>
@@ -103,7 +106,7 @@ public abstract class Skill : Behaviour
         }
 
         var cur_animName = skillData.GetAnimKeyBySkillIndex(StageNum);
-        float animTime = AnimManager.GetInstance().GetAnimTime2(cur_animName);
+        float animTime = AnimManager.GetInstance().GetAnimTime(cur_animName);
         var animCfg = AnimConfiger.GetInstance().GetAnimByAnimKey(cur_animName);
         animTime = animTime * animCfg.animation.ValidLength;
         curAnimLength = animTime;
@@ -192,5 +195,13 @@ public abstract class Skill : Behaviour
     public override string GetDesc()
     {
         return $"[{skillData.SkillName}]当前处于{skillState}状态 剩余时间{skillDurationTime};";
+    }
+
+    public void OnDestroy()
+    {
+        foreach (var item in instanceList)
+        {
+            item.End();
+        }
     }
 }

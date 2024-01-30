@@ -94,9 +94,9 @@ class TianYingBo : SkillInstance
 
     public TianYingBo(Skill skill, Action<Character[]> call)
     {
-        this.instancePath = "Skill/TianYinBo";
+        this.instancePath = "TianYinBo";
         this.RootSkill = skill;
-        this.instanceObj = ResourceManager.GetInstance().GetObjInstance<GameObject>(instancePath);
+        this.instanceObj = ResourceManager.GetInstance().GetSkillInstance(instancePath);
         this.durationTime = 1f;
         this.call = call;
 

@@ -14,7 +14,7 @@ public class UIBase
             if (root != null) return root;
             if (uiPath != null && uiPath != "")
             {
-                GameObject obj = ResourceManager.GetInstance().GetObjInstance<GameObject>("UI/" + uiPath);
+                GameObject obj = ResourceManager.GetInstance().GetObjInstance<GameObject>("prefabs/UI/" + uiPath);
                 root = obj;
                 return root;
             }

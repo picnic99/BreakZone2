@@ -39,13 +39,13 @@ public class FuWenJingGuSkill : Skill
         Transform dizzyEffect;
         Transform flyEffect;
         Skill skill;
-        string path = "Skill/FuWenJingGu";
+        string path = "FuWenJingGu";
         float skillDurationTime = 5f;
         public FuWenJingGu(Character character, Skill skill)
         {
             this.character = character;
             this.skill = skill;
-            skillInstance = ResourceManager.GetInstance().GetObjInstance<GameObject>(path);
+            skillInstance = ResourceManager.GetInstance().GetSkillInstance(path);
             this.InitTransform();
             this.AddBehaviour();
         }

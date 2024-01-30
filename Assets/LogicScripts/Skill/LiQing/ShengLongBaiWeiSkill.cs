@@ -44,12 +44,12 @@ public class ShengLongBaiWeiSkill : Skill
         public ShengLongBaiWei(Skill skill, Action<Character[]> call)
         {
             this.RootSkill = skill;
-            this.instancePath = "Skill/ShengLongBaiWei";
+            this.instancePath = "ShengLongBaiWei";
             this.durationTime = 2f;
             this.maxTriggerTarget = 99;
             this.IsEndRemoveObj = false;
             this.call = call;
-            this.instanceObj = ResourceManager.GetInstance().GetObjInstance<GameObject>(instancePath);
+            this.instanceObj = ResourceManager.GetInstance().GetSkillInstance(instancePath);
 
             this.Init();
         }

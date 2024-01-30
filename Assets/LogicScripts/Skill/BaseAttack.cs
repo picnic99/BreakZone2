@@ -61,7 +61,7 @@ public class BaseAttack : Skill
         Vector3 v = character.trans.position;
         //v = col.ClosestPointOnBounds(Hand_R.transform.position);
 
-        var bloodEffect = ResourceManager.GetInstance().GetObjInstance<GameObject>("Common/BloodEffect");
+        var bloodEffect = ResourceManager.GetInstance().GetEffectInstance("Common/BloodEffect");
         bloodEffect.transform.position = v;
         character.eventDispatcher.Event(CharacterEvent.ATK, new Character[] { target });
         //顿帧

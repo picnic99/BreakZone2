@@ -55,12 +55,12 @@ class GaiLunAtkInstance : SkillInstance
     public GaiLunAtkInstance(Skill skill, int index, Action<Character> call)
     {
         this.RootSkill = skill;
-        this.instancePath = "Skill/GaiLunAtk";
+        this.instancePath = "GaiLunAtk";
         this.durationTime = 1f;
         this.maxTriggerTarget = 99;
         this.IsEndRemoveObj = false;
         this.call = call;
-        this.instanceObj = ResourceManager.GetInstance().GetObjInstance<GameObject>(instancePath);
+        this.instanceObj = ResourceManager.GetInstance().GetSkillInstance(instancePath);
         this.instanceObj.transform.SetParent(skill.character.trans);
         this.curAtk = this.instanceObj.transform.Find("atk" + index).gameObject;
         this.curAtk.SetActive(true);
@@ -79,7 +79,7 @@ class GaiLunAtkInstance : SkillInstance
     {
         base.OnEnterTrigger(col);
         Vector3 v = col.ClosestPointOnBounds(RootSkill.character.GetWeapon().transform.position);
-        var bloodEffect = ResourceManager.GetInstance().GetObjInstance<GameObject>("Common/BloodEffect");
+        var bloodEffect = ResourceManager.GetInstance().GetEffectInstance("Common/BloodEffect");
         bloodEffect.transform.position = v;
         TimeManager.GetInstance().AddOnceTimer(this, 0.5f, () =>
         {

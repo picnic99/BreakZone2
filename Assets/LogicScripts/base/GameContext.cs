@@ -14,6 +14,7 @@ public class GameContext
     public static GameMode GameMode = GameMode.DEBUG;
 
     public static bool OpenRangeShow = true;
+    public static bool IsCrtReceiveInput = true;
 
     public static int SelectCrtId = 1;
 

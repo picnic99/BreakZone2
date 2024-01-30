@@ -31,6 +31,20 @@ public class Property
     public Property(Character character)
     {
         this.character = character;
+        initProperty();
+    }
+
+    private void initProperty()
+    {
+        var vo = CharacterConfiger.GetInstance().GetPropertyById(character.characterData.id);
+        if (vo == null) return;
+        hp = new PropertyValue(vo.property.Hp);
+        shield = new PropertyValue(vo.property.Defend);
+        atk = new PropertyValue(vo.property.Atk);
+        defend = new PropertyValue(vo.property.Defend);
+        pctDefend = new PropertyValue(vo.property.Defend);
+        atkSpeed = new PropertyValue(vo.property.AtkSpeed);
+        moveSpeed = new PropertyValue(vo.property.MoveSpeed);
     }
 
     public float Hp { get { return atk.finalValue; } private set { } }

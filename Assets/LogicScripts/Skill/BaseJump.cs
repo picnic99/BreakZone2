@@ -10,7 +10,7 @@ public class BaseJump : Skill
     {
         PlayAnim(skillData.GetAnimKey(0));
         AudioEventDispatcher.GetInstance().Event(MomentType.DoSkill, this, "jumpStart", this.character.trans.gameObject);
-        float len = AnimManager.GetInstance().GetAnimTime2(skillData.GetAnimKey(0));
+        float len = AnimManager.GetInstance().GetAnimTime(skillData.GetAnimKey(0));
         TimeManager.GetInstance().AddOnceTimer(this, len, () => {
             PlayAnim(skillData.GetAnimKey(1));
         });

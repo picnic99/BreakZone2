@@ -40,13 +40,13 @@ public class FaShuYongDongSkill : Skill
         Character character;
         GameObject skillInstance;
         Action<Character[]> call;
-        string path = "Skill/FaShuYongDong";
+        string path = "FaShuYongDong";
         float skillDurationTime = 5f;
         public FaShuYongDong(Character character, Action<Character[]> call)
         {
             this.character = character;
             this.call = call;
-            skillInstance = ResourceManager.GetInstance().GetObjInstance<GameObject>(path);
+            skillInstance = ResourceManager.GetInstance().GetSkillInstance(path);
             this.InitTransform();
             this.AddBehaviour();
         }

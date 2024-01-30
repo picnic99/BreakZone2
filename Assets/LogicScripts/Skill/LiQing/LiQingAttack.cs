@@ -57,7 +57,7 @@ public class LiQingAttack : BaseAttack
         {
             v = col.ClosestPointOnBounds(Leg_R.transform.position);
         }
-        var bloodEffect = ResourceManager.GetInstance().GetObjInstance<GameObject>("Common/BloodEffect");
+        var bloodEffect = ResourceManager.GetInstance().GetEffectInstance("Common/BloodEffect");
         bloodEffect.transform.position = v;
         character.eventDispatcher.Event(CharacterEvent.ATK, new Character[] { target });
         //顿帧

@@ -31,29 +31,12 @@ public class AnimManager : Manager<AnimManager>
         character.anim.ResetTrigger(animName);
     }
 
-
     /// <summary>
     /// 获取某个动画的时长
     /// </summary>
     /// <param name="animName"></param>
     /// <returns></returns>
-    public float GetAnimTime(string animName)
-    {
-        float len = 0;
-        AnimationClip clip = ResourceManager.GetInstance().LoadResource<AnimationClip>("Model/AnimClip/" + animName);
-        if(clip != null && clip.length > 0)
-        {
-            len = clip.length;
-        }
-        return len;
-    }
-
-    /// <summary>
-    /// 获取某个动画的时长
-    /// </summary>
-    /// <param name="animName"></param>
-    /// <returns></returns>
-    public float GetAnimTime2(string animKey,int index = 0)
+    public float GetAnimTime(string animKey,int index = 0)
     {
         float len = 0;
         var animPath = AnimConfiger.GetInstance().GetAnimByAnimKey(animKey);

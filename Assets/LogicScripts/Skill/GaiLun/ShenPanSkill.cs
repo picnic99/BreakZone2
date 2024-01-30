@@ -63,8 +63,8 @@ class ShenPanInstance : SkillInstance
     {
         this.RootSkill = skill;
         this.enterCall = call;
-        this.instancePath = "Skill/ShenPan2";
-        this.instanceObj = ResourceManager.GetInstance().GetObjInstance<GameObject>(instancePath);
+        this.instancePath = "ShenPan2";
+        this.instanceObj = ResourceManager.GetInstance().GetSkillInstance(instancePath);
         this.Init();
     }
 

@@ -120,4 +120,14 @@ public class UIManager : Manager<UIManager>
             UIDic.Remove(uiName);
         }
     }
+
+    public bool IsUIShow(string uiName)
+    {
+        if (UIDic.ContainsKey(uiName))
+        {
+            var ui = UIDic[uiName];
+            return ui.Root.activeSelf;
+        }
+        return false;
+    }
 }

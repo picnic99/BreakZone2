@@ -25,4 +25,9 @@ public class GameScene : Base
     {
 
     }
+
+    public void AddCrtToScene()
+    {
+
+    }
 }

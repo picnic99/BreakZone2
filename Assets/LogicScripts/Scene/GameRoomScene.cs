@@ -26,13 +26,6 @@ public class GameRoomScene : GameScene
         CameraManager.GetInstance().OpenCam();
         UIManager.GetInstance().ShowUI(RegUIClass.BaseInfoOptUI);
         //生成NPC
-        Character npc = CharacterManager.GetInstance().CreateFightCharacter(4);
-        SceneCrts.Add(npc);
-        npc.state = CharacterState.ENEMY;
-        npc.trans.parent = GameObject.Find("SceneRoot").transform;
-        Transform npcPos = bind["npcPos"].AS<GameObject>().transform;
-        npc.physic.Move(npcPos.position,0.01f);
-        npc.trans.rotation = npcPos.rotation;
         
         //同步其它角色
     }

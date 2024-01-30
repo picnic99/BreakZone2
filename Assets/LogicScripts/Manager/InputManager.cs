@@ -18,6 +18,8 @@ public class InputManager : Manager<InputManager>
 
     public override void OnUpdate()
     {
+        if (!GameContext.IsCrtReceiveInput) return;
+
         if (GameContext.CurRole == null) return;
 
         if (HasSelfRole == false)

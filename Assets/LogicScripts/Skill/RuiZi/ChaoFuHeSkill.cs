@@ -51,13 +51,13 @@ public class ChaoFuHeSkill : Skill
         Character character;
         GameObject skillInstance;
         Action<Character[]> call;
-        string path = "Skill/ChaoFuHe";
+        string path = "ChaoFuHe";
         float skillDurationTime = 3f;
         public ChaoFuHe(Character character,Action<Character[]> call)
         {
             this.character = character;
             this.call = call;
-            skillInstance = ResourceManager.GetInstance().GetObjInstance<GameObject>(path);
+            skillInstance = ResourceManager.GetInstance().GetSkillInstance(path);
             this.InitTransform();
             this.AddBehaviour();
         }

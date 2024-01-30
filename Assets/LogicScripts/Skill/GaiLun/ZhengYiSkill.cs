@@ -59,9 +59,9 @@ class ZhenYiInstance : SkillInstance
     {
         this.RootSkill = skill;
         this.enterCall = call;
-        this.instancePath = "Skill/ZhenYi";
+        this.instancePath = "ZhenYi";
         this.durationTime = 5f;
-        this.instanceObj = ResourceManager.GetInstance().GetObjInstance<GameObject>(instancePath);
+        this.instanceObj = ResourceManager.GetInstance().GetSkillInstance(instancePath);
         this.atkFlyCheck = this.instanceObj.transform.Find("atkFlyCheck").GetComponent<ColliderHelper>();
         this.JianWuCheck = this.instanceObj.transform.Find("JianWuCheck").GetComponent<ColliderHelper>();
         this.enterCall = call;
