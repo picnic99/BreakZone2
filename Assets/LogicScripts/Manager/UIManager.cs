@@ -21,7 +21,7 @@ public class UIManager : Manager<UIManager>
                 eventer.On(UIManager.HIDE_UI, HideUI);
                 eventer.On(UIManager.CLOSE_UI, CloseUI);*/
 
-        //´´½¨RootCanvas
+        //ï¿½ï¿½ï¿½ï¿½RootCanvas
         rootCvs = new RootCanvas();
         rootCvs.OnLoad();
         rootCvs.Init();
@@ -67,7 +67,7 @@ public class UIManager : Manager<UIManager>
             ui.Root.GetComponent<RectTransform>().offsetMin = new Vector2(0, 0);
             UIDic.Add(uiName, ui);
             ui.OnLoad();
-            GameContext.CurScene.SceneUIs.Add(uiName);
+            GameContext.CurScene?.SceneUIs.Add(uiName);
             return ui;
         }
 

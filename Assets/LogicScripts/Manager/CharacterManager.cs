@@ -7,6 +7,8 @@ public class CharacterManager : Manager<CharacterManager>
     /// 角色 死亡
     /// </summary>
     public static string CHARACTER_DIE { get { return GetInstance().GetType().Name + "CHARACTER_DIE"; } }
+    public static string CREATE_CHARACTER { get { return GetInstance().GetType().Name + "CREATE_CHARACTER"; } }
+    public static string REMOVE_CHARACTER { get { return GetInstance().GetType().Name + "REMOVE_CHARACTER"; } }
 
     public List<Character> characters = new List<Character>();
 
@@ -37,6 +39,7 @@ public class CharacterManager : Manager<CharacterManager>
         GameObject characterObj = ResourceManager.GetInstance().GetCharacterInstance<GameObject>(vo.character.ModePath);
         Character c = new Character(vo, characterObj, info);
         characters.Add(c);
+        Eventer.Event(CREATE_CHARACTER, c);
         return c;
     }
 
@@ -58,6 +61,7 @@ public class CharacterManager : Manager<CharacterManager>
             GameObject characterObj = ResourceManager.GetInstance().GetCharacterInstance<GameObject>(vo.character.ModePath);
             Character c = new Character(vo, characterObj, CharacterBaseInfo.GetFightBaseInfo());
             characters.Add(c);
+            Eventer.Event(CREATE_CHARACTER, c);
             return c;
         }
         return null;
@@ -75,6 +79,7 @@ public class CharacterManager : Manager<CharacterManager>
     {
         c.OnDestory();
         characters.Remove(c);
+        Eventer.Event(REMOVE_CHARACTER, c);
     }
 
     public override void OnUpdate()

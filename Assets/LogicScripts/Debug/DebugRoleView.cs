@@ -21,10 +21,10 @@ public class DebugRoleView
         DebugCharacter item = new DebugCharacter(obj);
         item.UpdateData(character);
         roles.Add(item);
-        if(roles.Count == 1)
-        {
-            item.Change();
-        }
+        // if(roles.Count == 1)
+        // {
+        //     item.Change();
+        // }
     }
 
     public void UpdateData()
@@ -38,6 +38,7 @@ public class DebugRoleView
     public void DelRole(DebugCharacter character)
     {
         roles.Remove(character);
+        character.Destory();
     }
 
     public DebugCharacter GetFristRole()

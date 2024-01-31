@@ -36,14 +36,14 @@ public class DebugCharacter
 
         this.character = this.character == null ? character : this.character;
 
-        this.character.OnUpdate();
+        //this.character.OnUpdate();
 
         msg.text = this.character.msg.ShowMsg();
 
     }
 
     /// <summary>
-    /// ÇÐ»»ÎªÖ÷½ÇÉ«
+    /// ï¿½Ð»ï¿½Îªï¿½ï¿½ï¿½ï¿½É«
     /// </summary>
     public void Change()
     {
@@ -69,6 +69,9 @@ public class DebugCharacter
         {
             DebugManager.GetInstance().DelRole(this);
         }
+    }
+
+    public void Destory(){
         GameObject.Destroy(Root);
     }
 

@@ -36,20 +36,9 @@ public class DebugManager : Manager<DebugManager>
 
     private List<Func<string>> monitors = new List<Func<string>>();
 
-    public void ShowPanel()
+    public override void Init()
     {
-        if (debugUI != null)
-        {
-            if (debugUI.Root.activeSelf)
-            {
-                debugUI.Hide();
-            }
-            else
-            {
-                debugUI.Show();
-            }
-            return;
-        }
+        base.Init();
 
         debugUI = (DebugUI)UIManager.GetInstance().ShowUI(RegUIClass.DebugUI);
         var uiRoot = debugUI.Root;
@@ -76,6 +65,24 @@ public class DebugManager : Manager<DebugManager>
         debugTargetView = new DebugTargetView(tmp_target.gameObject);
         debugRecordView = new DebugRecordView(tmp_record.gameObject, recordView.gameObject);
         debugAnimView = new DebugAnimView(tmp_anim.gameObject);
+
+        ShowPanel();
+    }
+
+    public void ShowPanel()
+    {
+        if (debugUI != null)
+        {
+            if (debugUI.Root.activeSelf)
+            {
+                debugUI.Hide();
+            }
+            else
+            {
+                debugUI.Show();
+            }
+            return;
+        }
 
         /*        DebugUIBinding.GetInstance().btn_skillEditor.onClick.AddListener(() => {
                     DebugUIBinding.GetInstance().obj_opt.SetActive(false);
@@ -107,7 +114,7 @@ public class DebugManager : Manager<DebugManager>
     }
 
     /// <summary>
-    /// Ìí¼ÓÒ»¸ö½ÇÉ«
+    /// ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½É«
     /// </summary>
     public Character AddRoleReturn()
     {
@@ -146,27 +153,52 @@ public class DebugManager : Manager<DebugManager>
         EventDispatcher.GetInstance().Event(EventDispatcher.MAIN_ROLE_CHANGE);
     }
 
-    private void Update()
+    public override void OnUpdate()
     {
-        InputManager.GetInstance().OnUpdate();
+        base.OnUpdate();
         debugRoleView.UpdateData();
         debugAnimView.OnUpdate();
         //ActionManager.GetInstance().SettleAction();
         monitorTips.text = "";
         foreach (var item in monitors)
         {
-            monitorTips.text += item() + "\n";
+           //monitorTips.text += item() + "\n";
         }
     }
 
-    private void updateCharacter()
+    public override void AddEventListener()
     {
+        base.AddEventListener();
+        CharacterManager.Eventer.On(CharacterManager.CREATE_CHARACTER, OnCreateCrt);
+        CharacterManager.Eventer.On(CharacterManager.REMOVE_CHARACTER, OnDelCrt);
+    }
+
+    public override void RemoveEventListener()
+    {
+        base.RemoveEventListener();
+        CharacterManager.Eventer.Off(CharacterManager.CREATE_CHARACTER, OnCreateCrt);
+        CharacterManager.Eventer.Off(CharacterManager.REMOVE_CHARACTER, OnDelCrt);
 
     }
 
-    public void ChangeCurRole()
+    private void OnCreateCrt(object[] args)
     {
+        Character crt = args[0] as Character;
+        debugRoleView.AddRole(crt);
+    }
 
+    private void OnDelCrt(object[] args)
+    {
+        Character crt = args[0] as Character;
+        for (int i = 0; i < debugRoleView.roles.Count; i++)
+        {
+            var item = debugRoleView.roles[i];
+            if (item.character == crt)
+            {
+                debugRoleView.DelRole(item);
+                return;
+            }
+        }
     }
 
     public void SetMainRole(DebugCharacter character)
