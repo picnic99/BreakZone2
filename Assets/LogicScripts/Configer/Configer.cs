@@ -1,6 +1,4 @@
 ﻿using SimpleJSON;
-using System.IO;
-using UnityEngine;
 
 /// <summary>
 /// 配置加载类
@@ -9,14 +7,16 @@ using UnityEngine;
 public class Configer
 {
     private static cfg.Tables tables;
-    public static cfg.Tables Tables { 
-        get {
-            if (tables==null)
+    public static cfg.Tables Tables
+    {
+        get
+        {
+            if (tables == null)
             {
                 Load();
             }
             return tables;
-        } 
+        }
     }
 
     static void Load()
@@ -26,6 +26,7 @@ public class Configer
 
     private static JSONNode LoadJson(string file)
     {
-        return JSON.Parse(File.ReadAllText(Application.dataPath + $"/../Config/output/json/{file}.json", System.Text.Encoding.UTF8));
+        var temp = ResourceManager.GetInstance().GetConfigRes(file);
+        return JSON.Parse(temp.text);
     }
 }

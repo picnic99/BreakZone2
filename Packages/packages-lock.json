@@ -1,11 +1,25 @@
 {
   "dependencies": {
+    "com.code-philosophy.hybridclr": {
+      "version": "https://github.com/focus-creative-games/hybridclr_unity.git#v4.0.15",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "51da1d4c433504f3171fff66217035b89c45d823"
+    },
     "com.code-philosophy.luban": {
       "version": "https://github.com/focus-creative-games/luban_unity.git",
       "depth": 0,
       "source": "git",
       "dependencies": {},
       "hash": "de0348c453844f91d52e736be681f0713ae47201"
+    },
+    "com.cysharp.unitask": {
+      "version": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "64792b672d35e43b3412fc74861f8bdbf41e3a6f"
     },
     "com.tuyoogame.yooasset": {
       "version": "2.1.1",

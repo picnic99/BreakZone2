@@ -1,17 +1,31 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using YooAsset;
 using Object = UnityEngine.Object;
 
 public class ResourceManager : Manager<ResourceManager>
 {
     public static string RESOURCE_PREFIX = "Res/";
+    public static string AB_PREFIX = "Assets/Res/";
 
+    private static bool ResourceFromAB = GameContext.ResourceFromAB;
 
     private float maxLoadTime = 3f;
     public T LoadResource<T>(string name) where T : Object
     {
-        return Resources.Load<T>(RESOURCE_PREFIX + name);
+        T result;
+        if (ResourceFromAB)
+        {
+            var package = YooAssets.GetPackage("DefaultPackage");
+            var temp = package.LoadAssetSync<T>(AB_PREFIX + name);
+            result = (T)temp.AssetObject;
+        }
+        else
+        {
+            result = Resources.Load<T>(RESOURCE_PREFIX + name);
+        }
+        return result;
     }
 
     public T GetObjInstance<T>(string name) where T : Object
@@ -29,7 +43,7 @@ public class ResourceManager : Manager<ResourceManager>
         var obj = LoadResource<T>(name);
         if (obj != null)
         {
-            obj = Object.Instantiate(obj);
+            obj = GameObject.Instantiate(obj);
         }
         return obj;
     }
@@ -48,7 +62,7 @@ public class ResourceManager : Manager<ResourceManager>
         var obj = LoadResource<GameObject>("prefabs/Skill/" + name);
         if (obj != null)
         {
-            obj = Object.Instantiate(obj);
+            obj = GameObject.Instantiate(obj);
         }
         return obj;
     }
@@ -58,7 +72,7 @@ public class ResourceManager : Manager<ResourceManager>
         var obj = LoadResource<GameObject>("prefabs/Effect/" + name);
         if (obj != null)
         {
-            obj = Object.Instantiate(obj);
+            obj = GameObject.Instantiate(obj);
         }
         return obj;
     }
@@ -77,6 +91,13 @@ public class ResourceManager : Manager<ResourceManager>
     public AudioClip GetAudioClip(string name)
     {
         var obj = LoadResource<AudioClip>("Sounds/" + name);
+        return obj;
+    }
+
+    public TextAsset GetConfigRes(string name)
+    {
+
+        var obj = LoadResource<TextAsset>("config/" + name);
         return obj;
     }
 

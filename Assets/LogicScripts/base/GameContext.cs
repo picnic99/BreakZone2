@@ -15,6 +15,7 @@ public class GameContext
 
     public static bool OpenRangeShow = true;
     public static bool IsCrtReceiveInput = true;
+    public static bool ResourceFromAB = true;
 
     public static int SelectCrtId = 1;
 
