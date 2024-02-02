@@ -21,7 +21,7 @@ public class GameContext
 
     private static Character _curRole;
     //当前操纵的角色
-    public static Character CurRole 
+    public static Character CurRole
     {
         get { return _curRole; }
         set
@@ -41,11 +41,7 @@ public class GameContext
         get { return _curScene; }
         set
         {
-            if(LastScene == null)
-            {
-                LastScene = value;
-            }
-            else
+            if (_curScene == null)
             {
                 LastScene = _curScene;
             }

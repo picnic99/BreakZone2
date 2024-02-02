@@ -28,6 +28,7 @@ public class DebugCharacter
         changeBtn.onClick.AddListener(Change);
         selectBtn.onClick.AddListener(Select);
         delBtn.onClick.AddListener(del);
+        applyBtn.onClick.AddListener(ApplyGM);
     }
 
     public void UpdateData(Character character = null)
@@ -71,7 +72,22 @@ public class DebugCharacter
         }
     }
 
-    public void Destory(){
+    public void ApplyGM()
+    {
+        // if (msgInput.text != "")
+        // {
+        //     var arr = msgInput.text.Split(':');
+        //     string code = arr[0];
+        //     //string value = arr[1];
+
+        //     if(code == "addBuff"){
+        //        BuffManager.GetInstance().AddCustomBuffGroup(null, new Character[]{character}, typeof(YanMieBuff),null);
+        //     }
+        // }
+    }
+
+    public void Destory()
+    {
         GameObject.Destroy(Root);
     }
 
