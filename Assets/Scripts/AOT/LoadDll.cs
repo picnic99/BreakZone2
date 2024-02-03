@@ -19,7 +19,11 @@ public class LoadDll : MonoBehaviour
     void Start()
     {
         Debug.Log("热更新流程开始");
+#if UNITY_EDITOR
+        CheckRes();
+#else
         CheckPkg();
+#endif
     }
 
     public void CheckPkg()
