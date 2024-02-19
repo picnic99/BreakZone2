@@ -65,10 +65,10 @@ public class BaseAttack : Skill
         bloodEffect.transform.position = v;
         character.eventDispatcher.Event(CharacterEvent.ATK, new Character[] { target });
         //顿帧
-        character.anim.speed = 0f;
+        //character.anim.speed = 0f;
         TimeManager.GetInstance().AddOnceTimer(this, 0.05f, () =>
         {
-            character.anim.speed = 1;
+            //character.anim.speed = 1;
         });
         TimeManager.GetInstance().AddOnceTimer(this, 0.5f, () =>
         {
@@ -90,7 +90,7 @@ public class BaseAttack : Skill
     public override void OnBack()
     {
         base.OnBack();
-        character.anim.speed = 1;
+        //character.anim.speed = 1;
         //Hand_R.OnTriggerEnterCall -= DoDamage;
         //Hand_R.enabled = false;
     }
@@ -98,6 +98,6 @@ public class BaseAttack : Skill
     public override void OnExit()
     {
         base.OnExit();
-        character.anim.speed = 1;
+        //character.anim.speed = 1;
     }
 }

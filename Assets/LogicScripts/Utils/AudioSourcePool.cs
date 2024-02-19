@@ -4,6 +4,7 @@ public class AudioSourcePool : ObjPool<AudioSource>
 {
     public override void Init(AudioSource obj)
     {
+        if (obj == null) return;
         obj.pitch = 1;
         obj.clip = null;
         obj.volume = 1;

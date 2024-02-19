@@ -9,10 +9,21 @@ using System.Reflection;
 /// </summary>
 public class BuffManager : Manager<BuffManager>
 {
-
-    internal void RemoveBuff(Character character)
+    public void RemoveBuff(Character character)
     {
 
+    }
+
+    public override void AddEventListener()
+    {
+        base.AddEventListener();
+        //CharacterManager.Eventer.On(CharacterManager.REMOVE_CHARACTER, OnRemoveAllBuffByCharacter);
+    }
+
+    public override void RemoveEventListener()
+    {
+        base.RemoveEventListener();
+        //CharacterManager.Eventer.Off(CharacterManager.REMOVE_CHARACTER, OnRemoveAllBuffByCharacter);
     }
 
     /// <summary>
@@ -83,7 +94,16 @@ public class BuffManager : Manager<BuffManager>
     //移除目标角色身上的所有BUFF
     public void RemoveAllBuffByCharacter(Character target)
     {
+        foreach (var item in target.BuffBehaviour)
+        {
+            item.OnDestroy();
+        }
+    }
 
+    public void OnRemoveAllBuffByCharacter(object[] args)
+    {
+        Character c = args[0] as Character;
+        RemoveAllBuffByCharacter(c);
     }
 
     internal void RemoveAllBuffFromSkill(Character character, Skill yongQiSkill)

@@ -24,6 +24,7 @@ public class CharacterManager : Manager<CharacterManager>
     {
         base.AddEventListener();
         Eventer.On(CHARACTER_DIE, OnCharacterDie);
+        GameSceneManager.Eventer.On(GameSceneManager.UNLOAD_SCENE, RemoveCrtByScene);
     }
 
 
@@ -31,6 +32,7 @@ public class CharacterManager : Manager<CharacterManager>
     {
         base.RemoveEventListener();
         Eventer.Off(CHARACTER_DIE, OnCharacterDie);
+        GameSceneManager.Eventer.Off(GameSceneManager.UNLOAD_SCENE, RemoveCrtByScene);
     }
 
 
@@ -40,6 +42,26 @@ public class CharacterManager : Manager<CharacterManager>
         if (crt != null)
         {
             crt.eventDispatcher.Event(CharacterEvent.CHANGE_STATE, crt, StateType.Die);
+        }
+    }
+
+
+    /// <summary>
+    /// 移除场景下的所有角色
+    /// </summary>
+    /// <param name="args"></param>
+    public void RemoveCrtByScene(object[] args)
+    {
+        string scene = args[0] as string;
+
+        if (sceneCrtDic.ContainsKey(scene))
+        {
+            List<Character> crts = sceneCrtDic[scene];
+            foreach (var item in crts)
+            {
+                RemoveCharacter(item);
+            }
+            sceneCrtDic.Remove(scene);
         }
     }
 

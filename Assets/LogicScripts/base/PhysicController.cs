@@ -220,30 +220,7 @@ public class PhysicController
     public void Move(Vector3 posOffset, float durationTime, bool isOverride = false, bool canCtrl = true)
     {
         CanControl = canCtrl;
-        /*
-                if (posOffset.y > 0)
-                {
-                    GravityOffset = 0;
-                    IsGravityEffect = false;
-                    //CanControl = false;
-                    TimeManager.GetInstance().AddOnceTimer(this, durationTime, () =>
-                    {
-                        IsGravityEffect = true;
-                        //CanControl = true;
-                    });
-                }*/
-
         AddAction(new PhysicAction(posOffset, durationTime, PhysicActionType.ADD));
-
-        /*        ValueModifier<Vector3> mod = deltaPosValue.AddModifier(deltaPos);
-                TimeManager.GetInstance().AddOnceTimer(this, durationTime, () =>
-                {
-                    deltaPosValue.RemoveModifier(mod);
-                    if (!canCtrl)
-                    {
-                        CanControl = true;
-                    }
-                });*/
     }
 
 
@@ -322,6 +299,7 @@ public class PhysicController
 
     public void OnUpdate()
     {
+        if (character.IsDestroyed) return;
         Vector3 actionOffset = GetFrameAction();
         CheckIsGround();
         if (!isGround)

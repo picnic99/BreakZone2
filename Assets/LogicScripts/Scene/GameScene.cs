@@ -12,7 +12,6 @@ public class GameScene : Base
 
     public virtual void OnEnter()
     {
-        GameContext.CurScene = this;
         bind = GameObject.Find("SceneData")?.GetComponent<UIBinding>();
     }
 

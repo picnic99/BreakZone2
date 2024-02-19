@@ -89,7 +89,7 @@ public abstract class Behaviour
     {
         if(name != "")
         {
-            AnimManager.GetInstance().StopAnim(character, name);
+            //AnimManager.GetInstance().StopAnim(character, name);
         }
     }
 

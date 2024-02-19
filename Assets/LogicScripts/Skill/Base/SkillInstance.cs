@@ -62,6 +62,8 @@ public abstract class SkillInstance
 
     protected bool IsEndRemoveObj = true;
 
+    public bool IsEnable = true;
+
     public virtual void Init(string layerName = "Character", CharacterState TriggerType = CharacterState.ENEMY)
     {
         maxDurationTime = durationTime;
@@ -173,5 +175,11 @@ public abstract class SkillInstance
                 instanceObj = null; 
             });
         }
+    }
+
+    public void OnDestroy()
+    {
+        IsEnable = false;
+        MonoBridge.GetInstance().DestroyOBJ(instanceObj);
     }
 }

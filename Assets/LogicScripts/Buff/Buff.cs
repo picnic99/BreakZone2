@@ -19,6 +19,8 @@ public abstract class Buff : Behaviour
     //Buff的数据 存储一些基本信息 支持配置
     public BuffVO buffData;
 
+    public bool IsEnable = true;
+
     //为该buff指定作用角色
     public virtual Character Character
     {
@@ -42,7 +44,13 @@ public abstract class Buff : Behaviour
     {
         //从角色身上移除掉该BUFF的引用
         character.RemoveBuffBehaviour(this);
+        IsEnable = false;
         Debug.Log("[BUFF结束] " + character.characterData.characterName + " -- " + buffData.buffName);
+    }
+
+    public void OnDestroy()
+    {
+        OnEnd();
     }
 
     public override void OnExit()

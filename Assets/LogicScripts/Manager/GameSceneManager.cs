@@ -3,9 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+ 
+/// <summary>
+/// 游戏场景管理类
+/// </summary>
 public class GameSceneManager : Manager<GameSceneManager>
 {
+    public static string LOAD_SCENE = "LOAD_SCENE";//加载场景
+    public static string UNLOAD_SCENE = "UNLOAD_SCENE";//卸载场景
+
     /// <summary>
     /// 场景与场景名称映射
     /// </summary>
@@ -36,7 +42,6 @@ public class GameSceneManager : Manager<GameSceneManager>
         {
             GameScene scene = (GameScene)type.Assembly.CreateInstance(type.Name);
             SwitchingScene = scene;
-            UnLoadScene(GameContext.LastScene);
             LoadScene(sceneName);
         }
 
@@ -55,7 +60,11 @@ public class GameSceneManager : Manager<GameSceneManager>
         }
         return null;
     }
-
+    
+    /// <summary>
+    /// 卸载场景
+    /// </summary>
+    /// <param name="sceneName"></param>
     public void UnLoadScene(string sceneName)
     {
         if (sceneName == null || sceneName.Length <= 0) return;
@@ -63,33 +72,60 @@ public class GameSceneManager : Manager<GameSceneManager>
         UnLoadScene(scene);
     }
 
+    private void RemoveSceneDic(string name)
+    {
+        if (sceneDic.ContainsKey(name))
+        {
+            sceneDic.Remove(name);
+        }
+    }    
+    private void AddSceneDic(GameScene scene)
+    {
+        sceneDic[scene.SceneName] = scene;
+    }
+
     public void UnLoadScene(GameScene scene)
     {
         if (scene == null) return;
         if (scene != SwitchingScene)
         {
-            GameContext.CurScene.OnExit();
+            scene.OnExit();
+            GameSceneManager.Eventer.Event(UNLOAD_SCENE, scene.SceneName);
+            RemoveSceneDic(scene.SceneName);
             //卸载相关内容
-            foreach (var item in GameContext.CurScene.SceneUIs)
-            {
-                UIManager.GetInstance().CloseUI(item);
-            }
+            /*            foreach (var item in GameContext.CurScene.SceneUIs)
+                        {
+                            UIManager.GetInstance().CloseUI(item);
+                        }
 
-            foreach (var item in GameContext.CurScene.SceneCrts)
-            {
-                CharacterManager.GetInstance().RemoveCharacter(item);
-            }
+                        foreach (var item in GameContext.CurScene.SceneCrts)
+                        {
+                            CharacterManager.GetInstance().RemoveCharacter(item);
+                        }*/
         }
     }
 
+    /// <summary>
+    /// 加载场景
+    /// </summary>
+    /// <param name="sceneName"></param>
     public void LoadScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
         //此处抛出进度
     }
 
+    /// <summary>
+    /// 场景加载完毕回调
+    /// </summary>
+    /// <param name="scene"></param>
+    /// <param name="mode"></param>
     private void SceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        GameContext.CurScene = SwitchingScene;
+        UnLoadScene(GameContext.LastScene);
         SwitchingScene.OnEnter();
+        AddSceneDic(SwitchingScene);
+        GameSceneManager.Eventer.Event(LOAD_SCENE, SwitchingScene.SceneName);
     }
 }

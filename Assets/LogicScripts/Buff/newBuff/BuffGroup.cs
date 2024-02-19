@@ -72,6 +72,7 @@ public class BuffGroup : Buff
 
     public override void OnUpdate()
     {
+        if (!IsEnable) return;
         durationTime -= Time.deltaTime;
         if (durationTime <= 0 || buffComponents == null || buffComponents.Count <= 0)
         {

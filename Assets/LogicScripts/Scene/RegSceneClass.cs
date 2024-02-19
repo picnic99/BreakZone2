@@ -7,6 +7,7 @@ public class RegSceneClass :RegisterBase<RegSceneClass, string, Type>
 {
     public static string SelectRoleScene = "SelectRole";
     public static string GameRoomScene = "GameRoom";
+    public static string AllScene = "AllScene";
 
     public override void Init()
     {

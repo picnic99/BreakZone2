@@ -4,8 +4,19 @@ using UnityEngine.EventSystems;
 
 public class UIBase
 {
+    /// <summary>
+    /// 所属场景
+    /// </summary>
+    public string belongScene = RegSceneClass.AllScene;
+    /// <summary>
+    /// UI路径
+    /// </summary>
     public string uiPath;
+    /// <summary>
+    /// 所属层级
+    /// </summary>
     public UILayers layer;
+
     private GameObject root;
     public GameObject Root
     {

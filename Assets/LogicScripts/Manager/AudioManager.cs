@@ -99,7 +99,7 @@ public class AudioManager :Manager<AudioManager>
                 }
             }
 
-            audioSource.transform.parent = sourceMain.transform;
+            audioSource.transform.SetParent(sourceMain.transform);
         }
 
         audioSource.volume = data.Volume;

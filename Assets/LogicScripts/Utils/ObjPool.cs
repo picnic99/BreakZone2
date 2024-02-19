@@ -16,13 +16,22 @@ public abstract class ObjPool<T>
         }
         else
         {
-            obj = objs.Dequeue();
+            obj = default;
+            while (objs.Count > 0)
+            {
+                obj = objs.Dequeue();
+                if (obj == null)
+                {
+                    continue;
+                }
+            }
         }
         return obj;
     }
 
     public void Recover(T obj)
     {
+        if (obj == null) return;
         if (objs.Count >= maxNum)
         {
             return;

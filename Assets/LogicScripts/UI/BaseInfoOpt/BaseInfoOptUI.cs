@@ -23,6 +23,7 @@ public class BaseInfoOptUI : UIBase
     {
         uiPath = RegPrefabs.BaseInfoOptUI;
         layer = UILayers.MIDDLE;
+        belongScene = RegSceneClass.GameRoomScene;
 
         skillItems = new List<BaseInfoSkillItem>();
 

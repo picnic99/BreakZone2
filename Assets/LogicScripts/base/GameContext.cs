@@ -41,7 +41,7 @@ public class GameContext
         get { return _curScene; }
         set
         {
-            if (_curScene == null)
+            if (_curScene != null)
             {
                 LastScene = _curScene;
             }

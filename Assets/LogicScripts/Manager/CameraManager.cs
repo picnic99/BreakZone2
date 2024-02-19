@@ -19,6 +19,8 @@ public class CameraManager : Manager<CameraManager>
 
     public GameObject camRoot;
 
+    public bool IsEnable = false;
+
     public Camera CamRoot { get { return camRoot.GetComponent<Camera>(); } }
 
     public Character curLookCharacter;
@@ -52,6 +54,7 @@ public class CameraManager : Manager<CameraManager>
     {
         Character crt = args[0] as Character;
         curLookCharacter = crt;
+        IsEnable = true;
         ShowMainCam();
     }
 
@@ -148,6 +151,8 @@ public class CameraManager : Manager<CameraManager>
 
     public void ArmRotate()
     {
+        if (!IsEnable) return;
+        if (curLookCharacter.IsDestroyed) return;
         if (state != CameraState.ARM) return;
 
         var mouseY = Input.GetAxis("Mouse Y");

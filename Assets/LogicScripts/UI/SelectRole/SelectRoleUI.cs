@@ -23,6 +23,7 @@ public class SelectRoleUI : UIBase
     public SelectRoleUI()
     {
         uiPath = RegPrefabs.SelectRoleUI;
+        belongScene = RegSceneClass.SelectRoleScene;
         layer = UILayers.BOTTOM;
         roleTabs = new List<RoleTabItem>();
     }

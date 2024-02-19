@@ -21,13 +21,15 @@ public class GaiLunAttack : BaseAttack
         int index = StageNum + 1;
         TimeManager.GetInstance().AddOnceTimer(this, skillData.GetFrontTime(StageNum), () =>
           {
-              new GaiLunAtkInstance(this, index, DoDamage);
+              var ins = new GaiLunAtkInstance(this, index, DoDamage);
+              instanceList.Add(ins);
               AudioEventDispatcher.GetInstance().Event(MomentType.DoSkill, this, "atk");
           });
     }
 
     public void DoDamage(Character target)
     {
+        if (target.IsDestroyed) return;
         AddState(target, character, StateType.Injure);
         DoDamage(target, character.property.Atk);
         AudioManager.GetInstance().Play("sword_damage1", false);
@@ -107,6 +109,7 @@ class GaiLunAtkInstance : SkillInstance
 
     public override void InitTransform()
     {
+        if (instanceObj == null || RootSkill.character.trans == null) return;
         instanceObj.transform.forward = RootSkill.character.trans.forward;
         instanceObj.transform.position = RootSkill.character.trans.position + RootSkill.character.trans.forward * 1f;
     }

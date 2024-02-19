@@ -39,29 +39,29 @@ public class CharacterBaseInfo
 /// </summary>
 public class Character
 {
-    public CharacterBaseInfo baseInfo;
+    public CharacterBaseInfo baseInfo { get; set; }
 
     public CharacterState state = CharacterState.NEUTRAL;
     //用于控制角色位置
-    public Transform trans;
+    public Transform trans { get; set; }
     //用于播放角色动画
-    public Animator anim;
+    public Animator anim { get; set; }
     //记录角色属性数值
-    public Property property;
+    public Property property { get; set; }
     //范围检测器
     //public RangeScan scan;
     //物理控制器
-    public PhysicController physic;
+    public PhysicController physic { get; set; }
 
-    public CharacterAnimator characterAnimator;
+    public CharacterAnimator characterAnimator { get; set; }
     //事件管理器
     public EventDispatcher eventDispatcher;
     //状态机 只负责角色状态之间的切换
-    public FSM fsm;
+    public FSM fsm { get; set; }
     //StateBar
-    public CommonStateBar stateBar;
+    public CommonStateBar stateBar { get; set; }
     //输入管理器
-    public InputManager input;
+    public InputManager input { get; set; }
 
     //存储角色当前正在执行的Skill 有些脱手技能 不一定有那么快结束掉
     public List<Skill> SkillBehaviour;
@@ -78,6 +78,8 @@ public class Character
 
     public List<GameObject> weapons;
     public AnimCoverData animCoverData;
+
+    public bool IsDestroyed = false;
 
     public Character(CharacterVO vo, GameObject obj, CharacterBaseInfo baseInfo = null)
     {
@@ -136,15 +138,6 @@ public class Character
     /// </summary>
     public void OnUpdate()
     {
-
-        //状态更新
-        if (GameContext.CurRole == this && baseInfo.canControl)
-        {
-            var X = Input.GetAxis("Horizontal");
-            var Z = Input.GetAxis("Vertical");
-            anim.SetFloat("speedX", X);
-            anim.SetFloat("speedZ", Z);
-        }
 
         physic?.OnUpdate();
         fsm?.OnUpdate();
@@ -271,21 +264,28 @@ public class Character
 
     public void OnDestory()
     {
+        IsDestroyed = true;
         RemoveEventListener();
-        if (trans != null)
-        {
-            MonoBridge.GetInstance().DestroyOBJ(trans.gameObject);
-        }
         //EventDispatcher.GetInstance().Event(EventDispatcher.CHARACTER_DESTORY, this);
-        fsm.OnDestory();
+        fsm?.OnDestory();
         physic?.OnDestory();
         physic = null;
         fsm = null;
         //清理技能
-        foreach (var item in SkillBehaviour)
+        for (int i = 0; i < SkillBehaviour.Count; i++)
         {
+            var item = SkillBehaviour[i];
             item.OnDestroy();
         }
         //清理BUFF
+        for (int i = 0; i < BuffBehaviour.Count; i++)
+        {
+            var item = BuffBehaviour[i];
+            item.OnDestroy();
+        }
+        if (trans != null)
+        {
+            MonoBridge.GetInstance().DestroyOBJ(trans.gameObject);
+        }
     }
 }

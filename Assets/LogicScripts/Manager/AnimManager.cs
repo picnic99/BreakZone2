@@ -28,7 +28,7 @@ public class AnimManager : Manager<AnimManager>
 
     public void StopAnim(Character character, string animName)
     {
-        character.anim.ResetTrigger(animName);
+        //character.anim.ResetTrigger(animName);
     }
 
     /// <summary>
