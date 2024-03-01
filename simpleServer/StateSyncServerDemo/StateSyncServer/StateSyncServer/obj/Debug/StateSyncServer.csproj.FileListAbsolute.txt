@@ -1,0 +1,16 @@
+D:\unityPoj\DontWatchMe(1)\StateSyncServerDemo\StateSyncServer\StateSyncServer\bin\Debug\StateSyncServer.exe.config
+D:\unityPoj\DontWatchMe(1)\StateSyncServerDemo\StateSyncServer\StateSyncServer\bin\Debug\StateSyncServer.exe
+D:\unityPoj\DontWatchMe(1)\StateSyncServerDemo\StateSyncServer\StateSyncServer\bin\Debug\StateSyncServer.pdb
+D:\unityPoj\DontWatchMe(1)\StateSyncServerDemo\StateSyncServer\StateSyncServer\obj\Debug\StateSyncServer.csproj.AssemblyReference.cache
+D:\unityPoj\DontWatchMe(1)\StateSyncServerDemo\StateSyncServer\StateSyncServer\obj\Debug\StateSyncServer.csproj.CoreCompileInputs.cache
+D:\unityPoj\DontWatchMe(1)\StateSyncServerDemo\StateSyncServer\StateSyncServer\obj\Debug\StateSyncServer.exe
+D:\unityPoj\DontWatchMe(1)\StateSyncServerDemo\StateSyncServer\StateSyncServer\obj\Debug\StateSyncServer.pdb
+D:\unityPoj\DontWatchMe(1)\StateSyncServerDemo\StateSyncServer\StateSyncServer\bin\Debug\Newtonsoft.Json.dll
+D:\unityPoj\DontWatchMe(1)\StateSyncServerDemo\StateSyncServer\StateSyncServer\bin\Debug\Newtonsoft.Json.xml
+D:\unityPoj\DontWatchMe(1)\StateSyncServerDemo\StateSyncServer\StateSyncServer\obj\Debug\StateSyncServer.csproj.CopyComplete
+D:\unityPoj\DontWatchMe(1)\StateSyncServerDemo\StateSyncServer\StateSyncServer\bin\Debug\MathNet.Numerics.dll
+D:\unityPoj\DontWatchMe(1)\StateSyncServerDemo\StateSyncServer\StateSyncServer\bin\Debug\System.Numerics.Vectors.dll
+D:\unityPoj\DontWatchMe(1)\StateSyncServerDemo\StateSyncServer\StateSyncServer\bin\Debug\System.ValueTuple.dll
+D:\unityPoj\DontWatchMe(1)\StateSyncServerDemo\StateSyncServer\StateSyncServer\bin\Debug\MathNet.Numerics.xml
+D:\unityPoj\DontWatchMe(1)\StateSyncServerDemo\StateSyncServer\StateSyncServer\bin\Debug\System.Numerics.Vectors.xml
+D:\unityPoj\DontWatchMe(1)\StateSyncServerDemo\StateSyncServer\StateSyncServer\bin\Debug\System.ValueTuple.xml
