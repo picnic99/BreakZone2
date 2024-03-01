@@ -35,9 +35,12 @@ namespace Assets.LogicScripts.Client.Net
                         dic.Add(ProtocolId.CLENT_PLAYER_ADD_NTF, typeof(PlayerAddNtf));
                         dic.Add(ProtocolId.CLENT_BULLET_ADD_NTF, typeof(AddBulletNtf));*/
 
+            dic.Add(ProtocolId.CLIENT_PLAYER_LOGIN_REQ, typeof(PlayerLoginReq));
+            dic.Add(ProtocolId.CLIENT_PLAYER_LOGIN_REP, typeof(PlayerLoginRep));
+            dic.Add(ProtocolId.CLIENT_PLAYER_BASE_INFO_NTF, typeof(PlayerBaseInfoNtf));
+     
             dic.Add(ProtocolId.CLIENT_GAME_PLAYER_OPT_REQ, typeof(GamePlayerOptReq));
             dic.Add(ProtocolId.CLIENT_GAME_PLAYER_OPT_REP, typeof(GamePlayerOptRep));
-
         }
 
         public Type GetType(ProtocolId key)

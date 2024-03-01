@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Assets.LogicScripts.Client.Net.Protocols
 {
-    class Protocol
+    public class Protocol
     {
         public ProtocolId protocolId;
     }
