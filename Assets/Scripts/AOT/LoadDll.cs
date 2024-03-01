@@ -82,7 +82,7 @@ public class LoadDll : MonoBehaviour
 #endif
 
         //进入游戏流程
-        SceneHandle sceneData = package.LoadSceneAsync("Assets/Res/Scene/Login");
+        SceneHandle sceneData = package.LoadSceneAsync("Assets/Res/Scene/Root");
         sceneData.Completed += LoadScene;
     }
 

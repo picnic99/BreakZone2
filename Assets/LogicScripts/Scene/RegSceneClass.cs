@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +6,7 @@ using UnityEngine;
 public class RegSceneClass :RegisterBase<RegSceneClass, string, Type>
 {
     public static string SelectRoleScene = "SelectRole";
+    public static string LoginScene = "Login";
     public static string GameRoomScene = "GameRoom";
     public static string AllScene = "AllScene";
 
@@ -14,5 +15,6 @@ public class RegSceneClass :RegisterBase<RegSceneClass, string, Type>
         base.Init();
         regDic.Add(RegSceneClass.SelectRoleScene, typeof(SelectRoleScene));
         regDic.Add(RegSceneClass.GameRoomScene, typeof(GameRoomScene));
+        regDic.Add(RegSceneClass.LoginScene, typeof(LoginScene));
     }
 }

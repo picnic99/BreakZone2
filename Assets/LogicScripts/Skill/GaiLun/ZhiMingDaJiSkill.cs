@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ZhiMingDaJiSkill : Skill
 {
-    private AnimCoverVO moveCover;
+    //private AnimCoverVO moveCover;
     private AnimCoverVO atkCover;
 
     public ZhiMingDaJiSkill()
@@ -22,7 +22,6 @@ public class ZhiMingDaJiSkill : Skill
         obj.transform.localPosition = new Vector3(-0.084F, 0, 0.033F);
         obj.transform.localRotation = Quaternion.identity;
         obj.transform.localScale = new Vector3(0.05F, 0.05F, 0.05F);
-
     }
 
     public override void OnEnter()
@@ -35,7 +34,7 @@ public class ZhiMingDaJiSkill : Skill
     {
         base.OnTrigger();
         //移除所有的减速效果
-        BuffManager.GetInstance().RemoveBuff(character);
+        //BuffManager.GetInstance().RemoveBuff(character);
 
         //动画覆盖 更改后续的移动动画和攻击动画
         //moveCover = new AnimCoverVO("GAILUN_SWORD_RUN");

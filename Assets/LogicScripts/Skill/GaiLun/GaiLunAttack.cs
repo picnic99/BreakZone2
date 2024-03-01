@@ -32,8 +32,8 @@ public class GaiLunAttack : BaseAttack
         if (target.IsDestroyed) return;
         AddState(target, character, StateType.Injure);
         DoDamage(target, character.property.Atk);
-        AudioManager.GetInstance().Play("sword_damage1", false);
-        AudioManager.GetInstance().Play("sword_damage2", false);
+/*        AudioManager.GetInstance().Play("sword_damage1", false);
+        AudioManager.GetInstance().Play("sword_damage2", false);*/
 
         //顿帧
         character.characterAnimator.SetSpeed(0);

@@ -54,7 +54,8 @@ public class GameMain : MonoBehaviour
 
     public void GameStart()
     {
-        GameSceneManager.GetInstance().SwitchScene(RegSceneClass.SelectRoleScene);
+        Assets.LogicScripts.Client.Manager.NetManager.GetInstance().Connect();
+        GameSceneManager.GetInstance().SwitchScene(RegSceneClass.LoginScene);
     }
 
     public void RegSystemHotKey()
