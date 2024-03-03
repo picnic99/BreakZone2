@@ -32,6 +32,6 @@ public class LoginUI : UIBase
     {
         Debug.Log(Username.text);
         Debug.Log(Password.text);
-        Assets.LogicScripts.Client.ActionManager.GetInstance().Send_LoginReq(Username.text, Password.text);
+        Assets.LogicScripts.Client.ActionManager.GetInstance().SendLoginReq(Username.text, Password.text);
     }
 }

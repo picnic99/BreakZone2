@@ -64,10 +64,18 @@ public class EventDispatcher : Singleton<EventDispatcher>
     {
         AddDelegate(eventName, callback);
     }
+    public void On(int eventName, Action<object[]> callback)
+    {
+        AddDelegate(eventName + "", callback);
+    }
 
     public void Off(string eventName, Action<object[]> callback)
     {
         RemoveDelegate(eventName, callback);
+    }
+    public void Off(int eventName, Action<object[]> callback)
+    {
+        RemoveDelegate(eventName + "", callback);
     }
 
     public void Event(string eventName, params object[] args)
@@ -77,6 +85,13 @@ public class EventDispatcher : Singleton<EventDispatcher>
         {
             ((Action<object[]>)call).Invoke(args);
         }
-
+    }
+    public void Event(int eventName, params object[] args)
+    {
+        events.TryGetValue(eventName + "", out Delegate call);
+        if (call != null)
+        {
+            ((Action<object[]>)call).Invoke(args);
+        }
     }
 }

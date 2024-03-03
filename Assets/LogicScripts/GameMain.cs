@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.LogicScripts.Client.Net.PB;
+using System;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -13,6 +14,8 @@ public class GameMain : MonoBehaviour
     }
 
     public List<IManager> managers;
+    public Queue<Protocol> ProtoList = new Queue<Protocol>();
+
 
     private void Awake()
     {
@@ -24,6 +27,7 @@ public class GameMain : MonoBehaviour
     }
     void Start()
     {
+        RegProtocol.Init();
         managers = new List<IManager>()
         {
             ResourceManager.GetInstance(),
@@ -40,6 +44,12 @@ public class GameMain : MonoBehaviour
     void Update()
     {
         RegSystemHotKey();
+        //协议处理
+        while (ProtoList.Count > 0)
+        {
+            var protocol = ProtoList.Dequeue();
+            EventDispatcher.GetInstance().Event(protocol.protocolId, protocol);
+        }
         UpdateManager();
     }
 

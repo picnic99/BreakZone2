@@ -1,5 +1,7 @@
 ﻿using Assets.LogicScripts.Client.Net;
-using Assets.LogicScripts.Client.Net.Protocols;
+using Assets.LogicScripts.Client.Net.PB;
+using Assets.LogicScripts.Utils;
+using Google.Protobuf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,67 +18,59 @@ namespace Assets.LogicScripts.Client.Manager
 
     class NetManager:Manager<NetManager>
     {
-        Socket client;
+        Thread listenerThread; //监听数据
+        IPEndPoint ipPoint;
+        TcpClient client;
 
+        //初始化
         public void Connect()
         {
-            client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
-            IPAddress ip = IPAddress.Parse("127.0.0.1");
-            IPEndPoint endPoint = new IPEndPoint(ip, int.Parse("8080"));
-            client.Connect(endPoint);
-            Thread thread = new Thread(ReciveMsg);
-            thread.IsBackground = true;
-            thread.Start(client);
-            Debug.Log("Hello Server");
+            //定义服务器的IP和端口，端口与服务器对应
+            var ip = IPAddress.Parse("127.0.0.1"); //可以是局域网或互联网ip，此处是本机
+            ipPoint = new IPEndPoint(ip, 8080);
+
+            client = new TcpClient(ipPoint.AddressFamily);
+            client.Connect(ipPoint);
+
+
+            //开启一个线程连接，必须的，否则主线程卡死
+            listenerThread = new Thread(new ThreadStart(SocketReceive));
+            listenerThread.Start();
         }
 
-        /// <summary>
-        /// 客户端接收到服务器发送的消息
-        /// </summary>
-        /// <param name="o">客户端</param>
-        void ReciveMsg(object o)
+
+        void SocketReceive()
         {
-            Socket client = o as Socket;
+            //不断接收服务器发来的数据
             while (true)
             {
-                ///定义客户端接收到的信息大小
-                byte[] arrList = new byte[4096];
-                ///接收到的信息大小(所占字节数)
-                int length = client.Receive(arrList);
-                string json = Encoding.UTF8.GetString(arrList, 0, length);
-                Debug.Log(System.DateTime.Now.ToString("HH:mm:ss:fff") + " - 服务器发来的原始数据:" + json);
-                json = json.Replace('\'', '"');
-                if (json.IndexOf("{") == -1) continue;
-
-                int sizeLen = 5;
-                int starLen = 0;
-                while (starLen < json.Length - 1)
+                try
                 {
-                    int len = Convert.ToInt32(json.Substring(starLen, sizeLen));
-                    string msg = json.Substring(starLen + sizeLen, len);
-                    starLen += len + sizeLen;
-                    Protocol p = JsonUtility.FromJson<Protocol>(msg);
-                    Type type = ProtocolRegClass.GetInstance().GetType(p.protocolId);
-                    Protocol proto = JsonConvert.DeserializeObject(msg, type) as Protocol;
-
+                    Protocol proto = PbUtil.UnPack(client.GetStream());
+                    CommonUtils.Logout("接收到消息：" + proto.ToString());
+                    //proto.client = client;
                     GameMain.GetInstance().ProtoList.Enqueue(proto);
+
+                }
+                catch (Exception e)
+                {
+                    CommonUtils.Logout("接收出现异常: " + e.StackTrace);
+                    client.Close();
+                    break;
                 }
             }
         }
 
-        private void SendMsg(string msg)
+        public void SendProtocol(IMessage protocol)
         {
-            byte[] sendBytes = Encoding.UTF8.GetBytes(msg);
-            msg = sendBytes.Length.ToString().PadLeft(5, '0') + msg;
-            sendBytes = Encoding.UTF8.GetBytes(msg);
-            //把二进制的消息发出去
-            client.Send(sendBytes);
-        }
-
-        public void SendProtocol(Protocol proto)
-        {
-            string json = JsonConvert.SerializeObject(proto);
-            SendMsg(json);
+            int id = RegProtocol.GetProtocolId(protocol);
+            if (id > 0)
+            {
+                var data = protocol.ToByteArray();
+                var bytes = PbUtil.Pack((uint)id, data);
+                CommonUtils.Logout($"发送消息：len = {data.Length},protocolId = {id},data = {protocol.ToString()}");
+                client.Client.Send(bytes);
+            }
         }
     }
 }

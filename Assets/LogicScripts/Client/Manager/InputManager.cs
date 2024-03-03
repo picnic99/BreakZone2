@@ -1,6 +1,5 @@
 ﻿using Assets.LogicScripts.Client.Enum;
 using Assets.LogicScripts.Client.Manager;
-using Assets.LogicScripts.Client.Net.Protocols;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -63,7 +62,7 @@ namespace Assets.LogicScripts.Client
             if (GameContext.CurRole == null) return;
 
             //前进 后退 左移 右移 加速 攻击 跳跃 技能1 技能2 技能3 技能4 瞄准 闪避
-            GamePlayerOptReq proto = new GamePlayerOptReq();
+/*            GamePlayerOptReq proto = new GamePlayerOptReq();
             proto.input = GetPlayInput();
             proto.UpMove = GetKeyOptState(KeyCode.W);
             proto.DownMove = GetKeyOptState(KeyCode.S);
@@ -86,7 +85,7 @@ namespace Assets.LogicScripts.Client
                 proto.Rot = angles.y;
             }
 
-            NetManager.GetInstance().SendProtocol(proto);
+            NetManager.GetInstance().SendProtocol(proto);*/
         }
     }
 }
