@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Assets.LogicScripts.Client.Net.PB.Enum;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -32,6 +33,6 @@ public class LoginUI : UIBase
     {
         Debug.Log(Username.text);
         Debug.Log(Password.text);
-        Assets.LogicScripts.Client.ActionManager.GetInstance().SendLoginReq(Username.text, Password.text);
+        Assets.LogicScripts.Client.ActionManager.GetInstance().SendLoginReq(Username.text, Password.text,LoginTypeEnum.LOGIN_IN);
     }
 }

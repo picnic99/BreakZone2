@@ -1,4 +1,5 @@
 ﻿using Assets.LogicScripts.Client.Net.PB;
+using Assets.LogicScripts.Client;
 using System;
 using System.Collections.Generic;
 using UnityEditor;
@@ -56,6 +57,7 @@ public class GameMain : MonoBehaviour
 
     public void UpdateManager()
     {
+        Assets.LogicScripts.Client.InputManager.GetInstance().OnUpdate();
         foreach (var item in managers)
         {
             item.OnUpdate();

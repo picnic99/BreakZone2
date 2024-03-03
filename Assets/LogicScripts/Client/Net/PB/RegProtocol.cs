@@ -18,6 +18,13 @@ namespace Assets.LogicScripts.Client.Net.PB
             typeDic = new Dictionary<int, Type>();
             RegProtocolData(ProtocolId.CLIENT_PLAYER_LOGIN_REQ, typeof(PlayerLoginReq));
             RegProtocolData(ProtocolId.CLIENT_PLAYER_LOGIN_REP, typeof(PlayerLoginRep));
+            RegProtocolData(ProtocolId.CLIENT_PLAYER_BASE_INFO_NTF, typeof(PlayerBaseInfoNtf));
+            RegProtocolData(ProtocolId.CLIENT_SELECT_ROLE_REQ, typeof(SelectCrtReq));
+            RegProtocolData(ProtocolId.CLIENT_SELECT_ROLE_REP, typeof(SelectCrtRep));
+            RegProtocolData(ProtocolId.CLIENT_ENTER_SCENE_REQ, typeof(EnterSceneReq));
+            RegProtocolData(ProtocolId.CLIENT_ENTER_SCENE_REP, typeof(EnterSceneRep));
+            RegProtocolData(ProtocolId.CLENT_GET_GAME_DATA_REQ, typeof(GetGameDataReq));
+            RegProtocolData(ProtocolId.CLENT_GET_GAME_DATA_REP, typeof(GetGameDataRep));
         }
 
         public static Type GetProtocolType(int id)

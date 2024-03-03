@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Assets.LogicScripts.Client.Enum
 {
-    enum PlayerOptEnum
+    public class PlayerOptEnum
     {
-        UNKNOW = 0,
-        DOWN = 1,
-        DOWN_HOLD = 2,
-        UP = 3,
+        public static int UNKNOW = 0;
+        public static int DOWN = 1;
+        public static int DOWN_HOLD = 2;
+        public static int UP = 3;
     }
 }

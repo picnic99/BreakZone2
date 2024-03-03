@@ -1,3 +1,5 @@
+using Assets.LogicScripts.Client.Manager;
+using Assets.LogicScripts.Client.Net.PB.Enum;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,7 +11,8 @@ using UnityEngine;
 /// </summary>
 public class SelectRoleUI : UIBase
 {
-    private GameObject infoRoot { get { return UIBase.GetBind<GameObject>(Root, "infoRoot"); } }
+    private GameObject infoRoot => UIBase.GetBind<GameObject>(Root, "infoRoot");
+    private GameObject LoginOutBtn => UIBase.GetBind<GameObject>(Root, "LoginOutBtn");
 
     private GameObject tabItemObj;
 
@@ -35,6 +38,7 @@ public class SelectRoleUI : UIBase
         tabItemObj = bind["roleItem"].AS<GameObject>();
 
         var datas = CharacterConfiger.GetInstance().GetRealCharacters();
+        AddClick(LoginOutBtn, OnLoginOut);
 
         for (int i = 0; i < datas.Length; i++)
         {
@@ -67,6 +71,10 @@ public class SelectRoleUI : UIBase
             }
         }
         updateTabs();
+    }
+    public void OnLoginOut(object[] args)
+    {
+        Assets.LogicScripts.Client.ActionManager.GetInstance().SendLoginReq(PlayerManager.GetInstance().Self.username, "", LoginTypeEnum.LOGIN_Out);
     }
 
     private void updateTabs()

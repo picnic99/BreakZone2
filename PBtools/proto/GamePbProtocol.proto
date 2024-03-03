@@ -3,14 +3,70 @@ syntax = "proto3";
 package msg;
 option java_package = "game.msg";
 
-
 message PlayerLoginReq {
     string username = 1;
 	string password = 2;
-	uint32 type = 3;
+	int32 type = 3;
 }
 
 message PlayerLoginRep {
-    uint32 result = 1;
-	uint32 type = 3;
+    int32 result = 1;
+	int32 type = 3;
+}
+
+message PlayerBaseInfoNtf{
+	string username = 1;
+	int32 lastStaySceneId = 2;
+	//uint32 lastSelectCrtId = 3;
+	float lastStayPosX = 3;
+	float lastStayPosY = 4;
+	float lastStayPosZ = 5;	
+}
+
+message SelectCrtReq{
+	int32 crtId = 1;
+}
+
+message SelectCrtRep{
+	int32 result = 1;
+	int32 crtId = 2;
+}
+
+message EnterSceneReq{
+	int32 sceneId = 1;
+}
+
+message EnterSceneRep{
+	int32 result = 1;
+	int32 sceneId = 2;
+}
+
+message GetGameDataReq{
+
+}
+
+message GetGameDataRep{
+	int32 result = 1;
+}
+
+message GamePlayerOptReq{
+	float inputX = 1;
+	float inputY = 2;
+	int32 UpMove = 3;
+	int32 DownMove = 4;
+	int32 LeftMove = 5;
+	int32 RightMove = 6;
+	int32 AddSpeed = 7;
+	int32 Arm = 8;
+	int32 Flash = 9;
+	int32 Jump = 10;
+	int32 Atk = 11;
+	int32 Skill1 = 12;
+	int32 Skill2 = 13;
+	int32 Skill3 = 14;
+	int32 Skill4 = 15;
+	float rot = 16;
+}
+message GamePlayerOptRep{
+	int32 result = 1;
 }

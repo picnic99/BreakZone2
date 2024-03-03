@@ -57,7 +57,7 @@ namespace StateSyncServer.LogicScripts.Manager
             var type = req.Type;
 
 
-            if (type == 1)
+            if (type == LoginTypeEnum.LOGIN_IN)
             {
                 //登录
                 CommonUtils.Logout($"玩家{username}登录");
@@ -69,8 +69,16 @@ namespace StateSyncServer.LogicScripts.Manager
                 rep.Type = type;
                 NetManager.GetInstance().SendProtocol(proto.client, rep);
                 //同步一下玩家信息
+                PlayerBaseInfoNtf ntf = new PlayerBaseInfoNtf();
+                ntf.Username = username;
+                //以下信息从数据库查询
+                ntf.LastStaySceneId = 1;
+                ntf.LastStayPosX = 0;
+                ntf.LastStayPosY = 0;
+                ntf.LastStayPosZ = 0;
+                NetManager.GetInstance().SendProtocol(proto.client, ntf);
             }
-            if (type == 2)
+            if (type == LoginTypeEnum.LOGIN_Out)
             {
                 //注销
                 Global.PlayerSocketMap.Remove(username);

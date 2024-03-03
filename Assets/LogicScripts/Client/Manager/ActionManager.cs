@@ -10,6 +10,7 @@ using Assets.LogicScripts.Client.Net.PB;
 using Assets.LogicScripts.Client.Net.PB.Enum;
 using Msg;
 using Assets.LogicScripts.Utils;
+using Assets.LogicScripts.Client.Entity;
 
 namespace Assets.LogicScripts.Client
 {
@@ -23,6 +24,9 @@ namespace Assets.LogicScripts.Client
         {
             base.AddEventListener();
             EventDispatcher.GetInstance().On(ProtocolId.CLIENT_PLAYER_LOGIN_REP, LoginRepHandle);
+            EventDispatcher.GetInstance().On(ProtocolId.CLIENT_PLAYER_BASE_INFO_NTF, HandleBaseInfoNtf);
+            EventDispatcher.GetInstance().On(ProtocolId.CLIENT_SELECT_ROLE_REP, SelectCrtHandle);
+            EventDispatcher.GetInstance().On(ProtocolId.CLIENT_ENTER_SCENE_REP, EnterSceneHandle);
 
         }
 
@@ -30,21 +34,68 @@ namespace Assets.LogicScripts.Client
         {
             base.RemoveEventListener();
             EventDispatcher.GetInstance().Off(ProtocolId.CLIENT_PLAYER_LOGIN_REP, LoginRepHandle);
+            EventDispatcher.GetInstance().Off(ProtocolId.CLIENT_PLAYER_BASE_INFO_NTF, HandleBaseInfoNtf);
+            EventDispatcher.GetInstance().Off(ProtocolId.CLIENT_SELECT_ROLE_REP, SelectCrtHandle);
+            EventDispatcher.GetInstance().Off(ProtocolId.CLIENT_ENTER_SCENE_REP, EnterSceneHandle);
 
         }
 
 
-        public void SendLoginReq(string username, string password)
+        public void SendLoginReq(string username, string password, int type)
         {
-            if (!String.IsNullOrEmpty(username) || !String.IsNullOrEmpty(password))
+/*            if (!String.IsNullOrEmpty(username) || !String.IsNullOrEmpty(password))
             {
                 //提示
-            }
+            }*/
             var req = new PlayerLoginReq();
             req.Username = username;
             req.Password = password;
-            req.Type = 1;
+            req.Type = type;
             NetManager.GetInstance().SendProtocol(req);
+        }
+
+        public void SendSelectCrtReq(int crtId)
+        {
+            var req = new SelectCrtReq();
+            req.CrtId = crtId;
+            NetManager.GetInstance().SendProtocol(req);
+        }
+
+        public void SendEnterSceneReq(int sceneId = 1)
+        {
+            var req = new EnterSceneReq();
+            req.SceneId = sceneId;
+            NetManager.GetInstance().SendProtocol(req);
+        }
+
+        public void SelectCrtHandle(object[] args)
+        {
+            Protocol proto = args[0] as Protocol;
+
+            SelectCrtRep rep = proto.GetDataInstance<SelectCrtRep>();
+
+            var result = rep.Result;
+            var crtId = rep.CrtId;
+            if (result == ProtocolResultEnum.SUCCESS)
+            {
+                CommonUtils.Logout("选择角色" + crtId + "完毕");
+                SendEnterSceneReq(PlayerManager.GetInstance().Self.lastStaySceneId);
+            }
+        }
+
+        public void EnterSceneHandle(object[] args)
+        {
+            Protocol proto = args[0] as Protocol;
+
+            EnterSceneRep rep = proto.GetDataInstance<EnterSceneRep>();
+
+            var result = rep.Result;
+            var SceneId = rep.SceneId;
+            if (result == ProtocolResultEnum.SUCCESS)
+            {
+                CommonUtils.Logout("进入场景" + SceneId + "请求成功");
+                GameSceneManager.GetInstance().SwitchScene(RegSceneClass.GameRoomScene);
+            }
         }
 
         private void LoginRepHandle(object[] args)
@@ -57,19 +108,17 @@ namespace Assets.LogicScripts.Client
             var type = rep.Type;
             if (result == ProtocolResultEnum.SUCCESS)
             {
-                if (type == 1)
+                if (type == LoginTypeEnum.LOGIN_IN)
                 {
                     //登录
                     CommonUtils.Logout("登录成功!");
-                    //写入数据
-                    //进入到选择角色场景
-                    GameSceneManager.GetInstance().SwitchScene(RegSceneClass.SelectRoleScene);
                 }
-                else if (type == 2)
+                else if (type == LoginTypeEnum.LOGIN_Out)
                 {
-                    CommonUtils.Logout("登出成功!");
                     //退出登录
+                    CommonUtils.Logout("登出成功!");
                     //清理数据
+                    PlayerManager.GetInstance().ClearPlayer();
                     //返回到登录场景
                     GameSceneManager.GetInstance().SwitchScene(RegSceneClass.LoginScene);
                 }
@@ -78,6 +127,24 @@ namespace Assets.LogicScripts.Client
             {
                 CommonUtils.Logout("PlayerLoginRep 操作失败");
             }
+        }
+
+        private void HandleBaseInfoNtf(object[] args)
+        {
+            Protocol proto = args[0] as Protocol;
+            PlayerBaseInfoNtf rep = proto.GetDataInstance<PlayerBaseInfoNtf>();
+            var username = rep.Username;
+            var lastStaySceneId = rep.LastStaySceneId;
+            
+            Vector3 lastStayPos = new Vector3(
+                rep.LastStayPosX, 
+                rep.LastStayPosY,
+                rep.LastStayPosZ);
+
+            Player p = new Player(username, (int)lastStaySceneId, lastStayPos);
+            PlayerManager.GetInstance().Self = p;
+            CommonUtils.Logout("玩家信息同步完成! 即将切换到选择角色");
+            GameSceneManager.GetInstance().SwitchScene(RegSceneClass.SelectRoleScene);
         }
 
 
@@ -165,12 +232,12 @@ namespace Assets.LogicScripts.Client
 
         private void Handle_PlayerBaseInfoNtf(Protocol proto)
         {
-/*            PlayerBaseInfoNtf action = proto as PlayerBaseInfoNtf;
-            var baseInfo = action.baseInfo;
-            if (baseInfo != null)
-            {
-                Common.GameContext.playerBaseInfo = baseInfo;
-            }*/
+            /*            PlayerBaseInfoNtf action = proto as PlayerBaseInfoNtf;
+                        var baseInfo = action.baseInfo;
+                        if (baseInfo != null)
+                        {
+                            Common.GameContext.playerBaseInfo = baseInfo;
+                        }*/
         }
     }
 }

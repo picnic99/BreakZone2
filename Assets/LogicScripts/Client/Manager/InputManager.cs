@@ -1,5 +1,6 @@
 ﻿using Assets.LogicScripts.Client.Enum;
 using Assets.LogicScripts.Client.Manager;
+using Msg;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +22,7 @@ namespace Assets.LogicScripts.Client
             return new Vector3(x, 0, z);
         }
 
-        public PlayerOptEnum GetKeyOptState(KeyCode key)
+        public int GetKeyOptState(KeyCode key)
         {
             if (Input.GetKeyDown(key))
             {
@@ -38,7 +39,7 @@ namespace Assets.LogicScripts.Client
             return PlayerOptEnum.UNKNOW;
         }
 
-        public PlayerOptEnum GetMouseOptState(int mouseKey)
+        public int GetMouseOptState(int mouseKey)
         {
             if (Input.GetMouseButtonDown(mouseKey))
             {
@@ -57,13 +58,16 @@ namespace Assets.LogicScripts.Client
 
         public override void OnUpdate()
         {
-            if (!GameContext.IsCrtReceiveInput) return;
+            //if (!GameContext.IsCrtReceiveInput) return;
 
-            if (GameContext.CurRole == null) return;
+            //if (GameContext.CurRole == null) return;
+
+
 
             //前进 后退 左移 右移 加速 攻击 跳跃 技能1 技能2 技能3 技能4 瞄准 闪避
-/*            GamePlayerOptReq proto = new GamePlayerOptReq();
-            proto.input = GetPlayInput();
+            GamePlayerOptReq proto = new GamePlayerOptReq();
+            proto.InputX = GetPlayInput().x;
+            proto.InputY = GetPlayInput().z;
             proto.UpMove = GetKeyOptState(KeyCode.W);
             proto.DownMove = GetKeyOptState(KeyCode.S);
             proto.LeftMove = GetKeyOptState(KeyCode.A);
@@ -78,14 +82,14 @@ namespace Assets.LogicScripts.Client
             proto.Skill3 = GetKeyOptState(KeyCode.R);
             proto.Skill4 = GetKeyOptState(KeyCode.F);
 
-            if(GetPlayInput().magnitude >= thresholdMove && (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D)))
+            if (GetPlayInput().magnitude >= thresholdMove && (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D)))
             {
                 if (CameraManager.GetInstance().state != CameraState.MAIN) return;
                 Vector3 angles = GameContext.CurRole.trans.position - CameraManager.GetInstance().curCam.transform.rotation.eulerAngles;
                 proto.Rot = angles.y;
             }
 
-            NetManager.GetInstance().SendProtocol(proto);*/
+            NetManager.GetInstance().SendProtocol(proto);
         }
     }
 }

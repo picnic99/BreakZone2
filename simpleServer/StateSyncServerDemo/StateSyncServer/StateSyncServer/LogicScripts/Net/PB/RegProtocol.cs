@@ -17,6 +17,7 @@ namespace StateSyncServer.LogicScripts.Net.PB
             typeDic = new Dictionary<int, Type>();
             RegProtocolData(ProtocolId.CLIENT_PLAYER_LOGIN_REQ, typeof(PlayerLoginReq));
             RegProtocolData(ProtocolId.CLIENT_PLAYER_LOGIN_REP, typeof(PlayerLoginRep));
+            RegProtocolData(ProtocolId.CLIENT_PLAYER_BASE_INFO_NTF, typeof(PlayerBaseInfoNtf));
         }
 
         public static Type GetProtocolType(int id)
