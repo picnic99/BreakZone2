@@ -6,14 +6,36 @@ using System.Threading.Tasks;
 
 namespace StateSyncServer.LogicScripts.Manager
 {
-    class Manager<T> where T : new()
+    class Manager<T> : EventDispatcher where T : new()
     {
         public static T _instance;
 
         public static T GetInstance()
         {
-            if (_instance == null) _instance = new T();
+            if (_instance == null) { 
+                _instance = new T();
+            } 
             return _instance;
+        }
+
+        public virtual void Init()
+        {
+            AddListener();
+        }
+
+        public virtual void Destroy()
+        {
+            RemoveListener();
+        }
+
+        public virtual void AddListener()
+        {
+
+        }
+
+        public virtual void RemoveListener ()
+        {
+
         }
     }
 }

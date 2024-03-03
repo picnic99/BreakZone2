@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StateSyncServer.LogicScripts.Util
 {
-    class CommonUtils
+    public class CommonUtils
     {
 
         public static string GetCurTime()

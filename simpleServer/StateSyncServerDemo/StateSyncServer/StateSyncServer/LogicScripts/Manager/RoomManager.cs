@@ -46,10 +46,10 @@ namespace StateSyncServer.LogicScripts.Manager
             return null;
         }
         //获取房间里面的所有玩家
-        public List<Player> GetRoomPlayers(int roomId)
+        public List<Character> GetRoomPlayers(int roomId)
         {
-            List<Player> result = new List<Player>();
-            var list = PlayerManager.GetInstance().GetAllPlayers();
+            List<Character> result = new List<Character>();
+            var list = CharacterManager.GetInstance().GetAllPlayers();
 
             foreach (var p in list)
             {
@@ -65,7 +65,7 @@ namespace StateSyncServer.LogicScripts.Manager
         public List<int> GetRoomPlayerIds(int roomId)
         {
             List<int> result = new List<int>();
-            var list = PlayerManager.GetInstance().GetAllPlayers();
+            var list = CharacterManager.GetInstance().GetAllPlayers();
             foreach (var p in list)
             {
                 if (p.data.roomId == roomId)

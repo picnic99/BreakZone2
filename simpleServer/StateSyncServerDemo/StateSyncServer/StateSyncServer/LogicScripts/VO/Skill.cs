@@ -16,13 +16,13 @@ namespace StateSyncServer.LogicScripts.VO
         public int skillId;
         public int tickCtn = 0;//当前播放帧
         public Vector3[] animData;//动画数据
-        public Player player;//角色引用
+        public Character player;//角色引用
 
         public Skill(int playerId, int skillId)
         {
             this.playerId = playerId;
             this.skillId = skillId;
-            this.player = PlayerManager.GetInstance().GetPlayer(this.playerId);
+            this.player = CharacterManager.GetInstance().GetPlayer(this.playerId);
             if (this.skillId == (int)SkillId.XUAN_FENG_ZHAN)
             {
                 this.animData = AnimManager.JumpAnimData;

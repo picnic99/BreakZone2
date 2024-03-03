@@ -1,4 +1,4 @@
-﻿using StateSyncServer.LogicScripts.Net.Protocols;
+﻿
 using StateSyncServer.LogicScripts.Util;
 using StateSyncServer.LogicScripts.VO;
 using System;
@@ -20,12 +20,12 @@ namespace StateSyncServer.LogicScripts.Manager
 
         public void CreateBullet(Bullet bullet)
         {
-            this.BulletList.Add(bullet);
+/*            this.BulletList.Add(bullet);
             //通知房间内其它玩家 有弹道创建
             var AddBulletNtf = new AddBulletNtf(bullet.data);
             CommonUtils.Logout("玩家[" + bullet.data.playerId + "]创建弹道 [" + bullet.data.bulletId + "]");
-            var p = PlayerManager.GetInstance().GetPlayer(bullet.data.playerId);
-            NetManager.GetInstance().SendProtoToRoom(p.data.roomId, AddBulletNtf);
+            var p = CharacterManager.GetInstance().GetPlayer(bullet.data.playerId);*/
+            //NetManager.GetInstance().SendProtoToRoom(p.data.roomId, AddBulletNtf);
         }
 
         public void RemoveBullet(Bullet bullet)

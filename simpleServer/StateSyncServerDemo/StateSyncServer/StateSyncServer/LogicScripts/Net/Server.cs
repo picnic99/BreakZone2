@@ -7,18 +7,22 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using StateSyncServer.LogicScripts.Net.Protocols;
-using StateSyncServer.LogicScripts.Net.Protocols.Base;
+using StateSyncServer.LogicScripts.Manager;
+using StateSyncServer.LogicScripts.Net.PB;
 using StateSyncServer.LogicScripts.Util;
 
 namespace StateSyncServer.LogicScripts.Net
 {
     class Server
     {
-
         private TcpListener server;
         private List<TcpClient> clients = new List<TcpClient>();
         private Thread listenThread;
+        /// <summary>
+        /// 缓冲区大小
+        /// </summary>
+        private int BUFF_SIZE = 4096;
+
 
         public void Start()
         {
@@ -26,7 +30,7 @@ namespace StateSyncServer.LogicScripts.Net
             server.Start();
             listenThread = new Thread(ListenForClients);
             listenThread.Start();
-            CommonUtils.Logout("服务器已启动！");
+            CommonUtils.Logout("服务器已启动");
 
         }
 
@@ -40,48 +44,33 @@ namespace StateSyncServer.LogicScripts.Net
             while (true)
             {
                 TcpClient client = server.AcceptTcpClient();
+                client.ReceiveBufferSize = BUFF_SIZE;
+                client.SendBufferSize = BUFF_SIZE;
                 clients.Add(client);
-                Console.WriteLine("Client connected: " + client.Client.RemoteEndPoint.ToString());
+                Console.WriteLine("客户端连接: " + client.Client.RemoteEndPoint.ToString());
 
-                Thread clientThread = new Thread(HandleClientComm);
+                Thread clientThread = new Thread(Receive);
                 clientThread.Start(client);
             }
         }
 
-        private void HandleClientComm(object client)
+        private void Receive(object client)
         {
             TcpClient tcpClient = (TcpClient)client;
-            NetworkStream clientStream = tcpClient.GetStream();
-
-            byte[] message = new byte[4096];
-            int bytesRead;
-
             while (true)
             {
                 try
                 {
-                    bytesRead = 0;
+                    Protocol proto = PbUtil.UnPack(tcpClient.GetStream());
+                    CommonUtils.Logout("接收到消息：" + proto.ToString());
+                    proto.client = tcpClient;
+                    GameMain.GetInstance().ProtoList.Enqueue(proto);
 
-                    // Block until a client sends a message  
-                    bytesRead = clientStream.Read(message, 0, message.Length);
-
-                    if (bytesRead == 0)
-                    {
-                        // The client disconnected from the server  
-                        Console.WriteLine("Client disconnected: " + tcpClient.Client.RemoteEndPoint.ToString());
-                        tcpClient.Close();
-                        clients.Remove(tcpClient);
-                        break;
-                    }
-
-                    // Translate the bytes received into ASCII for display purposes  
-                    ASCIIEncoding encoder = new ASCIIEncoding();
-                    string received = encoder.GetString(message, 0, bytesRead);
-                    Received(tcpClient, received);
+                    //NetManager.GetInstance().SendProtocol(tcpClient, proto.GetDataInstance());
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine("Error: " + e.StackTrace);
+                    Console.WriteLine("接收出现异常: " + e.StackTrace);
                     tcpClient.Close();
                     clients.Remove(tcpClient);
                     break;
@@ -89,39 +78,9 @@ namespace StateSyncServer.LogicScripts.Net
             }
         }
 
-        public void Received(TcpClient client,string data)
+        public void Send(TcpClient client, byte[] data)
         {
-            List<string> datas = new List<string>();
-            int sizeLen = 5;
-            int starLen = 0;
-            while (starLen < data.Length - 1)
-            {
-                data = data.Replace("\"", "'");
-                int len = Convert.ToInt32(data.Substring(starLen, starLen + sizeLen));
-                string msg = data.Substring(starLen + sizeLen, starLen + len);
-                starLen += len + sizeLen;
-                datas.Add(msg);
-                CommonUtils.Logout("len:" + len + " data:" + msg);
-            }
-            foreach (var item in datas)
-            {
-                CommonUtils.Logout("Received protocol:" + item);
-                Protocol p = JsonConvert.DeserializeObject<Protocol>(item);
-                Type type = ProtocolRegClass.GetInstance().GetType(p.protocolId);
-                Protocol proto = JsonConvert.DeserializeObject(item, type) as Protocol;
-                //事件处理
-                proto.client = client;
-                GameMain.GetInstance().ProtoList.Enqueue(proto);
-                //GameMain.GetInstance().Handle(client, proto);
-            }
-        }
-
-        public void Send(TcpClient client,string content)
-        {
-            ASCIIEncoding encoder = new ASCIIEncoding();
-            byte[] msg = encoder.GetBytes(content);
-            client.GetStream().Write(msg, 0, msg.Length);
-            CommonUtils.Logout("Sent protocol:" + content);
+            client.Client.Send(data);
         }
 
         public void Stop()

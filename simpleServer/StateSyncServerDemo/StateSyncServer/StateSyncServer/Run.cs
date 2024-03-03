@@ -1,5 +1,5 @@
 ﻿using StateSyncServer.LogicScripts.Net;
-using StateSyncServer.LogicScripts.Net.Protocols;
+using StateSyncServer.LogicScripts.Net.PB;
 using StateSyncServer.LogicScripts.Util;
 using System;
 using System.Collections.Generic;
@@ -15,6 +15,7 @@ namespace StateSyncServer
     {
         static void Main(string[] args)
         {
+            RegProtocol.Init();
             new Server().RunServer();
             GameMain.GetInstance().Run();
             //MatrixUtils.Test();

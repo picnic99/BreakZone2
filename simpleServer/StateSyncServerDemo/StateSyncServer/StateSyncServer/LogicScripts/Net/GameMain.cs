@@ -1,12 +1,13 @@
 ﻿
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net.Sockets;
 using System.Threading;
 using StateSyncServer.LogicScripts.Common;
 using StateSyncServer.LogicScripts.Manager;
-using StateSyncServer.LogicScripts.Net.Protocols;
+using StateSyncServer.LogicScripts.Net.PB;
 using StateSyncServer.LogicScripts.Util;
 using StateSyncServer.LogicScripts.VO;
 
@@ -22,18 +23,12 @@ namespace StateSyncServer.LogicScripts.Net
             return _instance;
         }
 
-        private float lastTime = 0;
-
+        //线程安全的队列 ConcurrentQueue
         public Queue<Protocol> ProtoList = new Queue<Protocol>();
 
         public void Run()
         {
-            /*            // 设置定时器回调  
-                        TimerCallback timerCallback = new TimerCallback(Update);
-
-                        // 创建一个周期为1000毫秒的定时器  
-                        Timer timer = new Timer(timerCallback, null, 0, Global.FixedFrameTimeMS);*/
-
+            Init();
             long lastTimestamp = 0;
             while (true)
             {
@@ -68,6 +63,11 @@ namespace StateSyncServer.LogicScripts.Net
 
         }
 
+        private void Init()
+        {
+            ActionManager.GetInstance().Init();
+        }
+
 
         private Stopwatch watch = new Stopwatch();
 
@@ -94,28 +94,18 @@ namespace StateSyncServer.LogicScripts.Net
                 var action = ActionManager.GetInstance().ActionList[i];
                 ActionManager.GetInstance().FightHandle(action);
             }*/
-            ActionManager.GetInstance().ClearAction();
+            //ActionManager.GetInstance().ClearAction();
             //技能数据迭代
             SkillManager.GetInstance().Tick();
             //数据迭代
-            PlayerManager.GetInstance().Tick();
+            CharacterManager.GetInstance().Tick();
             //弹道迭代
             BulletManager.GetInstance().Tick();
         }
 
         public void Handle(Protocol protocol)
         {
-            bool isFightProto = protocol is PlayerOptReq;
-
-            if (isFightProto)
-            {
-                //ActionManager.GetInstance().AddAction((PlayerOptReq)protocol);
-                ActionManager.GetInstance().FightHandle((PlayerOptReq)protocol);
-            }
-            else
-            {
-                ActionManager.GetInstance().LogicHandle(protocol.client, protocol);
-            }
+            ActionManager.GetInstance().Event(protocol.protocolId,protocol);
         }
     }
 }

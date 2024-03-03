@@ -14,6 +14,6 @@ namespace StateSyncServer.LogicScripts.Common
         public static float FixedFrameTimeS = 0.05f; // 1000/20
         public static int FixedFrameTimeMS = 50; // 1000/20
 
-        public static Dictionary<int, TcpClient> PlayerSocketMap = new Dictionary<int, TcpClient>();
+        public static Dictionary<string, TcpClient> PlayerSocketMap = new Dictionary<string, TcpClient>();
     }
 }
