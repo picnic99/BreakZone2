@@ -34,7 +34,8 @@ namespace StateSyncServer.LogicScripts.Manager
             ActionManager.GetInstance().On(ProtocolId.CLIENT_PLAYER_LOGIN_REQ, LoginReqHandle);
             ActionManager.GetInstance().On(ProtocolId.CLIENT_SELECT_ROLE_REQ, SelectCrtHandle);
             ActionManager.GetInstance().On(ProtocolId.CLIENT_ENTER_SCENE_REQ, EnterSceneHandle);
-            ActionManager.GetInstance().On(ProtocolId.CLIENT_GAME_PLAYER_OPT_REQ, EnterSceneHandle);
+            ActionManager.GetInstance().On(ProtocolId.CLIENT_GAME_PLAYER_OPT_REQ, HandlePlayerGameOpt);
+            ActionManager.GetInstance().On(ProtocolId.CLIENT_GAME_PLAYER_INPUT_REQ, HandlePlayerInput);
         }
 
         public override void RemoveListener()
@@ -43,7 +44,8 @@ namespace StateSyncServer.LogicScripts.Manager
             ActionManager.GetInstance().Off(ProtocolId.CLIENT_PLAYER_LOGIN_REQ, LoginReqHandle);
             ActionManager.GetInstance().Off(ProtocolId.CLIENT_SELECT_ROLE_REQ, SelectCrtHandle);
             ActionManager.GetInstance().Off(ProtocolId.CLIENT_ENTER_SCENE_REQ, EnterSceneHandle);
-            ActionManager.GetInstance().Off(ProtocolId.CLIENT_GAME_PLAYER_OPT_REQ, EnterSceneHandle);
+            ActionManager.GetInstance().Off(ProtocolId.CLIENT_GAME_PLAYER_OPT_REQ, HandlePlayerGameOpt);
+            ActionManager.GetInstance().Off(ProtocolId.CLIENT_GAME_PLAYER_INPUT_REQ, HandlePlayerInput);
         }
 
         public void SelectCrtHandle(object[] args)
@@ -53,7 +55,7 @@ namespace StateSyncServer.LogicScripts.Manager
             SelectCrtReq req = proto.GetDataInstance<SelectCrtReq>();
 
             var crtId = req.CrtId;
-            if(crtId > 0)
+            if (crtId > 0)
             {
                 CommonUtils.Logout("选择角色" + crtId);
                 //创建角色实体 Character
@@ -75,6 +77,9 @@ namespace StateSyncServer.LogicScripts.Manager
             if (SceneId > 0)
             {
                 CommonUtils.Logout("进入场景" + SceneId);
+                var p = Global.GetPlayerByClient(proto.client);
+                if (p == null) return;
+                p.lastStaySceneId = SceneId;
                 //协议返回
                 EnterSceneRep rep = new EnterSceneRep();
                 rep.Result = ProtocolResultEnum.SUCCESS;
@@ -96,6 +101,7 @@ namespace StateSyncServer.LogicScripts.Manager
             PlayerLoginReq req = proto.GetDataInstance<PlayerLoginReq>();
             var username = req.Username;
             var password = req.Password;
+            var playerId = req.PlayerId;
             var type = req.Type;
 
 
@@ -103,8 +109,8 @@ namespace StateSyncServer.LogicScripts.Manager
             {
                 //登录
                 CommonUtils.Logout($"玩家{username}登录");
-                Global.PlayerSocketMap.Add(username, proto.client);
-                PlayerManager.GetInstance().GetPlayer(username, password);
+                var p = PlayerManager.GetInstance().GetPlayer(username, password);
+                Global.AddPlayerClientMap(p.playerId, proto.client);
                 //协议返回
                 PlayerLoginRep rep = new PlayerLoginRep();
                 rep.Result = ProtocolResultEnum.SUCCESS;
@@ -112,6 +118,7 @@ namespace StateSyncServer.LogicScripts.Manager
                 NetManager.GetInstance().SendProtocol(proto.client, rep);
                 //同步一下玩家信息
                 PlayerBaseInfoNtf ntf = new PlayerBaseInfoNtf();
+                ntf.PlayerId = p.playerId;
                 ntf.Username = username;
                 //以下信息从数据库查询
                 ntf.LastStaySceneId = 1;
@@ -123,7 +130,11 @@ namespace StateSyncServer.LogicScripts.Manager
             if (type == LoginTypeEnum.LOGIN_Out)
             {
                 //注销
-                Global.PlayerSocketMap.Remove(username);
+                if (playerId <= 0) return;
+                var p = PlayerManager.GetInstance().FindPlayer(playerId);
+                if (p == null) return;
+                Global.RemovePlayerClientMap(p.playerId);
+
                 //协议返回
                 PlayerLoginRep rep = new PlayerLoginRep();
                 rep.Result = ProtocolResultEnum.SUCCESS;
@@ -134,27 +145,112 @@ namespace StateSyncServer.LogicScripts.Manager
             }
         }
 
+        public void HandlePlayerInput(object[] args)
+        {
+            Protocol proto = args[0] as Protocol;
+            GamePlayerInputReq req = proto.GetDataInstance<GamePlayerInputReq>();
+            var InputX = req.InputX;
+            var InputY = req.InputY;
+
+            int pId = Global.GetPlayerIdByClient(proto.client);
+            if (pId == 0) return;
+            GamePlayerInputNtf ntf = new GamePlayerInputNtf();
+            ntf.InputX = InputX;
+            ntf.InputY = InputY;
+            ntf.PlayerId = pId;
+            NetManager.GetInstance().SendProtocol(proto.client, ntf);
+        }
+
         public void HandlePlayerGameOpt(object[] args)
         {
             Protocol proto = args[0] as Protocol;
 
-            GamePlayerOptReq req = new GamePlayerOptReq();
+            GamePlayerOptReq req = proto.GetDataInstance<GamePlayerOptReq>();
 
-            proto.InputX = GetPlayInput().x;
-            proto.InputY = GetPlayInput().z;
-            proto.UpMove = GetKeyOptState(KeyCode.W);
-            proto.DownMove = GetKeyOptState(KeyCode.S);
-            proto.LeftMove = GetKeyOptState(KeyCode.A);
-            proto.RightMove = GetKeyOptState(KeyCode.D);
-            proto.AddSpeed = GetKeyOptState(KeyCode.LeftShift);
-            proto.Arm = GetMouseOptState(1);
-            proto.Flash = GetKeyOptState(KeyCode.LeftControl);
-            proto.Jump = GetKeyOptState(KeyCode.Space);
-            proto.Atk = GetMouseOptState(0);
-            proto.Skill1 = GetKeyOptState(KeyCode.Q);
-            proto.Skill2 = GetKeyOptState(KeyCode.E);
-            proto.Skill3 = GetKeyOptState(KeyCode.R);
-            proto.Skill4 = GetKeyOptState(KeyCode.F);
+            var UpMove = req.UpMove;
+            var DownMove = req.DownMove;
+            var LeftMove = req.LeftMove;
+            var RightMove = req.RightMove;
+            var AddSpeed = req.AddSpeed;
+            var Arm = req.Arm;
+            var Flash = req.Flash;
+            var Jump = req.Jump;
+            var Atk = req.Atk;
+            var Skill1 = req.Skill1;
+            var Skill2 = req.Skill2;
+            var Skill3 = req.Skill3;
+            var Skill4 = req.Skill4;
+
+            GamePlayerOptRep rep = new GamePlayerOptRep();
+            rep.Result = ProtocolResultEnum.SUCCESS;
+            NetManager.GetInstance().SendProtocol(proto.client, rep);
+
+            if (PlayerOptEnum.IsKeyDown(UpMove)
+                || PlayerOptEnum.IsKeyDown(DownMove)
+                || PlayerOptEnum.IsKeyDown(LeftMove)
+                || PlayerOptEnum.IsKeyDown(RightMove)
+                )
+            {
+                //玩家移动 播放移动动画
+                int pId = Global.GetPlayerIdByClient(proto.client);
+                if (pId == 0) return;
+                GameAnimPlayNtf NTF = new GameAnimPlayNtf();
+                NTF.AnimName = "DEFAULT_MOVE";
+                NTF.PlayerId = pId;
+                NTF.TranslateTime = 0.15f;
+                NetManager.GetInstance().SendProtocol(proto.client, NTF);
+            }
+        }
+
+        public void HandleGetGameDataReq(object[] args)
+        {
+            Protocol proto = args[0] as Protocol;
+            GetGameDataRep rep = new GetGameDataRep();
+            rep.Result = ProtocolResultEnum.SUCCESS;
+            NetManager.GetInstance().SendProtocol(proto.client, rep);
+            var p = Global.GetPlayerByClient(proto.client);
+            if (p!=null)
+            {
+                SyncGameDataToScene(p.lastStaySceneId,p.playerId);
+            }
+        }
+
+        /// <summary>
+        /// 同步游戏数据
+        /// </summary>
+        public SyncGameDataNtf GetSyncGameData(int sceneId)
+        {
+            //收集场景中需要同步的数据
+
+            var ntf = new SyncGameDataNtf();
+            //填充数据
+            return ntf;
+        }
+
+        public void SyncGameDataToScene(int sceneId, int playerId)
+        {
+            SyncGameDataNtf ntf = GetSyncGameData(sceneId);
+            var client = Global.GetClientByPlayerId(playerId);
+            NetManager.GetInstance().SendProtocol(client, ntf);
+        }
+
+        /// <summary>
+        /// 同步游戏数据至场景中
+        /// </summary>
+        /// <param name="sceneId">场景</param>
+        /// <param name="playerIds">需要同步的玩家</param>
+        public void SyncGameDataToScene(int sceneId, List<int> playerIds)
+        {
+            SyncGameDataNtf ntf = GetSyncGameData(sceneId);
+            foreach (var item in playerIds)
+            {
+
+                var client = Global.GetClientByPlayerId(item);
+                if (client != null)
+                {
+                    NetManager.GetInstance().SendProtocol(client, ntf);
+                }
+            }
         }
 
         /*        private void Handle_LoginIn(TcpClient client, Protocol proto)

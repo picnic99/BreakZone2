@@ -15,7 +15,7 @@ public class playableAnimator
     protected PlayableGraph graph;
     private AnimationPlayableOutput output;
     private Animator _anim;
-    public Character character { get; set; }
+    //public Character character { get; set; }
 
     /// <summary>
     /// 状态机的速度
@@ -25,10 +25,10 @@ public class playableAnimator
     /// <summary>
     /// 初始化动画状态机
     /// </summary>
-    public virtual void Init(Animator anim, Character character)
+    public virtual void Init(Animator anim)
     {
         _anim = anim;
-        this.character = character;
+        //this.character = character;
 
         graph = PlayableGraph.Create();
         output = AnimationPlayableOutput.Create(graph, this.GetType().Name, _anim);

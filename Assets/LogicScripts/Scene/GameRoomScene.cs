@@ -10,6 +10,7 @@ public class GameRoomScene : GameScene
     public GameRoomScene()
     {
         SceneName = RegSceneClass.GameRoomScene;
+        IsFightScene = true;
     }
 
     public override void OnEnter()

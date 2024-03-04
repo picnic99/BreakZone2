@@ -25,5 +25,7 @@ namespace StateSyncServer.LogicScripts.Net.PB
         public static int CLIENT_ANIM_PLAY_NTF = 20005;//动画播放
         public static int CLIENT_AUDIO_PLAY_NTF = 20006;//音频播放
         public static int CLIENT_PLAYER_PROPERTY_CHANGE_NTF = 20007;//玩家属性发送改变
+        public static int CLIENT_GAME_PLAYER_INPUT_REQ = 20008;//玩家按键输入值
+        public static int CLIENT_GAME_PLAYER_INPUT_NTF = 20009;//玩家按键输入值
     }
 }

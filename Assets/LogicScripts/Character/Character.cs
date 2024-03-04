@@ -111,7 +111,7 @@ public class Character
         property = new Property(this);
         if (baseInfo.needControl) physic = new PhysicController(this);
         characterAnimator = new CharacterAnimator();
-        characterAnimator.Init(anim, this);
+        characterAnimator.Init(anim);
         fsm = new FSM(this);
         msg = new MSG();
         animCoverData = new AnimCoverData(this);

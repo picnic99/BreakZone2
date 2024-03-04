@@ -19,6 +19,11 @@ public class AnimManager : Manager<AnimManager>
         //Debug.Log(animName);
     }
 
+    public void PlayAnim(playableAnimator anim,string animName, float translateTime = 0.15f)
+    {
+        anim.Play(animName, translateTime);
+    }
+
     public void PlayStateAnim(Character character, StateVO state, float translateTime = 0.15f)
     {
         //查找是否有状态动画覆盖

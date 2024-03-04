@@ -9,16 +9,11 @@ namespace Assets.LogicScripts.Client.Entity
 {
     class Player
     {
+        public int playerId;
         public string username;
+        public string password;
 
-        public int lastStaySceneId;
-        public Vector3 lastStayPos;
-
-        public Player(string username, int lastStaySceneId, Vector3 lastStayPos)
-        {
-            this.username = username;
-            this.lastStaySceneId = lastStaySceneId;
-            this.lastStayPos = lastStayPos;
-        }
+        public int lastStaySceneId = 1;
+        public Vector3 lastStayPos = Vector3.zero;
     }
 }

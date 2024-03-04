@@ -41,7 +41,7 @@ public class RoleInfoView : UIItemBase
                 });*/
 
         //GameSceneManager.GetInstance().SwitchScene(RegSceneClass.GameRoomScene);
-        Assets.LogicScripts.Client.ActionManager.GetInstance().SendSelectCrtReq(vo.id);
+        Assets.LogicScripts.Client.Manager.ActionManager.GetInstance().SendSelectCrtReq(vo.id);
     }
 
     public void UpdateData(CharacterVO vo)

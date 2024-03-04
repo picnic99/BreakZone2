@@ -74,7 +74,7 @@ public class SelectRoleUI : UIBase
     }
     public void OnLoginOut(object[] args)
     {
-        Assets.LogicScripts.Client.ActionManager.GetInstance().SendLoginReq(PlayerManager.GetInstance().Self.username, "", LoginTypeEnum.LOGIN_Out);
+        Assets.LogicScripts.Client.Manager.ActionManager.GetInstance().SendLoginReq(PlayerManager.GetInstance().Self.username, "", LoginTypeEnum.LOGIN_Out);
     }
 
     private void updateTabs()

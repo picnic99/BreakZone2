@@ -44,7 +44,6 @@ public class GameSceneManager : Manager<GameSceneManager>
             SwitchingScene = scene;
             LoadScene(sceneName);
         }
-
     }
 
     /// <summary>

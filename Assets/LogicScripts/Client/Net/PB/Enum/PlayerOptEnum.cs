@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assets.LogicScripts.Client.Enum
+namespace Assets.LogicScripts.Client.Net.PB.Enum
 {
     public class PlayerOptEnum
     {

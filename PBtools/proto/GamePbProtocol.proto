@@ -6,7 +6,8 @@ option java_package = "game.msg";
 message PlayerLoginReq {
     string username = 1;
 	string password = 2;
-	int32 type = 3;
+	int32 playerId = 3;
+	int32 type = 4;
 }
 
 message PlayerLoginRep {
@@ -15,12 +16,13 @@ message PlayerLoginRep {
 }
 
 message PlayerBaseInfoNtf{
-	string username = 1;
-	int32 lastStaySceneId = 2;
-	//uint32 lastSelectCrtId = 3;
-	float lastStayPosX = 3;
-	float lastStayPosY = 4;
-	float lastStayPosZ = 5;	
+	int32 playerId = 1;
+	string username = 2;
+	int32 lastStaySceneId = 3;
+	//uint32 lastSelectCrtId = 4;
+	float lastStayPosX = 5;
+	float lastStayPosY = 6;
+	float lastStayPosZ = 7;	
 }
 
 message SelectCrtReq{
@@ -49,24 +51,68 @@ message GetGameDataRep{
 	int32 result = 1;
 }
 
+//角色数据信息
+message CrtGameData{
+	int32 playerId = 1;
+	float posX = 2;
+	float posY = 3;
+	float posZ = 4;
+	float rot = 5;
+}
+
+//弹道数据信息
+message BulletGameData{
+
+}
+
+//特效数据信息
+message EffectGameData{
+
+}
+
+//同步游戏数据
+message SyncGameDataNtf{
+	//角色数据信息
+	repeated CrtGameData crtData = 1;
+	//弹道数据信息
+	repeated BulletGameData bulletData = 2;
+	//特效数据信息
+	repeated EffectGameData effectData = 3;
+}
+
 message GamePlayerOptReq{
-	float inputX = 1;
-	float inputY = 2;
-	int32 UpMove = 3;
-	int32 DownMove = 4;
-	int32 LeftMove = 5;
-	int32 RightMove = 6;
-	int32 AddSpeed = 7;
-	int32 Arm = 8;
-	int32 Flash = 9;
-	int32 Jump = 10;
-	int32 Atk = 11;
-	int32 Skill1 = 12;
-	int32 Skill2 = 13;
-	int32 Skill3 = 14;
-	int32 Skill4 = 15;
-	float rot = 16;
+	int32 UpMove = 1;
+	int32 DownMove = 2;
+	int32 LeftMove = 3;
+	int32 RightMove = 4;
+	int32 AddSpeed = 5;
+	int32 Arm = 6;
+	int32 Flash = 7;
+	int32 Jump = 8;
+	int32 Atk = 9;
+	int32 Skill1 = 10;
+	int32 Skill2 = 11;
+	int32 Skill3 = 12;
+	int32 Skill4 = 13;
+	float rot = 14;
 }
 message GamePlayerOptRep{
 	int32 result = 1;
+}
+
+message GamePlayerInputReq{
+	float InputX = 1;
+	float InputY = 2;
+}
+
+message	GamePlayerInputNtf{
+	int32 playerId = 1;
+	float InputX = 2;
+	float InputY = 3;
+}
+
+message GameAnimPlayNtf{
+	int32 playerId = 1;
+	string animName = 2;
+	float translateTime = 3;
 }

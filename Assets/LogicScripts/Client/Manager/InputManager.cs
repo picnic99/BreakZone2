@@ -1,5 +1,6 @@
-﻿using Assets.LogicScripts.Client.Enum;
-using Assets.LogicScripts.Client.Manager;
+﻿using Assets.LogicScripts.Client.Manager;
+using Assets.LogicScripts.Client.Net.PB.Enum;
+using Assets.LogicScripts.Utils;
 using Msg;
 using System;
 using System.Collections.Generic;
@@ -62,12 +63,15 @@ namespace Assets.LogicScripts.Client
 
             //if (GameContext.CurRole == null) return;
 
+            if (!PlayerManager.GetInstance().SelfIsExist) return;
 
+            if (!GameContext.CurScene.IsFightScene) return;
+
+            var input = GetPlayInput();
+            Assets.LogicScripts.Client.Manager.ActionManager.GetInstance().SendPlayerInput(input.x,input.z);
 
             //前进 后退 左移 右移 加速 攻击 跳跃 技能1 技能2 技能3 技能4 瞄准 闪避
             GamePlayerOptReq proto = new GamePlayerOptReq();
-            proto.InputX = GetPlayInput().x;
-            proto.InputY = GetPlayInput().z;
             proto.UpMove = GetKeyOptState(KeyCode.W);
             proto.DownMove = GetKeyOptState(KeyCode.S);
             proto.LeftMove = GetKeyOptState(KeyCode.A);
