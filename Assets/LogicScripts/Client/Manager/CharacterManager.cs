@@ -48,6 +48,14 @@ namespace Assets.LogicScripts.Client.Manager
             return false;
         }
 
+        public void HideAllCharacter()
+        {
+            foreach (var item in datas)
+            {
+                item.Value.SetActive(false);
+            }
+        }
+
         public override void AddEventListener()
         {
             base.AddEventListener();

@@ -140,19 +140,20 @@ namespace Assets.LogicScripts.Client.Manager
              * 1.服务器只同步实体的数据
              * 2.找到当前客户端的实体 若存在则同步数据 更新实体 若不存在 则因此实体
              */
+            CharacterManager.GetInstance().HideAllCharacter();
             foreach (var item in CrtData)
             {
-                var crt = LogicScripts.Client.Manager.CharacterManager.GetInstance().FindCharacter(item.PlayerId);
+                var crt = CharacterManager.GetInstance().FindCharacter(item.PlayerId);
+
                 if (crt == null)
                 {
-                    crt.SetActive(false);
+                    CharacterManager.GetInstance().CreateCharacter(1, item.PlayerId);
                 }
-                else
-                {
-                    crt.CrtData.Pos = new Vector3(item.PosX,item.PosY,item.PosZ);
-                    crt.CrtData.Rot = item.Rot;
-                    crt.ApplyCrtData();
-                }
+
+                crt.CrtData.Pos = new Vector3(item.PosX, item.PosY, item.PosZ);
+                crt.CrtData.Rot = item.Rot;
+                crt.SetActive(true);
+                crt.ApplyCrtData();
             }
 
         }
@@ -164,7 +165,7 @@ namespace Assets.LogicScripts.Client.Manager
             var PlayerId = ntf.PlayerId;
             var AnimName = ntf.AnimName;
             var crt = CharacterManager.GetInstance().FindCharacter(PlayerId);
-            if(crt != null)
+            if (crt != null)
             {
                 AnimManager.GetInstance().PlayAnim(crt.CharacterAnimator, AnimName);
             }
