@@ -8,25 +8,25 @@
 //------------------------------------------------------------------------------
 
 using Luban;
-using SimpleJSON;
+using System.Text.Json;
 
 
 namespace cfg
 {
 public sealed partial class Audio : Luban.BeanBase
 {
-    public Audio(JSONNode _buf) 
+    public Audio(JsonElement _buf) 
     {
-        { if(!_buf["id"].IsNumber) { throw new SerializationException(); }  Id = _buf["id"]; }
-        { if(!_buf["characterId"].IsNumber) { throw new SerializationException(); }  CharacterId = _buf["characterId"]; }
-        { if(!_buf["skillId"].IsNumber) { throw new SerializationException(); }  SkillId = _buf["skillId"]; }
-        { if(!_buf["stateId"].IsNumber) { throw new SerializationException(); }  StateId = _buf["stateId"]; }
-        { if(!_buf["keyword"].IsString) { throw new SerializationException(); }  Keyword = _buf["keyword"]; }
-        { if(!_buf["playMode"].IsNumber) { throw new SerializationException(); }  PlayMode = _buf["playMode"]; }
-        { var __json0 = _buf["audioDatas"]; if(!__json0.IsArray) { throw new SerializationException(); } AudioDatas = new System.Collections.Generic.List<AudioData>(__json0.Count); foreach(JSONNode __e0 in __json0.Children) { AudioData __v0;  { if(!__e0.IsObject) { throw new SerializationException(); }  __v0 = AudioData.DeserializeAudioData(__e0);  }  AudioDatas.Add(__v0); }   }
+        Id = _buf.GetProperty("id").GetInt32();
+        CharacterId = _buf.GetProperty("characterId").GetInt32();
+        SkillId = _buf.GetProperty("skillId").GetInt32();
+        StateId = _buf.GetProperty("stateId").GetInt32();
+        Keyword = _buf.GetProperty("keyword").GetString();
+        PlayMode = _buf.GetProperty("playMode").GetInt32();
+        { var __json0 = _buf.GetProperty("audioDatas"); AudioDatas = new System.Collections.Generic.List<AudioData>(__json0.GetArrayLength()); foreach(JsonElement __e0 in __json0.EnumerateArray()) { AudioData __v0;  __v0 = AudioData.DeserializeAudioData(__e0);  AudioDatas.Add(__v0); }   }
     }
 
-    public static Audio DeserializeAudio(JSONNode _buf)
+    public static Audio DeserializeAudio(JsonElement _buf)
     {
         return new Audio(_buf);
     }

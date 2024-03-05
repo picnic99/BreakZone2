@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 
 using Luban;
-using SimpleJSON;
+using System.Text.Json;
 
 
 namespace cfg
@@ -18,15 +18,15 @@ public partial class TbCharacter
     private readonly System.Collections.Generic.Dictionary<int, Character> _dataMap;
     private readonly System.Collections.Generic.List<Character> _dataList;
     
-    public TbCharacter(JSONNode _buf)
+    public TbCharacter(JsonElement _buf)
     {
         _dataMap = new System.Collections.Generic.Dictionary<int, Character>();
         _dataList = new System.Collections.Generic.List<Character>();
         
-        foreach(JSONNode _ele in _buf.Children)
+        foreach(JsonElement _ele in _buf.EnumerateArray())
         {
             Character _v;
-            { if(!_ele.IsObject) { throw new SerializationException(); }  _v = Character.DeserializeCharacter(_ele);  }
+            _v = Character.DeserializeCharacter(_ele);
             _dataList.Add(_v);
             _dataMap.Add(_v.Id, _v);
         }

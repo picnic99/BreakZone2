@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 
 using Luban;
-using SimpleJSON;
+using System.Text.Json;
 
 
 namespace cfg
@@ -18,15 +18,15 @@ public partial class TbSkill
     private readonly System.Collections.Generic.Dictionary<int, Skill> _dataMap;
     private readonly System.Collections.Generic.List<Skill> _dataList;
     
-    public TbSkill(JSONNode _buf)
+    public TbSkill(JsonElement _buf)
     {
         _dataMap = new System.Collections.Generic.Dictionary<int, Skill>();
         _dataList = new System.Collections.Generic.List<Skill>();
         
-        foreach(JSONNode _ele in _buf.Children)
+        foreach(JsonElement _ele in _buf.EnumerateArray())
         {
             Skill _v;
-            { if(!_ele.IsObject) { throw new SerializationException(); }  _v = Skill.DeserializeSkill(_ele);  }
+            _v = Skill.DeserializeSkill(_ele);
             _dataList.Add(_v);
             _dataMap.Add(_v.Id, _v);
         }

@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 
 using Luban;
-using SimpleJSON;
+using System.Text.Json;
 
 
 namespace cfg
@@ -18,15 +18,15 @@ public partial class TbAudio
     private readonly System.Collections.Generic.Dictionary<int, Audio> _dataMap;
     private readonly System.Collections.Generic.List<Audio> _dataList;
     
-    public TbAudio(JSONNode _buf)
+    public TbAudio(JsonElement _buf)
     {
         _dataMap = new System.Collections.Generic.Dictionary<int, Audio>();
         _dataList = new System.Collections.Generic.List<Audio>();
         
-        foreach(JSONNode _ele in _buf.Children)
+        foreach(JsonElement _ele in _buf.EnumerateArray())
         {
             Audio _v;
-            { if(!_ele.IsObject) { throw new SerializationException(); }  _v = Audio.DeserializeAudio(_ele);  }
+            _v = Audio.DeserializeAudio(_ele);
             _dataList.Add(_v);
             _dataMap.Add(_v.Id, _v);
         }

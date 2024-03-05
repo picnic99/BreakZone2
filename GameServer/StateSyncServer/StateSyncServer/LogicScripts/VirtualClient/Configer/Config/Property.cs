@@ -8,24 +8,24 @@
 //------------------------------------------------------------------------------
 
 using Luban;
-using SimpleJSON;
+using System.Text.Json;
 
 
 namespace cfg
 {
 public sealed partial class Property : Luban.BeanBase
 {
-    public Property(JSONNode _buf) 
+    public Property(JsonElement _buf) 
     {
-        { if(!_buf["id"].IsNumber) { throw new SerializationException(); }  Id = _buf["id"]; }
-        { if(!_buf["hp"].IsNumber) { throw new SerializationException(); }  Hp = _buf["hp"]; }
-        { if(!_buf["atk"].IsNumber) { throw new SerializationException(); }  Atk = _buf["atk"]; }
-        { if(!_buf["defend"].IsNumber) { throw new SerializationException(); }  Defend = _buf["defend"]; }
-        { if(!_buf["moveSpeed"].IsNumber) { throw new SerializationException(); }  MoveSpeed = _buf["moveSpeed"]; }
-        { if(!_buf["atkSpeed"].IsNumber) { throw new SerializationException(); }  AtkSpeed = _buf["atkSpeed"]; }
+        Id = _buf.GetProperty("id").GetInt32();
+        Hp = _buf.GetProperty("hp").GetInt32();
+        Atk = _buf.GetProperty("atk").GetInt32();
+        Defend = _buf.GetProperty("defend").GetInt32();
+        MoveSpeed = _buf.GetProperty("moveSpeed").GetSingle();
+        AtkSpeed = _buf.GetProperty("atkSpeed").GetSingle();
     }
 
-    public static Property DeserializeProperty(JSONNode _buf)
+    public static Property DeserializeProperty(JsonElement _buf)
     {
         return new Property(_buf);
     }

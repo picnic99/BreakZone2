@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 
 using Luban;
-using SimpleJSON;
+using System.Text.Json;
 
 namespace cfg
 {
@@ -21,7 +21,7 @@ public partial class Tables
     public TbState TbState {get; }
     public TbAudio TbAudio {get; }
 
-    public Tables(System.Func<string, JSONNode> loader)
+    public Tables(System.Func<string, JsonElement> loader)
     {
         TbCharacter = new TbCharacter(loader("tbcharacter"));
         TbProperty = new TbProperty(loader("tbproperty"));

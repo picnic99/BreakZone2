@@ -8,34 +8,34 @@
 //------------------------------------------------------------------------------
 
 using Luban;
-using SimpleJSON;
+using System.Text.Json;
 
 
 namespace cfg
 {
 public sealed partial class Skill : Luban.BeanBase
 {
-    public Skill(JSONNode _buf) 
+    public Skill(JsonElement _buf) 
     {
-        { if(!_buf["id"].IsNumber) { throw new SerializationException(); }  Id = _buf["id"]; }
-        { if(!_buf["name"].IsString) { throw new SerializationException(); }  Name = _buf["name"]; }
-        { if(!_buf["cd"].IsNumber) { throw new SerializationException(); }  Cd = _buf["cd"]; }
-        { if(!_buf["isShow"].IsBoolean) { throw new SerializationException(); }  IsShow = _buf["isShow"]; }
-        { if(!_buf["desc"].IsString) { throw new SerializationException(); }  Desc = _buf["desc"]; }
-        { if(!_buf["icon"].IsString) { throw new SerializationException(); }  Icon = _buf["icon"]; }
-        { var __json0 = _buf["tags"]; if(!__json0.IsArray) { throw new SerializationException(); } Tags = new System.Collections.Generic.List<SkillTags>(__json0.Count); foreach(JSONNode __e0 in __json0.Children) { SkillTags __v0;  { if(!__e0.IsNumber) { throw new SerializationException(); }  __v0 = (SkillTags)__e0.AsInt; }  Tags.Add(__v0); }   }
-        { if(!_buf["IsInstantSkill"].IsBoolean) { throw new SerializationException(); }  IsInstantSkill = _buf["IsInstantSkill"]; }
-        { if(!_buf["IsOnly"].IsBoolean) { throw new SerializationException(); }  IsOnly = _buf["IsOnly"]; }
-        { var __json0 = _buf["mutexState"]; if(!__json0.IsArray) { throw new SerializationException(); } MutexState = new System.Collections.Generic.List<int>(__json0.Count); foreach(JSONNode __e0 in __json0.Children) { int __v0;  { if(!__e0.IsNumber) { throw new SerializationException(); }  __v0 = __e0; }  MutexState.Add(__v0); }   }
-        { var __json0 = _buf["backBreakSkills"]; if(!__json0.IsArray) { throw new SerializationException(); } BackBreakSkills = new System.Collections.Generic.List<int>(__json0.Count); foreach(JSONNode __e0 in __json0.Children) { int __v0;  { if(!__e0.IsNumber) { throw new SerializationException(); }  __v0 = __e0; }  BackBreakSkills.Add(__v0); }   }
-        { if(!_buf["valueRules"].IsString) { throw new SerializationException(); }  ValueRules = _buf["valueRules"]; }
-        { var __json0 = _buf["animKeys"]; if(!__json0.IsArray) { throw new SerializationException(); } AnimKeys = new System.Collections.Generic.List<string>(__json0.Count); foreach(JSONNode __e0 in __json0.Children) { string __v0;  { if(!__e0.IsString) { throw new SerializationException(); }  __v0 = __e0; }  AnimKeys.Add(__v0); }   }
-        { if(!_buf["sounds"].IsString) { throw new SerializationException(); }  Sounds = _buf["sounds"]; }
-        { if(!_buf["effects"].IsString) { throw new SerializationException(); }  Effects = _buf["effects"]; }
-        { if(!_buf["extraParams"].IsString) { throw new SerializationException(); }  ExtraParams = _buf["extraParams"]; }
+        Id = _buf.GetProperty("id").GetInt32();
+        Name = _buf.GetProperty("name").GetString();
+        Cd = _buf.GetProperty("cd").GetInt32();
+        IsShow = _buf.GetProperty("isShow").GetBoolean();
+        Desc = _buf.GetProperty("desc").GetString();
+        Icon = _buf.GetProperty("icon").GetString();
+        { var __json0 = _buf.GetProperty("tags"); Tags = new System.Collections.Generic.List<SkillTags>(__json0.GetArrayLength()); foreach(JsonElement __e0 in __json0.EnumerateArray()) { SkillTags __v0;  __v0 = (SkillTags)__e0.GetInt32();  Tags.Add(__v0); }   }
+        IsInstantSkill = _buf.GetProperty("IsInstantSkill").GetBoolean();
+        IsOnly = _buf.GetProperty("IsOnly").GetBoolean();
+        { var __json0 = _buf.GetProperty("mutexState"); MutexState = new System.Collections.Generic.List<int>(__json0.GetArrayLength()); foreach(JsonElement __e0 in __json0.EnumerateArray()) { int __v0;  __v0 = __e0.GetInt32();  MutexState.Add(__v0); }   }
+        { var __json0 = _buf.GetProperty("backBreakSkills"); BackBreakSkills = new System.Collections.Generic.List<int>(__json0.GetArrayLength()); foreach(JsonElement __e0 in __json0.EnumerateArray()) { int __v0;  __v0 = __e0.GetInt32();  BackBreakSkills.Add(__v0); }   }
+        ValueRules = _buf.GetProperty("valueRules").GetString();
+        { var __json0 = _buf.GetProperty("animKeys"); AnimKeys = new System.Collections.Generic.List<string>(__json0.GetArrayLength()); foreach(JsonElement __e0 in __json0.EnumerateArray()) { string __v0;  __v0 = __e0.GetString();  AnimKeys.Add(__v0); }   }
+        Sounds = _buf.GetProperty("sounds").GetString();
+        Effects = _buf.GetProperty("effects").GetString();
+        ExtraParams = _buf.GetProperty("extraParams").GetString();
     }
 
-    public static Skill DeserializeSkill(JSONNode _buf)
+    public static Skill DeserializeSkill(JsonElement _buf)
     {
         return new Skill(_buf);
     }

@@ -8,27 +8,27 @@
 //------------------------------------------------------------------------------
 
 using Luban;
-using SimpleJSON;
+using System.Text.Json;
 
 
 namespace cfg
 {
 public sealed partial class Character : Luban.BeanBase
 {
-    public Character(JSONNode _buf) 
+    public Character(JsonElement _buf) 
     {
-        { if(!_buf["id"].IsNumber) { throw new SerializationException(); }  Id = _buf["id"]; }
-        { if(!_buf["name"].IsString) { throw new SerializationException(); }  Name = _buf["name"]; }
-        { if(!_buf["headIcon"].IsString) { throw new SerializationException(); }  HeadIcon = _buf["headIcon"]; }
-        { if(!_buf["modePath"].IsString) { throw new SerializationException(); }  ModePath = _buf["modePath"]; }
-        { if(!_buf["propertyId"].IsNumber) { throw new SerializationException(); }  PropertyId = _buf["propertyId"]; }
-        { var __json0 = _buf["skills"]; if(!__json0.IsArray) { throw new SerializationException(); } Skills = new System.Collections.Generic.List<int>(__json0.Count); foreach(JSONNode __e0 in __json0.Children) { int __v0;  { if(!__e0.IsNumber) { throw new SerializationException(); }  __v0 = __e0; }  Skills.Add(__v0); }   }
-        { if(!_buf["stateAnims"].IsString) { throw new SerializationException(); }  StateAnims = _buf["stateAnims"]; }
-        { if(!_buf["desc"].IsString) { throw new SerializationException(); }  Desc = _buf["desc"]; }
-        { if(!_buf["isFake"].IsBoolean) { throw new SerializationException(); }  IsFake = _buf["isFake"]; }
+        Id = _buf.GetProperty("id").GetInt32();
+        Name = _buf.GetProperty("name").GetString();
+        HeadIcon = _buf.GetProperty("headIcon").GetString();
+        ModePath = _buf.GetProperty("modePath").GetString();
+        PropertyId = _buf.GetProperty("propertyId").GetInt32();
+        { var __json0 = _buf.GetProperty("skills"); Skills = new System.Collections.Generic.List<int>(__json0.GetArrayLength()); foreach(JsonElement __e0 in __json0.EnumerateArray()) { int __v0;  __v0 = __e0.GetInt32();  Skills.Add(__v0); }   }
+        StateAnims = _buf.GetProperty("stateAnims").GetString();
+        Desc = _buf.GetProperty("desc").GetString();
+        IsFake = _buf.GetProperty("isFake").GetBoolean();
     }
 
-    public static Character DeserializeCharacter(JSONNode _buf)
+    public static Character DeserializeCharacter(JsonElement _buf)
     {
         return new Character(_buf);
     }

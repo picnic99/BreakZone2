@@ -8,21 +8,21 @@
 //------------------------------------------------------------------------------
 
 using Luban;
-using SimpleJSON;
+using System.Text.Json;
 
 
 namespace cfg
 {
 public sealed partial class AnimClipData : Luban.BeanBase
 {
-    public AnimClipData(JSONNode _buf) 
+    public AnimClipData(JsonElement _buf) 
     {
-        { if(!_buf["animPath"].IsString) { throw new SerializationException(); }  AnimPath = _buf["animPath"]; }
-        { if(!_buf["x"].IsNumber) { throw new SerializationException(); }  X = _buf["x"]; }
-        { if(!_buf["y"].IsNumber) { throw new SerializationException(); }  Y = _buf["y"]; }
+        AnimPath = _buf.GetProperty("animPath").GetString();
+        X = _buf.GetProperty("x").GetInt32();
+        Y = _buf.GetProperty("y").GetInt32();
     }
 
-    public static AnimClipData DeserializeAnimClipData(JSONNode _buf)
+    public static AnimClipData DeserializeAnimClipData(JsonElement _buf)
     {
         return new AnimClipData(_buf);
     }

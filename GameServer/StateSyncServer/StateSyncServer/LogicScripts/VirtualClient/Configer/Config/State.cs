@@ -8,27 +8,27 @@
 //------------------------------------------------------------------------------
 
 using Luban;
-using SimpleJSON;
+using System.Text.Json;
 
 
 namespace cfg
 {
 public sealed partial class State : Luban.BeanBase
 {
-    public State(JSONNode _buf) 
+    public State(JsonElement _buf) 
     {
-        { if(!_buf["id"].IsNumber) { throw new SerializationException(); }  Id = _buf["id"]; }
-        { if(!_buf["type"].IsString) { throw new SerializationException(); }  Type = _buf["type"]; }
-        { if(!_buf["name"].IsString) { throw new SerializationException(); }  Name = _buf["name"]; }
-        { if(!_buf["animKey"].IsString) { throw new SerializationException(); }  AnimKey = _buf["animKey"]; }
-        { if(!_buf["exitType"].IsNumber) { throw new SerializationException(); }  ExitType = (StateExitType)_buf["exitType"].AsInt; }
-        { if(!_buf["order"].IsNumber) { throw new SerializationException(); }  Order = _buf["order"]; }
-        { var __json0 = _buf["mutexState"]; if(!__json0.IsArray) { throw new SerializationException(); } MutexState = new System.Collections.Generic.List<int>(__json0.Count); foreach(JSONNode __e0 in __json0.Children) { int __v0;  { if(!__e0.IsNumber) { throw new SerializationException(); }  __v0 = __e0; }  MutexState.Add(__v0); }   }
-        { var __json0 = _buf["exceptSkills"]; if(!__json0.IsArray) { throw new SerializationException(); } ExceptSkills = new System.Collections.Generic.List<int>(__json0.Count); foreach(JSONNode __e0 in __json0.Children) { int __v0;  { if(!__e0.IsNumber) { throw new SerializationException(); }  __v0 = __e0; }  ExceptSkills.Add(__v0); }   }
-        { if(!_buf["isSkill"].IsBoolean) { throw new SerializationException(); }  IsSkill = _buf["isSkill"]; }
+        Id = _buf.GetProperty("id").GetInt32();
+        Type = _buf.GetProperty("type").GetString();
+        Name = _buf.GetProperty("name").GetString();
+        AnimKey = _buf.GetProperty("animKey").GetString();
+        ExitType = (StateExitType)_buf.GetProperty("exitType").GetInt32();
+        Order = _buf.GetProperty("order").GetInt32();
+        { var __json0 = _buf.GetProperty("mutexState"); MutexState = new System.Collections.Generic.List<int>(__json0.GetArrayLength()); foreach(JsonElement __e0 in __json0.EnumerateArray()) { int __v0;  __v0 = __e0.GetInt32();  MutexState.Add(__v0); }   }
+        { var __json0 = _buf.GetProperty("exceptSkills"); ExceptSkills = new System.Collections.Generic.List<int>(__json0.GetArrayLength()); foreach(JsonElement __e0 in __json0.EnumerateArray()) { int __v0;  __v0 = __e0.GetInt32();  ExceptSkills.Add(__v0); }   }
+        IsSkill = _buf.GetProperty("isSkill").GetBoolean();
     }
 
-    public static State DeserializeState(JSONNode _buf)
+    public static State DeserializeState(JsonElement _buf)
     {
         return new State(_buf);
     }

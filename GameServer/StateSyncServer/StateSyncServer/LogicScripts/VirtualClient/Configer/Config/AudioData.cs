@@ -8,28 +8,28 @@
 //------------------------------------------------------------------------------
 
 using Luban;
-using SimpleJSON;
+using System.Text.Json;
 
 
 namespace cfg
 {
 public sealed partial class AudioData : Luban.BeanBase
 {
-    public AudioData(JSONNode _buf) 
+    public AudioData(JsonElement _buf) 
     {
-        { if(!_buf["audioName"].IsString) { throw new SerializationException(); }  AudioName = _buf["audioName"]; }
-        { if(!_buf["sourceType"].IsNumber) { throw new SerializationException(); }  SourceType = (AudioSourceType)_buf["sourceType"].AsInt; }
-        { if(!_buf["playType"].IsNumber) { throw new SerializationException(); }  PlayType = _buf["playType"]; }
-        { if(!_buf["volume"].IsNumber) { throw new SerializationException(); }  Volume = _buf["volume"]; }
-        { if(!_buf["speed"].IsNumber) { throw new SerializationException(); }  Speed = _buf["speed"]; }
-        { if(!_buf["loop"].IsBoolean) { throw new SerializationException(); }  Loop = _buf["loop"]; }
-        { if(!_buf["onlySelf"].IsBoolean) { throw new SerializationException(); }  OnlySelf = _buf["onlySelf"]; }
-        { if(!_buf["delay"].IsNumber) { throw new SerializationException(); }  Delay = _buf["delay"]; }
-        { if(!_buf["weight"].IsNumber) { throw new SerializationException(); }  Weight = _buf["weight"]; }
-        { if(!_buf["maxLoopTime"].IsNumber) { throw new SerializationException(); }  MaxLoopTime = _buf["maxLoopTime"]; }
+        AudioName = _buf.GetProperty("audioName").GetString();
+        SourceType = (AudioSourceType)_buf.GetProperty("sourceType").GetInt32();
+        PlayType = _buf.GetProperty("playType").GetInt32();
+        Volume = _buf.GetProperty("volume").GetSingle();
+        Speed = _buf.GetProperty("speed").GetSingle();
+        Loop = _buf.GetProperty("loop").GetBoolean();
+        OnlySelf = _buf.GetProperty("onlySelf").GetBoolean();
+        Delay = _buf.GetProperty("delay").GetSingle();
+        Weight = _buf.GetProperty("weight").GetSingle();
+        MaxLoopTime = _buf.GetProperty("maxLoopTime").GetSingle();
     }
 
-    public static AudioData DeserializeAudioData(JSONNode _buf)
+    public static AudioData DeserializeAudioData(JsonElement _buf)
     {
         return new AudioData(_buf);
     }

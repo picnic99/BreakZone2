@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 
 using Luban;
-using SimpleJSON;
+using System.Text.Json;
 
 
 namespace cfg
@@ -18,15 +18,15 @@ public partial class TbAnimation
     private readonly System.Collections.Generic.Dictionary<string, Animation> _dataMap;
     private readonly System.Collections.Generic.List<Animation> _dataList;
     
-    public TbAnimation(JSONNode _buf)
+    public TbAnimation(JsonElement _buf)
     {
         _dataMap = new System.Collections.Generic.Dictionary<string, Animation>();
         _dataList = new System.Collections.Generic.List<Animation>();
         
-        foreach(JSONNode _ele in _buf.Children)
+        foreach(JsonElement _ele in _buf.EnumerateArray())
         {
             Animation _v;
-            { if(!_ele.IsObject) { throw new SerializationException(); }  _v = Animation.DeserializeAnimation(_ele);  }
+            _v = Animation.DeserializeAnimation(_ele);
             _dataList.Add(_v);
             _dataMap.Add(_v.Key, _v);
         }

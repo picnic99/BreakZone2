@@ -8,25 +8,25 @@
 //------------------------------------------------------------------------------
 
 using Luban;
-using SimpleJSON;
+using System.Text.Json;
 
 
 namespace cfg
 {
 public sealed partial class Animation : Luban.BeanBase
 {
-    public Animation(JSONNode _buf) 
+    public Animation(JsonElement _buf) 
     {
-        { if(!_buf["key"].IsString) { throw new SerializationException(); }  Key = _buf["key"]; }
-        { if(!_buf["animType"].IsNumber) { throw new SerializationException(); }  AnimType = _buf["animType"]; }
-        { var __json0 = _buf["clips"]; if(!__json0.IsArray) { throw new SerializationException(); } Clips = new System.Collections.Generic.List<AnimClipData>(__json0.Count); foreach(JSONNode __e0 in __json0.Children) { AnimClipData __v0;  { if(!__e0.IsObject) { throw new SerializationException(); }  __v0 = AnimClipData.DeserializeAnimClipData(__e0);  }  Clips.Add(__v0); }   }
-        { if(!_buf["frontTime"].IsNumber) { throw new SerializationException(); }  FrontTime = _buf["frontTime"]; }
-        { if(!_buf["backTime"].IsNumber) { throw new SerializationException(); }  BackTime = _buf["backTime"]; }
-        { var __json0 = _buf["eventTimes"]; if(!__json0.IsArray) { throw new SerializationException(); } EventTimes = new System.Collections.Generic.List<string>(__json0.Count); foreach(JSONNode __e0 in __json0.Children) { string __v0;  { if(!__e0.IsString) { throw new SerializationException(); }  __v0 = __e0; }  EventTimes.Add(__v0); }   }
-        { if(!_buf["validLength"].IsNumber) { throw new SerializationException(); }  ValidLength = _buf["validLength"]; }
+        Key = _buf.GetProperty("key").GetString();
+        AnimType = _buf.GetProperty("animType").GetInt32();
+        { var __json0 = _buf.GetProperty("clips"); Clips = new System.Collections.Generic.List<AnimClipData>(__json0.GetArrayLength()); foreach(JsonElement __e0 in __json0.EnumerateArray()) { AnimClipData __v0;  __v0 = AnimClipData.DeserializeAnimClipData(__e0);  Clips.Add(__v0); }   }
+        FrontTime = _buf.GetProperty("frontTime").GetSingle();
+        BackTime = _buf.GetProperty("backTime").GetSingle();
+        { var __json0 = _buf.GetProperty("eventTimes"); EventTimes = new System.Collections.Generic.List<string>(__json0.GetArrayLength()); foreach(JsonElement __e0 in __json0.EnumerateArray()) { string __v0;  __v0 = __e0.GetString();  EventTimes.Add(__v0); }   }
+        ValidLength = _buf.GetProperty("validLength").GetSingle();
     }
 
-    public static Animation DeserializeAnimation(JSONNode _buf)
+    public static Animation DeserializeAnimation(JsonElement _buf)
     {
         return new Animation(_buf);
     }

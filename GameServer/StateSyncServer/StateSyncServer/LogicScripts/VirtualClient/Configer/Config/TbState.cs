@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 
 using Luban;
-using SimpleJSON;
+using System.Text.Json;
 
 
 namespace cfg
@@ -18,15 +18,15 @@ public partial class TbState
     private readonly System.Collections.Generic.Dictionary<int, State> _dataMap;
     private readonly System.Collections.Generic.List<State> _dataList;
     
-    public TbState(JSONNode _buf)
+    public TbState(JsonElement _buf)
     {
         _dataMap = new System.Collections.Generic.Dictionary<int, State>();
         _dataList = new System.Collections.Generic.List<State>();
         
-        foreach(JSONNode _ele in _buf.Children)
+        foreach(JsonElement _ele in _buf.EnumerateArray())
         {
             State _v;
-            { if(!_ele.IsObject) { throw new SerializationException(); }  _v = State.DeserializeState(_ele);  }
+            _v = State.DeserializeState(_ele);
             _dataList.Add(_v);
             _dataMap.Add(_v.Id, _v);
         }
