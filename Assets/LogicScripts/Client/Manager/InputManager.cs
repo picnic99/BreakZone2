@@ -67,11 +67,15 @@ namespace Assets.LogicScripts.Client
 
             if (!GameContext.CurScene.IsFightScene) return;
 
+            if (!Input.anyKey) return;
+
             var input = GetPlayInput();
             Assets.LogicScripts.Client.Manager.ActionManager.GetInstance().SendPlayerInput(input.x,input.z);
 
             //前进 后退 左移 右移 加速 攻击 跳跃 技能1 技能2 技能3 技能4 瞄准 闪避
             GamePlayerOptReq proto = new GamePlayerOptReq();
+
+
             proto.UpMove = GetKeyOptState(KeyCode.W);
             proto.DownMove = GetKeyOptState(KeyCode.S);
             proto.LeftMove = GetKeyOptState(KeyCode.A);

@@ -1,0 +1,583 @@
+[
+  {
+    "key": "DEFAULT_IDLE",
+    "animType": 1,
+    "clips": [
+      {
+        "animPath": "Default/idle",
+        "x": 0,
+        "y": 0
+      }
+    ],
+    "frontTime": 0,
+    "backTime": 0,
+    "eventTimes": [
+      "0"
+    ],
+    "validLength": 1
+  },
+  {
+    "key": "DEFAULT_DIE",
+    "animType": 1,
+    "clips": [
+      {
+        "animPath": "Default/die/die",
+        "x": 0,
+        "y": 0
+      }
+    ],
+    "frontTime": 0,
+    "backTime": 0,
+    "eventTimes": [
+      "0"
+    ],
+    "validLength": 1
+  },
+  {
+    "key": "DEFAULT_START_JUMP",
+    "animType": 1,
+    "clips": [
+      {
+        "animPath": "Default/jump/startJump",
+        "x": 0,
+        "y": 0
+      }
+    ],
+    "frontTime": 0,
+    "backTime": 0,
+    "eventTimes": [
+      "0"
+    ],
+    "validLength": 1
+  },
+  {
+    "key": "DEFAULT_KEEP_JUMP",
+    "animType": 1,
+    "clips": [
+      {
+        "animPath": "Default/jump/keepJump",
+        "x": 0,
+        "y": 0
+      }
+    ],
+    "frontTime": 0,
+    "backTime": 0,
+    "eventTimes": [
+      "0"
+    ],
+    "validLength": 1
+  },
+  {
+    "key": "DEFAULT_END_JUMP",
+    "animType": 1,
+    "clips": [
+      {
+        "animPath": "Default/jump/endJump",
+        "x": 0,
+        "y": 0
+      }
+    ],
+    "frontTime": 0,
+    "backTime": 0,
+    "eventTimes": [
+      "0"
+    ],
+    "validLength": 1
+  },
+  {
+    "key": "DEFAULT_INJURE",
+    "animType": 1,
+    "clips": [
+      {
+        "animPath": "Default/injure/8_injure",
+        "x": 0,
+        "y": 0
+      }
+    ],
+    "frontTime": 0,
+    "backTime": 0,
+    "eventTimes": [
+      "0"
+    ],
+    "validLength": 1
+  },
+  {
+    "key": "DEFAULT_ATK1",
+    "animType": 1,
+    "clips": [
+      {
+        "animPath": "Default/atk/atk1",
+        "x": 0,
+        "y": 0
+      }
+    ],
+    "frontTime": 0,
+    "backTime": 0.8,
+    "eventTimes": [
+      "0"
+    ],
+    "validLength": 1
+  },
+  {
+    "key": "DEFAULT_ATK2",
+    "animType": 1,
+    "clips": [
+      {
+        "animPath": "Default/atk/atk2",
+        "x": 0,
+        "y": 0
+      }
+    ],
+    "frontTime": 0,
+    "backTime": 0.8,
+    "eventTimes": [
+      "0"
+    ],
+    "validLength": 1
+  },
+  {
+    "key": "DEFAULT_ATK3",
+    "animType": 1,
+    "clips": [
+      {
+        "animPath": "Default/atk/atk3",
+        "x": 0,
+        "y": 0
+      }
+    ],
+    "frontTime": 0,
+    "backTime": 0.8,
+    "eventTimes": [
+      "0"
+    ],
+    "validLength": 1
+  },
+  {
+    "key": "DEFAULT_MOVE",
+    "animType": 2,
+    "clips": [
+      {
+        "animPath": "Default/move/2_move_front",
+        "x": 0,
+        "y": 1
+      },
+      {
+        "animPath": "Default/move/2_move_back",
+        "x": 0,
+        "y": -1
+      },
+      {
+        "animPath": "Default/move/2_move_front_left",
+        "x": -1,
+        "y": 0
+      },
+      {
+        "animPath": "Default/move/2_move_front_right",
+        "x": 1,
+        "y": 0
+      },
+      {
+        "animPath": "Default/move/2_move_front_right45",
+        "x": 1,
+        "y": 1
+      },
+      {
+        "animPath": "Default/move/2_move_back_right45",
+        "x": 1,
+        "y": -1
+      },
+      {
+        "animPath": "Default/move/2_move_front_left45",
+        "x": -1,
+        "y": 1
+      },
+      {
+        "animPath": "Default/move/2_move_back_left45",
+        "x": -1,
+        "y": -1
+      }
+    ],
+    "frontTime": 0,
+    "backTime": 0,
+    "eventTimes": [
+      "0"
+    ],
+    "validLength": 1
+  },
+  {
+    "key": "DEFAULT_RUN",
+    "animType": 2,
+    "clips": [
+      {
+        "animPath": "Default/run/3_run_front",
+        "x": 0,
+        "y": 1
+      },
+      {
+        "animPath": "Default/run/3_run_back",
+        "x": 0,
+        "y": -1
+      },
+      {
+        "animPath": "Default/run/3_run_front_left",
+        "x": -1,
+        "y": 0
+      },
+      {
+        "animPath": "Default/run/3_run_front_right",
+        "x": 1,
+        "y": 0
+      },
+      {
+        "animPath": "Default/run/3_run_front_right45",
+        "x": 1,
+        "y": 1
+      },
+      {
+        "animPath": "Default/run/3_run_back_right45",
+        "x": 1,
+        "y": -1
+      },
+      {
+        "animPath": "Default/run/3_run_front_left45",
+        "x": -1,
+        "y": 1
+      },
+      {
+        "animPath": "Default/run/3_run_back_left45",
+        "x": -1,
+        "y": -1
+      }
+    ],
+    "frontTime": 0,
+    "backTime": 0,
+    "eventTimes": [
+      "0"
+    ],
+    "validLength": 1
+  },
+  {
+    "key": "DEFAULT_ROLL",
+    "animType": 2,
+    "clips": [
+      {
+        "animPath": "Default/roll/Esc_StandRoll_Front_Root",
+        "x": 0,
+        "y": 1
+      },
+      {
+        "animPath": "Default/roll/Esc_StandRoll_Back_Root",
+        "x": 0,
+        "y": -1
+      },
+      {
+        "animPath": "Default/roll/Esc_StandRoll_Left_Root",
+        "x": -1,
+        "y": 0
+      },
+      {
+        "animPath": "Default/roll/Esc_StandRoll_Right_Root",
+        "x": 1,
+        "y": 0
+      },
+      {
+        "animPath": "Default/roll/Esc_StandRoll_Right_Root",
+        "x": 1,
+        "y": 1
+      },
+      {
+        "animPath": "Default/roll/Esc_StandRoll_Right_Root",
+        "x": 1,
+        "y": -1
+      },
+      {
+        "animPath": "Default/roll/Esc_StandRoll_Left_Root",
+        "x": -1,
+        "y": 1
+      },
+      {
+        "animPath": "Default/roll/Esc_StandRoll_Left_Root",
+        "x": -1,
+        "y": -1
+      }
+    ],
+    "frontTime": 0,
+    "backTime": 0,
+    "eventTimes": [
+      "0"
+    ],
+    "validLength": 1
+  },
+  {
+    "key": "GAILUN_IDLE",
+    "animType": 1,
+    "clips": [
+      {
+        "animPath": "GaiLun/1_idle",
+        "x": 0,
+        "y": 0
+      }
+    ],
+    "frontTime": 0,
+    "backTime": 0,
+    "eventTimes": [
+      "0"
+    ],
+    "validLength": 1
+  },
+  {
+    "key": "GAILUN_ATK1",
+    "animType": 1,
+    "clips": [
+      {
+        "animPath": "GaiLun/Light_Attk_1",
+        "x": 0,
+        "y": 0
+      }
+    ],
+    "frontTime": 0.15,
+    "backTime": 0.6,
+    "eventTimes": [
+      "0"
+    ],
+    "validLength": 0.6
+  },
+  {
+    "key": "GAILUN_ATK2",
+    "animType": 1,
+    "clips": [
+      {
+        "animPath": "GaiLun/Light_Attk_2",
+        "x": 0,
+        "y": 0
+      }
+    ],
+    "frontTime": 0.15,
+    "backTime": 0.6,
+    "eventTimes": [
+      "0"
+    ],
+    "validLength": 0.6
+  },
+  {
+    "key": "GAILUN_ATK3",
+    "animType": 1,
+    "clips": [
+      {
+        "animPath": "GaiLun/Light_Attk_3",
+        "x": 0,
+        "y": 0
+      }
+    ],
+    "frontTime": 0.35,
+    "backTime": 0.6,
+    "eventTimes": [
+      "0"
+    ],
+    "validLength": 0.6
+  },
+  {
+    "key": "GAILUN_SWORD_RUN",
+    "animType": 1,
+    "clips": [
+      {
+        "animPath": "GaiLun/Run_Sword",
+        "x": 0,
+        "y": 0
+      }
+    ],
+    "frontTime": 0,
+    "backTime": 0,
+    "eventTimes": [
+      "0"
+    ],
+    "validLength": 1
+  },
+  {
+    "key": "GAILUN_SWORD_HARD_ATK",
+    "animType": 1,
+    "clips": [
+      {
+        "animPath": "GaiLun/Run_Hard_Attk",
+        "x": 0,
+        "y": 0
+      }
+    ],
+    "frontTime": 0,
+    "backTime": 0,
+    "eventTimes": [
+      "0"
+    ],
+    "validLength": 1
+  },
+  {
+    "key": "GAILUN_SHENPAN",
+    "animType": 1,
+    "clips": [
+      {
+        "animPath": "GaiLun/Hard_Attk_5",
+        "x": 0,
+        "y": 0
+      }
+    ],
+    "frontTime": 0,
+    "backTime": 1,
+    "eventTimes": [
+      "0"
+    ],
+    "validLength": 1
+  },
+  {
+    "key": "GAILUN_ZHENGYI",
+    "animType": 1,
+    "clips": [
+      {
+        "animPath": "GaiLun/Hard_Attk_4",
+        "x": 0,
+        "y": 0
+      }
+    ],
+    "frontTime": 0.5,
+    "backTime": 1,
+    "eventTimes": [
+      "0"
+    ],
+    "validLength": 1
+  },
+  {
+    "key": "TIANYINBO_1",
+    "animType": 1,
+    "clips": [
+      {
+        "animPath": "Default/atk/atk1",
+        "x": 0,
+        "y": 0
+      }
+    ],
+    "frontTime": 0.3,
+    "backTime": 1,
+    "eventTimes": [
+      "0"
+    ],
+    "validLength": 1
+  },
+  {
+    "key": "TIANYINBO_2",
+    "animType": 1,
+    "clips": [
+      {
+        "animPath": "tyb_2",
+        "x": 0,
+        "y": 0
+      }
+    ],
+    "frontTime": 0.3,
+    "backTime": 1,
+    "eventTimes": [
+      "0"
+    ],
+    "validLength": 1
+  },
+  {
+    "key": "CUIJINGDUANGU",
+    "animType": 1,
+    "clips": [
+      {
+        "animPath": "cjdg",
+        "x": 0,
+        "y": 0
+      }
+    ],
+    "frontTime": 0.4,
+    "backTime": 1,
+    "eventTimes": [
+      "0"
+    ],
+    "validLength": 1
+  },
+  {
+    "key": "SHENGLONGBAIWEI",
+    "animType": 1,
+    "clips": [
+      {
+        "animPath": "slbw",
+        "x": 0,
+        "y": 0
+      }
+    ],
+    "frontTime": 0.2,
+    "backTime": 1,
+    "eventTimes": [
+      "0"
+    ],
+    "validLength": 1
+  },
+  {
+    "key": "DEFAULT_ROLL_FRONT",
+    "animType": 1,
+    "clips": [
+      {
+        "animPath": "Default/roll/Esc_StandRoll_Front_Root",
+        "x": 0,
+        "y": 0
+      }
+    ],
+    "frontTime": 0,
+    "backTime": 1,
+    "eventTimes": [
+      "0"
+    ],
+    "validLength": 1
+  },
+  {
+    "key": "DEFAULT_ROLL_BACK",
+    "animType": 1,
+    "clips": [
+      {
+        "animPath": "Default/roll/Esc_StandRoll_Back_Root",
+        "x": 0,
+        "y": 0
+      }
+    ],
+    "frontTime": 0,
+    "backTime": 1,
+    "eventTimes": [
+      "0"
+    ],
+    "validLength": 1
+  },
+  {
+    "key": "DEFAULT_ROLL_LEFT",
+    "animType": 1,
+    "clips": [
+      {
+        "animPath": "Default/roll/Esc_StandRoll_Left_Root",
+        "x": 0,
+        "y": 0
+      }
+    ],
+    "frontTime": 0,
+    "backTime": 1,
+    "eventTimes": [
+      "0"
+    ],
+    "validLength": 1
+  },
+  {
+    "key": "DEFAULT_ROLL_RIGHT",
+    "animType": 1,
+    "clips": [
+      {
+        "animPath": "Default/roll/Esc_StandRoll_Right_Root",
+        "x": 0,
+        "y": 0
+      }
+    ],
+    "frontTime": 0,
+    "backTime": 1,
+    "eventTimes": [
+      "0"
+    ],
+    "validLength": 1
+  }
+]

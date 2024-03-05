@@ -9,6 +9,7 @@ namespace StateSyncServer.LogicScripts.Manager
 {
     class PlayerManager : Manager<PlayerManager>
     {
+
         public int curIdIndex = 1;
         Dictionary<int, Player> datas = new Dictionary<int, Player>();
 
@@ -27,6 +28,29 @@ namespace StateSyncServer.LogicScripts.Manager
                 return datas[playerId];
             }
             return null;
+        }
+
+        public List<Player> GetAllPlayer()
+        {
+            List<Player> result = new List<Player>();
+            foreach (var item in datas)
+            {
+                result.Add(item.Value);
+            }
+            return result;
+        }
+
+        public List<Player> GetAllPlayerInScene(int sceneId)
+        {
+            List<Player> result = new List<Player>();
+            foreach (var item in datas)
+            {
+                if (item.Value.lastStaySceneId == sceneId)
+                {
+                    result.Add(item.Value);
+                }
+            }
+            return result;
         }
 
         public void RemovePlayer(int playerId)

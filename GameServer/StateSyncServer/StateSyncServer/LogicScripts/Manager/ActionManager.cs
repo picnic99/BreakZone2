@@ -28,26 +28,32 @@ namespace StateSyncServer.LogicScripts.Manager
 
     class ActionManager : Manager<ActionManager>
     {
-        public override void AddListener()
+        public override void AddEventListener()
         {
-            base.AddListener();
+            base.AddEventListener();
             ActionManager.GetInstance().On(ProtocolId.CLIENT_PLAYER_LOGIN_REQ, LoginReqHandle);
             ActionManager.GetInstance().On(ProtocolId.CLIENT_SELECT_ROLE_REQ, SelectCrtHandle);
             ActionManager.GetInstance().On(ProtocolId.CLIENT_ENTER_SCENE_REQ, EnterSceneHandle);
             ActionManager.GetInstance().On(ProtocolId.CLIENT_GAME_PLAYER_OPT_REQ, HandlePlayerGameOpt);
             ActionManager.GetInstance().On(ProtocolId.CLIENT_GAME_PLAYER_INPUT_REQ, HandlePlayerInput);
+            ActionManager.GetInstance().On(ProtocolId.CLENT_GET_GAME_DATA_REQ, HandleGetGameDataReq);
         }
 
-        public override void RemoveListener()
+        public override void RemoveEventListener()
         {
-            base.RemoveListener();
+            base.RemoveEventListener();
             ActionManager.GetInstance().Off(ProtocolId.CLIENT_PLAYER_LOGIN_REQ, LoginReqHandle);
             ActionManager.GetInstance().Off(ProtocolId.CLIENT_SELECT_ROLE_REQ, SelectCrtHandle);
             ActionManager.GetInstance().Off(ProtocolId.CLIENT_ENTER_SCENE_REQ, EnterSceneHandle);
             ActionManager.GetInstance().Off(ProtocolId.CLIENT_GAME_PLAYER_OPT_REQ, HandlePlayerGameOpt);
             ActionManager.GetInstance().Off(ProtocolId.CLIENT_GAME_PLAYER_INPUT_REQ, HandlePlayerInput);
+            ActionManager.GetInstance().Off(ProtocolId.CLENT_GET_GAME_DATA_REQ, HandleGetGameDataReq);
         }
 
+        /// <summary>
+        /// 选择角色
+        /// </summary>
+        /// <param name="args"></param>
         public void SelectCrtHandle(object[] args)
         {
             Protocol proto = args[0] as Protocol;
@@ -58,7 +64,11 @@ namespace StateSyncServer.LogicScripts.Manager
             if (crtId > 0)
             {
                 CommonUtils.Logout("选择角色" + crtId);
-                //创建角色实体 Character
+                Player p = proto.GetPlayer();
+                if (p != null)
+                {
+                    p.lastSelectCrtId = crtId;
+                }
                 //协议返回
                 SelectCrtRep rep = new SelectCrtRep();
                 rep.Result = ProtocolResultEnum.SUCCESS;
@@ -67,6 +77,10 @@ namespace StateSyncServer.LogicScripts.Manager
             }
         }
 
+        /// <summary>
+        /// 进入场景
+        /// </summary>
+        /// <param name="args"></param>
         public void EnterSceneHandle(object[] args)
         {
             Protocol proto = args[0] as Protocol;
@@ -77,9 +91,7 @@ namespace StateSyncServer.LogicScripts.Manager
             if (SceneId > 0)
             {
                 CommonUtils.Logout("进入场景" + SceneId);
-                var p = Global.GetPlayerByClient(proto.client);
-                if (p == null) return;
-                p.lastStaySceneId = SceneId;
+                SceneManager.GetInstance().AddPlayerToScene(proto.GetPlayerId(), SceneId);
                 //协议返回
                 EnterSceneRep rep = new EnterSceneRep();
                 rep.Result = ProtocolResultEnum.SUCCESS;
@@ -88,13 +100,11 @@ namespace StateSyncServer.LogicScripts.Manager
             }
         }
 
-        /*        private void Handle_GetData(Protocol proto)
-                {
-                    GetGameDataReq action = (GetGameDataReq) proto;
-                    var playerId = action.playerId;
-                    SyncGameData(playerId);
-                }
-        */
+
+        /// <summary>
+        /// 登录请求
+        /// </summary>
+        /// <param name="args"></param>
         private void LoginReqHandle(object[] args)
         {
             Protocol proto = args[0] as Protocol;
@@ -103,7 +113,6 @@ namespace StateSyncServer.LogicScripts.Manager
             var password = req.Password;
             var playerId = req.PlayerId;
             var type = req.Type;
-
 
             if (type == LoginTypeEnum.LOGIN_IN)
             {
@@ -134,7 +143,7 @@ namespace StateSyncServer.LogicScripts.Manager
                 var p = PlayerManager.GetInstance().FindPlayer(playerId);
                 if (p == null) return;
                 Global.RemovePlayerClientMap(p.playerId);
-
+                PlayerManager.GetInstance().RemovePlayer(playerId);
                 //协议返回
                 PlayerLoginRep rep = new PlayerLoginRep();
                 rep.Result = ProtocolResultEnum.SUCCESS;
@@ -145,6 +154,10 @@ namespace StateSyncServer.LogicScripts.Manager
             }
         }
 
+        /// <summary>
+        /// 处理玩家输入操作
+        /// </summary>
+        /// <param name="args"></param>
         public void HandlePlayerInput(object[] args)
         {
             Protocol proto = args[0] as Protocol;
@@ -152,86 +165,95 @@ namespace StateSyncServer.LogicScripts.Manager
             var InputX = req.InputX;
             var InputY = req.InputY;
 
-            int pId = Global.GetPlayerIdByClient(proto.client);
-            if (pId == 0) return;
+            Player player = proto.GetPlayer();
+            if (player == null) return;
+            player.SetInput(new System.Numerics.Vector2(InputX, InputY));
+            //协议返回
             GamePlayerInputNtf ntf = new GamePlayerInputNtf();
             ntf.InputX = InputX;
             ntf.InputY = InputY;
-            ntf.PlayerId = pId;
-            NetManager.GetInstance().SendProtocol(proto.client, ntf);
+            ntf.PlayerId = player.playerId;
+            List<Player> players = SceneManager.GetInstance().GetPlayersInScene(player.lastStaySceneId);
+            if (players.Count > 0)
+            {
+                NetManager.GetInstance().SendProtoToScene(players, ntf);
+            }
         }
 
+        /// <summary>
+        /// 处理玩家的操作
+        /// </summary>
+        /// <param name="args"></param>
         public void HandlePlayerGameOpt(object[] args)
         {
             Protocol proto = args[0] as Protocol;
 
             GamePlayerOptReq req = proto.GetDataInstance<GamePlayerOptReq>();
 
-            var UpMove = req.UpMove;
-            var DownMove = req.DownMove;
-            var LeftMove = req.LeftMove;
-            var RightMove = req.RightMove;
-            var AddSpeed = req.AddSpeed;
-            var Arm = req.Arm;
-            var Flash = req.Flash;
-            var Jump = req.Jump;
-            var Atk = req.Atk;
-            var Skill1 = req.Skill1;
-            var Skill2 = req.Skill2;
-            var Skill3 = req.Skill3;
-            var Skill4 = req.Skill4;
+            Player player = proto.GetPlayer();
+            if (player != null)
+            {
+                player.ApplyPlayerOpt(req);
+            }
 
+            //协议返回
             GamePlayerOptRep rep = new GamePlayerOptRep();
             rep.Result = ProtocolResultEnum.SUCCESS;
             NetManager.GetInstance().SendProtocol(proto.client, rep);
 
-            if (PlayerOptEnum.IsKeyDown(UpMove)
-                || PlayerOptEnum.IsKeyDown(DownMove)
-                || PlayerOptEnum.IsKeyDown(LeftMove)
-                || PlayerOptEnum.IsKeyDown(RightMove)
-                )
-            {
-                //玩家移动 播放移动动画
-                int pId = Global.GetPlayerIdByClient(proto.client);
-                if (pId == 0) return;
-                GameAnimPlayNtf NTF = new GameAnimPlayNtf();
-                NTF.AnimName = "DEFAULT_MOVE";
-                NTF.PlayerId = pId;
-                NTF.TranslateTime = 0.15f;
-                NetManager.GetInstance().SendProtocol(proto.client, NTF);
-            }
+            /*            GameAnimPlayNtf NTF = new GameAnimPlayNtf();
+                        NTF.AnimName = "DEFAULT_MOVE";
+                        NTF.PlayerId = pId;
+                        NTF.TranslateTime = 0.15f;
+                        NetManager.GetInstance().SendProtocol(proto.client, NTF);*/
         }
 
+        /// <summary>
+        /// 同步数据申请
+        /// </summary>
+        /// <param name="args"></param>
         public void HandleGetGameDataReq(object[] args)
         {
             Protocol proto = args[0] as Protocol;
             GetGameDataRep rep = new GetGameDataRep();
             rep.Result = ProtocolResultEnum.SUCCESS;
             NetManager.GetInstance().SendProtocol(proto.client, rep);
-            var p = Global.GetPlayerByClient(proto.client);
-            if (p!=null)
+            var p = proto.GetPlayer();
+            if (p != null)
             {
-                SyncGameDataToScene(p.lastStaySceneId,p.playerId);
+                SyncGameDataToScene(p.lastStaySceneId);
             }
         }
 
         /// <summary>
         /// 同步游戏数据
+        /// TODO 需要考虑数据量的情况
+        /// 除了第一次进入场景中 需要同步场景的所有信息
+        /// 其余时刻应当是谁触发了状态改变就同步谁的数据给其它玩家
         /// </summary>
         public SyncGameDataNtf GetSyncGameData(int sceneId)
         {
             //收集场景中需要同步的数据
-
+            //读取当前场景中存在的玩家 包括AI 可能还需要考虑物体
             var ntf = new SyncGameDataNtf();
+            CrtGameData crtData = new CrtGameData();
+            crtData.PlayerId = 1;
+            crtData.PosX = 0;
+            crtData.PosY = 0;
+            crtData.PosZ = 0;
+            ntf.CrtData.Add(crtData);
             //填充数据
             return ntf;
         }
 
-        public void SyncGameDataToScene(int sceneId, int playerId)
+        public void SyncGameDataToScene(int sceneId)
         {
             SyncGameDataNtf ntf = GetSyncGameData(sceneId);
-            var client = Global.GetClientByPlayerId(playerId);
-            NetManager.GetInstance().SendProtocol(client, ntf);
+            List<Player> players = SceneManager.GetInstance().GetPlayersInScene(sceneId);
+            if (players.Count > 0)
+            {
+                NetManager.GetInstance().SendProtoToScene(players, ntf);
+            }
         }
 
         /// <summary>
@@ -252,169 +274,5 @@ namespace StateSyncServer.LogicScripts.Manager
                 }
             }
         }
-
-        /*        private void Handle_LoginIn(TcpClient client, Protocol proto)
-                {
-                    LoginInReq action = (LoginInReq)proto;
-
-                    var playerId = action.playerId;
-                    CommonUtils.Logout(playerId + "");
-                    Global.PlayerSocketMap.Add(playerId, client);
-                    CharacterManager.GetInstance().CreatePlayer(playerId);
-                    //协议返回
-                    LoginInRep protocol = new LoginInRep(1, playerId);
-                    //NetManager.GetInstance().SendProtocol(client, protocol);
-                }
-
-                private void Handle_LoginOut(Protocol proto)
-                {
-                    LoginInReq action = (LoginInReq)proto;
-                    var playerId = action.playerId;
-                    if (Global.PlayerSocketMap.ContainsKey(playerId))
-                    {
-                        Global.PlayerSocketMap.Remove(playerId);
-                    }
-                }
-
-                //战斗行为处理
-                public void FightHandle(PlayerOptReq action)
-                {
-
-                    switch (action.type)
-                    {
-                        // case FightActionEnum.IDLE:
-                        //     this.Handle_Idle();
-                        //     break;
-                        case FightActionEnum.START_MOVE:
-                            this.Handle_StartMove(action);
-                            break;
-                        case FightActionEnum.END_MOVE:
-                            this.Handle_EndMove(action);
-                            break;
-                        case FightActionEnum.ROTATE:
-                            this.Handle_Rotate(action);
-                            break;
-                        case FightActionEnum.SKILL:
-                            this.Handle_Skill(action);
-                            break;
-                        default:
-                            break;
-                    }
-                }
-
-                //加入房间协议
-                private void Handle_AddRoom(TcpClient client, Protocol proto)
-                {
-                    AddRoomReq action = (AddRoomReq)proto; 
-
-                    var roomId = action.roomId;
-                    var playerId = action.playerId;
-                    var p = CharacterManager.GetInstance().GetPlayer(playerId);
-                    if (p == null) return; //错误代码
-                    if (roomId != 0)
-                    {
-                        var room = RoomManager.GetInstance().GetRoom(roomId);
-                        if (room != null)
-                        {
-                            p.data.roomId = roomId;
-                        }
-                    }
-                    else
-                    {
-                        Room r = RoomManager.GetInstance().CreateRoom();
-                        p.data.roomId = r.roomId;
-                    }
-                    //协议返回
-                    var players = RoomManager.GetInstance().GetRoomPlayerIds(p.data.roomId);
-
-                    var AddRoomRep = new AddRoomRep(1, p.data.roomId, players.ToArray());
-                    //NetManager.GetInstance().SendProtocol(client, AddRoomRep);
-
-                    var PlayerAddNtf = new PlayerAddNtf(p.data.roomId, players.ToArray());
-                    //NetManager.GetInstance().SendProtoToRoom(p.data.roomId, PlayerAddNtf);
-
-                    this.SyncGameData(playerId);
-                }
-
-                private void Handle_StartMove(PlayerOptReq action)
-                {
-                    var playerId = action.playerId;
-                    var p = CharacterManager.GetInstance().GetPlayer(playerId);
-                    if (p == null) return;
-                    this.SetPlayerState(playerId, StateEnum.MOVE);
-                    this.DispatcherAction(action);
-                }
-                private void Handle_EndMove(PlayerOptReq action)
-                {
-                    var playerId = action.playerId;
-                    var p = CharacterManager.GetInstance().GetPlayer(playerId);
-                    if (p == null) return;
-                    this.SetPlayerState(playerId, StateEnum.IDLE);
-                    this.DispatcherAction(action);
-                }
-
-                private void Handle_Rotate(PlayerOptReq action)
-                {
-                    var playerId = action.playerId;
-                    var rot = action.rot;
-                    var p = CharacterManager.GetInstance().GetPlayer(playerId);
-                    if (p == null) return;
-                    p.Rotate(rot);
-                    this.DispatcherAction(action);
-                }
-
-                private void Handle_Skill(PlayerOptReq action)
-                {
-                    var playerId = action.playerId;
-                    var skillId = action.skillId;
-                    SkillManager.GetInstance().AddSkill(new Skill(playerId, skillId));
-                    CommonUtils.Logout("玩家[" + playerId + "]施放技能 " + skillId);
-                    this.DispatcherAction(action);
-                }
-
-                private void SetPlayerState(int playerid, StateEnum state)
-                {
-                    var p = CharacterManager.GetInstance().GetPlayer(playerid);
-                    if (p != null)
-                    {
-                        p.data.state = state;
-                        CommonUtils.Logout("玩家[" + p.data.playerId + "]状态修改为 " + state);
-                        SyncGameData(playerid);
-                    }
-                }
-
-                private void SyncGameData(int Playerid)
-                {
-                    var p = CharacterManager.GetInstance().GetPlayer(Playerid);
-                    var players = CharacterManager.GetInstance().GetAOIPlayer(Playerid);
-                    if (players == null) return;
-                    List<PlayerGameData> playerDatas = new List<PlayerGameData>();
-                    foreach (var item in players)
-                    {
-                        playerDatas.Add(item.data);
-                    }
-                    var bullets = BulletManager.GetInstance().GetAllBullets();
-                    List<BulletData> bulletDatas = new List<BulletData>();
-                    foreach (var item in bullets)
-                    {
-                        bulletDatas.Add(item.data);
-                    }
-                    var GameDataNtf = new GameDataNtf(p.data.roomId, playerDatas, bulletDatas);
-                    CommonUtils.Logout("数据同步至玩家[" + p.data.playerId + "]");
-                    //NetManager.GetInstance().SendProtoToRoom(p.data.roomId, GameDataNtf);
-                }
-
-                //派发事件
-                private void DispatcherAction(PlayerOptReq action)
-                {
-                    var players = CharacterManager.GetInstance().GetAOIPlayer(action.playerId);
-                    if (players == null) return;
-                    foreach (var player in players)
-                    {
-                        CommonUtils.Logout("操作转发至玩家[" + player.data.playerId + "]");
-                        //发送数据同步协议
-                        //NetManager.GetInstance().SendProtocol(Global.PlayerSocketMap[player.data.playerId], action);
-                    }
-                }*/
     }
 }

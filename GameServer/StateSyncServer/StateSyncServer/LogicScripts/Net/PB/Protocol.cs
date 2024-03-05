@@ -1,6 +1,9 @@
 ﻿using Google.Protobuf;
 using Google.Protobuf.Reflection;
 using Msg;
+using StateSyncServer.LogicScripts.Common;
+using StateSyncServer.LogicScripts.Manager;
+using StateSyncServer.LogicScripts.VO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,6 +47,21 @@ namespace StateSyncServer.LogicScripts.Net.PB
             Type type = RegProtocol.GetProtocolType(protocolId);
             MessageParser parser = (MessageParser)type.GetProperty("Parser").GetValue(null);
             return parser.ParseFrom(data);
+        }
+
+        public int GetPlayerId()
+        {
+           return Global.GetPlayerIdByClient(client);
+        }
+
+        public Player GetPlayer()
+        {
+            int id = GetPlayerId();
+            if (id > 0)
+            {
+                return PlayerManager.GetInstance().FindPlayer(id);
+            }
+            return null;
         }
     }
 }

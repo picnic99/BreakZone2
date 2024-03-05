@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace StateSyncServer.LogicScripts.Manager
 {
-    class EventDispatcher
+    public class EventDispatcher
     {
         public Dictionary<string, Delegate> events = new Dictionary<string, Delegate>();
 

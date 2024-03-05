@@ -9,7 +9,7 @@ namespace StateSyncServer.LogicScripts.Manager
 {
     class RoomManager : Manager<RoomManager>
     {
-        //最后一个房间的Id
+/*        //最后一个房间的Id
         private int LastRoomId = 0;
         //房间列表
         private Dictionary<int, Room> RoomMap = new Dictionary<int, Room>();
@@ -79,6 +79,6 @@ namespace StateSyncServer.LogicScripts.Manager
         public void Tick()
         {
             //处理玩家输入的
-        }
+        }*/
     }
 }

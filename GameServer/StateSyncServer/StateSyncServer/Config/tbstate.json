@@ -1,0 +1,265 @@
+[
+  {
+    "id": 1,
+    "type": "idle",
+    "name": "空闲",
+    "animKey": "DEFAULT_IDLE",
+    "exitType": 2,
+    "order": 0,
+    "mutexState": [],
+    "exceptSkills": [],
+    "isSkill": false
+  },
+  {
+    "id": 2,
+    "type": "move",
+    "name": "移动",
+    "animKey": "DEFAULT_MOVE",
+    "exitType": 2,
+    "order": 0,
+    "mutexState": [
+      1
+    ],
+    "exceptSkills": [],
+    "isSkill": false
+  },
+  {
+    "id": 3,
+    "type": "jump",
+    "name": "跳跃",
+    "animKey": "",
+    "exitType": 2,
+    "order": 0,
+    "mutexState": [
+      1,
+      2,
+      5,
+      11,
+      12
+    ],
+    "exceptSkills": [
+      1013
+    ],
+    "isSkill": true
+  },
+  {
+    "id": 4,
+    "type": "doSkill",
+    "name": "施法",
+    "animKey": "",
+    "exitType": 1,
+    "order": 0,
+    "mutexState": [
+      1,
+      2,
+      3,
+      5,
+      11,
+      12
+    ],
+    "exceptSkills": [],
+    "isSkill": true
+  },
+  {
+    "id": 5,
+    "type": "doAtk",
+    "name": "普攻",
+    "animKey": "",
+    "exitType": 1,
+    "order": 0,
+    "mutexState": [
+      1,
+      2,
+      3,
+      4,
+      11,
+      12
+    ],
+    "exceptSkills": [],
+    "isSkill": true
+  },
+  {
+    "id": 6,
+    "type": "dizzy",
+    "name": "眩晕",
+    "animKey": "",
+    "exitType": 3,
+    "order": 0,
+    "mutexState": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      11,
+      12
+    ],
+    "exceptSkills": [],
+    "isSkill": false
+  },
+  {
+    "id": 7,
+    "type": "atkFly",
+    "name": "击飞",
+    "animKey": "",
+    "exitType": 2,
+    "order": 0,
+    "mutexState": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      11,
+      12
+    ],
+    "exceptSkills": [],
+    "isSkill": false
+  },
+  {
+    "id": 8,
+    "type": "silence",
+    "name": "沉默",
+    "animKey": "",
+    "exitType": 1,
+    "order": 0,
+    "mutexState": [
+      4
+    ],
+    "exceptSkills": [],
+    "isSkill": false
+  },
+  {
+    "id": 9,
+    "type": "trap",
+    "name": "禁锢",
+    "animKey": "",
+    "exitType": 3,
+    "order": 0,
+    "mutexState": [
+      2,
+      3,
+      11,
+      12
+    ],
+    "exceptSkills": [],
+    "isSkill": false
+  },
+  {
+    "id": 10,
+    "type": "super",
+    "name": "霸体",
+    "animKey": "",
+    "exitType": 1,
+    "order": 0,
+    "mutexState": [
+      6,
+      7,
+      8,
+      9
+    ],
+    "exceptSkills": [],
+    "isSkill": false
+  },
+  {
+    "id": 11,
+    "type": "run",
+    "name": "奔跑",
+    "animKey": "DEFAULT_RUN",
+    "exitType": 2,
+    "order": 0,
+    "mutexState": [
+      1
+    ],
+    "exceptSkills": [],
+    "isSkill": false
+  },
+  {
+    "id": 12,
+    "type": "Roll",
+    "name": "翻滚",
+    "animKey": "DEFAULT_ROLL",
+    "exitType": 1,
+    "order": 0,
+    "mutexState": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      11
+    ],
+    "exceptSkills": [],
+    "isSkill": true
+  },
+  {
+    "id": 13,
+    "type": "Injure",
+    "name": "受伤",
+    "animKey": "DEFAULT_INJURE",
+    "exitType": 1,
+    "order": 0,
+    "mutexState": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      11,
+      12
+    ],
+    "exceptSkills": [],
+    "isSkill": false
+  },
+  {
+    "id": 14,
+    "type": "block",
+    "name": "格挡",
+    "animKey": "",
+    "exitType": 2,
+    "order": 0,
+    "mutexState": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      11,
+      12
+    ],
+    "exceptSkills": [],
+    "isSkill": false
+  },
+  {
+    "id": 15,
+    "type": "stayAir",
+    "name": "滞空",
+    "animKey": "",
+    "exitType": 1,
+    "order": 0,
+    "mutexState": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      11,
+      12
+    ],
+    "exceptSkills": [],
+    "isSkill": false
+  },
+  {
+    "id": 16,
+    "type": "die",
+    "name": "死亡",
+    "animKey": "DEFAULT_DIE",
+    "exitType": 2,
+    "order": 0,
+    "mutexState": [
+      1
+    ],
+    "exceptSkills": [],
+    "isSkill": false
+  }
+]

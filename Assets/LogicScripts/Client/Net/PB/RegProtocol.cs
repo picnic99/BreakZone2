@@ -30,6 +30,7 @@ namespace Assets.LogicScripts.Client.Net.PB
             RegProtocolData(ProtocolId.CLIENT_ANIM_PLAY_NTF, typeof(GameAnimPlayNtf));
             RegProtocolData(ProtocolId.CLIENT_GAME_PLAYER_INPUT_REQ, typeof(GamePlayerInputReq));
             RegProtocolData(ProtocolId.CLIENT_GAME_PLAYER_INPUT_NTF, typeof(GamePlayerInputNtf));
+            RegProtocolData(ProtocolId.CLENT_SYNC_GAME_DATA_NTF, typeof(SyncGameDataNtf));
         }
 
         public static Type GetProtocolType(int id)

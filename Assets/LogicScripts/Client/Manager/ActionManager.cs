@@ -147,7 +147,7 @@ namespace Assets.LogicScripts.Client.Manager
 
                 if (crt == null)
                 {
-                    CharacterManager.GetInstance().CreateCharacter(1, item.PlayerId);
+                    crt = CharacterManager.GetInstance().CreateCharacter(1, item.PlayerId);
                 }
 
                 crt.CrtData.Pos = new Vector3(item.PosX, item.PosY, item.PosZ);

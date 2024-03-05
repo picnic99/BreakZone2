@@ -1,4 +1,5 @@
 ﻿using MathNet.Numerics.LinearAlgebra.Complex;
+using Msg;
 using StateSyncServer.LogicScripts.Common;
 using StateSyncServer.LogicScripts.Enum;
 using StateSyncServer.LogicScripts.Util;
@@ -22,6 +23,24 @@ namespace StateSyncServer.LogicScripts.VO
         public Character(int playerId)
         {
             data.playerId = playerId;
+        }
+
+
+        /// <summary>
+        /// 数据初始化
+        /// 属性值 当前的状态 位置旋转 携带的技能和buff
+        /// </summary>
+        public void Init()
+        {
+            //TODO
+        }
+
+        /// <summary>
+        /// 应用玩家的操作
+        /// </summary>
+        public void ApplyOpt(GamePlayerOptReq opt)
+        {
+            //todo
         }
 
         public void Tick()

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StateSyncServer.LogicScripts.Manager
 {
-    class Manager<T> : EventDispatcher where T : new()
+    public class Manager<T> : EventDispatcher where T : new()
     {
         public static T _instance;
 
@@ -20,20 +20,20 @@ namespace StateSyncServer.LogicScripts.Manager
 
         public virtual void Init()
         {
-            AddListener();
+            AddEventListener();
         }
 
         public virtual void Destroy()
         {
-            RemoveListener();
+            RemoveEventListener();
         }
 
-        public virtual void AddListener()
+        public virtual void AddEventListener()
         {
 
         }
 
-        public virtual void RemoveListener ()
+        public virtual void RemoveEventListener ()
         {
 
         }

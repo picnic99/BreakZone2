@@ -9,10 +9,11 @@ using StateSyncServer.LogicScripts.Util;
 using StateSyncServer.LogicScripts.Common;
 using Google.Protobuf;
 using StateSyncServer.LogicScripts.Net.PB;
+using StateSyncServer.LogicScripts.VO;
 
 namespace StateSyncServer.LogicScripts.Manager
 {
-    class NetManager:Manager<NetManager>
+    class NetManager : Manager<NetManager>
     {
         public void SendProtocol(TcpClient client, IMessage protocol)
         {
@@ -27,15 +28,21 @@ namespace StateSyncServer.LogicScripts.Manager
             }
         }
 
-        public void SendProtoToRoom(int roomId, IMessage protocol)
+        /// <summary>
+        /// 发送协议给场景中的玩家
+        /// </summary>
+        /// <param name="protocol"></param>
+        /// <param name="players"></param>
+        public void SendProtoToScene(List<Player> players, IMessage protocol)
         {
-            //协议返回
-/*            var players = RoomManager.GetInstance().GetRoomPlayerIds(roomId);
-            foreach (var id in players)
+            foreach (var item in players)
             {
-                //发送数据同步协议
-                NetManager.GetInstance().SendProtocol(Global.PlayerSocketMap[id], protocol);
-            }*/
+                TcpClient tcpClient = Global.GetClientByPlayerId(item.playerId);
+                if (tcpClient != null)
+                {
+                    SendProtocol(tcpClient, protocol);
+                }
+            }
         }
     }
 }

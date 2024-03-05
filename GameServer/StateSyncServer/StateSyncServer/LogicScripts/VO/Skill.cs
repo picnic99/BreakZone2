@@ -22,7 +22,7 @@ namespace StateSyncServer.LogicScripts.VO
         {
             this.playerId = playerId;
             this.skillId = skillId;
-            this.player = CharacterManager.GetInstance().GetPlayer(this.playerId);
+            this.player = null; //CharacterManager.GetInstance().GetPlayer(this.playerId);
             if (this.skillId == (int)SkillId.XUAN_FENG_ZHAN)
             {
                 this.animData = AnimManager.JumpAnimData;

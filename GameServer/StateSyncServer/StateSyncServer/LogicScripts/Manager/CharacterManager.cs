@@ -1,4 +1,5 @@
-﻿using StateSyncServer.LogicScripts.VO;
+﻿using Msg;
+using StateSyncServer.LogicScripts.VO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,69 +9,97 @@ using System.Threading.Tasks;
 
 namespace StateSyncServer.LogicScripts.Manager
 {
-    class CharacterManager:Manager<CharacterManager>
+    class CharacterManager : Manager<CharacterManager>
     {
-        private Dictionary<int,Character> playerMap = new Dictionary<int,Character>();
+        public static string PLAYER_OPT_CHANGE = "PLAYER_OPT_CHANGE";
+        public static string PLAYER_ADD_TO_SCENE = "PLAYER_ADD_TO_SCENE";
+
+        private Dictionary<int, Character> datas = new Dictionary<int, Character>();
 
         public CharacterManager()
         {
 
         }
 
-        public Character CreatePlayer(int playerId)
+        public override void AddEventListener()
         {
-            var p = new Character(playerId);
-            this.playerMap.Add(playerId,p);
-            return p;
+            base.AddEventListener();
+            On(PLAYER_OPT_CHANGE, OnPlayeOptChange);
+            On(PLAYER_ADD_TO_SCENE, OnPlayeOptChange);
         }
-        //移除角色实例
-        public void DelPlayer(int playerId)
-        {
-            this.playerMap.Remove(playerId);
-        }
-        //查找角色
-        public Character GetPlayer(int playerId)
-        {
-            if (this.playerMap.ContainsKey(playerId))
-            {
-            return this.playerMap[playerId];
 
+        public override void RemoveEventListener()
+        {
+            base.RemoveEventListener();
+            Off(PLAYER_OPT_CHANGE, OnPlayeOptChange);
+            Off(PLAYER_ADD_TO_SCENE, OnPlayeOptChange);
+        }
+
+        public void OnPlayeOptChange(object[] args)
+        {
+            int playerId = (int)args[0];
+            GamePlayerOptReq opt = args[1] as GamePlayerOptReq;
+
+            var c = FindCharacter(playerId);
+            if (c != null)
+            {
+                c.ApplyOpt(opt);
+            }
+        }
+
+        public void OnPlayerAddToScene(object[] args)
+        {
+            int playerId = (int)args[0];
+            //检测是否已经有实体存在
+            //存在：初始化实体的数据 如属性值 当前的状态 位置旋转 携带的技能和buff
+            //不存在：创建一个新的实体
+            Character character = FindCharacter(playerId);
+            Player player = PlayerManager.GetInstance().FindPlayer(playerId);
+            if(character == null)
+            {
+                character = CreateCharacter(player.lastSelectCrtId,playerId);
+            }
+            character.Init();
+        }
+
+        public Character CreateCharacter(int crtId, int playerId)
+        {
+            var c = new Character(playerId);
+            datas.Add(playerId, c);
+            return c;
+        }
+
+        public Character FindCharacter(int playerId)
+        {
+            if (datas.ContainsKey(playerId))
+            {
+                return datas[playerId];
             }
             return null;
         }
 
-        //获取角色可视范围内的角色  包括自己
-        public List<Character> GetAOIPlayer(int playerId)
+        public bool RemoveCharacter(Character crt)
         {
-            List<Character> result = new List<Character>();
-            var p = this.GetPlayer(playerId);
-            if (p != null && p.data.roomId != 0)
+            int key = 0;
+            foreach (var item in datas)
             {
-                var players = RoomManager.GetInstance().GetRoomPlayers(p.data.roomId);
-                if (players != null && players.Count > 0)
+                if (item.Value == crt)
                 {
-                    foreach (var other in players)
-                    {
-                        var len = Vector3.Distance(p.data.pos, other.data.pos);
-                        if (len <= p.data.lookRange)
-                        {
-                            result.Add(other);
-                        }
-
-                    }
+                    key = item.Key;
+                    break;
                 }
             }
-            return result;
-        }
-
-        public List<Character> GetAllPlayers()
-        {
-            return this.playerMap.Values.ToList();
+            if (key > 0)
+            {
+                datas.Remove(key);
+                return true;
+            }
+            return false;
         }
 
         public void Tick()
         {
-            foreach (var item in playerMap)
+            foreach (var item in datas)
             {
                 item.Value.Tick();
             }
