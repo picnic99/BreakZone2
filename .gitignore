@@ -34,7 +34,7 @@ ExportedObj/
 .consulo/
 *.csproj
 *.unityproj
-*.sln
+# *.sln
 *.suo
 *.tmp
 *.user
@@ -71,8 +71,7 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
-
-simpleServer/*
 output/*
+simpleServer/Server/BZ/CDN/pc/v1.0/*
 Bundles/*
 HybridCLRData/*

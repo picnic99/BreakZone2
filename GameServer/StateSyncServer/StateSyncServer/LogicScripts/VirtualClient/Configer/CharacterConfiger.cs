@@ -1,71 +1,61 @@
-﻿using StateSyncServer.LogicScripts.Util;
-using StateSyncServer.LogicScripts.VirtualClient.VO;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace StateSyncServer.LogicScripts.VirtualClient.Configer
+﻿using System.Collections.Generic;
+/// <summary>
+/// 角色的数据配置解析类
+/// </summary>
+public class CharacterConfiger : Singleton<CharacterConfiger>
 {
-    /// <summary>
-    /// 角色的数据配置解析类
-    /// </summary>
-    public class CharacterConfiger : Singleton<CharacterConfiger>
-    {
-        private List<CharacterVO> List;
-        private List<PropertyVO> propertyList;
+    private List<CharacterVO> List;
+    private List<PropertyVO> propertyList;
 
-        public void Init()
+    public void Init()
+    {
+        if(List == null) List = new List<CharacterVO>();
+        if(propertyList == null) propertyList = new List<PropertyVO>();
+        foreach (var item in Configer.Tables.TbCharacter.DataList)
         {
-            if (List == null) List = new List<CharacterVO>();
-            if (propertyList == null) propertyList = new List<PropertyVO>();
-            foreach (var item in Configer.Tables.TbCharacter.DataList)
-            {
-                var anim = new CharacterVO();
-                anim.character = item;
-                List.Add(anim);
-            }
-            foreach (var item in Configer.Tables.TbProperty.DataList)
-            {
-                var p = new PropertyVO();
-                p.property = item;
-                propertyList.Add(p);
-            }
+            var anim = new CharacterVO();
+            anim.character = item;
+            List.Add(anim);
         }
-        public CharacterVO GetCharacterById(int id)
+        foreach (var item in Configer.Tables.TbProperty.DataList)
         {
-            var vo = List.Find((item) => { return item.character.Id == id; });
+            var p = new PropertyVO();
+            p.property = item;
+            propertyList.Add(p);
+        }
+    }
+    public CharacterVO GetCharacterById(int id)
+    {
+        var vo = List.Find((item) => { return item.character.Id == id; });
+        return vo;
+    }
+
+    public CharacterVO[] GetAllCharacter()
+    {
+        return List.ToArray();
+    }
+
+    public PropertyVO GetPropertyById(int id)
+    {
+        CharacterVO cVO = GetCharacterById(id);
+        if(cVO != null)
+        {
+            var vo = propertyList.Find((item) => { return item.property.Id == cVO.character.PropertyId; });
             return vo;
         }
+        return null;
+    }
 
-        public CharacterVO[] GetAllCharacter()
+    public CharacterVO[] GetRealCharacters()
+    {
+        List<CharacterVO> result = new List<CharacterVO>();
+        foreach (var item in List)
         {
-            return List.ToArray();
-        }
-
-        public PropertyVO GetPropertyById(int id)
-        {
-            CharacterVO cVO = GetCharacterById(id);
-            if (cVO != null)
+            if (!item.character.IsFake)
             {
-                var vo = propertyList.Find((item) => { return item.property.Id == cVO.character.PropertyId; });
-                return vo;
+                result.Add(item);
             }
-            return null;
         }
-
-        public CharacterVO[] GetRealCharacters()
-        {
-            List<CharacterVO> result = new List<CharacterVO>();
-            foreach (var item in List)
-            {
-                if (!item.character.IsFake)
-                {
-                    result.Add(item);
-                }
-            }
-            return result.ToArray();
-        }
+        return result.ToArray();
     }
 }
