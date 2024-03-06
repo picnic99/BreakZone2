@@ -1,23 +1,25 @@
-﻿
-public class AudioVO
+﻿namespace StateSyncServer.LogicScripts.VirtualClient.VO
 {
-    public cfg.Audio audio;
-
-    public string GetKeyStr()
+    public class AudioVO
     {
-        int crtId = audio.CharacterId.ToString() == "" ? 0 : audio.CharacterId;
-        int SkillId = audio.SkillId.ToString() == "" ? 0 : audio.SkillId;
-        int StateId = audio.StateId.ToString() == "" ? 0 : audio.StateId;
+        public cfg.Audio audio;
 
-        return $"{crtId}_{SkillId}_{StateId}_{audio.Keyword}";
-    }
+        public string GetKeyStr()
+        {
+            int crtId = audio.CharacterId.ToString() == "" ? 0 : audio.CharacterId;
+            int SkillId = audio.SkillId.ToString() == "" ? 0 : audio.SkillId;
+            int StateId = audio.StateId.ToString() == "" ? 0 : audio.StateId;
 
-    public bool IsAllPlay()
-    {
-        return audio.PlayMode == 1;
-    }
-    public bool IsRandomPlay()
-    {
-        return audio.PlayMode == 2;
+            return $"{crtId}_{SkillId}_{StateId}_{audio.Keyword}";
+        }
+
+        public bool IsAllPlay()
+        {
+            return audio.PlayMode == 1;
+        }
+        public bool IsRandomPlay()
+        {
+            return audio.PlayMode == 2;
+        }
     }
 }

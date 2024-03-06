@@ -10,22 +10,6 @@ using StateSyncServer.LogicScripts.Net.PB.Enum;
 
 namespace StateSyncServer.LogicScripts.Manager
 {
-    class FightActionType
-    {
-        /// <summary>
-        /// //开始移动
-        /// </summary>
-        public static string START_MOVE = "START_MOVE";
-        /// <summary>
-        /// 停止移动
-        /// </summary>
-        public static string END_MOVE = "END_MOVE";
-        /// <summary>
-        /// 旋转
-        /// </summary>
-        public static string ROTATE = "ROTATE";
-    }
-
     class ActionManager : Manager<ActionManager>
     {
         public override void AddEventListener()

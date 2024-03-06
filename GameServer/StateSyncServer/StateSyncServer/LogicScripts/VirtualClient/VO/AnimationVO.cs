@@ -1,10 +1,13 @@
-﻿public class AnimType
+﻿namespace StateSyncServer.LogicScripts.VirtualClient.VO
 {
-    public static int CLIP = 1;
-    public static int BLEND = 2;
-}
+    public class AnimType
+    {
+        public static int CLIP = 1;
+        public static int BLEND = 2;
+    }
 
-public class AnimationVO
-{
-    public cfg.Animation animation;
+    public class AnimationVO
+    {
+        public cfg.Animation animation;
+    }
 }

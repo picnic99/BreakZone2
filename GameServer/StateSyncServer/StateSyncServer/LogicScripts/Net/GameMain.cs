@@ -9,6 +9,7 @@ using StateSyncServer.LogicScripts.Common;
 using StateSyncServer.LogicScripts.Manager;
 using StateSyncServer.LogicScripts.Net.PB;
 using StateSyncServer.LogicScripts.Util;
+using StateSyncServer.LogicScripts.VirtualClient.Manager;
 using StateSyncServer.LogicScripts.VO;
 
 namespace StateSyncServer.LogicScripts.Net
@@ -65,7 +66,7 @@ namespace StateSyncServer.LogicScripts.Net
 
         private void Init()
         {
-            ActionManager.GetInstance().Init();
+            LogicScripts.Manager.ActionManager.GetInstance().Init();
         }
 
 
@@ -73,39 +74,39 @@ namespace StateSyncServer.LogicScripts.Net
 
         public void Update(object state)
         {
-/*            if (watch.IsRunning)
-            {
-                watch.Stop();
-                // 获取经过的时间（毫秒）  
-                long elapsedMilliseconds = watch.ElapsedMilliseconds;
+            /*            if (watch.IsRunning)
+                        {
+                            watch.Stop();
+                            // 获取经过的时间（毫秒）  
+                            long elapsedMilliseconds = watch.ElapsedMilliseconds;
 
-                // 输出结果  
-                //Console.WriteLine("执行时间: {0} 毫秒", elapsedMilliseconds);
-                watch.Reset();
-            }
-            else
-            {
-                watch.Start();
-            }*/
+                            // 输出结果  
+                            //Console.WriteLine("执行时间: {0} 毫秒", elapsedMilliseconds);
+                            watch.Reset();
+                        }
+                        else
+                        {
+                            watch.Start();
+                        }*/
 
             //处理事件
-/*            for (int i = 0; i < ActionManager.GetInstance().ActionList.Count; i++)
-            {
-                var action = ActionManager.GetInstance().ActionList[i];
-                ActionManager.GetInstance().FightHandle(action);
-            }*/
+            /*            for (int i = 0; i < ActionManager.GetInstance().ActionList.Count; i++)
+                        {
+                            var action = ActionManager.GetInstance().ActionList[i];
+                            ActionManager.GetInstance().FightHandle(action);
+                        }*/
             //ActionManager.GetInstance().ClearAction();
             //技能数据迭代
-            SkillManager.GetInstance().Tick();
+            LogicScripts.Manager.SkillManager.GetInstance().Tick();
             //数据迭代
-            CharacterManager.GetInstance().Tick();
+            LogicScripts.Manager.CharacterManager.GetInstance().Tick();
             //弹道迭代
             BulletManager.GetInstance().Tick();
         }
 
         public void Handle(Protocol protocol)
         {
-            ActionManager.GetInstance().Event(protocol.protocolId,protocol);
+            LogicScripts.Manager.ActionManager.GetInstance().Event(protocol.protocolId,protocol);
         }
     }
 }

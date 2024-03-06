@@ -1,6 +1,9 @@
-﻿using System;
+﻿using StateSyncServer.LogicScripts.VirtualClient.Base;
+using StateSyncServer.LogicScripts.VirtualClient.Characters;
+using StateSyncServer.LogicScripts.VirtualClient.Manager;
+using System;
 using System.Collections.Generic;
-using UnityEngine;
+using System.Numerics;
 
 public enum RangeType
 {
@@ -17,7 +20,7 @@ public enum RangeType
 public class RangeScan
 {
     private Character character;
-    private RangeDrawer drawer;
+
     public RangeScan(Character character)
     {
         this.character = character;
@@ -27,8 +30,6 @@ public class RangeScan
     public void InitDrawer()
     {
         if (this.character == null || this.character.trans == null) return;
-        drawer = this.character.trans.gameObject.AddComponent<RangeDrawer>();
-        drawer.color = RangeDrawer.FRIEND_COLOR;
         EventDispatcher.GetInstance().On(EventDispatcher.MAIN_ROLE_CHANGE, UpdateRangeScan);
         HideRange();
     }
@@ -37,8 +38,6 @@ public class RangeScan
     {
         if (character == GameContext.CurRole) character.state = CharacterState.FRIEND;
         else character.state = CharacterState.ENEMY;
-        if (character.state == CharacterState.FRIEND) drawer.color = RangeDrawer.FRIEND_COLOR;
-        if (character.state == CharacterState.ENEMY) drawer.color = RangeDrawer.ENEMY_COLOR;
     }
 
     /// <summary>
@@ -65,8 +64,8 @@ public class RangeScan
                 var self2Target = target.trans.position - pos;
                 var left_crs = Vector3.Cross(self2Target.normalized, left_border.normalized);
                 var right_crs = Vector3.Cross(self2Target.normalized, right_border.normalized);
-                var angle = Vector3.SignedAngle(dir, self2Target, Vector3.up);
-                if ((angle >= degs[0] && angle <= degs[1] && left_crs.y * right_crs.y <= 0) || Mathf.Abs(degs[0]) + Mathf.Abs(degs[1]) >= 360)
+                var angle = Vector3.SignedAngle(dir, self2Target, new Vector3(0,1,0));
+                if ((angle >= degs[0] && angle <= degs[1] && left_crs.y * right_crs.y <= 0) || Math.Abs(degs[0]) + Math.Abs(degs[1]) >= 360)
                 {
                     Vector3 targetPos = target.trans.position; targetPos.y = 0;
                     Vector3 characterPos = pos; characterPos.y = 0;
@@ -79,18 +78,6 @@ public class RangeScan
 
         }
         return result.ToArray();
-    }
-
-    public void ShowRange(float degree, float radius,float delay = 0.5f)
-    {
-        drawer.ShowRange(degree, radius);
-        TimeManager.GetInstance().RemoveTimer(this, HideRange);
-        TimeManager.GetInstance().AddOnceTimer(this, delay, HideRange);
-    }
-
-    public void HideRange()
-    {
-        drawer.HideRange();
     }
 
     /// <summary>

@@ -1,6 +1,9 @@
-﻿public enum SkillInStateEnum
+﻿namespace StateSyncServer.LogicScripts.VirtualClient.Enum
 {
-    FRONT,//前摇
-    TRIGGER,//触发
-    BACK//后摇
+    public enum SkillInStateEnum
+    {
+        FRONT,//前摇
+        TRIGGER,//触发
+        BACK//后摇
+    }
 }

@@ -1,20 +1,24 @@
+using StateSyncServer.LogicScripts.VirtualClient.Manager;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LoginScene : GameScene
+namespace StateSyncServer.LogicScripts.VirtualClient.Scene
 {
-    public LoginScene()
+    public class LoginScene : GameScene
     {
-        SceneName = RegSceneClass.LoginScene;
-    }
+        public LoginScene()
+        {
+            SceneName = RegSceneClass.LoginScene;
+        }
 
-    public override void OnEnter()
-    {
-        base.OnEnter();
-        //º”‘ÿUI
-        UIManager.GetInstance().ShowUI(RegUIClass.LoginUI);
-        CameraManager.GetInstance().CloseCam();
-    }
+        public override void OnEnter()
+        {
+            base.OnEnter();
+            //º”‘ÿUI
+            UIManager.GetInstance().ShowUI(RegUIClass.LoginUI);
+            CameraManager.GetInstance().CloseCam();
+        }
 
+    }
 }

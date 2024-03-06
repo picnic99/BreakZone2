@@ -1,29 +1,44 @@
-﻿using System;
-using UnityEngine;
+﻿using StateSyncServer.LogicScripts.VirtualClient.Manager.Base;
+using StateSyncServer.LogicScripts.VO;
+using System.Collections.Generic;
 
-/// <summary>
-/// 特效管理器
-/// 负责特效的创建与回收
-/// 如施法技能时附带的特效 角色身上的特效 各种特效
-/// </summary>
-public class EffectManager:Manager<EffectManager>
+namespace StateSyncServer.LogicScripts.VirtualClient.Manager
 {
-    public GameObject PlayEffect(string name, float durationTime, Transform parant, Vector3 pos, Vector3 dir, Vector3 scale)
+
+    /// <summary>
+    /// 特效管理器
+    /// 负责特效的创建与回收
+    /// 如施法技能时附带的特效 角色身上的特效 各种特效
+    /// </summary>
+    public class EffectManager : Manager<EffectManager>
     {
-/*        GameObject asset = ResourceManager.GetInstance().LoadResource<GameObject>("Effect/" + name);
-        if (asset)
+        public int curEffectIdIndex = 1;
+
+        private Dictionary<int, GameEffect> datas = new Dictionary<int, GameEffect>();
+
+        /// <summary>
+        /// 创建特效
+        /// </summary>
+        public void CreateEffect()
         {
-            GameObject obj = GameObject.Instantiate<GameObject>(asset);
-            if (parant != null) obj.transform.SetParent(parant);
-            obj.transform.position = pos;
-            obj.transform.forward = dir;
-            obj.transform.localScale = scale;
-            TimeManager.GetInstance().AddOnceTimer(this, durationTime, () =>
-            {
-                GameObject.Destroy(obj);
-            });
-            return obj;
-        }*/
-        return null;
+
+        }
+        
+        /// <summary>
+        /// 变换特效
+        /// </summary>
+        /// <param name="instanceId"></param>
+        public void TransformEffect(int instanceId)
+        {
+
+        }
+
+        /// <summary>
+        /// 移除特效
+        /// </summary>
+        public void RemoveEffect(int instanceId)
+        {
+
+        }
     }
 }

@@ -111,8 +111,16 @@ message	GamePlayerInputNtf{
 	float InputY = 3;
 }
 
+//播放动画
 message GameAnimPlayNtf{
 	int32 playerId = 1;
 	string animName = 2;
 	float translateTime = 3;
+}
+
+//播放音频
+message GameAudioPlayNtf{
+	int32 instanceId = 1;
+	int32 audioId = 2;
+	int32 randomIndex = 3;
 }

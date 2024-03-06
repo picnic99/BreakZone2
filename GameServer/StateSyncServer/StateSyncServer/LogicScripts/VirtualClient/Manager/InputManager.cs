@@ -1,182 +1,181 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using Msg;
+using StateSyncServer.LogicScripts.Net.PB.Enum;
+using StateSyncServer.LogicScripts.VirtualClient.Base;
+using StateSyncServer.LogicScripts.VirtualClient.Characters;
+using StateSyncServer.LogicScripts.VirtualClient.Manager.Base;
+using StateSyncServer.LogicScripts.VirtualClient.States;
+using System.Numerics;
 
-public class InputManager : Manager<InputManager>
+namespace StateSyncServer.LogicScripts.VirtualClient.Manager
 {
-    public bool HasSelfRole = false;
-
-    public float thresholdMove = 0f;
-
-    public Vector3 GetPlayInput()
+    public class InputManager
     {
-        var x = Input.GetAxis("Horizontal");
-        var z = Input.GetAxis("Vertical");
-        return new Vector3(x, 0, z);
-    }
+        public Character crt;
 
-    public override void OnUpdate()
-    {
-        return;
+        public bool HasSelfRole = false;
 
-        if (!GameContext.IsCrtReceiveInput) return;
+        public float thresholdMove = 0f;
 
-        if (GameContext.CurRole == null) return;
-
-        if (HasSelfRole == false)
+        public InputManager(Character crt)
         {
-            AddEventListener();
-            HasSelfRole = true;
+            this.crt = crt;
         }
 
-        var moveDelta = GetPlayInput();
-        //移动与奔跑
-        if (moveDelta.magnitude >= thresholdMove && (Input.GetKey(KeyCode.W)|| Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D)))
+        public void OnDestroy()
         {
-            if (GameContext.CharacterIncludeState(StateType.Move))
+            this.crt = null;
+        }
+
+        public void ApplyOpt(GamePlayerOptReq opt)
+        {
+            if (crt == null) return;
+            Tick(opt);
+        }
+
+        public void Tick(GamePlayerOptReq opt)
+        {
+            Vector2 input = crt.GetPlayerInput();
+
+            var moveDelta = input;
+            //移动与奔跑
+            if (moveDelta.Length() >= thresholdMove 
+                && (PlayerOptEnum.IsHoldKey(opt.UpMove) 
+                || PlayerOptEnum.IsHoldKey(opt.LeftMove)
+                || PlayerOptEnum.IsHoldKey(opt.DownMove)
+                || PlayerOptEnum.IsHoldKey(opt.RightMove)))
             {
-                if (Input.GetKeyDown(KeyCode.LeftShift))
+                if (GameContext.CharacterIncludeState(StateType.Move, crt))
                 {
-                    if (!GameContext.CharacterIncludeState(StateType.Run))
+                    if (PlayerOptEnum.IsKeyDown(opt.AddSpeed))
                     {
-                        ChangeState(GameContext.CurRole, StateType.Run);
-                        StopState(StateType.Move);
+                        if (!GameContext.CharacterIncludeState(StateType.Run, crt))
+                        {
+                            ChangeState(crt, StateType.Run);
+                            StopState(StateType.Move);
+                        }
                     }
                 }
-            }
-            else if (GameContext.CharacterIncludeState(StateType.Run))
-            {
-                if (Input.GetKeyDown(KeyCode.LeftShift))
+                else if (GameContext.CharacterIncludeState(StateType.Run, crt))
                 {
-                    if (!GameContext.CharacterIncludeState(StateType.Move))
+                    if (PlayerOptEnum.IsKeyDown(opt.AddSpeed))
                     {
-                        ChangeState(GameContext.CurRole, StateType.Move);
-                        StopState(StateType.Run);
+                        if (!GameContext.CharacterIncludeState(StateType.Move, crt))
+                        {
+                            ChangeState(crt, StateType.Move);
+                            StopState(StateType.Run);
+                        }
                     }
+                }
+                else
+                {
+                    if (PlayerOptEnum.IsKeyDown(opt.AddSpeed))
+                    {
+                        ChangeState(crt, StateType.Run);
+
+                    }
+                    else
+                    {
+                        ChangeState(crt, StateType.Move);
+                    }
+                }
+
+                if (!GameContext.CharacterIncludeState(StateType.Roll, crt))
+                {
+                    LookForward();
                 }
             }
             else
             {
-                if (Input.GetKeyDown(KeyCode.LeftShift))
+                if (GameContext.CharacterIncludeState(StateType.Move, crt))
                 {
-                    ChangeState(GameContext.CurRole, StateType.Run);
-
+                    StopState(StateType.Move);
                 }
-                else
+                if (GameContext.CharacterIncludeState(StateType.Run, crt))
                 {
-                    ChangeState(GameContext.CurRole, StateType.Move);
+                    StopState(StateType.Run);
                 }
             }
-
-            if (!GameContext.CharacterIncludeState(StateType.Roll))
+            if (PlayerOptEnum.IsKeyDown(opt.Atk))
             {
-                LookForward();
+                ChangeState(crt, StateType.DoAtk, GameContext.GetCharacterSkillIdByIndex(0,crt));
+
+            }
+            if (PlayerOptEnum.IsKeyDown(opt.Jump))
+            {
+                ChangeState(crt, StateType.Jump, GameContext.GetCharacterSkillIdByIndex(1,crt));
+            }
+            if (PlayerOptEnum.IsKeyDown(opt.Arm))
+            {
+                //瞄准
+                CameraManager.GetInstance().ShowArmCam();
+                crt.physic.multiply = 0.1f;
+
+            }
+            else if (PlayerOptEnum.IsKeyUp(opt.Arm))
+            {
+                CameraManager.GetInstance().ShowMainCam();
+                crt.physic.multiply = 1f;
+            }
+            if (PlayerOptEnum.IsHoldKey(opt.Arm))
+            {
+                //LookForward();
+            }
+            if (PlayerOptEnum.IsKeyDown(opt.Flash))
+            {
+                if (moveDelta.Length() > 0)
+                {
+                    ChangeState(crt, StateType.Roll, GameContext.GetCharacterSkillIdByIndex(2, crt));
+                }
+            }
+            if (PlayerOptEnum.IsKeyDown(opt.Skill1))
+            {
+                ChangeState(crt, StateType.DoSkill, GameContext.GetCharacterSkillIdByIndex(3, crt));
+            }
+            if (PlayerOptEnum.IsKeyDown(opt.Skill2))
+            {
+                ChangeState(crt, StateType.DoSkill, GameContext.GetCharacterSkillIdByIndex(5, crt));
+            }
+            if (PlayerOptEnum.IsKeyDown(opt.Skill3))
+            {
+                ChangeState(crt, StateType.DoSkill, GameContext.GetCharacterSkillIdByIndex(6, crt));
+            }
+            if (PlayerOptEnum.IsKeyDown(opt.Skill4))
+            {
+                //ChangeState(GameContext.CurRole, StateType.DoSkill, GameContext.GetCharacterSkillIdByIndex(6));
             }
         }
-        else
+
+        /// <summary>
+        /// 看向相机方向
+        /// </summary>
+        private void LookForward()
         {
-            if (GameContext.CharacterIncludeState(StateType.Move))
+            float CamRot = 0;//读取客户端的相机朝向
+            crt.trans.RotateTo(CamRot);
+
+        }
+
+        /// <summary>
+        /// 改变状态
+        /// args [来源(Character),状态名称(string),技能id(int)]
+        /// </summary>
+        /// <param name="character"></param>
+        /// <param name="args"></param>
+        public void ChangeState(Character character, params object[] args)
+        {
+            int len = args.Length + 1;
+            object[] objs = new object[len];
+            objs[0] = character;
+            for (int i = 0; i < args.Length; i++)
             {
-                StopState(StateType.Move);
+                objs[i + 1] = args[i];
             }
-            if (GameContext.CharacterIncludeState(StateType.Run))
-            {
-                StopState(StateType.Run);
-            }
+            character.eventDispatcher.Event(CharacterEvent.CHANGE_STATE, objs);
         }
-        if (Input.GetMouseButtonDown(0))
-        {
-            ChangeState(GameContext.CurRole, StateType.DoAtk, GameContext.GetCharacterSkillIdByIndex(0));
 
-        }
-        if (Input.GetKeyDown(KeyCode.Space))
+        public void StopState(string state)
         {
-            ChangeState(GameContext.CurRole, StateType.Jump, GameContext.GetCharacterSkillIdByIndex(1));
+            crt.eventDispatcher.Event(CharacterEvent.STATE_OVER, state);
         }
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            ChangeState(GameContext.CurRole, StateType.DoSkill, GameContext.GetCharacterSkillIdByIndex(3));
-        }
-        if (Input.GetMouseButtonDown(1))
-        {
-            //瞄准
-            CameraManager.GetInstance().ShowArmCam();
-            GameContext.CurRole.physic.multiply = 0.1f;
-
-        }
-        else if (Input.GetMouseButtonUp(1))
-        {
-            CameraManager.GetInstance().ShowMainCam();
-            GameContext.CurRole.physic.multiply = 1f;
-        }
-        if (Input.GetMouseButton(1))
-        {
-            //LookForward();
-        }
-        if (Input.GetKeyDown(KeyCode.LeftControl))
-        {
-            if(moveDelta.magnitude > 0)
-            {
-                ChangeState(GameContext.CurRole, StateType.Roll, GameContext.GetCharacterSkillIdByIndex(2));
-            }
-        }
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            ChangeState(GameContext.CurRole, StateType.DoSkill, GameContext.GetCharacterSkillIdByIndex(5));
-        }
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            ChangeState(GameContext.CurRole, StateType.DoSkill, GameContext.GetCharacterSkillIdByIndex(6));
-        }
-    }
-
-
-    private void LookForward() {
-        if (CameraManager.GetInstance().state != CameraState.MAIN) return;
-        Vector3 dir = GameContext.CurRole.trans.position - CameraManager.GetInstance().curCam.transform.position;
-        if (GameContext.CurRole.canRotate)
-        {
-            GameContext.CurRole.trans.forward = new Vector3(dir.x, 0, dir.z);
-        }
-    }
-
-    /// <summary>
-    /// 改变状态
-    /// args [来源(Character),状态名称(string),技能id(int)]
-    /// </summary>
-    /// <param name="character"></param>
-    /// <param name="args"></param>
-    public void ChangeState(Character character, params object[] args)
-    {
-        int len = args.Length + 1;
-        object[] objs = new object[len];
-        objs[0] = character;
-        for (int i = 0; i < args.Length; i++)
-        {
-            objs[i + 1] = args[i];
-        }
-        character.eventDispatcher.Event(CharacterEvent.CHANGE_STATE, objs);
-    }
-
-    public void StopState(string state)
-    {
-        GameContext.CurRole?.eventDispatcher.Event(CharacterEvent.STATE_OVER, state);
-    }
-
-    public override void AddEventListener()
-    {
-        GameContext.CurRole?.eventDispatcher.On(CharacterEvent.DO_SKILL, OnDoSkill);
-    }
-
-    public override void RemoveEventListener()
-    {
-        GameContext.CurRole?.eventDispatcher.On(CharacterEvent.DO_SKILL, OnDoSkill);
-    }
-
-    private void OnDoSkill(object[] args)
-    {
-        int id = (int)args[0];
-        //LookForward();
     }
 }

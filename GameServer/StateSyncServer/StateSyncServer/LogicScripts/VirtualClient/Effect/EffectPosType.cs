@@ -1,4 +1,7 @@
-﻿public enum EffectPosType
+﻿namespace StateSyncServer.LogicScripts.VirtualClient.Effect
 {
-    SELF,
+    public enum EffectPosType
+    {
+        SELF,
+    }
 }

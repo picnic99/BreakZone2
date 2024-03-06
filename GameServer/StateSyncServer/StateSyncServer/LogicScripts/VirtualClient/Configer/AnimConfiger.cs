@@ -1,23 +1,28 @@
-﻿using System.Collections.Generic;
+﻿using StateSyncServer.LogicScripts.VirtualClient.Base;
+using StateSyncServer.LogicScripts.VirtualClient.VO;
+using System.Collections.Generic;
 
-public class AnimConfiger : Singleton<AnimConfiger>
+namespace StateSyncServer.LogicScripts.VirtualClient.Configer
 {
-    private List<AnimationVO> List;
-
-    public void Init()
+    public class AnimConfiger : Singleton<AnimConfiger>
     {
-        if (List == null) List = new List<AnimationVO>();
+        private List<AnimationVO> List;
 
-        foreach (var item in Configer.Tables.TbAnimation.DataList)
+        public void Init()
         {
-            var anim = new AnimationVO();
-            anim.animation = item;
-            List.Add(anim);
+            if (List == null) List = new List<AnimationVO>();
+
+            foreach (var item in Configer.Tables.TbAnimation.DataList)
+            {
+                var anim = new AnimationVO();
+                anim.animation = item;
+                List.Add(anim);
+            }
         }
-    }
-    public AnimationVO GetAnimByAnimKey(string key)
-    {
-        var vo = List.Find((item) => { return item.animation.Key == key; });
-        return vo;
+        public AnimationVO GetAnimByAnimKey(string key)
+        {
+            var vo = List.Find((item) => { return item.animation.Key == key; });
+            return vo;
+        }
     }
 }

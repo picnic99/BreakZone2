@@ -1,45 +1,49 @@
-﻿using UnityEngine;
+﻿using StateSyncServer.LogicScripts.Util;
+using StateSyncServer.LogicScripts.VirtualClient.Base;
 
-public class Manager<T> : Singleton<T>, IManager where T : new()
+namespace StateSyncServer.LogicScripts.VirtualClient.Manager.Base
 {
-    private static EventDispatcher _eventer;
-    public static EventDispatcher Eventer
+    public class Manager<T> : VirtualClient.Base.Singleton<T>, IManager where T : new()
     {
-        get
+        private static EventDispatcher _eventer;
+        public static EventDispatcher Eventer
         {
-            if (_eventer == null) _eventer = new EventDispatcher();
-            return _eventer;
+            get
+            {
+                if (_eventer == null) _eventer = new EventDispatcher();
+                return _eventer;
+            }
         }
-    }
 
-    public Manager()
-    {
-    }
+        public Manager()
+        {
+        }
 
-    public virtual void AddEventListener()
-    {
+        public virtual void AddEventListener()
+        {
 
-    }
+        }
 
-    public virtual void RemoveEventListener()
-    {
+        public virtual void RemoveEventListener()
+        {
 
-    }
+        }
 
-    public virtual void Clear()
-    {
-        Debug.Log(typeof(T).Name + " 管理器清理");
-        RemoveEventListener();
-    }
+        public virtual void Clear()
+        {
+            CommonUtils.Logout(typeof(T).Name + " 管理器清理");
+            RemoveEventListener();
+        }
 
-    public virtual void Init()
-    {
-        Debug.Log(typeof(T).Name + " 管理器初始化");
-        AddEventListener();
-    }
+        public virtual void Init()
+        {
+            CommonUtils.Logout(typeof(T).Name + " 管理器初始化");
+            AddEventListener();
+        }
 
-    public virtual void OnUpdate()
-    {
+        public virtual void OnUpdate()
+        {
 
+        }
     }
 }

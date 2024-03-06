@@ -1,11 +1,6 @@
 ﻿using Msg;
 using StateSyncServer.LogicScripts.Manager;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace StateSyncServer.LogicScripts.VO
 {
@@ -21,6 +16,7 @@ namespace StateSyncServer.LogicScripts.VO
         public string password;
 
         public int lastStaySceneId = 1;
+        public int SceneId => lastStaySceneId;
         public int lastSelectCrtId = 1;
         public Vector3 lastStayPos = Vector3.Zero;
 

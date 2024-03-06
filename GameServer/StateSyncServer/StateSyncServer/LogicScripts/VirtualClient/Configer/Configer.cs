@@ -1,32 +1,39 @@
-﻿using SimpleJSON;
+﻿using StateSyncServer.LogicScripts.Manager;
+using StateSyncServer.LogicScripts.VirtualClient.Manager;
+using System.Text.Json;
 
-/// <summary>
-/// 配置加载类
-/// 负责加载LUBAN配置表数据信息
-/// </summary>
-public class Configer
+namespace StateSyncServer.LogicScripts.VirtualClient.Configer
 {
-    private static cfg.Tables tables;
-    public static cfg.Tables Tables
+
+    /// <summary>
+    /// 配置加载类
+    /// 负责加载LUBAN配置表数据信息
+    /// </summary>
+    public class Configer
     {
-        get
+        private static cfg.Tables tables;
+        public static cfg.Tables Tables
         {
-            if (tables == null)
+            get
             {
-                Load();
+                if (tables == null)
+                {
+                    Load();
+                }
+                return tables;
             }
-            return tables;
         }
-    }
 
-    static void Load()
-    {
-        tables = new cfg.Tables(LoadJson);
-    }
+        static void Load()
+        {
+            tables = new cfg.Tables(LoadJson);
+        }
 
-    private static JSONNode LoadJson(string file)
-    {
-        var temp = ResourceManager.GetInstance().GetConfigRes(file);
-        return JSON.Parse(temp.text);
+        private static JsonElement LoadJson(string file)
+        {
+            var temp = ResourceManager.GetInstance().GetConfigRes(file);
+            JsonElement jsonElement = JsonSerializer.Deserialize<JsonElement>(temp));
+            return jsonElement;
+        }
     }
 }

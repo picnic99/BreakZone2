@@ -1,7 +1,12 @@
-﻿public class RecordManager : Manager<RecordManager> 
+﻿using StateSyncServer.LogicScripts.VirtualClient.Manager.Base;
+
+namespace StateSyncServer.LogicScripts.VirtualClient.Manager
 {
-    public void AddRecord(string msg)
+    public class RecordManager : Manager<RecordManager>
     {
-        EventDispatcher.GetInstance().Event(EventDispatcher.ADD_RECORD, msg);
+        public void AddRecord(string msg)
+        {
+            EventDispatcher.GetInstance().Event(EventDispatcher.ADD_RECORD, msg);
+        }
     }
 }

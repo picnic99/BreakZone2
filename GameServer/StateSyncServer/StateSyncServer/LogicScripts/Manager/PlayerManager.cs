@@ -40,6 +40,17 @@ namespace StateSyncServer.LogicScripts.Manager
             return result;
         }
 
+
+        /// <summary>
+        /// 获取该玩家能看到的玩家
+        /// </summary>
+        /// <param name="playerId"></param>
+        /// <returns></returns>
+        public List<Player> GetAOIPlayers(int playerId)
+        {
+            return new List<Player>();
+        }
+
         public List<Player> GetAllPlayerInScene(int sceneId)
         {
             List<Player> result = new List<Player>();

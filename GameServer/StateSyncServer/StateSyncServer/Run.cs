@@ -1,4 +1,5 @@
-﻿using StateSyncServer.LogicScripts.Net;
+﻿using StateSyncServer.LogicScripts.Manager;
+using StateSyncServer.LogicScripts.Net;
 using StateSyncServer.LogicScripts.Net.PB;
 using StateSyncServer.LogicScripts.Util;
 using System;

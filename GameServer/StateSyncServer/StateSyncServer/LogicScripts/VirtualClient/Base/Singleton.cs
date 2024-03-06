@@ -1,18 +1,21 @@
-﻿/// <summary>
-/// 单例工具类
-/// </summary>
-/// <typeparam name="T"></typeparam>
-public class Singleton<T> where T : new()
+﻿namespace StateSyncServer.LogicScripts.VirtualClient.Base
 {
-    private static T _instance;
-
-    public static T GetInstance()
+    /// <summary>
+    /// 单例工具类
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public class Singleton<T> where T : new()
     {
-        if (_instance == null)
+        private static T _instance;
+
+        public static T GetInstance()
         {
-            _instance = new T();
-            typeof(T).GetMethod("Init")?.Invoke(_instance, null);
+            if (_instance == null)
+            {
+                _instance = new T();
+                typeof(T).GetMethod("Init")?.Invoke(_instance, null);
+            }
+            return _instance;
         }
-        return _instance;
     }
 }

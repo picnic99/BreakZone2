@@ -1,5 +1,7 @@
-﻿
-public class PropertyVO
+﻿namespace StateSyncServer.LogicScripts.VirtualClient.VO
 {
-    public cfg.Property property;
+    public class PropertyVO
+    {
+        public cfg.Property property;
+    }
 }

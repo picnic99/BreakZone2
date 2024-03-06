@@ -1,27 +1,32 @@
-﻿using System.Collections.Generic;
+﻿using StateSyncServer.LogicScripts.VirtualClient.Base;
+using StateSyncServer.LogicScripts.VirtualClient.VO;
+using System.Collections.Generic;
 
-public class AudioConfiger : Singleton<AudioConfiger>
+namespace StateSyncServer.LogicScripts.VirtualClient.Configer
 {
-    private List<AudioVO> List;
-
-    public void Init()
+    public class AudioConfiger : Singleton<AudioConfiger>
     {
-        if (List == null) List = new List<AudioVO>();
+        private List<AudioVO> List;
 
-        foreach (var item in Configer.Tables.TbAudio.DataList)
+        public void Init()
         {
-            var vo = new AudioVO();
-            vo.audio = item;
-            List.Add(vo);
+            if (List == null) List = new List<AudioVO>();
+
+            foreach (var item in Configer.Tables.TbAudio.DataList)
+            {
+                var vo = new AudioVO();
+                vo.audio = item;
+                List.Add(vo);
+            }
         }
-    }
-    public AudioVO GetAudioData(int crtId, int skillId, int stateId, string keyword = "")
-    {
-        var vo = List.Find((item) => { return item.GetKeyStr() == GetKeyStr(crtId,skillId,stateId,keyword); });
-        return vo;
-    }
-    public string GetKeyStr(int crtId = 0,int skillId = 0, int stateId = 0, string keyword = "")
-    {
-        return $"{crtId}_{skillId}_{stateId}_{keyword}";
+        public AudioVO GetAudioData(int crtId, int skillId, int stateId, string keyword = "")
+        {
+            var vo = List.Find((item) => { return item.GetKeyStr() == GetKeyStr(crtId, skillId, stateId, keyword); });
+            return vo;
+        }
+        public string GetKeyStr(int crtId = 0, int skillId = 0, int stateId = 0, string keyword = "")
+        {
+            return $"{crtId}_{skillId}_{stateId}_{keyword}";
+        }
     }
 }

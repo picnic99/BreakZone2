@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using StateSyncServer.LogicScripts.Util;
 using StateSyncServer.LogicScripts.Enum;
+using StateSyncServer.LogicScripts.VirtualClient.Manager;
 
 namespace StateSyncServer.LogicScripts.VO
 {

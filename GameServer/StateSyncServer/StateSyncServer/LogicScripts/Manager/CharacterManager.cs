@@ -1,18 +1,22 @@
 ﻿using Msg;
+using StateSyncServer.LogicScripts.VirtualClient.Base;
+using StateSyncServer.LogicScripts.VirtualClient.Characters;
+using StateSyncServer.LogicScripts.VirtualClient.Configer;
+using StateSyncServer.LogicScripts.VirtualClient.Enum;
+using StateSyncServer.LogicScripts.VirtualClient.States;
 using StateSyncServer.LogicScripts.VO;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
+using Character = StateSyncServer.LogicScripts.VirtualClient.Characters.Character;
 
 namespace StateSyncServer.LogicScripts.Manager
 {
     class CharacterManager : Manager<CharacterManager>
     {
+        public int curCrtIdIndex = 1;
+
         public static string PLAYER_OPT_CHANGE = "PLAYER_OPT_CHANGE";
         public static string PLAYER_ADD_TO_SCENE = "PLAYER_ADD_TO_SCENE";
+        public static string CHARACTER_DIE = "CHARACTER_DIE";
 
         private Dictionary<int, Character> datas = new Dictionary<int, Character>();
 
@@ -26,6 +30,8 @@ namespace StateSyncServer.LogicScripts.Manager
             base.AddEventListener();
             On(PLAYER_OPT_CHANGE, OnPlayeOptChange);
             On(PLAYER_ADD_TO_SCENE, OnPlayeOptChange);
+            On(CHARACTER_DIE, OnCharacterDie);
+            On(CharacterEvent.PROPERTY_CHANGE, OnCharacterDie);
         }
 
         public override void RemoveEventListener()
@@ -33,8 +39,41 @@ namespace StateSyncServer.LogicScripts.Manager
             base.RemoveEventListener();
             Off(PLAYER_OPT_CHANGE, OnPlayeOptChange);
             Off(PLAYER_ADD_TO_SCENE, OnPlayeOptChange);
+            Off(CHARACTER_DIE, OnCharacterDie);
+            Off(CharacterEvent.PROPERTY_CHANGE, OnCharacterDie);
+
         }
 
+        /// <summary>
+        /// 当角色死亡
+        /// </summary>
+        /// <param name="args"></param>
+        public void OnCharacterDie(object[] args)
+        {
+            Character crt = args[0] as Character;
+            if (crt != null)
+            {
+                crt.eventDispatcher.Event(CharacterEvent.CHANGE_STATE, crt, StateType.Die);
+            }
+        }
+
+        /// <summary>
+        /// 当角色的属性发生改变
+        /// </summary>
+        /// <param name="args"></param>
+        public void OnPropertyChange(object[] args)
+        {
+            PropertyType type = (PropertyType)args[0];
+            PropertyValue value = (PropertyValue)args[1];
+            Character crt = (Character)args[2];
+
+
+        }
+
+        /// <summary>
+        /// 当玩家的操作改变
+        /// </summary>
+        /// <param name="args"></param>
         public void OnPlayeOptChange(object[] args)
         {
             int playerId = (int)args[0];
@@ -47,6 +86,10 @@ namespace StateSyncServer.LogicScripts.Manager
             }
         }
 
+        /// <summary>
+        /// 当玩家进入场景
+        /// </summary>
+        /// <param name="args"></param>
         public void OnPlayerAddToScene(object[] args)
         {
             int playerId = (int)args[0];
@@ -59,12 +102,14 @@ namespace StateSyncServer.LogicScripts.Manager
             {
                 character = CreateCharacter(player.lastSelectCrtId,playerId);
             }
-            character.Init();
+            character.InitData();
         }
 
         public Character CreateCharacter(int crtId, int playerId)
         {
-            var c = new Character(playerId);
+            VirtualClient.VO.CharacterVO vo = CharacterConfiger.GetInstance().GetCharacterById(crtId);
+            var c = new Character(vo,playerId);
+            c.InstanceId = InstanceTypeEnum.GetCrtInstanceId(curCrtIdIndex++);
             datas.Add(playerId, c);
             return c;
         }

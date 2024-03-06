@@ -52,7 +52,9 @@ namespace Msg {
             "UGxheWVySW5wdXROdGYSEAoIcGxheWVySWQYASABKAUSDgoGSW5wdXRYGAIg",
             "ASgCEg4KBklucHV0WRgDIAEoAiJMCg9HYW1lQW5pbVBsYXlOdGYSEAoIcGxh",
             "eWVySWQYASABKAUSEAoIYW5pbU5hbWUYAiABKAkSFQoNdHJhbnNsYXRlVGlt",
-            "ZRgDIAEoAkIKCghnYW1lLm1zZ2IGcHJvdG8z"));
+            "ZRgDIAEoAiJMChBHYW1lQXVkaW9QbGF5TnRmEhIKCmluc3RhbmNlSWQYASAB",
+            "KAUSDwoHYXVkaW9JZBgCIAEoBRITCgtyYW5kb21JbmRleBgDIAEoBUIKCghn",
+            "YW1lLm1zZ2IGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
@@ -73,7 +75,8 @@ namespace Msg {
             new pbr::GeneratedClrTypeInfo(typeof(global::Msg.GamePlayerOptRep), global::Msg.GamePlayerOptRep.Parser, new[]{ "Result" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Msg.GamePlayerInputReq), global::Msg.GamePlayerInputReq.Parser, new[]{ "InputX", "InputY" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Msg.GamePlayerInputNtf), global::Msg.GamePlayerInputNtf.Parser, new[]{ "PlayerId", "InputX", "InputY" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Msg.GameAnimPlayNtf), global::Msg.GameAnimPlayNtf.Parser, new[]{ "PlayerId", "AnimName", "TranslateTime" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Msg.GameAnimPlayNtf), global::Msg.GameAnimPlayNtf.Parser, new[]{ "PlayerId", "AnimName", "TranslateTime" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Msg.GameAudioPlayNtf), global::Msg.GameAudioPlayNtf.Parser, new[]{ "InstanceId", "AudioId", "RandomIndex" }, null, null, null, null)
           }));
     }
     #endregion
@@ -4394,6 +4397,9 @@ namespace Msg {
 
   }
 
+  /// <summary>
+  ///播放动画
+  /// </summary>
   public sealed partial class GameAnimPlayNtf : pb::IMessage<GameAnimPlayNtf>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -4648,6 +4654,272 @@ namespace Msg {
           }
           case 29: {
             TranslateTime = input.ReadFloat();
+            break;
+          }
+        }
+      }
+    }
+    #endif
+
+  }
+
+  /// <summary>
+  ///播放音频
+  /// </summary>
+  public sealed partial class GameAudioPlayNtf : pb::IMessage<GameAudioPlayNtf>
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      , pb::IBufferMessage
+  #endif
+  {
+    private static readonly pb::MessageParser<GameAudioPlayNtf> _parser = new pb::MessageParser<GameAudioPlayNtf>(() => new GameAudioPlayNtf());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pb::MessageParser<GameAudioPlayNtf> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Msg.GamePbProtocolReflection.Descriptor.MessageTypes[18]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public GameAudioPlayNtf() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public GameAudioPlayNtf(GameAudioPlayNtf other) : this() {
+      instanceId_ = other.instanceId_;
+      audioId_ = other.audioId_;
+      randomIndex_ = other.randomIndex_;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public GameAudioPlayNtf Clone() {
+      return new GameAudioPlayNtf(this);
+    }
+
+    /// <summary>Field number for the "instanceId" field.</summary>
+    public const int InstanceIdFieldNumber = 1;
+    private int instanceId_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int InstanceId {
+      get { return instanceId_; }
+      set {
+        instanceId_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "audioId" field.</summary>
+    public const int AudioIdFieldNumber = 2;
+    private int audioId_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int AudioId {
+      get { return audioId_; }
+      set {
+        audioId_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "randomIndex" field.</summary>
+    public const int RandomIndexFieldNumber = 3;
+    private int randomIndex_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int RandomIndex {
+      get { return randomIndex_; }
+      set {
+        randomIndex_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override bool Equals(object other) {
+      return Equals(other as GameAudioPlayNtf);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool Equals(GameAudioPlayNtf other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (InstanceId != other.InstanceId) return false;
+      if (AudioId != other.AudioId) return false;
+      if (RandomIndex != other.RandomIndex) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (InstanceId != 0) hash ^= InstanceId.GetHashCode();
+      if (AudioId != 0) hash ^= AudioId.GetHashCode();
+      if (RandomIndex != 0) hash ^= RandomIndex.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void WriteTo(pb::CodedOutputStream output) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      output.WriteRawMessage(this);
+    #else
+      if (InstanceId != 0) {
+        output.WriteRawTag(8);
+        output.WriteInt32(InstanceId);
+      }
+      if (AudioId != 0) {
+        output.WriteRawTag(16);
+        output.WriteInt32(AudioId);
+      }
+      if (RandomIndex != 0) {
+        output.WriteRawTag(24);
+        output.WriteInt32(RandomIndex);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      if (InstanceId != 0) {
+        output.WriteRawTag(8);
+        output.WriteInt32(InstanceId);
+      }
+      if (AudioId != 0) {
+        output.WriteRawTag(16);
+        output.WriteInt32(AudioId);
+      }
+      if (RandomIndex != 0) {
+        output.WriteRawTag(24);
+        output.WriteInt32(RandomIndex);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(ref output);
+      }
+    }
+    #endif
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int CalculateSize() {
+      int size = 0;
+      if (InstanceId != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(InstanceId);
+      }
+      if (AudioId != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(AudioId);
+      }
+      if (RandomIndex != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(RandomIndex);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(GameAudioPlayNtf other) {
+      if (other == null) {
+        return;
+      }
+      if (other.InstanceId != 0) {
+        InstanceId = other.InstanceId;
+      }
+      if (other.AudioId != 0) {
+        AudioId = other.AudioId;
+      }
+      if (other.RandomIndex != 0) {
+        RandomIndex = other.RandomIndex;
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(pb::CodedInputStream input) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      input.ReadRawMessage(this);
+    #else
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 8: {
+            InstanceId = input.ReadInt32();
+            break;
+          }
+          case 16: {
+            AudioId = input.ReadInt32();
+            break;
+          }
+          case 24: {
+            RandomIndex = input.ReadInt32();
+            break;
+          }
+        }
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+            break;
+          case 8: {
+            InstanceId = input.ReadInt32();
+            break;
+          }
+          case 16: {
+            AudioId = input.ReadInt32();
+            break;
+          }
+          case 24: {
+            RandomIndex = input.ReadInt32();
             break;
           }
         }

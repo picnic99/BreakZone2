@@ -1,46 +1,48 @@
-﻿using System;
+﻿
 using System.Collections.Generic;
-using UnityEngine;
 
-public abstract class ObjPool<T>
+namespace StateSyncServer.LogicScripts.VirtualClient.Utils
 {
-    public int maxNum = 100;
-    public Queue<T> objs = new Queue<T>();
-
-    public T Get()
+    public abstract class ObjPool<T>
     {
-        T obj;
-        if (objs.Count <= 0)
+        public int maxNum = 100;
+        public Queue<T> objs = new Queue<T>();
+
+        public T Get()
         {
-            obj = InstanceObj();
-        }
-        else
-        {
-            obj = default;
-            while (objs.Count > 0)
+            T obj;
+            if (objs.Count <= 0)
             {
-                obj = objs.Dequeue();
-                if (obj == null)
+                obj = InstanceObj();
+            }
+            else
+            {
+                obj = default;
+                while (objs.Count > 0)
                 {
-                    continue;
+                    obj = objs.Dequeue();
+                    if (obj == null)
+                    {
+                        continue;
+                    }
                 }
             }
+            return obj;
         }
-        return obj;
-    }
 
-    public void Recover(T obj)
-    {
-        if (obj == null) return;
-        if (objs.Count >= maxNum)
+        public void Recover(T obj)
         {
-            return;
+            if (obj == null) return;
+            if (objs.Count >= maxNum)
+            {
+                return;
+            }
+            Init(obj);
+            objs.Enqueue(obj);
         }
-        Init(obj);
-        objs.Enqueue(obj);
+
+        public abstract T InstanceObj();
+
+        public abstract void Init(T obj);
     }
-
-    public abstract T InstanceObj();
-
-    public abstract void Init(T obj);
 }

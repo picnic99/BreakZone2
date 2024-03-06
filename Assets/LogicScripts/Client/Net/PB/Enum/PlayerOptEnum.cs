@@ -12,5 +12,18 @@ namespace Assets.LogicScripts.Client.Net.PB.Enum
         public static int DOWN = 1;
         public static int DOWN_HOLD = 2;
         public static int UP = 3;
+
+        public static bool IsKeyDown(int key)
+        {
+            return key == DOWN;
+        }
+        public static bool IsHoldKey(int key)
+        {
+            return key == DOWN_HOLD;
+        }
+        public static bool IsKeyUp(int key)
+        {
+            return key == UP;
+        }
     }
 }
