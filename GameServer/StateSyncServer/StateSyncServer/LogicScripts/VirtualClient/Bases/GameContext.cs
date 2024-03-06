@@ -4,7 +4,7 @@ using StateSyncServer.LogicScripts.VO;
 using System.Numerics;
 using Character = StateSyncServer.LogicScripts.VirtualClient.Characters.Character;
 
-namespace StateSyncServer.LogicScripts.VirtualClient.Base
+namespace StateSyncServer.LogicScripts.VirtualClient.Bases
 {
     public enum GameMode
     {

@@ -14,7 +14,11 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bridge
         private Matrix4x4 TransformMatrix = Matrix4x4.Identity;
         //旋转矩阵
         private Matrix4x4 RotateMatrix = Matrix4x4.Identity;
+
         private Vector3 position;
+
+        private Vector3 scale;
+
         private Quaternion rotation;
 
         public Vector3 Forward

@@ -2,7 +2,9 @@
 using StateSyncServer.LogicScripts.VirtualClient.Base;
 using StateSyncServer.LogicScripts.VirtualClient.Buffs;
 using StateSyncServer.LogicScripts.VirtualClient.Characters;
+using StateSyncServer.LogicScripts.VirtualClient.Manager;
 using StateSyncServer.LogicScripts.VirtualClient.Skills.Base;
+using CharacterManager = StateSyncServer.LogicScripts.Manager.CharacterManager;
 
 namespace StateSyncServer.LogicScripts.VirtualClient.Actions
 {

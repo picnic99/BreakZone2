@@ -1,6 +1,6 @@
 using StateSyncServer.LogicScripts.Common;
 using StateSyncServer.LogicScripts.Util;
-using StateSyncServer.LogicScripts.VirtualClient.Base;
+using StateSyncServer.LogicScripts.VirtualClient.Bases;
 using StateSyncServer.LogicScripts.VirtualClient.Characters;
 using StateSyncServer.LogicScripts.VirtualClient.Configer;
 using StateSyncServer.LogicScripts.VirtualClient.Enum;

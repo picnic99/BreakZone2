@@ -1,5 +1,5 @@
 ﻿using StateSyncServer.LogicScripts.Util;
-using StateSyncServer.LogicScripts.VirtualClient.Base;
+using StateSyncServer.LogicScripts.VirtualClient.Bases;
 using StateSyncServer.LogicScripts.VirtualClient.Configer;
 using StateSyncServer.LogicScripts.VirtualClient.Skills.Base;
 using StateSyncServer.LogicScripts.VirtualClient.VO;
@@ -7,7 +7,7 @@ using System;
 
 namespace StateSyncServer.LogicScripts.VirtualClient.Manager
 {
-    public class AudioEventDispatcher : VirtualClient.Base.Singleton<AudioEventDispatcher>
+    public class AudioEventDispatcher : VirtualClient.Bases.Singleton<AudioEventDispatcher>
     {
         public EventDispatcher dispatcher;
 

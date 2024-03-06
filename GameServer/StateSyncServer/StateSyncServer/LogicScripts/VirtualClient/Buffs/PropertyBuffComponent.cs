@@ -1,4 +1,5 @@
-﻿using StateSyncServer.LogicScripts.VirtualClient.Base;
+﻿
+using StateSyncServer.LogicScripts.VirtualClient.Bases;
 using StateSyncServer.LogicScripts.VirtualClient.Value;
 using System.Collections.Generic;
 

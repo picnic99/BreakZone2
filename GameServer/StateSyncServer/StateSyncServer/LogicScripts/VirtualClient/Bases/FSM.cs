@@ -6,7 +6,7 @@ using StateSyncServer.LogicScripts.VirtualClient.Manager;
 using StateSyncServer.LogicScripts.VirtualClient.Skills.Base;
 using StateSyncServer.LogicScripts.VirtualClient.States;
 
-namespace StateSyncServer.LogicScripts.VirtualClient.Base
+namespace StateSyncServer.LogicScripts.VirtualClient.Bases
 {
     public class FSM
     {

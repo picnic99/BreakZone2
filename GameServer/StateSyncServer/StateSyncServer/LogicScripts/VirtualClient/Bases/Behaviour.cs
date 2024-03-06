@@ -7,7 +7,7 @@ using StateSyncServer.LogicScripts.VirtualClient.States;
 using StateSyncServer.LogicScripts.VirtualClient.VO;
 using System;
 
-namespace StateSyncServer.LogicScripts.VirtualClient.Base
+namespace StateSyncServer.LogicScripts.VirtualClient.Bases
 {
     public abstract class Behaviour
     {

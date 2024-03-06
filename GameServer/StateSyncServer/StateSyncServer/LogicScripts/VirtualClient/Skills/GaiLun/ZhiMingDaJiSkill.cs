@@ -1,6 +1,6 @@
 //致命打击 提升移动速度 移除所有减速效果 下次攻击附带额外伤害以及沉默效果
 using StateSyncServer.LogicScripts.Common;
-using StateSyncServer.LogicScripts.VirtualClient.Base;
+using StateSyncServer.LogicScripts.VirtualClient.Bases;
 using StateSyncServer.LogicScripts.VirtualClient.Buffs;
 using StateSyncServer.LogicScripts.VirtualClient.Characters;
 using StateSyncServer.LogicScripts.VirtualClient.Manager;

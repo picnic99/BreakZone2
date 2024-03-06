@@ -1,7 +1,7 @@
 using Msg;
 using StateSyncServer.LogicScripts.Manager;
 using StateSyncServer.LogicScripts.VirtualClient.Actions;
-using StateSyncServer.LogicScripts.VirtualClient.Base;
+using StateSyncServer.LogicScripts.VirtualClient.Bases;
 using StateSyncServer.LogicScripts.VirtualClient.Bridge;
 using StateSyncServer.LogicScripts.VirtualClient.Buffs;
 using StateSyncServer.LogicScripts.VirtualClient.Buffs.newBuff;
@@ -34,10 +34,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Characters
         /// 阵营
         /// </summary>
         public CharacterState state = CharacterState.NEUTRAL;
-        //用于控制角色位置
-        public Transform trans { get; set; }
-        //用于播放角色动画
-        public Animator anim { get; set; }
+
         //记录角色属性数值
         public Property property { get; set; }
         //物理控制器

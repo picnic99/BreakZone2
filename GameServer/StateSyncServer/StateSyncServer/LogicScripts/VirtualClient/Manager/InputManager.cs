@@ -1,6 +1,6 @@
 ﻿using Msg;
 using StateSyncServer.LogicScripts.Net.PB.Enum;
-using StateSyncServer.LogicScripts.VirtualClient.Base;
+using StateSyncServer.LogicScripts.VirtualClient.Bases;
 using StateSyncServer.LogicScripts.VirtualClient.Characters;
 using StateSyncServer.LogicScripts.VirtualClient.Manager.Base;
 using StateSyncServer.LogicScripts.VirtualClient.States;
@@ -107,14 +107,14 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Manager
             if (PlayerOptEnum.IsKeyDown(opt.Arm))
             {
                 //瞄准
-                CameraManager.GetInstance().ShowArmCam();
-                crt.physic.multiply = 0.1f;
+/*                CameraManager.GetInstance().ShowArmCam();
+                crt.physic.multiply = 0.1f;*/
 
             }
             else if (PlayerOptEnum.IsKeyUp(opt.Arm))
             {
-                CameraManager.GetInstance().ShowMainCam();
-                crt.physic.multiply = 1f;
+/*                CameraManager.GetInstance().ShowMainCam();
+                crt.physic.multiply = 1f;*/
             }
             if (PlayerOptEnum.IsHoldKey(opt.Arm))
             {

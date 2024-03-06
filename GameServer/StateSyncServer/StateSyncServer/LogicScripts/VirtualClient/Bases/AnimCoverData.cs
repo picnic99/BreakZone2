@@ -1,7 +1,7 @@
 ﻿using StateSyncServer.LogicScripts.VirtualClient.Characters;
 using System.Collections.Generic;
 
-namespace StateSyncServer.LogicScripts.VirtualClient.Base
+namespace StateSyncServer.LogicScripts.VirtualClient.Bases
 {
     public class AnimCoverVO
     {

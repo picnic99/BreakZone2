@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace StateSyncServer.LogicScripts.VirtualClient.Base
+namespace StateSyncServer.LogicScripts.VirtualClient.Bases
 {
     public class RegisterBase<T, K, V> where T : RegisterBase<T, K, V>, new()
     {

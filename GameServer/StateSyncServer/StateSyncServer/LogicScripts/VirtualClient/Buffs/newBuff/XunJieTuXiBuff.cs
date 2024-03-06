@@ -1,6 +1,6 @@
 ﻿using StateSyncServer.LogicScripts.Util;
 using StateSyncServer.LogicScripts.VirtualClient.Actions;
-using StateSyncServer.LogicScripts.VirtualClient.Base;
+using StateSyncServer.LogicScripts.VirtualClient.Bases;
 using StateSyncServer.LogicScripts.VirtualClient.VO;
 
 namespace StateSyncServer.LogicScripts.VirtualClient.Buffs.newBuff

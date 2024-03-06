@@ -1,4 +1,4 @@
-﻿namespace StateSyncServer.LogicScripts.VirtualClient.Base
+﻿namespace StateSyncServer.LogicScripts.VirtualClient.Bases
 {
     /// <summary>
     /// 单例工具类

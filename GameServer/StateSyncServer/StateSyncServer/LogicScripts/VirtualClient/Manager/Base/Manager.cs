@@ -1,9 +1,9 @@
 ﻿using StateSyncServer.LogicScripts.Util;
-using StateSyncServer.LogicScripts.VirtualClient.Base;
+using StateSyncServer.LogicScripts.VirtualClient.Bases;
 
 namespace StateSyncServer.LogicScripts.VirtualClient.Manager.Base
 {
-    public class Manager<T> : VirtualClient.Base.Singleton<T>, IManager where T : new()
+    public class Manager<T> : VirtualClient.Bases.Singleton<T>, IManager where T : new()
     {
         private static EventDispatcher _eventer;
         public static EventDispatcher Eventer

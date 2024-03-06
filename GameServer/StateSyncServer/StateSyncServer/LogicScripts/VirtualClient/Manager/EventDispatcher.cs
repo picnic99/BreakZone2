@@ -1,5 +1,5 @@
 ﻿using StateSyncServer.LogicScripts.Util;
-using StateSyncServer.LogicScripts.VirtualClient.Base;
+using StateSyncServer.LogicScripts.VirtualClient.Bases;
 using System;
 using System.Collections.Generic;
 
@@ -10,7 +10,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Manager
     /// 事件管理器
     /// 实现基础的监听触发功能
     /// </summary>
-    public class EventDispatcher : VirtualClient.Base.Singleton<EventDispatcher>
+    public class EventDispatcher : VirtualClient.Bases.Singleton<EventDispatcher>
     {
         public static string ADD_RECORD { get { return GetInstance().GetType().Name + "ADD_RECORD"; } }
 

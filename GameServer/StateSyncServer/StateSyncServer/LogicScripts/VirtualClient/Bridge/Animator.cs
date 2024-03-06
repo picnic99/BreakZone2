@@ -8,5 +8,9 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bridge
 {
     public class Animator
     {
+        public void Play()
+        {
+
+        }
     }
 }

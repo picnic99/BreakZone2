@@ -1,4 +1,4 @@
-﻿using StateSyncServer.LogicScripts.VirtualClient.Base;
+﻿using StateSyncServer.LogicScripts.VirtualClient.Bases;
 
 namespace StateSyncServer.LogicScripts.VirtualClient.Buffs
 {

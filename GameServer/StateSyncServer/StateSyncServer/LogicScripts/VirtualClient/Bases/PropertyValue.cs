@@ -1,6 +1,6 @@
 ﻿using StateSyncServer.LogicScripts.VirtualClient.Value;
 
-namespace StateSyncServer.LogicScripts.VirtualClient.Base
+namespace StateSyncServer.LogicScripts.VirtualClient.Bases
 {
     /// <summary>
     /// 属性数值

@@ -1,4 +1,5 @@
-using StateSyncServer.LogicScripts.VirtualClient.Base;
+
+using StateSyncServer.LogicScripts.VirtualClient.Bases;
 using StateSyncServer.LogicScripts.VirtualClient.Buffs;
 using StateSyncServer.LogicScripts.VirtualClient.Buffs.newBuff;
 using StateSyncServer.LogicScripts.VirtualClient.Characters;

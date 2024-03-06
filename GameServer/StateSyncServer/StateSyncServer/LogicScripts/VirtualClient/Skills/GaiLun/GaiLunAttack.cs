@@ -1,13 +1,9 @@
-﻿using StateSyncServer.LogicScripts.VirtualClient.Base;
-using StateSyncServer.LogicScripts.VirtualClient.Character;
+﻿using StateSyncServer.LogicScripts.VirtualClient.Bases;
 using StateSyncServer.LogicScripts.VirtualClient.Characters;
 using StateSyncServer.LogicScripts.VirtualClient.Manager;
-using StateSyncServer.LogicScripts.VirtualClient.Skill.Base;
 using StateSyncServer.LogicScripts.VirtualClient.Skills.Base;
-using StateSyncServer.LogicScripts.VirtualClient.State;
 using StateSyncServer.LogicScripts.VirtualClient.States;
 using System;
-using UnityEngine;
 
 namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
 {
