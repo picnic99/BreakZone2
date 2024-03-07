@@ -3,6 +3,7 @@ using StateSyncServer.LogicScripts.VirtualClient.Characters;
 using StateSyncServer.LogicScripts.VirtualClient.Manager;
 using StateSyncServer.LogicScripts.VirtualClient.Skills.Base;
 using StateSyncServer.LogicScripts.VirtualClient.States;
+using System.Numerics;
 
 namespace StateSyncServer.LogicScripts.VirtualClient.Skills
 {
@@ -55,29 +56,25 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills
             character.eventDispatcher.Event(CharacterEvent.PRE_ATK);
         }
 
-        public void DoDamage(Collider col)
+        public void DoDamage(Character target)
         {
-            if (triggered) return;
-            var target = GameContext.GetCharacterByObj(col.gameObject);
             if (target == null || target == character) return;
             AddState(target, character, StateType.Injure);
             DoDamage(target, character.property.Atk);
             triggered = true;
-            Vector3 v = character.trans.position;
-            //v = col.ClosestPointOnBounds(Hand_R.transform.position);
+            Vector3 v = character.instance.trans.Position;
+            GameInstance ins = InstanceManager.GetInstance().CreateEffectInstance("Common/BloodEffect",v,0);
 
-            var bloodEffect = ResourceManager.GetInstance().GetEffectInstance("Common/BloodEffect");
-            bloodEffect.transform.position = v;
             character.eventDispatcher.Event(CharacterEvent.ATK, new Character[] { target });
             //顿帧
             //character.anim.speed = 0f;
-            TimeManager.GetInstance().AddOnceTimer(this, 0.05f, () =>
+/*            TimeManager.GetInstance().AddOnceTimer(this, 0.05f, () =>
             {
                 //character.anim.speed = 1;
-            });
+            });*/
             TimeManager.GetInstance().AddOnceTimer(this, 0.5f, () =>
             {
-                GameObject.Destroy(bloodEffect);
+                InstanceManager.GetInstance().RemoveInstance(ins);
             });
 
             //受击位移

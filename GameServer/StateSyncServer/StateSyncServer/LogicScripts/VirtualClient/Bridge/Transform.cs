@@ -16,10 +16,16 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bridge
         private Matrix4x4 RotateMatrix = Matrix4x4.Identity;
 
         private Vector3 position;
+        public Vector3 Position { get => position; set => position = value; }
 
         private Vector3 scale;
+        public Vector3 Scale { get => scale; set => scale = value; }
 
         private Quaternion rotation;
+        public Quaternion Rotation { get => rotation; set => rotation = value; }
+
+        private float rot;
+        public float Rot { get => rot; set => rot = value; }
 
         public Vector3 Forward
         {

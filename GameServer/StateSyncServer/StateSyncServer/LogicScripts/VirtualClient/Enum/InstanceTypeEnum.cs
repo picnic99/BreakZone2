@@ -12,6 +12,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Enum
     /// </summary>
     class InstanceTypeEnum
     {
+        public static int ALL = 99;
         public static int CHARACTER = 1;
         public static int SKILL = 2;
         public static int EFFECT = 3;

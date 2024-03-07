@@ -1,5 +1,5 @@
 ﻿using Msg;
-using StateSyncServer.LogicScripts.VirtualClient.Base;
+using StateSyncServer.LogicScripts.VirtualClient.Bases;
 using StateSyncServer.LogicScripts.VirtualClient.Characters;
 using StateSyncServer.LogicScripts.VirtualClient.Configer;
 using StateSyncServer.LogicScripts.VirtualClient.Enum;
@@ -18,6 +18,9 @@ namespace StateSyncServer.LogicScripts.Manager
         public static string PLAYER_ADD_TO_SCENE = "PLAYER_ADD_TO_SCENE";
         public static string CHARACTER_DIE = "CHARACTER_DIE";
 
+        /// <summary>
+        /// Playerid - Character
+        /// </summary>
         private Dictionary<int, Character> datas = new Dictionary<int, Character>();
 
         public CharacterManager()

@@ -3,6 +3,12 @@ syntax = "proto3";
 package msg;
 option java_package = "game.msg";
 
+message Position{
+	float X = 1;
+	float Y = 2;
+	float Z = 3;
+}
+
 message PlayerLoginReq {
     string username = 1;
 	string password = 2;
@@ -20,9 +26,7 @@ message PlayerBaseInfoNtf{
 	string username = 2;
 	int32 lastStaySceneId = 3;
 	//uint32 lastSelectCrtId = 4;
-	float lastStayPosX = 5;
-	float lastStayPosY = 6;
-	float lastStayPosZ = 7;	
+	Position lastStayPos = 5;
 }
 
 message SelectCrtReq{
@@ -54,9 +58,7 @@ message GetGameDataRep{
 //角色数据信息
 message CrtGameData{
 	int32 playerId = 1;
-	float posX = 2;
-	float posY = 3;
-	float posZ = 4;
+	Position pos = 2;
 	float rot = 5;
 }
 
@@ -113,7 +115,7 @@ message	GamePlayerInputNtf{
 
 //播放动画
 message GameAnimPlayNtf{
-	int32 playerId = 1;
+	int32 instanceId = 1;
 	string animName = 2;
 	float translateTime = 3;
 }
@@ -123,4 +125,35 @@ message GameAudioPlayNtf{
 	int32 instanceId = 1;
 	int32 audioId = 2;
 	int32 randomIndex = 3;
+}
+
+//游戏物体创建
+message GameInstanceCreateNtf{
+	int32 instanceId = 1;
+	int32 prefabId = 2;
+	Position initPos = 3;
+	Position initScale = 4;
+	float initRot = 5;
+}
+
+//游戏物体变换
+message GameInstanceTransformNtf{
+	int32 instanceId = 1;
+	//变换的类型 1位移2旋转3缩放
+	int32 trans = 2;
+	//变换的方式 1 指定目标 2 指定速度
+	int32 transType = 3;
+	//位移或者缩放的目标 如 1s移动至pos或者 1s移动pos偏移
+	Position target = 4;
+	//旋转目标
+	float rotTarget = 5;
+	//持续时间  s为单位
+	float durationTime = 6;
+	
+}
+
+//游戏物体销毁
+message GameInstanceDestroyNtf{
+	int32 instanceId = 1;
+	float delay = 2;
 }

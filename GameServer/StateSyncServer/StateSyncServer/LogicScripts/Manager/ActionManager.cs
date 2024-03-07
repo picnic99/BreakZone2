@@ -1,4 +1,4 @@
-﻿using StateSyncServer.LogicScripts.Enum;
+﻿
 using StateSyncServer.LogicScripts.VO;
 using System.Collections.Generic;
 using System.Net.Sockets;
@@ -7,6 +7,7 @@ using StateSyncServer.LogicScripts.Util;
 using Msg;
 using StateSyncServer.LogicScripts.Net.PB;
 using StateSyncServer.LogicScripts.Net.PB.Enum;
+using System.Numerics;
 
 namespace StateSyncServer.LogicScripts.Manager
 {
@@ -115,9 +116,9 @@ namespace StateSyncServer.LogicScripts.Manager
                 ntf.Username = username;
                 //以下信息从数据库查询
                 ntf.LastStaySceneId = 1;
-                ntf.LastStayPosX = 0;
-                ntf.LastStayPosY = 0;
-                ntf.LastStayPosZ = 0;
+                ntf.LastStayPos.X = 0;
+                ntf.LastStayPos.Y = 0;
+                ntf.LastStayPos.Z = 0;
                 NetManager.GetInstance().SendProtocol(proto.client, ntf);
             }
             if (type == LoginTypeEnum.LOGIN_Out)
@@ -222,9 +223,9 @@ namespace StateSyncServer.LogicScripts.Manager
             var ntf = new SyncGameDataNtf();
             CrtGameData crtData = new CrtGameData();
             crtData.PlayerId = 1;
-            crtData.PosX = 0;
-            crtData.PosY = 0;
-            crtData.PosZ = 0;
+            crtData.Pos.X = 0;
+            crtData.Pos.Y = 0;
+            crtData.Pos.Z = 0;
             ntf.CrtData.Add(crtData);
             //填充数据
             return ntf;
@@ -257,6 +258,77 @@ namespace StateSyncServer.LogicScripts.Manager
                     NetManager.GetInstance().SendProtocol(client, ntf);
                 }
             }
+        }
+
+        public void SendAnimPlayNtf(int playerId,int instanceId,string animName,float translateTime)
+        {
+            GameAnimPlayNtf ntf = new GameAnimPlayNtf();
+            ntf.InstanceId = instanceId;
+            ntf.AnimName = animName;
+            ntf.TranslateTime = translateTime;
+
+            List<Player> players = SceneManager.GetInstance().GetPlayerInSceneByPid(playerId);
+            if (players == null || players.Count == 0) return;
+            NetManager.GetInstance().SendProtoToScene(players, ntf);
+        }
+
+        public void SendAudioPlayNtf(int playerId,int instanceId,int audioId,int randomIndex)
+        {
+            GameAudioPlayNtf ntf = new GameAudioPlayNtf();
+            ntf.InstanceId = instanceId;
+            ntf.AudioId = audioId;
+            ntf.RandomIndex = randomIndex;
+
+            List<Player> players = SceneManager.GetInstance().GetPlayerInSceneByPid(playerId);
+            if (players == null || players.Count == 0) return;
+            NetManager.GetInstance().SendProtoToScene(players, ntf);
+        }
+
+        public void SendGameInstanceCreateNtf(int playerId, int instanceId, int prefabId, Vector3 initPos, Vector3 initScale, float initRot)
+        {
+            GameInstanceCreateNtf NTF = new GameInstanceCreateNtf();
+            NTF.InstanceId = instanceId;
+            NTF.PrefabId = prefabId;
+            NTF.InitPos = new Position();
+            NTF.InitPos.X = initPos.X;
+            NTF.InitPos.Y = initPos.Y;
+            NTF.InitPos.Z = initPos.Z;
+            NTF.InitScale = new Position();
+            NTF.InitScale.X = initScale.X;
+            NTF.InitScale.Y = initScale.Y;
+            NTF.InitScale.Z = initScale.Z;
+            NTF.InitRot = initRot;
+            List<Player> players = SceneManager.GetInstance().GetPlayerInSceneByPid(playerId);
+            if (players == null || players.Count == 0) return;
+            NetManager.GetInstance().SendProtoToScene(players, NTF);
+        }
+
+        public void SendGameInstanceTransformNtf(int playerId, int instanceId, int trans, int transType, Vector3 target, float rotTarget, float durationTime)
+        {
+            GameInstanceTransformNtf ntf = new GameInstanceTransformNtf();
+            ntf.InstanceId = instanceId;
+            ntf.Trans = trans;
+            ntf.TransType = transType;
+            ntf.Target = new Position();
+            ntf.Target.X = target.X;
+            ntf.Target.Y = target.Y;
+            ntf.Target.Z = target.Z;
+            ntf.RotTarget = rotTarget;
+            ntf.DurationTime = durationTime;
+
+            List<Player> players = SceneManager.GetInstance().GetPlayerInSceneByPid(playerId);
+            if (players == null || players.Count == 0) return;
+            NetManager.GetInstance().SendProtoToScene(players, ntf);
+        }
+
+        public void SendGameInstanceDestroyNtf(int playerId, int instanceId, float delay = 0)
+        {
+            GameInstanceDestroyNtf NTF = new GameInstanceDestroyNtf();
+            NTF.InstanceId = instanceId;
+            NTF.Delay = delay;
+            List<Player> players = SceneManager.GetInstance().GetPlayerInSceneByPid(playerId);
+            if (players == null || players.Count == 0) return;
+            NetManager.GetInstance().SendProtoToScene(players, NTF);
         }
     }
 }

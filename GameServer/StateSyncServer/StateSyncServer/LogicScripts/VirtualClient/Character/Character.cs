@@ -23,9 +23,11 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Characters
     /// 角色管理器
     /// 
     /// </summary>
-    public class Character: GameInstance
+    public class Character: Instance
     {
         public int playerId;
+
+        public GameInstance instance;
         /// <summary>
         /// 基础信息
         /// </summary>
@@ -39,6 +41,8 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Characters
         public Property property { get; set; }
         //物理控制器
         public PhysicController physic { get; set; }
+
+        public Transform trans => instance.trans;
         //事件管理器
         public EventDispatcher eventDispatcher;
         //状态机 只负责角色状态之间的切换
@@ -70,8 +74,8 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Characters
             {
                 this.baseInfo = new CharacterBaseInfo();
             }
-            trans = new Transform();
-            anim = new Animator();
+
+            instance = new GameInstance(this);
 
             InitCharacter();
         }

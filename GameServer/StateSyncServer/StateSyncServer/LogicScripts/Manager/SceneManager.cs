@@ -48,6 +48,16 @@ namespace StateSyncServer.LogicScripts.Manager
             return PlayerManager.GetInstance().GetAllPlayerInScene(sceneId);
         }
 
+        public List<Player> GetPlayerInSceneByPid(int playerId) 
+        {
+            Player p = PlayerManager.GetInstance().FindPlayer(playerId);
+            if(p != null)
+            {
+                return GetPlayersInScene(p.SceneId);
+            }
+            return null;
+        }
+
         public void Tick()
         {
 
