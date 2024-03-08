@@ -21,14 +21,14 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Manager
         /// <param name="v"></param>
         public void PlayAnim(Character character, string animName, float translateTime = 0.15f)
         {
-            character.anim.Play(animName, translateTime);
+            //character.anim.Play(animName, translateTime);
             //character.anim.SetTrigger(animName);
             //CommonUtils.Logout(animName);
         }
 
         public void PlayAnim(Animator anim, string animName, float translateTime = 0.15f)
         {
-            anim.Play(animName, translateTime);
+            //anim.Play(animName, translateTime);
         }
 
         public void PlayStateAnim(Character character, StateVO state, float translateTime = 0.15f)

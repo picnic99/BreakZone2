@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,8 +14,8 @@ namespace StateSyncServer.LogicScripts.Common
     {
         //每秒帧数
         public static int FrameRate = 20;
-        public static float FixedFrameTimeS = 0.05f; // 1000/20
-        public static int FixedFrameTimeMS = 50; // 1000/20
+        public const float FixedFrameTimeS = 0.05f; // 1000/20
+        public const int FixedFrameTimeMS = 50; // 1000/20
 
         private static Dictionary<int, TcpClient> PlayerSocketMap = new Dictionary<int, TcpClient>();
     

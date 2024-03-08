@@ -9,6 +9,7 @@ using StateSyncServer.LogicScripts.VirtualClient.States;
 using StateSyncServer.LogicScripts.VirtualClient.VO;
 using System;
 using System.Collections.Generic;
+using System.Numerics;
 
 namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
 {
@@ -24,13 +25,15 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
 
         public void ShowWeaponEffect()
         {
-            var obj = ResourceManager.GetInstance().GetSkillInstance("ZhiMingDaJi_XuLi");
+
+
+            InstanceManager.GetInstance().CreateEffectInstance("ZhiMingDaJi_XuLi",character.Trans.Position,character.Trans.Rot);
             //AudioManager.GetInstance().Play("sword_power", false);
             AudioEventDispatcher.GetInstance().Event(MomentType.DoSkill, this, "weaponFillPower",character.playerId,character.InstanceId);
-            obj.transform.parent = character.GetWeapon().transform;
+/*            obj.transform.parent = character.GetWeapon().transform;
             obj.transform.localPosition = new Vector3(-0.084F, 0, 0.033F);
             obj.transform.localRotation = Quaternion.identity;
-            obj.transform.localScale = new Vector3(0.05F, 0.05F, 0.05F);
+            obj.transform.localScale = new Vector3(0.05F, 0.05F, 0.05F);*/
         }
 
         public override void OnEnter()
@@ -114,20 +117,18 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
             instancePath = "ZhiMingDaJi";
             durationTime = maxTime;
             enterCall = call;
-            instanceObj = ResourceManager.GetInstance().GetSkillInstance(instancePath);
-            instanceObj.SetActive(false);
             this.moveOffset = moveOffset;
-            Init();
-            AudioEventDispatcher.GetInstance().Event(MomentType.DoSkill, RootSkill, "flywheel", RootSkill.character.playerId,InstanceId);
+            //Init();
+            AudioEventDispatcher.GetInstance().Event(MomentType.DoSkill, RootSkill, "flywheel", RootSkill.character.playerId,instanceObj.InstanceId);
         }
 
         public override void AddBehaviour()
         {
-            TimeManager.GetInstance().AddLoopTimer(this, 0.25f, () =>
+            TimeManager.GetInstance().AddLoopTimer(this, () =>
             {
                 if (durationTime <= 0)
                 {
-                    if (isBack && Vector3.Distance(instanceObj.transform.position, RootSkill.character.trans.position) <= 0.1f)
+                    if (isBack && Vector3.Distance(instanceObj.trans.Position, RootSkill.character.Trans.Position) <= 0.1f)
                     {
                         End();
                         return;
@@ -135,7 +136,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
                 }
                 DoMove();
                 durationTime -= Global.FixedFrameTimeMS;
-            });
+            }, 0.25f);
         }
 
         private void DoMove()
@@ -143,7 +144,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
             instanceObj.SetActive(true);
 
             // TODO 返回时追踪角色位置
-            if (durationTime <= maxTime / 2)
+/*            if (durationTime <= maxTime / 2)
             {
                 if (!isBack)
                 {
@@ -153,22 +154,22 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
                 instanceObj.transform.position -= instanceObj.transform.forward * Time.deltaTime * 30f;
                 var scale = instanceObj.transform.localScale - Vector3.one * Time.deltaTime * 3f;
                 instanceObj.transform.localScale = scale.x < 0.2f ? new Vector3(0.2f, 0.2f, 0.2f) : scale;
-                instanceObj.transform.forward = -(RootSkill.character.trans.position - instanceObj.transform.position);
+                instanceObj.transform.forward = -(RootSkill.character.Trans.position - instanceObj.transform.position);
             }
             else
             {
                 instanceObj.transform.position += instanceObj.transform.forward * Time.deltaTime * 30f;
                 instanceObj.transform.localScale += Vector3.one * Time.deltaTime * 3f;
-            }
+            }*/
         }
 
 
 
         public override void InitTransform()
         {
-            instanceObj.transform.position = RootSkill.character.trans.position + RootSkill.character.trans.forward * 1f;
-            instanceObj.transform.forward = RootSkill.character.trans.forward;
-            instanceObj.transform.RotateAround(instanceObj.transform.position, Vector3.up, moveOffset);
+/*            instanceObj.transform.position = RootSkill.character.Trans.position + RootSkill.character.Trans.forward * 1f;
+            instanceObj.transform.forward = RootSkill.character.Trans.forward;
+            instanceObj.transform.RotateAround(instanceObj.transform.position, Vector3.up, moveOffset);*/
         }
 
         public override void InvokeEnterTrigger(Character target)

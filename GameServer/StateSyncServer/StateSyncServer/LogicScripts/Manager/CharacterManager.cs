@@ -32,7 +32,7 @@ namespace StateSyncServer.LogicScripts.Manager
         {
             base.AddEventListener();
             On(PLAYER_OPT_CHANGE, OnPlayeOptChange);
-            On(PLAYER_ADD_TO_SCENE, OnPlayeOptChange);
+            On(PLAYER_ADD_TO_SCENE, OnPlayerAddToScene);
             On(CHARACTER_DIE, OnCharacterDie);
             On(CharacterEvent.PROPERTY_CHANGE, OnCharacterDie);
         }
@@ -41,7 +41,7 @@ namespace StateSyncServer.LogicScripts.Manager
         {
             base.RemoveEventListener();
             Off(PLAYER_OPT_CHANGE, OnPlayeOptChange);
-            Off(PLAYER_ADD_TO_SCENE, OnPlayeOptChange);
+            Off(PLAYER_ADD_TO_SCENE, OnPlayerAddToScene);
             Off(CHARACTER_DIE, OnCharacterDie);
             Off(CharacterEvent.PROPERTY_CHANGE, OnCharacterDie);
 
@@ -112,7 +112,6 @@ namespace StateSyncServer.LogicScripts.Manager
         {
             VirtualClient.VO.CharacterVO vo = CharacterConfiger.GetInstance().GetCharacterById(crtId);
             var c = new Character(vo,playerId);
-            c.InstanceId = InstanceTypeEnum.GetCrtInstanceId(curCrtIdIndex++);
             datas.Add(playerId, c);
             return c;
         }

@@ -1,10 +1,12 @@
-﻿using StateSyncServer.LogicScripts.VirtualClient.Bases;
+﻿using StateSyncServer.LogicScripts.Common;
+using StateSyncServer.LogicScripts.VirtualClient.Bases;
 using StateSyncServer.LogicScripts.VirtualClient.Characters;
 using StateSyncServer.LogicScripts.VirtualClient.Manager;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
+using System.Timers;
 
 namespace StateSyncServer.LogicScripts.VirtualClient.Bridge
 {
@@ -44,7 +46,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bridge
         {
             get
             {
-                return Time.time >= endTime;
+                return true; // Time.time >= endTime;
             }
         }
 
@@ -63,7 +65,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bridge
             this.totalOffset = totalOffset;
             this.time = time;
             this.type = type;
-            endTime = Time.time + this.time;
+            //endTime = Time.time + this.time;
         }
     }
 
@@ -72,7 +74,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bridge
     {
         public Character character;
         //private Rigidbody rb;
-        public CharacterController cc;
+        //public CharacterController cc;
         /// <summary>
         /// 重力加速度
         /// </summary>
@@ -113,24 +115,15 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bridge
         /// </summary>
         //private Vector3 curDeltaPos = Vector3.zero;
         //private VectorValue deltaPosValue = new VectorValue(Vector3.zero);
-        private Vector3 totalMove = Vector3.zero;
+        private Vector3 totalMove = Vector3.Zero;
 
         private List<PhysicAction> actionList = new List<PhysicAction>();
 
         public PhysicController(Character character)
         {
             this.character = character;
-            cc = this.character.trans.GetComponent<CharacterController>();
-            cc.enabled = true;
-            if (GameContext.GameMode == GameMode.DEBUG)
-            {
-                DebugManager.GetInstance().AddMonitor(() => { return "[PhysicController]frameActionOffset：" + GetFrameAction().ToString(); });
-                DebugManager.GetInstance().AddMonitor(() => { return "[PhysicController]IsJump：" + IsJump; });
-                DebugManager.GetInstance().AddMonitor(() => { return "[PhysicController]GravityOffset：" + GravityOffset; });
-                DebugManager.GetInstance().AddMonitor(() => { return "[PhysicController]isGround：" + isGround; });
-                DebugManager.GetInstance().AddMonitor(() => { return "[PhysicController]totalMove：" + totalMove.ToString(); });
-                DebugManager.GetInstance().AddMonitor(() => { return "[PhysicController]velocity：" + cc.velocity; });
-            }
+/*            cc = this.character.Trans.GetComponent<CharacterController>();
+            cc.enabled = true;*/
         }
 
         /// <summary>
@@ -188,15 +181,15 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bridge
             {
                 if (x)
                 {
-                    item.totalOffset.x = 0;
+                    item.totalOffset.X = 0;
                 }
                 else if (y)
                 {
-                    item.totalOffset.y = 0;
+                    item.totalOffset.Y = 0;
                 }
                 else if (z)
                 {
-                    item.totalOffset.z = 0;
+                    item.totalOffset.Z = 0;
                 }
             }
         }
@@ -208,7 +201,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bridge
         public Vector3 GetFrameAction()
         {
             CheckAction();
-            Vector3 result = Vector3.zero;
+            Vector3 result = Vector3.Zero;
             foreach (var item in actionList)
             {
                 result += item.FrameOffset;
@@ -270,7 +263,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bridge
         /// <param name="durationTime"></param>
         public void AtkFly(float height, float durationTime)
         {
-            Move(Vector3.up * height, durationTime, true, false);
+            //Move(Vector3.up * height, durationTime, true, false);
         }
 
         /// <summary>
@@ -287,24 +280,25 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bridge
         /// <param name="speed"></param>
         public void MoveFollow(Character target, float speed = 1, Action endCall = null)
         {
-            Action fun = null;
+/*            Action fun = null;
+            Timer t = null;
             fun = () =>
             {
-                Vector3 dir = target.trans.position - character.trans.position;
+                Vector3 dir = target.Trans.position - character.Trans.position;
                 cc.Move(dir.normalized * speed * Time.deltaTime);
-                if (Vector3.Distance(target.trans.position, character.trans.position) <= character.physic.cc.radius + target.physic.cc.radius + 0.2f || Math.Abs(cc.velocity.magnitude) <= 0.1f)
+                if (Vector3.Distance(target.Trans.position, character.Trans.position) <= character.physic.cc.radius + target.physic.cc.radius + 0.2f || Math.Abs(cc.velocity.magnitude) <= 0.1f)
                 {
-                    TimeManager.GetInstance().RemoveTimer(this, fun);
+                    TimeManager.GetInstance().RemoveTimer(this, t);
                     endCall();
                 }
             };
 
-            TimeManager.GetInstance().AddLoopTimer(this, 0f, fun);
+            t = TimeManager.GetInstance().AddLoopTimer(this, fun, 0f,Global.FixedFrameTimeS);*/
         }
 
         public void OnUpdate()
         {
-            if (character.IsDestroyed) return;
+            return;
             Vector3 actionOffset = GetFrameAction();
             CheckIsGround();
             if (!isGround)
@@ -319,10 +313,10 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bridge
                 //受到重力影响
                 if (IsGravityEffect)
                 {
-                    GravityOffset -= gravity * Time.deltaTime * multiply;
+                    GravityOffset -= gravity * Global.FixedFrameTimeS * multiply;
                 }
 
-                if (actionOffset.y >= GravityOffset)
+                if (actionOffset.Y >= GravityOffset)
                 {
                     //上升状态
                 }
@@ -353,17 +347,17 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bridge
 
             if (!CanMove) return;
 
-            Vector3 dir = Vector3.zero;
+            Vector3 dir = Vector3.Zero;
             //滞空移动
-            if (CanControl && !isGround && actionOffset.magnitude > 0 && GameContext.CurRole == character)
+            if (CanControl && !isGround && actionOffset.Length() > 0)
             {
                 dir = GameContext.GetDirByInput(character, false) * 5f;
             }
 
             //当前帧总偏移 = （行为总偏移 + 重力偏移 + 滞空移动偏移） * 当前帧时间 * 倍数
-            totalMove = (actionOffset + new Vector3(0, GravityOffset, 0) + dir) * Time.deltaTime * multiply;
+            totalMove = (actionOffset + new Vector3(0, GravityOffset, 0) + dir) * Global.FixedFrameTimeS * multiply;
 
-            cc.Move(totalMove);
+            //cc.Move(totalMove);
 
         }
 
@@ -372,8 +366,8 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bridge
         /// </summary>
         private void CheckIsGround()
         {
-            lastIsGround = isGround;
-            var raycastAll = Physics.OverlapBox(character.trans.position, new Vector3(0.3f, 0.1f, 0.3f), Quaternion.identity, 1 << LayerMask.NameToLayer("Build"));
+/*            lastIsGround = isGround;
+            var raycastAll = Physics.OverlapBox(character.Trans.position, new Vector3(0.3f, 0.1f, 0.3f), Quaternion.identity, 1 << LayerMask.NameToLayer("Build"));
             if (raycastAll.Length > 0)
             {
                 // 在地面
@@ -383,7 +377,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bridge
             {
                 // 离地
                 isGround = false;
-            }
+            }*/
         }
 
         public void OnDestory()

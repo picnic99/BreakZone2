@@ -66,11 +66,9 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bases
         public GameInstance(Instance obj)
         {
             parent = obj;
-        }
 
-        public void Init(int PrefabId,)
-        {
-
+            trans = new Transform();
+            anim = new Animator();
         }
 
         public int GetInstanceType()
@@ -90,12 +88,12 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bases
         public void SetCollider(Collider col)
         {
             this.col = col;
-            this.col.enterCall += OnTriggerEnter;
+/*            this.col.enterCall += OnTriggerEnter;
             this.col.stayCall += OnTriggerStay;
-            this.col.exitCall += OnTriggerExit;
+            this.col.exitCall += OnTriggerExit;*/
         }
 
-        private void SetActive(bool b)
+        public void SetActive(bool b)
         {
 
         }

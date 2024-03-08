@@ -31,9 +31,9 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills
 
         private int GetAnimIndexByInput()
         {
-            var input = InputManager.GetInstance().GetPlayInput();
+            //var input = character.input;
             int animIndex = 0;
-            if (input.z >= 0)
+/*            if (input.z >= 0)
             {
                 //前
                 animIndex = 0;
@@ -52,7 +52,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills
             {
                 //左
                 animIndex = 2;
-            }
+            }*/
             return animIndex;
 
         }

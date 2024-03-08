@@ -296,7 +296,6 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Buffs
                 }
             }
             Action fun = () => { isTrigger = true; };
-            TimeManager.GetInstance().RemoveTimer(this, fun);
             TimeManager.GetInstance().AddOnceTimer(this, durationTime, fun);
         }
 
@@ -321,7 +320,6 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Buffs
             }
 
             Action fun = () => { isEnd = true; };
-            TimeManager.GetInstance().RemoveTimer(this, fun);
             TimeManager.GetInstance().AddOnceTimer(this, durationTime, fun);
         }
 

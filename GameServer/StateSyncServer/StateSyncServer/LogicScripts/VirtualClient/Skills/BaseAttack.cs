@@ -11,9 +11,6 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills
     {
         //再次触发最大等待时间
         public float maxWaitTime = 0.5f;
-
-        //public ColliderHelper Hand_R;
-
         public BaseAttack()
         {
             //允许再次触发
@@ -22,9 +19,6 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills
 
         public override void OnEnter()
         {
-            //Hand_R = character.anim.GetBoneTransform(HumanBodyBones.RightHand).GetComponent<ColliderHelper>();
-            //Hand_R.enabled = false;
-
             if (StageNum >= 3)
             {
                 StageNum = 0;
@@ -43,7 +37,6 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills
             }
             base.OnEnter();
 
-            //stateDurationTime = curAnimLength;
             skillDurationTime = stateDurationTime + maxWaitTime;
         }
 
@@ -51,36 +44,27 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills
         public void Atk()
         {
             triggered = false;
-            //Hand_R.enabled = true;
-            //Hand_R.OnTriggerEnterCall += DoDamage;
             character.eventDispatcher.Event(CharacterEvent.PRE_ATK);
         }
 
         public void DoDamage(Character target)
         {
             if (target == null || target == character) return;
+
             AddState(target, character, StateType.Injure);
+
             DoDamage(target, character.property.Atk);
+
             triggered = true;
             Vector3 v = character.instance.trans.Position;
             GameInstance ins = InstanceManager.GetInstance().CreateEffectInstance("Common/BloodEffect",v,0);
 
             character.eventDispatcher.Event(CharacterEvent.ATK, new Character[] { target });
-            //顿帧
-            //character.anim.speed = 0f;
-/*            TimeManager.GetInstance().AddOnceTimer(this, 0.05f, () =>
-            {
-                //character.anim.speed = 1;
-            });*/
+
             TimeManager.GetInstance().AddOnceTimer(this, 0.5f, () =>
             {
                 InstanceManager.GetInstance().RemoveInstance(ins);
             });
-
-            //受击位移
-            /*        var dir = (character.trans.forward).normalized;
-                    dir.y = 0;
-                    target.physic.Move(dir.normalized * 0.1f, 0.1f);*/
         }
 
         public override void OnTrigger()
@@ -92,15 +76,11 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills
         public override void OnBack()
         {
             base.OnBack();
-            //character.anim.speed = 1;
-            //Hand_R.OnTriggerEnterCall -= DoDamage;
-            //Hand_R.enabled = false;
         }
 
         public override void OnExit()
         {
             base.OnExit();
-            //character.anim.speed = 1;
         }
     }
 }

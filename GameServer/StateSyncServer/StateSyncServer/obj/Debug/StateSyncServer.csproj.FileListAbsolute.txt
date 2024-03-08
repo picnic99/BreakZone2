@@ -59,3 +59,12 @@ D:\unityPoj\BZ_Logic\GameServer\StateSyncServer\StateSyncServer\obj\Debug\StateS
 D:\unityPoj\BZ_Logic\GameServer\StateSyncServer\StateSyncServer\obj\Debug\StateSyncServer.csproj.CopyComplete
 D:\unityPoj\BZ_Logic\GameServer\StateSyncServer\StateSyncServer\obj\Debug\StateSyncServer.exe
 D:\unityPoj\BZ_Logic\GameServer\StateSyncServer\StateSyncServer\obj\Debug\StateSyncServer.pdb
+D:\unityPoj\BZ_Logic\GameServer\StateSyncServer\StateSyncServer\bin\Debug\Microsoft.Bcl.AsyncInterfaces.dll
+D:\unityPoj\BZ_Logic\GameServer\StateSyncServer\StateSyncServer\bin\Debug\Microsoft.NET.StringTools.dll
+D:\unityPoj\BZ_Logic\GameServer\StateSyncServer\StateSyncServer\bin\Debug\System.Text.Encodings.Web.dll
+D:\unityPoj\BZ_Logic\GameServer\StateSyncServer\StateSyncServer\bin\Debug\System.Text.Json.dll
+D:\unityPoj\BZ_Logic\GameServer\StateSyncServer\StateSyncServer\bin\Debug\System.Threading.Tasks.Extensions.dll
+D:\unityPoj\BZ_Logic\GameServer\StateSyncServer\StateSyncServer\bin\Debug\Microsoft.Bcl.AsyncInterfaces.xml
+D:\unityPoj\BZ_Logic\GameServer\StateSyncServer\StateSyncServer\bin\Debug\System.Text.Encodings.Web.xml
+D:\unityPoj\BZ_Logic\GameServer\StateSyncServer\StateSyncServer\bin\Debug\System.Text.Json.xml
+D:\unityPoj\BZ_Logic\GameServer\StateSyncServer\StateSyncServer\bin\Debug\System.Threading.Tasks.Extensions.xml

@@ -58,6 +58,7 @@ namespace StateSyncServer.LogicScripts.Manager
                 SelectCrtRep rep = new SelectCrtRep();
                 rep.Result = ProtocolResultEnum.SUCCESS;
                 rep.CrtId = crtId;
+                rep.InstanceId = 100001;
                 NetManager.GetInstance().SendProtocol(proto.client, rep);
             }
         }
@@ -116,9 +117,12 @@ namespace StateSyncServer.LogicScripts.Manager
                 ntf.Username = username;
                 //以下信息从数据库查询
                 ntf.LastStaySceneId = 1;
-                ntf.LastStayPos.X = 0;
-                ntf.LastStayPos.Y = 0;
-                ntf.LastStayPos.Z = 0;
+
+                Position pos = new Position();
+                pos.X = 0;
+                pos.Y = 0;
+                pos.Z = 0;
+                ntf.LastStayPos = pos;
                 NetManager.GetInstance().SendProtocol(proto.client, ntf);
             }
             if (type == LoginTypeEnum.LOGIN_Out)
@@ -221,12 +225,27 @@ namespace StateSyncServer.LogicScripts.Manager
             //收集场景中需要同步的数据
             //读取当前场景中存在的玩家 包括AI 可能还需要考虑物体
             var ntf = new SyncGameDataNtf();
-            CrtGameData crtData = new CrtGameData();
-            crtData.PlayerId = 1;
-            crtData.Pos.X = 0;
-            crtData.Pos.Y = 0;
-            crtData.Pos.Z = 0;
-            ntf.CrtData.Add(crtData);
+            /*            CrtGameData crtData = new CrtGameData();
+                        crtData.PlayerId = 1;
+                        crtData.Pos.X = 0;
+                        crtData.Pos.Y = 0;
+                        crtData.Pos.Z = 0;
+                        ntf.CrtData.Add(crtData);*/
+
+            GameInstanceData insData = new GameInstanceData();
+            insData.InstanceId = 100001;
+            Position pos = new Position();
+            pos.X = 0;
+            pos.Y = 0;
+            pos.Z = 0;
+            Position scale = new Position();
+            scale.X = 0;
+            scale.Y = 0;
+            scale.Z = 0;
+            insData.Pos = pos;
+            insData.Scale = scale;
+            insData.Rot = 0;
+            ntf.InstanceData.Add(insData);
             //填充数据
             return ntf;
         }

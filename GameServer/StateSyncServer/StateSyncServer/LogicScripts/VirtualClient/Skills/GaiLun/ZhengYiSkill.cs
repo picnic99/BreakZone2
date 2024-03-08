@@ -42,10 +42,11 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
         public void BeTrigger(Character target)
         {
             DoDamage(target, 25);
-            AudioManager.GetInstance().Play("sword_damage1", false);
-            var dir = (target.trans.position - character.trans.position).normalized;
+
+/*            AudioManager.GetInstance().Play("sword_damage1", false);
+            var dir = (target.Trans.position - character.Trans.position).normalized;
             dir.y = 2f;
-            target.physic.Move(dir.normalized * 0.2f, 0.1f);
+            target.physic.Move(dir.normalized * 0.2f, 0.1f);*/
         }
 
         protected override void OnEnd()
@@ -59,8 +60,8 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
     {
         private int maxDamageCtn = 9;//最大伤害次数
 
-        private ColliderHelper atkFlyCheck;
-        private ColliderHelper JianWuCheck;
+        //private ColliderHelper atkFlyCheck;
+        //private ColliderHelper JianWuCheck;
 
         public ZhenYiInstance(Skill skill, Action<Character> call)
         {
@@ -68,16 +69,16 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
             enterCall = call;
             instancePath = "ZhenYi";
             durationTime = 5f;
-            instanceObj = ResourceManager.GetInstance().GetSkillInstance(instancePath);
+/*            instanceObj = ResourceManager.GetInstance().GetSkillInstance(instancePath);
             atkFlyCheck = instanceObj.transform.Find("atkFlyCheck").GetComponent<ColliderHelper>();
-            JianWuCheck = instanceObj.transform.Find("JianWuCheck").GetComponent<ColliderHelper>();
+            JianWuCheck = instanceObj.transform.Find("JianWuCheck").GetComponent<ColliderHelper>();*/
             enterCall = call;
-            Init();
+            //Init();
         }
 
         public override void AddBehaviour()
         {
-            TimeManager.GetInstance().AddOnceTimer(this, 0.2f, () =>
+/*            TimeManager.GetInstance().AddOnceTimer(this, 0.2f, () =>
               {
                   atkFlyCheck.gameObject.SetActive(true);
                   atkFlyCheck.OnTriggerEnterCall += AtkFly;
@@ -86,13 +87,13 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
             {
                 atkFlyCheck.OnTriggerEnterCall -= AtkFly;
                 atkFlyCheck.gameObject.SetActive(false);
-            });
+            });*/
 
             float totalTime = 3f;
             float cd = totalTime / maxDamageCtn;
-            JianWuCheck.OnTriggerEnterCall += FeiWuAtk;
+            //JianWuCheck.OnTriggerEnterCall += FeiWuAtk;
             //剑舞
-            TimeManager.GetInstance().AddTimeByDurationCtn(this, totalTime, maxDamageCtn, () =>
+/*            TimeManager.GetInstance().AddTimeByDurationCtn(this, totalTime, maxDamageCtn, () =>
              {
                  JianWuCheck.gameObject.SetActive(true);
                  TimeManager.GetInstance().AddOnceTimer(this, 0.3f, () =>
@@ -111,12 +112,12 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
                          JianWuCheck.gameObject.SetActive(false);
                      //AudioManager.GetInstance().Play("atk_style1_5", false);
                  }, 3);
-             });
+             });*/
 
 
 
             //击飞
-            TimeManager.GetInstance().AddLoopTimer(this, 0, () =>
+/*            var t = TimeManager.GetInstance().AddLoopTimer(this,() =>
                     {
                         if (durationTime <= 0)
                         {
@@ -125,27 +126,33 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
                         }
                         durationTime -= Global.FixedFrameTimeMS;
                     });
+
+            TimeManager.GetInstance().AddOnceTimer(this,0,()=>
+            {
+                TimeManager.GetInstance().RemoveTimer(this,t);
+            });*/
+
         }
 
         public void AtkFly(Collider col)
         {
-            var target = GameContext.GetCharacterByObj(col.gameObject);
+/*            var target = GameContext.GetCharacterByObj(col.gameObject);
             if (target == null || target == RootSkill.character) return;
-            target.physic.AtkFly(1, 1f);
+            target.physic.AtkFly(1, 1f);*/
         }
 
         public void FeiWuAtk(Collider col)
         {
-            var target = GameContext.GetCharacterByObj(col.gameObject);
+/*            var target = GameContext.GetCharacterByObj(col.gameObject);
             if (target == null || target == RootSkill.character) return;
             target.physic.Move((instanceObj.transform.position - target.trans.position) * 0.3f, 0.5f);
-            enterCall.Invoke(target);
+            enterCall.Invoke(target);*/
         }
 
         public override void InitTransform()
         {
-            instanceObj.transform.position = RootSkill.character.trans.position + RootSkill.character.trans.forward * 7f;
-            instanceObj.transform.forward = RootSkill.character.trans.forward;
+/*            instanceObj.transform.position = RootSkill.character.Trans.position + RootSkill.character.Trans.forward * 7f;
+            instanceObj.transform.forward = RootSkill.character.Trans.forward;*/
         }
 
 

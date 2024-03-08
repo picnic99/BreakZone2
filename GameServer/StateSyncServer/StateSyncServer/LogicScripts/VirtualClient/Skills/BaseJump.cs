@@ -53,7 +53,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills
             EventDispatcher.GetInstance().Off(EventDispatcher.PLAYER_JUMPED, EndJump);
             TimeManager.GetInstance().AddOnceTimer(this, 0.2f, () =>
             {
-                CameraManager.GetInstance().EventImpulse(0.5f);
+                //CameraManager.GetInstance().EventImpulse(0.5f);
             });
         }
 

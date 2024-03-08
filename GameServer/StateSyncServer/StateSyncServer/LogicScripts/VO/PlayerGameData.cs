@@ -1,4 +1,4 @@
-﻿using StateSyncServer.LogicScripts.Enum;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +15,7 @@ namespace StateSyncServer.LogicScripts.VO
         //所在房间Id
         public int roomId = 0;
         //状态
-        public StateEnum state = StateEnum.IDLE;
+        //public StateEnum state = StateEnum.IDLE;
         //可视范围
         public float lookRange = 100;
         //当前位置信息

@@ -11,7 +11,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bases
 {
     public class Collider
     {
-        public int ColliderCheckType = InstanceTypeEnum.ALL;
+        public int ColliderCheckType;
         /// <summary>
         /// 有物体进入范围时调用
         /// </summary>

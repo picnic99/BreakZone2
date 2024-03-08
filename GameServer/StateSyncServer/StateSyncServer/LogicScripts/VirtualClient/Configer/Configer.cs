@@ -32,7 +32,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Configer
         private static JsonElement LoadJson(string file)
         {
             var temp = ResourceManager.GetInstance().GetConfigRes(file);
-            JsonElement jsonElement = JsonSerializer.Deserialize<JsonElement>(temp));
+            JsonElement jsonElement = JsonSerializer.Deserialize<JsonElement>(temp);
             return jsonElement;
         }
     }

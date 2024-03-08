@@ -5,6 +5,7 @@ using StateSyncServer.LogicScripts.VirtualClient.Manager;
 using StateSyncServer.LogicScripts.VirtualClient.Skills.Base;
 using System;
 using System.Collections.Generic;
+using System.Numerics;
 
 namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
 {
@@ -25,7 +26,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
             PlayAnim(skillData.GetAnimKey(0));
             base.OnEnter();
             skillDurationTime = stateDurationTime = 0.6f;
-            AudioEventDispatcher.GetInstance().Event(MomentType.DoSkill, this, "start", this.character.playerId,character.InstanceId);
+            AudioEventDispatcher.GetInstance().Event(MomentType.DoSkill, this, "start", this.character.playerId, character.InstanceId);
 
         }
 
@@ -69,36 +70,40 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
             RootSkill = skill;
             enterCall = call;
             instancePath = "ShenPan2";
-            instanceObj = ResourceManager.GetInstance().GetSkillInstance(instancePath);
-            Init();
+            //Init();
         }
 
         public override void InitTransform()
         {
-            var crt = RootSkill.character;
-            instanceObj.transform.forward = crt.trans.forward;
-            instanceObj.transform.position = crt.trans.position;
-            instanceObj.transform.localScale = new Vector3(0.7f, 0.7f, 0.7f); //shenpan2
-            instanceObj.transform.SetParent(crt.trans);
+            Vector3 pos = RootSkill.character.Trans.Position;
+            float rot = RootSkill.character.Trans.Rot;
+            InstanceManager.GetInstance().CreateSkillInstance(instancePath, pos, rot);
+            //挂载crt下方
         }
 
         public override void AddBehaviour()
         {
             var crt = RootSkill.character;
-            crt.physic.Move(crt.trans.Forward.Normalize() * 2.5f, 0.3f);
-            TimeManager.GetInstance().AddFrameLoopTimer(this, 0f, skillDurationTime1 + skillDurationTime2, () =>
+            crt.physic.Move(crt.Trans.Forward.Normalize() * 2.5f, 0.3f);
+            var t = TimeManager.GetInstance().AddLoopTimer(this, () =>
             {
                 if (skillDurationTime1 > 0)
                 {
-                    skillDurationTime1 -= Time.deltaTime;
+                    //skillDurationTime1 -= Time.deltaTime;
                 }
                 else if (skillDurationTime2 > 0)
                 {
-                    instanceObj.transform.SetParent(null);
-                    instanceObj.transform.position += instanceObj.transform.forward * Time.deltaTime * 20f;
+                    /*                    instanceObj.transform.SetParent(null);
+                                        instanceObj.transform.position += instanceObj.transform.forward * Time.deltaTime * 20f;*/
+                    //取消挂载crt
+                    //向前位移
                 }
-            },
-            End);
+            }, 0f);
+            TimeManager.GetInstance().AddOnceTimer(this, skillDurationTime1 + skillDurationTime2, () =>
+            {
+                End();
+                TimeManager.GetInstance().RemoveAllTimer(this);
+            });
         }
 
         public override void InvokeEnterTrigger(Character target)

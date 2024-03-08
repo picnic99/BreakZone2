@@ -26,20 +26,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bases
         public RangeScan(Character character)
         {
             this.character = character;
-            InitDrawer();
-        }
-
-        public void InitDrawer()
-        {
-            if (character == null || character.trans == null) return;
-            EventDispatcher.GetInstance().On(EventDispatcher.MAIN_ROLE_CHANGE, UpdateRangeScan);
-            HideRange();
-        }
-
-        public void UpdateRangeScan(object[] args)
-        {
-            if (character == GameContext.CurRole) character.state = CharacterState.FRIEND;
-            else character.state = CharacterState.ENEMY;
+            //InitDrawer();
         }
 
         /// <summary>
@@ -54,12 +41,12 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bases
         /// <returns></returns>
         public Character[] CheckShphere(Vector3 pos, Vector3 dir, string degree, float radius, RangeType type)
         {
-            float[] degs = new float[2]; int i = 0;
+            List<Character> result = new List<Character>();
+/*            float[] degs = new float[2]; int i = 0;
             foreach (var item in degree.Split(',')) degs[i++] = Convert.ToSingle(item);
             var left_border = Quaternion.AngleAxis(degs[0], Vector3.up) * dir;
-            var right_border = Quaternion.AngleAxis(degs[1], Vector3.up) * dir;
-            List<Character> result = new List<Character>();
-            foreach (var target in GameContext.AllCharacter)
+            var right_border = Quaternion.AngleAxis(degs[1], Vector3.up) * dir;*/
+/*            foreach (var target in GameContext.AllCharacter)
             {
                 if (target != character)
                 {
@@ -78,7 +65,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bases
                     }
                 }
 
-            }
+            }*/
             return result.ToArray();
         }
 
@@ -92,7 +79,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bases
         /// <returns></returns>
         public Vector3 RotateRound(Vector3 position, Vector3 center, Vector3 axis, float angle)
         {
-            return Quaternion.AngleAxis(angle, axis) * (position - center) + center;
+            return Vector3.Zero;//Quaternion.AngleAxis(angle, axis) * (position - center) + center;
         }
     }
 }

@@ -42,7 +42,8 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Characters
         //物理控制器
         public PhysicController physic { get; set; }
 
-        public Transform trans => instance.trans;
+        public Transform Trans => instance.trans;
+        public int InstanceId => instance.InstanceId;
         //事件管理器
         public EventDispatcher eventDispatcher;
         //状态机 只负责角色状态之间的切换
@@ -103,6 +104,10 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Characters
         public void InitData()
         {
             //todo
+            instance.trans.Position = Vector3.Zero;
+            instance.trans.Rot = 0;
+            instance.trans.Scale = Vector3.One;
+
         }
 
         public Vector2 GetPlayerInput()

@@ -76,9 +76,11 @@ namespace Assets.LogicScripts.Client.Manager
 
             var result = rep.Result;
             var crtId = rep.CrtId;
+            var instanceId = rep.InstanceId;
             if (result == ProtocolResultEnum.SUCCESS)
             {
                 CommonUtils.Logout("选择角色" + crtId + "完毕");
+                PlayerManager.GetInstance().Self.instanceId = instanceId;
                 SendEnterSceneReq(PlayerManager.GetInstance().Self.lastStaySceneId);
             }
         }
@@ -133,27 +135,33 @@ namespace Assets.LogicScripts.Client.Manager
         {
             Protocol proto = args[0] as Protocol;
             SyncGameDataNtf ntf = proto.GetDataInstance<SyncGameDataNtf>();
-            var CrtData = ntf.CrtData;
+            var insData = ntf.InstanceData;
 
             /**
              * 同步原则
              * 1.服务器只同步实体的数据
              * 2.找到当前客户端的实体 若存在则同步数据 更新实体 若不存在 则因此实体
              */
-            CharacterManager.GetInstance().HideAllCharacter();
-            foreach (var item in CrtData)
+            InstanceManager.GetInstance().HideAllInstance();
+            foreach (var item in insData)
             {
-                var crt = CharacterManager.GetInstance().FindCharacter(item.PlayerId);
+                var crt = InstanceManager.GetInstance().FindInstance(item.InstanceId);
 
                 if (crt == null)
                 {
-                    crt = CharacterManager.GetInstance().CreateCharacter(1, item.PlayerId);
+                    crt = InstanceManager.GetInstance().CreateInstance(item);
                 }
+                else
+                {
+                    crt.data = item;
+                }
+                crt.ApplyCrtData();
+                crt.obj.SetActive(true);
 
-                crt.CrtData.Pos = new Vector3(item.PosX, item.PosY, item.PosZ);
+/*                crt.CrtData.Pos = new Vector3(item.Pos.X, item.Pos.Y, item.Pos.Z);
                 crt.CrtData.Rot = item.Rot;
                 crt.SetActive(true);
-                crt.ApplyCrtData();
+                crt.ApplyCrtData();*/
             }
 
         }
@@ -162,9 +170,9 @@ namespace Assets.LogicScripts.Client.Manager
         {
             Protocol proto = args[0] as Protocol;
             GameAnimPlayNtf ntf = proto.GetDataInstance<GameAnimPlayNtf>();
-            var PlayerId = ntf.PlayerId;
+            var InstanceId = ntf.InstanceId;
             var AnimName = ntf.AnimName;
-            var crt = CharacterManager.GetInstance().FindCharacter(PlayerId);
+            var crt = CharacterManager.GetInstance().FindCharacter(InstanceId);
             if (crt != null)
             {
                 AnimManager.GetInstance().PlayAnim(crt.CharacterAnimator, AnimName);
@@ -211,9 +219,9 @@ namespace Assets.LogicScripts.Client.Manager
             var lastStaySceneId = rep.LastStaySceneId;
 
             Vector3 lastStayPos = new Vector3(
-                rep.LastStayPosX,
-                rep.LastStayPosY,
-                rep.LastStayPosZ);
+                rep.LastStayPos.X,
+                rep.LastStayPos.Y,
+                rep.LastStayPos.Z);
 
             Player p = new Player();
             p.playerId = playerId;

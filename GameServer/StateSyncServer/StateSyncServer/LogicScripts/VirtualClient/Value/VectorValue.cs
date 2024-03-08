@@ -34,9 +34,9 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Value
         {
             foreach (var item in modGroups.groups)
             {
-                if (item.value.y != 0)
+                if (item.value.Y != 0)
                 {
-                    item.value.y = 0;
+                    item.value.Y = 0;
                 }
             }
 

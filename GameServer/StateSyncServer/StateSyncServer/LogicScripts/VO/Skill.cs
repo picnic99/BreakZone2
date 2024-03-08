@@ -6,14 +6,14 @@ using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using StateSyncServer.LogicScripts.Util;
-using StateSyncServer.LogicScripts.Enum;
 using StateSyncServer.LogicScripts.VirtualClient.Manager;
+using static StateSyncServer.LogicScripts.VirtualClient.Manager.SkillManager;
 
 namespace StateSyncServer.LogicScripts.VO
 {
     class Skill
     {
-        public int playerId;
+/*        public int playerId;
         public int skillId;
         public int tickCtn = 0;//当前播放帧
         public Vector3[] animData;//动画数据
@@ -24,7 +24,7 @@ namespace StateSyncServer.LogicScripts.VO
             this.playerId = playerId;
             this.skillId = skillId;
             this.player = null; //CharacterManager.GetInstance().GetPlayer(this.playerId);
-            if (this.skillId == (int)SkillId.XUAN_FENG_ZHAN)
+            if (this.skillId == (int)skillCD.XUAN_FENG_ZHAN)
             {
                 this.animData = AnimManager.JumpAnimData;
             }
@@ -61,6 +61,6 @@ namespace StateSyncServer.LogicScripts.VO
 
             //计算相对位移
             this.player.MoveAt(offset);
-        }
+        }*/
     }
 }

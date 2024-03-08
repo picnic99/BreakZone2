@@ -23,7 +23,7 @@ namespace StateSyncServer.LogicScripts.VO
         {
             if (data.curDurationTime <= 0)
             {
-                BulletManager.GetInstance().RemoveBullet(this);
+                //BulletManager.GetInstance().RemoveBullet(this);
                 return;
             }
             data.curDurationTime -= Global.FixedFrameTimeS;

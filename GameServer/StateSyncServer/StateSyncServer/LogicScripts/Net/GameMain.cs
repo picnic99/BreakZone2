@@ -97,11 +97,11 @@ namespace StateSyncServer.LogicScripts.Net
                         }*/
             //ActionManager.GetInstance().ClearAction();
             //技能数据迭代
-            LogicScripts.Manager.SkillManager.GetInstance().Tick();
+            //LogicScripts.Manager.SkillManager.GetInstance().Tick();
             //数据迭代
             LogicScripts.Manager.CharacterManager.GetInstance().Tick();
             //弹道迭代
-            BulletManager.GetInstance().Tick();
+            //BulletManager.GetInstance().Tick();
         }
 
         public void Handle(Protocol protocol)

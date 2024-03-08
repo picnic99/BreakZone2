@@ -14,7 +14,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Manager
     {
         public int curEffectIdIndex = 1;
 
-        private Dictionary<int, GameEffect> datas = new Dictionary<int, GameEffect>();
+        //private Dictionary<int, GameEffect> datas = new Dictionary<int, GameEffect>();
 
         /// <summary>
         /// 创建特效

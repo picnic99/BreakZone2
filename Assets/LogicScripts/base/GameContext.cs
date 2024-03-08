@@ -27,7 +27,7 @@ public class GameContext
         set
         {
             _curRole = value;
-            EventDispatcher.GetInstance().Event(EventDispatcher.MAIN_ROLE_CHANGE, value);
+            //EventDispatcher.GetInstance().Event(EventDispatcher.MAIN_ROLE_CHANGE, value);
         }
     }
 

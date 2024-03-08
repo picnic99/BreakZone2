@@ -40,147 +40,106 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Manager
 
         public override void Init()
         {
-            MonoBridge.GetInstance().StartCoroutine(Coroutine());
+            //MonoBridge.GetInstance().StartCoroutine(Coroutine());
             base.Init();
         }
 
-        public void AddOnceTimer(object caller, float delayTime, Action call)
+        public void RegisterTimer(object call, Timer t)
         {
-            //TimeVO vo = new TimeVO(caller, TimeVO.ONCE, delayTime, 0, call);
-            //vos.Add(vo);
+            if (t == null) return;
+
+            if (datas.ContainsKey(call))
+            {
+                List<Timer> timers = datas[call];
+                if (timers == null)
+                {
+                    timers = new List<Timer>();
+                }
+                t.Start();
+                timers.Add(t);
+            }
+            else
+            {
+                datas.Add(call, new List<Timer>() { t });
+            }
+        }
+
+        public void RemoveTimer(object call, Timer t)
+        {
+            if (t == null) return;
+            if (datas.ContainsKey(call))
+            {
+                List<Timer> timers = datas[call];
+                if (timers != null)
+                {
+                    t.Stop();
+                    t.Dispose();
+                    timers.Remove(t);
+                }
+            }
+        }
+
+        public Timer AddOnceTimer(object caller, float delayTime, Action call)
+        {
             Timer t = new Timer();
             t.Interval = delayTime;
-            ElapsedEventHandler func = null; 
+            ElapsedEventHandler func = null;
             func = (sender, args) =>
             {
                 call.Invoke();
+                RemoveTimer(call, t);
             };
             t.Elapsed += func;
-            t.Start();
-            datas.Add(caller, t);
+            RegisterTimer(caller, t);
+            return t;
         }
 
-        public void AddFrameLoopTimer(object caller, float delayTime, float durationTime, Action call, Action endCall)
+        /// <summary>
+        /// 添加一个循环计时器
+        /// </summary>
+        /// <param name="caller">调用者</param>
+        /// <param name="call">方法</param>
+        /// <param name="delayTime">延迟执行</param>
+        /// <param name="fixedTime">固定间隔</param>
+        /// <param name="ctn">最大次数 -1 无限大</param>
+        /// <returns></returns>
+        public Timer AddLoopTimer(object caller, Action call, float delayTime = 0, float fixedTime = Global.FixedFrameTimeS, int ctn = -1)
         {
-            TimeVO vo = new TimeVO(caller, TimeVO.FRAME, delayTime, durationTime, call, endCall);
-            vos.Add(vo);
-        }
-
-        public void AddLoopTimer(object caller, float delayTime, Action call)
-        {
-            TimeVO vo = new TimeVO(caller, TimeVO.FOREVER, delayTime, float.MaxValue, call);
-            vos.Add(vo);
-        }
-
-
-        public void RemoveTimer(object caller, Action call)
-        {
-            for (int i = 0; i < vos.Count; i++)
+            int curCtn = 0;
+            Timer t = new Timer();
+            t.Interval = delayTime;
+            t.AutoReset = true;
+            ElapsedEventHandler func = null;
+            func = (sender, args) =>
             {
-                TimeVO vo = vos[i];
-                if (vo.caller == caller && vo.call == call)
+                call.Invoke();
+                t.Interval = fixedTime;
+                curCtn++;
+                if (ctn != -1 && curCtn >= ctn)
                 {
-                    vos.Remove(vo);
-                    return;
+                    RemoveTimer(call, t);
                 }
-            }
+            };
+            t.Elapsed += func;
+            RegisterTimer(caller, t);
+            return t;
         }
 
         public void RemoveAllTimer(object caller)
         {
-            List<TimeVO> temp = new List<TimeVO>();
-            for (int i = 0; i < vos.Count; i++)
+            if (datas.ContainsKey(caller))
             {
-                TimeVO vo = vos[i];
-                if (vo.caller == caller)
+                List<Timer> timers = datas[caller];
+                if(timers != null)
                 {
-                    temp.Add(vo);
-                }
-            }
-
-            foreach (var item in temp)
-            {
-                vos.Remove(item);
-            }
-        }
-
-        /// <summary>
-        /// 持续时间触发N次
-        /// </summary>
-        /// <param name="durationTime">持续时间</param>
-        /// <param name="triggerCtn">触发次数</param>
-        /// <param name="call">触发的函数</param>
-        /// <param name="triggerTime">触发时间点 默认为平均时间 time/ctn </param>
-        public void AddTimeByDurationCtn(object caller, float durationTime, int triggerCtn, Action call, bool immediateInvoke = false, float[] triggerTime = null)
-        {
-            List<float> tTimes = new List<float>();
-            float cd = durationTime / triggerCtn;
-            if (triggerTime == null)
-            {
-                float offSetTime = immediateInvoke ? 0 : cd;
-                for (int i = 0; i < triggerCtn; i++)
-                {
-                    tTimes.Add(cd * i + offSetTime);
-                }
-            }
-            else
-            {
-                tTimes = new List<float>(triggerTime);
-            }
-
-            foreach (var item in tTimes)
-            {
-                AddOnceTimer(caller, item, call);
-            }
-        }
-
-        /// <summary>
-        /// 下一帧调用
-        /// </summary>
-        /// <param name="call"></param>
-        public void AddFixedFrameCall(Action call, int frameCtn = 1)
-        {
-            MonoBridge.GetInstance().StartCoroutine(WaitFixedFrame(call, frameCtn));
-        }
-
-        IEnumerator WaitFixedFrame(Action call, int frameCtn)
-        {
-            for (int i = 0; i < frameCtn; i++)
-            {
-                yield return new WaitForEndOfFrame();
-            }
-            call();
-        }
-
-
-
-        IEnumerator Coroutine()
-        {
-            while (true)
-            {
-
-                for (int i = 0; i < vos.Count; i++)
-                {
-                    var vo = vos[i];
-                    if (vo.delayTime > 0)
+                    foreach (var item in timers)
                     {
-                        vo.delayTime -= Global.FixedFrameTimeMS;
+                        item.Stop();
+                        item.Dispose();
                     }
-                    else
-                    {
-                        vo.call();
-                        vo.durationTime -= Global.FixedFrameTimeMS;
-                        if (vo.durationTime <= 0)
-                        {
-                            if (vo.type != TimeVO.FOREVER)
-                            {
-                                vo.endCall?.Invoke();
-                                vos.Remove(vo);
-                            }
-                        }
-                    }
+                    timers.Clear();
                 }
-                yield return new WaitForEndOfFrame();
+                datas.Remove(caller);
             }
         }
     }

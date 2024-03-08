@@ -41,16 +41,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
 
             AddState(target, character, StateType.Injure);
             DoDamage(target, character.property.Atk);
-            /*        AudioManager.GetInstance().Play("sword_damage1", false);
-                    AudioManager.GetInstance().Play("sword_damage2", false);*/
 
-            //顿帧
-/*            character.characterAnimator.SetSpeed(0);
-            TimeManager.GetInstance().AddOnceTimer(this, 0.02f, () =>
-            {
-                //character.anim.speed = 1;
-                character.characterAnimator.SetSpeed(1);
-            });*/
             var dir = character.instance.trans.Forward.Normalize();
             dir.Y = 0;
             target.physic.Move(dir * 1f, 0.2f);
@@ -73,23 +64,15 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
             this.call = call;
 
 
-            curAtk = instanceObj.transform.Find("atk" + index).gameObject;
-            curAtk.SetActive(true);
-            Init();
-            //CameraManager.GetInstance().HorizontalShake(0.05f);
+            /*            curAtk = instanceObj.transform.Find("atk" + index).gameObject;
+                        curAtk.SetActive(true);
+                        Init();*/
         }
-
-/*        public override void SetCollider(string layerName, CharacterState TriggerType)
-        {
-            collider = curAtk.transform.Find("collider").GetComponent<ColliderHelper>();
-            SetTriggerInfo(layerName, TriggerType);
-            collider.OnTriggerEnterCall += OnEnterTrigger;
-        }*/
 
         public override void OnEnterTrigger(Character col)
         {
             base.OnEnterTrigger(col);
-            Vector3 v = RootSkill.character.trans.Position;
+            Vector3 v = RootSkill.character.Trans.Position;
             GameInstance ins = InstanceManager.GetInstance().CreateEffectInstance("Common/BloodEffect", v, 0);
             TimeManager.GetInstance().AddOnceTimer(this, 0.5f, () =>
             {
@@ -100,33 +83,18 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
         public override void InvokeEnterTrigger(Character target)
         {
             call.Invoke(target);
-            //特效顿帧
-/*            var lzEffect = curAtk.GetComponentsInChildren<ParticleSystem>();
-            foreach (var item in lzEffect)
-            {
-                item.Pause();
-            }
-            TimeManager.GetInstance().AddOnceTimer(this, 0.02f, () =>
-            {
-                foreach (var item in lzEffect)
-                {
-                    item.Play();
-                }
-            });*/
         }
 
         public override void InitTransform()
         {
-            InstanceManager.GetInstance().CreateSkillInstance(instancePath,);
-            instanceObj = ResourceManager.GetInstance().GetSkillInstance(instancePath);
-            instanceObj.trans.SetParent(skill.character.trans);
-            instanceObj.trans.Rot = RootSkill.character.trans.Rot;
-            instanceObj.trans.Position = RootSkill.character.trans.Position + RootSkill.character.trans.Forward * 1f;
+            Vector3 pos = RootSkill.character.Trans.Position + RootSkill.character.Trans.Forward * 1f;
+            float rot = RootSkill.character.Trans.Rot;
+            InstanceManager.GetInstance().CreateSkillInstance(instancePath, pos, rot);
         }
 
         public override void AddBehaviour()
         {
-            TimeManager.GetInstance().AddLoopTimer(this, 0.02f, () =>
+            TimeManager.GetInstance().AddLoopTimer(this, () =>
             {
                 if (durationTime <= 0)
                 {
@@ -134,7 +102,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
                     return;
                 }
                 durationTime -= 0.02f;
-            });
+            }, 0.02f);
         }
     }
 }

@@ -96,7 +96,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Manager
 
         public override void Init()
         {
-            MonoBridge.GetInstance().AddCall(UpdateCD);
+            //MonoBridge.GetInstance().AddCall(UpdateCD);
             base.Init();
         }
     }

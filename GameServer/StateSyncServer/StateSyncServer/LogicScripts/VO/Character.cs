@@ -1,7 +1,6 @@
 ﻿using MathNet.Numerics.LinearAlgebra.Complex;
 using Msg;
 using StateSyncServer.LogicScripts.Common;
-using StateSyncServer.LogicScripts.Enum;
 using StateSyncServer.LogicScripts.Util;
 using System;
 using System.Collections.Generic;
@@ -62,7 +61,7 @@ namespace StateSyncServer.LogicScripts.VO
 
         private void Move()
         {
-            if (data.state != StateEnum.MOVE) return;
+            //if (data.state != StateEnum.MOVE) return;
 
             var moveMat = MatrixUtils.GetMoveMatrix(new Vector3(0, 0, data.moveSpeed * Global.FixedFrameTimeS));
             this.TransformMatrix = MatrixUtils.MulMatrix(this.TransformMatrix, moveMat);

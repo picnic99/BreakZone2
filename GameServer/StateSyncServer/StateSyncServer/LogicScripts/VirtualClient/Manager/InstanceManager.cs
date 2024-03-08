@@ -1,4 +1,5 @@
 ﻿using StateSyncServer.LogicScripts.VirtualClient.Bases;
+using StateSyncServer.LogicScripts.VirtualClient.Characters;
 using StateSyncServer.LogicScripts.VirtualClient.Enum;
 using StateSyncServer.LogicScripts.VirtualClient.Manager.Base;
 using System;
@@ -16,20 +17,29 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Manager
 
         public Dictionary<int, GameInstance> datas = new Dictionary<int, GameInstance>();
 
-        public void AddInstance(GameInstance ins)
+        public void AddInstance(GameInstance ins, string prefabName, Vector3 pos = default, Vector3 scale = default, float rot = 0)
         {
             ins.InstanceId = CurIntanceId++;
+            ins.PrefabName = prefabName;
+            if (pos == default)
+            {
+                pos = Vector3.Zero;
+            }
+            ins.trans.Position = pos;
+            if (scale == default)
+            {
+                scale = Vector3.One;
+            }
+            ins.trans.Scale = scale;
+            ins.trans.Rot = rot;
             datas.Add(ins.InstanceId, ins);
         }
 
-        public GameInstance CreateEffectInstance(string prefabName,Vector3 pos,float rot)
+        public GameInstance CreateEffectInstance(string prefabName, Vector3 pos, float rot)
         {
             GameInstance ins = new GameInstance(null);
             ins.SetInstanceType(InstanceTypeEnum.EFFECT);
-            ins.PrefabName = prefabName;
-            ins.trans.Position = pos;
-            ins.trans.Rot = rot;
-            AddInstance(ins);
+            AddInstance(ins, prefabName, pos, Vector3.One, rot);
             return ins;
         }
 
@@ -37,10 +47,15 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Manager
         {
             GameInstance ins = new GameInstance(null);
             ins.SetInstanceType(InstanceTypeEnum.EFFECT);
-            ins.PrefabName = prefabName;
-            ins.trans.Position = pos;
-            ins.trans.Rot = rot;
-            AddInstance(ins);
+            AddInstance(ins, prefabName, pos, Vector3.One, rot);
+            return ins;
+        }
+
+        public GameInstance CreateCrtInstance(string prefabName, Character crt)
+        {
+            GameInstance ins = new GameInstance(crt);
+            ins.SetInstanceType(InstanceTypeEnum.CHARACTER);
+            AddInstance(ins, prefabName);
             return ins;
         }
 

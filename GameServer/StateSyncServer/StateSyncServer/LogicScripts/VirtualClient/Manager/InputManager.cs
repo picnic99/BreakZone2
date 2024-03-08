@@ -151,7 +151,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Manager
         private void LookForward()
         {
             float CamRot = 0;//读取客户端的相机朝向
-            crt.trans.RotateTo(CamRot);
+            crt.Trans.RotateTo(CamRot);
 
         }
 

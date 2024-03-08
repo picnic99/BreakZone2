@@ -1,4 +1,5 @@
-﻿using Cinemachine;
+﻿using Assets.LogicScripts.Client.Entity;
+using Cinemachine;
 using UnityEngine;
 
 
@@ -24,6 +25,8 @@ public class CameraManager : Manager<CameraManager>
     public Camera CamRoot { get { return camRoot.GetComponent<Camera>(); } }
 
     public Character curLookCharacter;
+
+    public GameInstance curLookInstance;
 
     private int priority = 1;
 
@@ -52,8 +55,10 @@ public class CameraManager : Manager<CameraManager>
 
     public void SetTarget(object[] args)
     {
-        Character crt = args[0] as Character;
-        curLookCharacter = crt;
+       //Character crt = args[0] as Character;
+        GameInstance ins = args[0] as GameInstance;
+        curLookCharacter = null;
+        curLookInstance = ins;
         IsEnable = true;
         ShowMainCam();
     }
@@ -89,8 +94,9 @@ public class CameraManager : Manager<CameraManager>
 
     public void ShowMainCam()
     {
-        mainCam.Follow = curLookCharacter.trans;
-        mainCam.LookAt = curLookCharacter.anim.GetBoneTransform(HumanBodyBones.Spine);
+        Transform trans = curLookCharacter == null ? curLookInstance.obj.transform : curLookCharacter.trans;
+        mainCam.Follow = trans;
+        mainCam.LookAt = trans;//curLookCharacter.anim.GetBoneTransform(HumanBodyBones.Spine);
         mainCam.Priority = ++priority;
         state = CameraState.MAIN;
         curCam = mainCam;
@@ -98,8 +104,9 @@ public class CameraManager : Manager<CameraManager>
 
     public void ShowFeatureCam()
     {
-        featureCam.Follow = curLookCharacter.trans;
-        featureCam.LookAt = curLookCharacter.anim.GetBoneTransform(HumanBodyBones.Spine);
+        Transform trans = curLookCharacter == null ? curLookInstance.obj.transform : curLookCharacter.trans;
+        featureCam.Follow = trans;
+        featureCam.LookAt = trans; //curLookCharacter.anim.GetBoneTransform(HumanBodyBones.Spine);
         featureCam.Priority = ++priority;
         state = CameraState.FEATURE;
         curCam = featureCam;
@@ -107,6 +114,7 @@ public class CameraManager : Manager<CameraManager>
     }
     public void ShowArmCam()
     {
+        return;
         armCam.Follow = curLookCharacter.trans.Find("armTarget");
         armCam.LookAt = curLookCharacter.trans.Find("armTarget");
         state = CameraState.ARM;
@@ -151,6 +159,7 @@ public class CameraManager : Manager<CameraManager>
 
     public void ArmRotate()
     {
+        return;
         if (!IsEnable) return;
         if (curLookCharacter.IsDestroyed) return;
         if (state != CameraState.ARM) return;
