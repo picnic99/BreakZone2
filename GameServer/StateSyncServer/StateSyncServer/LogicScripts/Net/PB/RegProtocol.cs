@@ -31,6 +31,8 @@ namespace StateSyncServer.LogicScripts.Net.PB
             RegProtocolData(ProtocolId.CLIENT_GAME_PLAYER_INPUT_REQ, typeof(GamePlayerInputReq));
             RegProtocolData(ProtocolId.CLIENT_GAME_PLAYER_INPUT_NTF, typeof(GamePlayerInputNtf));
             RegProtocolData(ProtocolId.CLENT_SYNC_GAME_DATA_NTF, typeof(SyncGameDataNtf));
+            RegProtocolData(ProtocolId.CLIENT_GAME_PLAYER_ENTER_SCENE_NTF, typeof(GamePlayerEnterSeneNtf));
+            RegProtocolData(ProtocolId.CLIENT_GAME_SYNC_AOI_PLAYER_NTF, typeof(GameSyncAOIPlayerNtf));
         }
 
         public static Type GetProtocolType(int id)

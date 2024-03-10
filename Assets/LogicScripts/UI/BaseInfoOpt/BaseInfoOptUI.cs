@@ -1,3 +1,4 @@
+using Assets.LogicScripts.Client.Manager;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -41,7 +42,8 @@ public class BaseInfoOptUI : UIBase
 
     public void InitUI()
     {
-        vo = GameContext.CurRole.characterData;
+        return;
+        vo = PlayerManager.GetInstance().Self.Crt.CrtVO;
         //更新头像与昵称
         crtName.text = vo.character.Name;
         //技能信息

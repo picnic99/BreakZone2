@@ -1,18 +1,17 @@
 ﻿
+using StateSyncServer.LogicScripts.Manager;
 using StateSyncServer.LogicScripts.VirtualClient.Bridge;
 using StateSyncServer.LogicScripts.VirtualClient.Characters;
 using StateSyncServer.LogicScripts.VirtualClient.Configer;
 using StateSyncServer.LogicScripts.VirtualClient.Manager.Base;
 using StateSyncServer.LogicScripts.VirtualClient.VO;
-
 namespace StateSyncServer.LogicScripts.VirtualClient.Manager
 {
 
     /// <summary>
     /// 动画管理器
-    /// 先考虑用animator 后续改用playable
     /// </summary>
-    public class AnimManager : Manager<AnimManager>
+    public class AnimManager : LogicScripts.Manager.Manager<AnimManager>
     {
         /// <summary>
         /// 为某个角色播放一个动画
@@ -24,11 +23,8 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Manager
             //character.anim.Play(animName, translateTime);
             //character.anim.SetTrigger(animName);
             //CommonUtils.Logout(animName);
-        }
 
-        public void PlayAnim(Animator anim, string animName, float translateTime = 0.15f)
-        {
-            //anim.Play(animName, translateTime);
+            StateSyncServer.LogicScripts.Manager.ActionManager.GetInstance().SendAnimPlayNtf(character.playerId,0, animName,translateTime);
         }
 
         public void PlayStateAnim(Character character, StateVO state, float translateTime = 0.15f)

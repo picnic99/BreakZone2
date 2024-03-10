@@ -33,7 +33,7 @@ namespace StateSyncServer.LogicScripts.Manager
         /// </summary>
         /// <param name="protocol"></param>
         /// <param name="players"></param>
-        public void SendProtoToScene(List<Player> players, IMessage protocol)
+        public void SendProtoToPlayers(List<Player> players, IMessage protocol)
         {
             foreach (var item in players)
             {

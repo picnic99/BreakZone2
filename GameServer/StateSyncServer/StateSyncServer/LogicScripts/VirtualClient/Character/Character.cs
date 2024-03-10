@@ -23,7 +23,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Characters
     /// 角色管理器
     /// 
     /// </summary>
-    public class Character: Instance
+    public class Character : Instance
     {
         public int playerId;
 
@@ -65,7 +65,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Characters
 
         public LogicScripts.VO.Player player;
 
-        public Character(CharacterVO vo,int playerId, CharacterBaseInfo baseInfo = null)
+        public Character(CharacterVO vo, int playerId, CharacterBaseInfo baseInfo = null)
         {
             characterData = vo;
             this.playerId = playerId;
@@ -112,19 +112,24 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Characters
 
         public Vector2 GetPlayerInput()
         {
-            if(player != null)
+            if (player != null)
             {
                 return player.input;
             }
             return Vector2.Zero;
         }
 
-        /// <summary>
-        /// 应用玩家的操作
-        /// </summary>
-        public void ApplyOpt(GamePlayerOptReq opt)
+        public GamePlayerOptReq GetOpt()
         {
-            input.ApplyOpt(opt);
+            if (player != null)
+            {
+                if (player.optQueue.Count > 0)
+                {
+                    return player.optQueue.Dequeue();
+                }
+            }
+            return new GamePlayerOptReq();
+
         }
 
         public void AddEventListener()
@@ -146,6 +151,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Characters
         /// </summary>
         public void Tick()
         {
+            input?.Tick();
             physic?.OnUpdate();
             fsm?.OnUpdate();
             //是否死亡

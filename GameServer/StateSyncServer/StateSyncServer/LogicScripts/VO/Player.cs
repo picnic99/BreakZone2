@@ -1,5 +1,7 @@
 ﻿using Msg;
 using StateSyncServer.LogicScripts.Manager;
+using System.Collections;
+using System.Collections.Generic;
 using System.Numerics;
 
 namespace StateSyncServer.LogicScripts.VO
@@ -12,21 +14,18 @@ namespace StateSyncServer.LogicScripts.VO
     public class Player
     {
         public int playerId;
-        public string username;
-        public string password;
-
         public int lastStaySceneId = 1;
         public int SceneId => lastStaySceneId;
         public int lastSelectCrtId = 1;
+        public int CrtId => lastSelectCrtId;
         public Vector3 lastStayPos = Vector3.Zero;
 
         public Vector2 input = Vector2.Zero;
+        public Queue<GamePlayerOptReq> optQueue = new Queue<GamePlayerOptReq>();
 
-        public Player(int playerId, string username, string password)
+
+        public Player()
         {
-            this.playerId = playerId;
-            this.username = username;
-            this.password = password;
         }
 
         /// <summary>
@@ -37,10 +36,9 @@ namespace StateSyncServer.LogicScripts.VO
             this.input = input;
         }
 
-        public void ApplyPlayerOpt(GamePlayerOptReq opt)
+        public void SetOpt(GamePlayerOptReq opt)
         {
-            //将玩家的输入告知Crt  crt根据input的数据 去分析是否需要改变状态 然后流程可以走原先的一套
-            CharacterManager.GetInstance().Event(CharacterManager.PLAYER_OPT_CHANGE, playerId, opt);
+            this.optQueue.Enqueue(opt);
         }
     }
 }

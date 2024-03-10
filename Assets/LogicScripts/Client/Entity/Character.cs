@@ -23,6 +23,8 @@ namespace Assets.LogicScripts.Client.Entity
 
         public CharacterVO CrtVO { get; set; }
 
+        public bool IsSelf { get; set; }
+
         public Character(int CrtId)
         {
             if(CrtId > 0)
@@ -39,7 +41,7 @@ namespace Assets.LogicScripts.Client.Entity
                 CrtObj.transform.rotation = Quaternion.identity;
                 CrtData = new CharacterDataVO();
                 //初始化角色动画 默认播放Idle
-                AnimManager.GetInstance().PlayAnim(CharacterAnimator, "DEFAULT_IDLE");
+                //AnimManager.GetInstance().PlayAnim(CharacterAnimator, "DEFAULT_IDLE");
             }
         }
 
@@ -51,10 +53,20 @@ namespace Assets.LogicScripts.Client.Entity
             }
         }
 
-        public void ApplyCrtData()
+        public void ApplyTransform(Vector3 pos, float rot)
         {
-            CrtObj.transform.position = CrtData.Pos;
-            CrtObj.transform.rotation = Quaternion.AngleAxis(CrtData.Rot, Vector3.up);
+            CrtObj.transform.position = pos;
+            CrtObj.transform.rotation = Quaternion.AngleAxis(rot, Vector3.up);
+        }
+        public void ApplyAnim()
+        {
+
+        }
+
+        public void Clear()
+        {
+            MonoBridge.GetInstance().DestroyOBJ(CrtObj);
+            CharacterAnimator.OnDestroy();
         }
     }
 }

@@ -3,5 +3,5 @@
 
     void Init();
     void OnUpdate();
-      void Clear();
+    void Clear();
 }

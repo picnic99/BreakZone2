@@ -31,8 +31,8 @@ namespace StateSyncServer.LogicScripts.Manager
         public override void AddEventListener()
         {
             base.AddEventListener();
-            On(PLAYER_OPT_CHANGE, OnPlayeOptChange);
-            On(PLAYER_ADD_TO_SCENE, OnPlayerAddToScene);
+            //On(PLAYER_OPT_CHANGE, OnPlayeOptChange);
+            //On(PLAYER_ADD_TO_SCENE, OnPlayerAddToScene);
             On(CHARACTER_DIE, OnCharacterDie);
             On(CharacterEvent.PROPERTY_CHANGE, OnCharacterDie);
         }
@@ -40,8 +40,8 @@ namespace StateSyncServer.LogicScripts.Manager
         public override void RemoveEventListener()
         {
             base.RemoveEventListener();
-            Off(PLAYER_OPT_CHANGE, OnPlayeOptChange);
-            Off(PLAYER_ADD_TO_SCENE, OnPlayerAddToScene);
+            //Off(PLAYER_OPT_CHANGE, OnPlayeOptChange);
+            //Off(PLAYER_ADD_TO_SCENE, OnPlayerAddToScene);
             Off(CHARACTER_DIE, OnCharacterDie);
             Off(CharacterEvent.PROPERTY_CHANGE, OnCharacterDie);
 
@@ -74,28 +74,12 @@ namespace StateSyncServer.LogicScripts.Manager
         }
 
         /// <summary>
-        /// 当玩家的操作改变
-        /// </summary>
-        /// <param name="args"></param>
-        public void OnPlayeOptChange(object[] args)
-        {
-            int playerId = (int)args[0];
-            GamePlayerOptReq opt = args[1] as GamePlayerOptReq;
-
-            var c = FindCharacter(playerId);
-            if (c != null)
-            {
-                c.ApplyOpt(opt);
-            }
-        }
-
-        /// <summary>
         /// 当玩家进入场景
         /// </summary>
         /// <param name="args"></param>
-        public void OnPlayerAddToScene(object[] args)
+        public void OnPlayerAddToScene(int pId)
         {
-            int playerId = (int)args[0];
+            int playerId = pId;
             //检测是否已经有实体存在
             //存在：初始化实体的数据 如属性值 当前的状态 位置旋转 携带的技能和buff
             //不存在：创建一个新的实体

@@ -81,6 +81,11 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Manager
 
         public Timer AddOnceTimer(object caller, float delayTime, Action call)
         {
+            if(delayTime <= 0)
+            {
+                call();
+                return null;
+            }
             Timer t = new Timer();
             t.Interval = delayTime;
             ElapsedEventHandler func = null;

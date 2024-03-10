@@ -91,11 +91,11 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Manager
             Buff buffInstance = null;
             if (args == null || args.Length <= 0)
             {
-                buffInstance = (Buff)buff.Assembly.CreateInstance(buff.Name);
+                buffInstance = (Buff)buff.Assembly.CreateInstance(buff.FullName);
             }
             else
             {
-                buffInstance = (Buff)buff.Assembly.CreateInstance(buff.Name, false, BindingFlags.Default, null, args, null, null);
+                buffInstance = (Buff)buff.Assembly.CreateInstance(buff.FullName, false, BindingFlags.Default, null, args, null, null);
             }
             return buffInstance;
         }

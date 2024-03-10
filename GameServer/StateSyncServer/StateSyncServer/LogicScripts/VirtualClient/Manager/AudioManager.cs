@@ -26,7 +26,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Manager
 
                 LogicScripts.VO.Player player = PlayerManager.GetInstance().FindPlayer(playerId);
                 System.Collections.Generic.List<LogicScripts.VO.Player> players = PlayerManager.GetInstance().GetAllPlayerInScene(player.SceneId);
-                NetManager.GetInstance().SendProtoToScene(players, ntf);
+                NetManager.GetInstance().SendProtoToPlayers(players, ntf);
             }
         }
     }

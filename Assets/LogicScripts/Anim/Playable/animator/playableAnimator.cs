@@ -53,4 +53,11 @@ public class playableAnimator
     {
         _speed = value;
     }
+
+    public void OnDestroy()
+    {
+        graph.Destroy();
+        _anim = null;
+        rootNode = null;
+    }
 }

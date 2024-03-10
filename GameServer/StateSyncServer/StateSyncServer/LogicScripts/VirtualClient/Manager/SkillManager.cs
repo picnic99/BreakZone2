@@ -44,7 +44,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Manager
         public Skill CreateSkill(int skillId, Character character = null, string stateName = null)
         {
             Type type = RegSkillClass.GetInstance().GetType(skillId);
-            Skill skill = (Skill)type.Assembly.CreateInstance(type.Name);
+            Skill skill = (Skill)type.Assembly.CreateInstance(type.FullName);
             var vo = SkillConfiger.GetInstance().GetSkillById(skillId);
             skill.skillData = vo;
             if (stateName != null) skill.belongState = stateName;

@@ -18,6 +18,7 @@ message PlayerLoginReq {
 
 message PlayerLoginRep {
     int32 result = 1;
+	int32 playerId = 2;
 	int32 type = 3;
 }
 
@@ -36,7 +37,7 @@ message SelectCrtReq{
 message SelectCrtRep{
 	int32 result = 1;
 	int32 crtId = 2;
-	int32 instanceId = 3;
+	int32 sceneId = 3;
 }
 
 message EnterSceneReq{
@@ -167,4 +168,20 @@ message GameInstanceTransformNtf{
 message GameInstanceDestroyNtf{
 	int32 instanceId = 1;
 	float delay = 2;
+}
+
+
+message GamePlayerBaseInfo{
+	int32 playerId = 1;
+	int32 crtId = 2;
+	Vec3 pos = 3;
+	float rot = 4;
+}
+ 
+message GamePlayerEnterSeneNtf{
+	GamePlayerBaseInfo playerInfo = 1;
+}
+
+message GameSyncAOIPlayerNtf{
+	repeated GamePlayerBaseInfo playerInfos = 1;
 }

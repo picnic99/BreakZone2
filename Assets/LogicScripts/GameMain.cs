@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
+using Assets.LogicScripts.Client.Manager;
 
 public class GameMain : MonoBehaviour
 {
@@ -39,6 +40,11 @@ public class GameMain : MonoBehaviour
             GameSceneManager.GetInstance(),
             CameraManager.GetInstance(),
         };
+
+        Assets.LogicScripts.Client.Manager.ActionManager.GetInstance().Init();
+        SceneManager.GetInstance().Init();
+        //CharacterManager.GetInstance().Init();
+
         GameStart();
     }
 
@@ -49,7 +55,7 @@ public class GameMain : MonoBehaviour
         while (ProtoList.Count > 0)
         {
             var protocol = ProtoList.Dequeue();
-            EventDispatcher.GetInstance().Event(protocol.protocolId, protocol);
+            Assets.LogicScripts.Client.Manager.ActionManager.GetInstance().Event(protocol.protocolId, protocol);
         }
         UpdateManager();
     }

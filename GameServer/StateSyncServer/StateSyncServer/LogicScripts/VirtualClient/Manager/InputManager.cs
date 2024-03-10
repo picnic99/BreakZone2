@@ -26,16 +26,10 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Manager
             this.crt = null;
         }
 
-        public void ApplyOpt(GamePlayerOptReq opt)
-        {
-            if (crt == null) return;
-            Tick(opt);
-        }
-
-        public void Tick(GamePlayerOptReq opt)
+        public void Tick()
         {
             Vector2 input = crt.GetPlayerInput();
-
+            GamePlayerOptReq opt = crt.GetOpt();
             var moveDelta = input;
             //移动与奔跑
             if (moveDelta.Length() >= thresholdMove 

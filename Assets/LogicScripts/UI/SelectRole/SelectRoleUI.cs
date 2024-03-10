@@ -1,3 +1,4 @@
+using Assets.LogicScripts.Client.Common;
 using Assets.LogicScripts.Client.Manager;
 using Assets.LogicScripts.Client.Net.PB.Enum;
 using System.Collections;
@@ -74,7 +75,7 @@ public class SelectRoleUI : UIBase
     }
     public void OnLoginOut(object[] args)
     {
-        Assets.LogicScripts.Client.Manager.ActionManager.GetInstance().SendLoginReq(PlayerManager.GetInstance().Self.username, "", LoginTypeEnum.LOGIN_Out);
+        Assets.LogicScripts.Client.Manager.ActionManager.GetInstance().SendLoginReq("", "", LoginTypeEnum.LOGIN_Out,Global.SelfPlayerId);
     }
 
     private void updateTabs()

@@ -67,14 +67,13 @@ namespace Assets.LogicScripts.Client
 
             if (!GameContext.CurScene.IsFightScene) return;
 
-            if (!Input.anyKey) return;
+            //if (!Input.anyKey) return;
 
             var input = GetPlayInput();
             Assets.LogicScripts.Client.Manager.ActionManager.GetInstance().SendPlayerInput(input.x,input.z);
 
             //前进 后退 左移 右移 加速 攻击 跳跃 技能1 技能2 技能3 技能4 瞄准 闪避
             GamePlayerOptReq proto = new GamePlayerOptReq();
-
 
             proto.UpMove = GetKeyOptState(KeyCode.W);
             proto.DownMove = GetKeyOptState(KeyCode.S);
@@ -90,14 +89,48 @@ namespace Assets.LogicScripts.Client
             proto.Skill3 = GetKeyOptState(KeyCode.R);
             proto.Skill4 = GetKeyOptState(KeyCode.F);
 
-            if (GetPlayInput().magnitude >= thresholdMove && (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D)))
+/*            if (GetPlayInput().magnitude >= thresholdMove && (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D)))
             {
                 if (CameraManager.GetInstance().state != CameraState.MAIN) return;
-                Vector3 angles = GameContext.CurRole.trans.position - CameraManager.GetInstance().curCam.transform.rotation.eulerAngles;
+                Vector3 angles = PlayerManager.GetInstance().Self.Trans.position - CameraManager.GetInstance().curCam.transform.rotation.eulerAngles;
                 proto.Rot = angles.y;
+            }*/
+
+            if (IsVaildOpt(proto))
+            {
+                NetManager.GetInstance().SendProtocol(proto);
+                lastOpt = proto;
+            }
+        }
+
+
+        public GamePlayerOptReq lastOpt;
+        public bool IsVaildOpt(GamePlayerOptReq opt)
+        {
+            if(lastOpt == null)
+            {
+                return true;
+            }
+            if(opt.UpMove != lastOpt.UpMove 
+               || opt.DownMove != lastOpt.DownMove
+               || opt.LeftMove != lastOpt.LeftMove
+               || opt.RightMove != lastOpt.RightMove
+               || opt.AddSpeed != lastOpt.AddSpeed
+               || opt.Arm != lastOpt.Arm
+               || opt.Flash != lastOpt.Flash
+               || opt.Jump != lastOpt.Jump
+               || opt.Atk != lastOpt.Atk
+               || opt.Skill1 != lastOpt.Skill1
+               || opt.Skill2 != lastOpt.Skill2
+               || opt.Skill3 != lastOpt.Skill3
+               || opt.Skill4 != lastOpt.Skill4
+               || opt.Rot != lastOpt.Rot
+              )
+            {
+                return true;
             }
 
-            NetManager.GetInstance().SendProtocol(proto);
+            return false;
         }
     }
 }

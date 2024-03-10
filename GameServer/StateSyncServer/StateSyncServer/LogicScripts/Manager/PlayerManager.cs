@@ -13,10 +13,13 @@ namespace StateSyncServer.LogicScripts.Manager
         public int curIdIndex = 1;
         Dictionary<int, Player> datas = new Dictionary<int, Player>();
 
-        public Player GetPlayer(string username, string password)
+        public Player FindPlayerFromDB(string username, string password)
         {
+            //UID PWD 作用从数据库查找到玩家数据
+
+            Player p = new Player();
             //从数据库读取这个玩家的数据 存入实体中
-            Player p = new Player(curIdIndex++, username, password);
+            p.playerId = curIdIndex++;
             datas.Add(p.playerId, p);
             return p;
         }
@@ -63,6 +66,20 @@ namespace StateSyncServer.LogicScripts.Manager
             }
             return result;
         }
+
+        public List<Player> GetAllPlayerInSceneNoSelf(int sceneId,int selfId)
+        {
+            List<Player> result = new List<Player>();
+            foreach (var item in datas)
+            {
+                if (item.Value.lastStaySceneId == sceneId && item.Value.playerId != selfId)
+                {
+                    result.Add(item.Value);
+                }
+            }
+            return result;
+        }
+
 
         public void RemovePlayer(int playerId)
         {

@@ -27,5 +27,8 @@ namespace Assets.LogicScripts.Client.Net.PB
         public static int CLIENT_PLAYER_PROPERTY_CHANGE_NTF = 20007;//玩家属性发送改变
         public static int CLIENT_GAME_PLAYER_INPUT_REQ = 20008;//玩家按键输入值
         public static int CLIENT_GAME_PLAYER_INPUT_NTF = 20009;//玩家按键输入值
+
+        public static int CLIENT_GAME_PLAYER_ENTER_SCENE_NTF = 20010;//玩家加入场景
+        public static int CLIENT_GAME_SYNC_AOI_PLAYER_NTF = 20011;//同步玩家周围的所有玩家
     }
 }

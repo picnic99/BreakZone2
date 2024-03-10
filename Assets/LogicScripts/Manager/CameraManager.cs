@@ -26,7 +26,7 @@ public class CameraManager : Manager<CameraManager>
 
     public Character curLookCharacter;
 
-    public GameInstance curLookInstance;
+    public Transform CurLookTarget;
 
     private int priority = 1;
 
@@ -53,12 +53,9 @@ public class CameraManager : Manager<CameraManager>
         }
     }
 
-    public void SetTarget(object[] args)
+    public void SetTarget(Transform target)
     {
-       //Character crt = args[0] as Character;
-        GameInstance ins = args[0] as GameInstance;
-        curLookCharacter = null;
-        curLookInstance = ins;
+        CurLookTarget = target;
         IsEnable = true;
         ShowMainCam();
     }
@@ -66,7 +63,7 @@ public class CameraManager : Manager<CameraManager>
     public override void AddEventListener()
     {
         base.AddEventListener();
-        EventDispatcher.GetInstance().On(EventDispatcher.MAIN_ROLE_CHANGE, SetTarget);
+        //EventDispatcher.GetInstance().On(EventDispatcher.MAIN_ROLE_CHANGE, SetTarget);
     }
 
     public override void Init()
@@ -94,7 +91,7 @@ public class CameraManager : Manager<CameraManager>
 
     public void ShowMainCam()
     {
-        Transform trans = curLookCharacter == null ? curLookInstance.obj.transform : curLookCharacter.trans;
+        Transform trans = CurLookTarget;
         mainCam.Follow = trans;
         mainCam.LookAt = trans;//curLookCharacter.anim.GetBoneTransform(HumanBodyBones.Spine);
         mainCam.Priority = ++priority;
@@ -104,7 +101,7 @@ public class CameraManager : Manager<CameraManager>
 
     public void ShowFeatureCam()
     {
-        Transform trans = curLookCharacter == null ? curLookInstance.obj.transform : curLookCharacter.trans;
+        Transform trans = CurLookTarget;
         featureCam.Follow = trans;
         featureCam.LookAt = trans; //curLookCharacter.anim.GetBoneTransform(HumanBodyBones.Spine);
         featureCam.Priority = ++priority;

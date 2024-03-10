@@ -16,14 +16,12 @@ public class GameRoomScene : GameScene
     public override void OnEnter()
     {
         base.OnEnter();
-        CameraManager.GetInstance().OpenCam();
-
         //生成主角
-        crt = CharacterManager.GetInstance().CreateFightCharacter(GameContext.SelectCrtId);
+/*        crt = CharacterManager.GetInstance().CreateFightCharacter(GameContext.SelectCrtId);
         SceneCrts.Add(crt);
         crt.baseInfo.isNeedStateBar = false;
         crt.trans.parent = GameObject.Find("SceneRoot").transform;
-        GameContext.CurRole = crt;
+        GameContext.CurRole = crt;*/
         CameraManager.GetInstance().OpenCam();
         UIManager.GetInstance().ShowUI(RegUIClass.BaseInfoOptUI);
         //生成NPC

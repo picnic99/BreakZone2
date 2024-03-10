@@ -67,6 +67,7 @@ namespace StateSyncServer.LogicScripts.Net
         private void Init()
         {
             LogicScripts.Manager.ActionManager.GetInstance().Init();
+            LogicScripts.Manager.CharacterManager.GetInstance().Init();
         }
 
 
@@ -74,34 +75,7 @@ namespace StateSyncServer.LogicScripts.Net
 
         public void Update(object state)
         {
-            /*            if (watch.IsRunning)
-                        {
-                            watch.Stop();
-                            // 获取经过的时间（毫秒）  
-                            long elapsedMilliseconds = watch.ElapsedMilliseconds;
-
-                            // 输出结果  
-                            //Console.WriteLine("执行时间: {0} 毫秒", elapsedMilliseconds);
-                            watch.Reset();
-                        }
-                        else
-                        {
-                            watch.Start();
-                        }*/
-
-            //处理事件
-            /*            for (int i = 0; i < ActionManager.GetInstance().ActionList.Count; i++)
-                        {
-                            var action = ActionManager.GetInstance().ActionList[i];
-                            ActionManager.GetInstance().FightHandle(action);
-                        }*/
-            //ActionManager.GetInstance().ClearAction();
-            //技能数据迭代
-            //LogicScripts.Manager.SkillManager.GetInstance().Tick();
-            //数据迭代
             LogicScripts.Manager.CharacterManager.GetInstance().Tick();
-            //弹道迭代
-            //BulletManager.GetInstance().Tick();
         }
 
         public void Handle(Protocol protocol)

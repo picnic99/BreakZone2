@@ -59,7 +59,8 @@ public class LoadDll : MonoBehaviour
             "System.Core.dll.bytes", // 如果使用了Linq，需要这个
             // "Newtonsoft.Json.dll",
             // "protobuf-net.dll",
-            "UnityEngine.CoreModule.dll.bytes"
+            "UnityEngine.CoreModule.dll.bytes",
+            "Google.Protobuf.dll.bytes"
         };
 
         for (int i = 0; i < aotDllList.Count; i++)
