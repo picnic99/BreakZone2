@@ -77,7 +77,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Buffs.newBuff
         public override void OnUpdate()
         {
             if (!IsEnable) return;
-            durationTime -= Global.FixedFrameTimeMS;
+            durationTime -= Global.FixedFrameTimeS;
             if (durationTime <= 0 || buffComponents == null || buffComponents.Count <= 0)
             {
                 OnEnd();

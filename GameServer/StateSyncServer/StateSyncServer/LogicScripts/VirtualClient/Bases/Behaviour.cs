@@ -12,14 +12,18 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bases
     public abstract class Behaviour
     {
         public Character character;
-        public float durationTime = 0;
+        public float durationTime
+        {
+            get;
+            set;
+        }
         /// <summary>
         /// 创建后执行
         /// </summary>
         public abstract void OnEnter();
         public virtual void OnUpdate()
         {
-            durationTime -= Global.FixedFrameTimeMS;
+            durationTime -= Global.FixedFrameTimeS;
             if (durationTime <= 0)
             {
                 OnEnd();

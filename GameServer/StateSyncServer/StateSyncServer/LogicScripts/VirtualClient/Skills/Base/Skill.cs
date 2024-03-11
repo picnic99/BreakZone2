@@ -48,9 +48,11 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.Base
         //技能能否再次触发
         public bool CanTriggerAgain = false;
 
-        public List<SkillInstance> instanceList = new List<SkillInstance>();
+        //public List<SkillInstance> instanceList = new List<SkillInstance>();
         //当前技能阶段
         public int StageNum = 0;
+        //最大阶段数
+        public int maxStageNum = 1;
         /// <summary>
         /// 所属状态 此技能为状态技能
         /// </summary>
@@ -146,7 +148,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.Base
 
         public override void OnUpdate()
         {
-            skillDurationTime -= Global.FixedFrameTimeMS;
+            skillDurationTime -= Global.FixedFrameTimeS;
             //CommonUtils.Logout($"当前技能为：{skillData.skill.Name},剩余时间：{skillDurationTime}");
             if (skillDurationTime <= 0)
             {
@@ -193,6 +195,10 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.Base
         {
             skillState = SkillInStateEnum.TRIGGER;
             StageNum++;
+            if (StageNum >= maxStageNum)
+            {
+                StageNum = 0;
+            }
         }
         /// <summary>
         /// 后摇
@@ -209,10 +215,10 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.Base
 
         public void OnDestroy()
         {
-            foreach (var item in instanceList)
+/*            foreach (var item in instanceList)
             {
                 item.End();
-            }
+            }*/
         }
     }
 }

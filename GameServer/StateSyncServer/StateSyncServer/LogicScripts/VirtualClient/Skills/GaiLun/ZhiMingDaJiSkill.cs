@@ -135,7 +135,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
                     }
                 }
                 DoMove();
-                durationTime -= Global.FixedFrameTimeMS;
+                durationTime -= Global.FixedFrameTimeS;
             }, 0.25f);
         }
 

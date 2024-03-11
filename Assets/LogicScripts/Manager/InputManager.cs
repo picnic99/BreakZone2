@@ -31,8 +31,9 @@ public class InputManager : Manager<InputManager>
         }
 
         var moveDelta = GetPlayInput();
+
         //移动与奔跑
-        if (moveDelta.magnitude >= thresholdMove && (Input.GetKey(KeyCode.W)|| Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D)))
+        if (moveDelta.magnitude >= thresholdMove && (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D)))
         {
             if (GameContext.CharacterIncludeState(StateType.Move))
             {
@@ -116,7 +117,7 @@ public class InputManager : Manager<InputManager>
         }
         if (Input.GetKeyDown(KeyCode.LeftControl))
         {
-            if(moveDelta.magnitude > 0)
+            if (moveDelta.magnitude > 0)
             {
                 ChangeState(GameContext.CurRole, StateType.Roll, GameContext.GetCharacterSkillIdByIndex(2));
             }
@@ -132,7 +133,8 @@ public class InputManager : Manager<InputManager>
     }
 
 
-    private void LookForward() {
+    private void LookForward()
+    {
         if (CameraManager.GetInstance().state != CameraState.MAIN) return;
         Vector3 dir = GameContext.CurRole.trans.position - CameraManager.GetInstance().curCam.transform.position;
         if (GameContext.CurRole.canRotate)

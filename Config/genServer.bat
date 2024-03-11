@@ -6,7 +6,7 @@ dotnet %LUBAN_DLL% ^
     -d json ^
     -c cs-dotnet-json ^
     --conf %CONF_ROOT%\luban.conf ^
-    -x outputDataDir=D:\u3dPoj\BreakZone2\GameServer\StateSyncServer\StateSyncServer\Config ^
-    -x outputCodeDir=D:\u3dPoj\BreakZone2\GameServer\StateSyncServer\StateSyncServer\LogicScripts\VirtualClient\Configer\Config
+    -x outputDataDir=..\GameServer\StateSyncServer\StateSyncServer\Config ^
+    -x outputCodeDir=..\GameServer\StateSyncServer\StateSyncServer\LogicScripts\VirtualClient\Configer\Config
 
 pause

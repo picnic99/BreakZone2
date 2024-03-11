@@ -13,9 +13,9 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
     {
         public string effectPath = "";
 
-        public GaiLunAttack()
+        public GaiLunAttack() : base()
         {
-            CanTriggerAgain = true;
+
         }
 
         public override void OnEnter()
@@ -30,7 +30,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
             TimeManager.GetInstance().AddOnceTimer(this, skillData.GetFrontTime(StageNum), () =>
               {
                   var ins = new GaiLunAtkInstance(this, index, DoDamage);
-                  instanceList.Add(ins);
+                  //instanceList.Add(ins);
                   AudioEventDispatcher.GetInstance().Event(MomentType.DoSkill, this, "atk", character.playerId, character.instance.InstanceId);
               });
         }

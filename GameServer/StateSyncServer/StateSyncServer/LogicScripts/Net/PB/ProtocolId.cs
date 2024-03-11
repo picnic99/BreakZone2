@@ -30,5 +30,12 @@ namespace StateSyncServer.LogicScripts.Net.PB
 
         public static int CLIENT_GAME_PLAYER_ENTER_SCENE_NTF = 20010;//玩家加入场景
         public static int CLIENT_GAME_SYNC_AOI_PLAYER_NTF = 20011;//同步玩家周围的所有玩家
+
+        public static int CLIENT_GAME_PLAYER_OPT_CMD_REQ = 20012;//发送玩家操作指令
+        public static int CLIENT_GAME_PLAYER_OPT_CMD_REP = 20013;//接收玩家操作指令
+        public static int CLIENT_GAME_PLAYER_INPUT_CMD_REQ = 20014;//发送玩家输入指令 input和rot
+        public static int CLIENT_GAME_PLAYER_INPUT_CMD_NTF = 20015;//同步玩家输入指令 input和rot
+        public static int CLIENT_GAME_SYNC_STATE_CHANGE_NTF = 20016;//同步状态发生改变
+
     }
 }

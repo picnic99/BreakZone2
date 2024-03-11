@@ -18,6 +18,7 @@ public sealed partial class AnimClipData : Luban.BeanBase
     public AnimClipData(JsonElement _buf) 
     {
         AnimPath = _buf.GetProperty("animPath").GetString();
+        RealLength = _buf.GetProperty("realLength").GetSingle();
         X = _buf.GetProperty("x").GetInt32();
         Y = _buf.GetProperty("y").GetInt32();
     }
@@ -28,6 +29,7 @@ public sealed partial class AnimClipData : Luban.BeanBase
     }
 
     public readonly string AnimPath;
+    public readonly float RealLength;
     public readonly int X;
     public readonly int Y;
    
@@ -39,12 +41,14 @@ public sealed partial class AnimClipData : Luban.BeanBase
         
         
         
+        
     }
 
     public override string ToString()
     {
         return "{ "
         + "animPath:" + AnimPath + ","
+        + "realLength:" + RealLength + ","
         + "x:" + X + ","
         + "y:" + Y + ","
         + "}";

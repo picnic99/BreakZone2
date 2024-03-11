@@ -6,7 +6,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills
 {
     public class BaseRoll : Skill
     {
-        public BaseRoll()
+        public BaseRoll() : base()
         {
             stateDurationTime = 1f;
             skillDurationTime = 1.2f;
@@ -31,9 +31,9 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills
 
         private int GetAnimIndexByInput()
         {
-            //var input = character.input;
+            var input = character.input.inputData;
             int animIndex = 0;
-/*            if (input.z >= 0)
+            if (input.Y >= 0)
             {
                 //前
                 animIndex = 0;
@@ -43,16 +43,16 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills
                 //后
                 animIndex = 1;
             }
-            if (input.x > 0)
+            if (input.X > 0)
             {
                 //右
                 animIndex = 3;
             }
-            else if (input.x < 0)
+            else if (input.X < 0)
             {
                 //左
                 animIndex = 2;
-            }*/
+            }
             return animIndex;
 
         }

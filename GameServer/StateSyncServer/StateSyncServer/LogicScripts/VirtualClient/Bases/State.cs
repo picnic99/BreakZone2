@@ -29,6 +29,8 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bases
             this.character = character;
             stateData = vo;
             durationTime = time;
+            CommonUtils.Logout(stateData.stateName + "ctor持续时间剩余" + durationTime);
+
         }
 
         public override void OnEnter()
@@ -44,6 +46,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bases
             {
                 character.eventDispatcher.On(EventDispatcher.OPT_REDUCE_STATE_TIME, OnOptReduceTime);
             }
+            CommonUtils.Logout(stateData.stateName + "OnEnter持续时间剩余" + durationTime);
         }
 
 
@@ -81,11 +84,13 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bases
 
             if (stateData.exitType == cfg.StateExitType.TIME_EXIT || stateData.exitType == cfg.StateExitType.CHANGE_TIME_EXIT)
             {
-                durationTime -= Global.FixedFrameTimeMS;
+                CommonUtils.Logout(stateData.stateName + "持续时间剩余" + durationTime);
+                durationTime -= Global.FixedFrameTimeS;
                 if (durationTime <= 0)
                 {
                     character.eventDispatcher.Event(CharacterEvent.STATE_OVER, this);
                     stateEnd = true;
+                    CommonUtils.Logout(stateData.stateName + "持续时间完毕");
                 }
             }
         }

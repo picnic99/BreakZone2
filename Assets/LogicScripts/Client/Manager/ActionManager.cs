@@ -29,6 +29,11 @@ namespace Assets.LogicScripts.Client.Manager
             On(ProtocolId.CLIENT_ANIM_PLAY_NTF, HandleAnimPlay);
             On(ProtocolId.CLIENT_GAME_PLAYER_ENTER_SCENE_NTF, Handle_GamePlayerEnterSeneNtf);
             On(ProtocolId.CLIENT_GAME_SYNC_AOI_PLAYER_NTF, Handle_GameSyncAOIPlayerNtf);
+
+            On(ProtocolId.CLIENT_GAME_PLAYER_OPT_CMD_REP, Handle_GamePlayerOptCmdRep);
+            On(ProtocolId.CLIENT_GAME_PLAYER_INPUT_CMD_NTF, Handle_GamePlayerInputCmdNtf);
+            On(ProtocolId.CLIENT_GAME_SYNC_STATE_CHANGE_NTF, Handle_GameSyncStateChangeNtf);
+
         }
 
         public override void RemoveEventListener()
@@ -44,6 +49,11 @@ namespace Assets.LogicScripts.Client.Manager
             Off(ProtocolId.CLIENT_ANIM_PLAY_NTF, HandleAnimPlay);
             Off(ProtocolId.CLIENT_GAME_PLAYER_ENTER_SCENE_NTF, Handle_GamePlayerEnterSeneNtf);
             Off(ProtocolId.CLIENT_GAME_SYNC_AOI_PLAYER_NTF, Handle_GameSyncAOIPlayerNtf);
+
+            Off(ProtocolId.CLIENT_GAME_PLAYER_OPT_CMD_REP, Handle_GamePlayerOptCmdRep);
+            Off(ProtocolId.CLIENT_GAME_PLAYER_INPUT_CMD_NTF, Handle_GamePlayerInputCmdNtf);
+            Off(ProtocolId.CLIENT_GAME_SYNC_STATE_CHANGE_NTF, Handle_GameSyncStateChangeNtf);
+
 
         }
 
@@ -318,98 +328,66 @@ namespace Assets.LogicScripts.Client.Manager
             }
         }
 
-
-
-
-        /*        public void Handle(Protocol protocol)
-                {
-                    switch (protocol.protocolId)
-                    {
-                        case ProtocolId.CLIENT_PLAYER_LOGIN_REP:
-                            Debug.Log("收到角色登录返回");
-                            Handle_LoginRep(protocol);
-                            break;
-                        case ProtocolId.CLIENT_PLAYER_BASE_INFO_NTF:
-                            Debug.Log("收到玩家的基础信息");
-                            Handle_PlayerBaseInfoNtf(protocol);
-                            break;
-                        case ProtocolId.CLIENT_SELECT_ROLE_REP:
-                            Debug.Log("选择角色返回");
-
-                            break;
-                        case ProtocolId.CLIENT_ENTER_SCENE_REP:
-                            Debug.Log("进入场景返回");
-                            break;
-                        case ProtocolId.CLENT_GET_GAME_DATA_REP:
-                            Debug.Log("获取游戏数据返回");
-                            break;
-                        case ProtocolId.CLENT_SYNC_GAME_DATA_NTF:
-                            Debug.Log("游戏数据同步通知");
-                            break;
-                        case ProtocolId.CLIENT_GAME_PLAYER_OPT_REP:
-                            Debug.Log("玩家操作返回");
-                            break;
-                        case ProtocolId.CLIENT_OBJ_CREATE_NTF:
-                            Debug.Log("物体创建");
-                            break;
-                        case ProtocolId.CLIENT_OBJ_TRANSFORM_NTF:
-                            Debug.Log("物体变化");
-                            break;
-                        case ProtocolId.CLIENT_ANIM_PLAY_NTF:
-                            Debug.Log("动画播放");
-                            break;
-                        case ProtocolId.CLIENT_AUDIO_PLAY_NTF:
-                            Debug.Log("音频播放");
-                            break;
-                        case ProtocolId.CLIENT_PLAYER_PROPERTY_CHANGE_NTF:
-                            Debug.Log("玩家属性发送改变");
-                            break;
-                        default:
-                            break;
-                    }
-                }
-
-                public void Send_LoginReq(string username,string password)
-                {
-                    if (!String.IsNullOrEmpty(username) || !String.IsNullOrEmpty(password))
-                    {
-                        //提示
-                    }
-                    var req = new PlayerLoginReq();
-                    req.username = username;
-                    req.password = password;
-                    NetManager.GetInstance().SendProtocol(req);
-                }
-                private void Handle_LoginRep(Protocol proto)
-                {
-                    PlayerLoginRep action = proto as PlayerLoginRep;
-                    int result = action.result;
-                    int type = action.type;
-                    if (result == (int)ProtocolResultEnum.SUCCESS)
-                    {
-                        if (type == 0)
-                        {
-                            //退出登录
-                            //清理数据
-                            //返回到登录场景
-                        }
-                        else if (type == 1)
-                        {
-                            //登录
-                            //写入数据
-                            //进入到选择角色场景
-                        }
-                    }
-                }*/
-
-        private void Handle_PlayerBaseInfoNtf(Protocol proto)
+        public void Send_GamePlayerOptCmdReq(string cmd, int type, int param)
         {
-            /*            PlayerBaseInfoNtf action = proto as PlayerBaseInfoNtf;
-                        var baseInfo = action.baseInfo;
-                        if (baseInfo != null)
-                        {
-                            Common.GameContext.playerBaseInfo = baseInfo;
-                        }*/
+            GamePlayerOptCmdReq req = new GamePlayerOptCmdReq();
+            req.PlayerId = Global.SelfPlayerId;
+            req.Cmd = cmd;
+            req.Type = type;
+            req.Param = param;
+            NetManager.GetInstance().SendProtocol(req);
         }
+
+        private void Handle_GamePlayerOptCmdRep(object[] args)
+        {
+            Protocol proto = args[0] as Protocol;
+            GamePlayerOptCmdRep rep = proto.GetDataInstance<GamePlayerOptCmdRep>();
+
+            int playerId = rep.PlayerId;
+            int result = rep.Result;
+
+            if (result != ProtocolResultEnum.SUCCESS)
+            {
+                CommonUtils.Logout("操作失败!");
+            }
+        }
+
+        public void Send_GamePlayerInputCmdReq(float inputX, float inputY, float rot)
+        {
+            GamePlayerInputCmdReq req = new GamePlayerInputCmdReq();
+            req.PlayerId = Global.SelfPlayerId;
+            req.InputX = inputX;
+            req.InputY = inputY;
+            req.Rot = rot;
+            NetManager.GetInstance().SendProtocol(req);
+        }
+        private void Handle_GamePlayerInputCmdNtf(object[] args)
+        {
+            Protocol proto = args[0] as Protocol;
+            GamePlayerInputCmdNtf ntf = proto.GetDataInstance<GamePlayerInputCmdNtf>();
+
+            Vector2 inputData = new Vector2(ntf.InputX, ntf.InputY);
+            float Rot = ntf.Rot;
+            int pId = ntf.PlayerId;
+
+            //通知对应角色应用输入
+            Player player = PlayerManager.GetInstance().FindPlayer(pId);
+            if (player != null)
+            {
+                player.Crt.CrtData.Input = inputData;
+            }
+            player.Trans.rotation = Quaternion.Euler(0, Rot, 0);
+        }
+
+        private void Handle_GameSyncStateChangeNtf(object[] args)
+        {
+            Protocol proto = args[0] as Protocol;
+            GameSyncStateChangeNtf ntf = proto.GetDataInstance<GameSyncStateChangeNtf>();
+
+            GamePlayerBaseInfo info = ntf.PlayerInfo;
+            Player p = PlayerManager.GetInstance().FindPlayer(info.PlayerId);
+            p.UpdateBaseInfo(info);
+        }
+
     }
 }

@@ -16,6 +16,8 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Manager
 
         public float thresholdMove = 0f;
 
+        public Vector2 inputData;
+
         public InputManager(Character crt)
         {
             this.crt = crt;
@@ -26,10 +28,34 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Manager
             this.crt = null;
         }
 
+        public void ApplyInput(GamePlayerInputCmdReq req)
+        {
+            inputData = new Vector2(req.InputX,req.InputY);
+            if(inputData.Length() > 0)
+            {
+                LookForward(req.Rot);
+            }
+        }
+
+        public void ApplyOpt(GamePlayerOptCmdReq req)
+        {
+            if(req.Type == 1)
+            {
+                //添加状态
+                ChangeState(crt,req.Cmd,req.Param - 1);
+            }
+            else
+            {
+                //移除状态
+                StopState(req.Cmd);
+            }
+        }
+
         public void Tick()
         {
-            Vector2 input = crt.GetPlayerInput();
-            GamePlayerOptReq opt = crt.GetOpt();
+            return;
+            Vector2 input = Vector2.Zero;
+            GamePlayerOptReq opt = null;
             var moveDelta = input;
             //移动与奔跑
             if (moveDelta.Length() >= thresholdMove 
@@ -75,7 +101,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Manager
 
                 if (!GameContext.CharacterIncludeState(StateType.Roll, crt))
                 {
-                    LookForward();
+                    //LookForward();
                 }
             }
             else
@@ -142,11 +168,9 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Manager
         /// <summary>
         /// 看向相机方向
         /// </summary>
-        private void LookForward()
+        private void LookForward(float rot)
         {
-            float CamRot = 0;//读取客户端的相机朝向
-            crt.Trans.RotateTo(CamRot);
-
+            crt.Trans.RotateTo(rot);
         }
 
         /// <summary>

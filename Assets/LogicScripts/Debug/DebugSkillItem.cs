@@ -60,13 +60,13 @@ public class DebugSkillItem
 
     private void OnClick()
     {
-        if (this.skillIndex >= 0)
+/*        if (this.skillIndex >= 0)
         {
             InputManager.GetInstance().ChangeState(GameContext.CurRole, stateName, this.skillIndex);
         }
         else
         {
             InputManager.GetInstance().ChangeState(GameContext.CurRole, stateName);
-        }
+        }*/
     }
 }

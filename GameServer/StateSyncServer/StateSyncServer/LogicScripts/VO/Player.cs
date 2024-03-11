@@ -21,24 +21,19 @@ namespace StateSyncServer.LogicScripts.VO
         public Vector3 lastStayPos = Vector3.Zero;
 
         public Vector2 input = Vector2.Zero;
-        public Queue<GamePlayerOptReq> optQueue = new Queue<GamePlayerOptReq>();
-
 
         public Player()
         {
         }
 
-        /// <summary>
-        /// 存储玩家的输入数据
-        /// </summary>
-        public void SetInput(Vector2 input)
+        public void SetInput(GamePlayerInputCmdReq input)
         {
-            this.input = input;
+            CharacterManager.GetInstance().FindCharacter(playerId).ApplyInput(input);
         }
 
-        public void SetOpt(GamePlayerOptReq opt)
+        public void SetOpt(GamePlayerOptCmdReq opt)
         {
-            this.optQueue.Enqueue(opt);
+            CharacterManager.GetInstance().FindCharacter(playerId).ApplyOpt(opt);
         }
     }
 }

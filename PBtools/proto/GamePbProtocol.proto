@@ -20,7 +20,7 @@ message PlayerLoginRep {
     int32 result = 1;
 	int32 playerId = 2;
 	int32 type = 3;
-}
+}                                                                
 
 message PlayerBaseInfoNtf{
 	int32 playerId = 1;
@@ -176,6 +176,7 @@ message GamePlayerBaseInfo{
 	int32 crtId = 2;
 	Vec3 pos = 3;
 	float rot = 4;
+	repeated string states = 5;
 }
  
 message GamePlayerEnterSeneNtf{
@@ -184,4 +185,34 @@ message GamePlayerEnterSeneNtf{
 
 message GameSyncAOIPlayerNtf{
 	repeated GamePlayerBaseInfo playerInfos = 1;
+}
+
+message GameSyncStateChangeNtf{
+	GamePlayerBaseInfo playerInfo = 1;
+}
+
+message GamePlayerOptCmdReq{
+	int32 playerId = 1;
+	string cmd = 2;
+	int32 type = 3;
+	int32 param = 4;
+}
+
+message GamePlayerOptCmdRep{
+	int32 playerId = 1;
+	int32 result = 2;
+}
+
+message GamePlayerInputCmdReq{
+	float playerId = 1;
+	float inputX = 2;
+	float inputY = 3;
+	float Rot = 4;
+}
+
+message GamePlayerInputCmdNtf{
+	int32 playerId = 1;
+	float inputX = 2;
+	float inputY = 3;
+	float Rot = 4;
 }

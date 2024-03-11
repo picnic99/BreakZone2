@@ -39,7 +39,7 @@ namespace Assets.LogicScripts.Client.Entity
         {
             get
             {
-                if(_crt == null)
+                if(_crt == null && Global.InGameScene)
                 {
                     if(playerId != 0 && CrtId != 0)
                     {

@@ -26,7 +26,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Manager
             }
             public void Reduce()
             {
-                time -= Global.FixedFrameTimeMS;
+                time -= Global.FixedFrameTimeS;
             }
 
             public float GetTime()

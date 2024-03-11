@@ -46,13 +46,12 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Manager
         /// <returns></returns>
         public float GetAnimTime(string animKey, int index = 0)
         {
-            float len = 0;
-/*            var animPath = AnimConfiger.GetInstance().GetAnimByAnimKey(animKey);
-            AnimationClip clip = ResourceManager.GetInstance().LoadResource<AnimationClip>("Anims/" + animPath.animation.Clips[index].AnimPath);
-            if (clip != null && clip.length > 0)
+            float len = 1;
+            var anim = AnimConfiger.GetInstance().GetAnimByAnimKey(animKey);
+            if(anim != null)
             {
-                len = clip.length;
-            }*/
+                return anim.animation.Clips[index].RealLength;
+            }
             return len;
         }
     }

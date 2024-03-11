@@ -11,19 +11,15 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills
     {
         //再次触发最大等待时间
         public float maxWaitTime = 0.5f;
-        public BaseAttack()
+        public BaseAttack() : base()
         {
             //允许再次触发
             CanTriggerAgain = true;
+            maxStageNum = 3;
         }
 
         public override void OnEnter()
         {
-            if (StageNum >= 3)
-            {
-                StageNum = 0;
-            }
-
             //播放动画前 考虑动画覆盖问题
             //动画覆盖分为两种 1 状态动画 2 技能动画
             AnimCoverVO vo = character.animCoverData.GetHead(belongState);
@@ -57,7 +53,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills
 
             triggered = true;
             Vector3 v = character.instance.trans.Position;
-            GameInstance ins = InstanceManager.GetInstance().CreateEffectInstance("Common/BloodEffect",v,0);
+            GameInstance ins = InstanceManager.GetInstance().CreateEffectInstance("Common/BloodEffect", v, 0);
 
             character.eventDispatcher.Event(CharacterEvent.ATK, new Character[] { target });
 

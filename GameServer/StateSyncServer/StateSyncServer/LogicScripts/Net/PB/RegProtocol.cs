@@ -33,6 +33,12 @@ namespace StateSyncServer.LogicScripts.Net.PB
             RegProtocolData(ProtocolId.CLENT_SYNC_GAME_DATA_NTF, typeof(SyncGameDataNtf));
             RegProtocolData(ProtocolId.CLIENT_GAME_PLAYER_ENTER_SCENE_NTF, typeof(GamePlayerEnterSeneNtf));
             RegProtocolData(ProtocolId.CLIENT_GAME_SYNC_AOI_PLAYER_NTF, typeof(GameSyncAOIPlayerNtf));
+            RegProtocolData(ProtocolId.CLIENT_GAME_PLAYER_OPT_CMD_REQ, typeof(GamePlayerOptCmdReq));
+            RegProtocolData(ProtocolId.CLIENT_GAME_PLAYER_OPT_CMD_REP, typeof(GamePlayerOptCmdRep));
+            RegProtocolData(ProtocolId.CLIENT_GAME_PLAYER_INPUT_CMD_REQ, typeof(GamePlayerInputCmdReq));
+            RegProtocolData(ProtocolId.CLIENT_GAME_PLAYER_INPUT_CMD_NTF, typeof(GamePlayerInputCmdNtf));
+            RegProtocolData(ProtocolId.CLIENT_GAME_SYNC_STATE_CHANGE_NTF, typeof(GameSyncStateChangeNtf));
+
         }
 
         public static Type GetProtocolType(int id)

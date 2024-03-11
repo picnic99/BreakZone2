@@ -379,7 +379,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Buffs
             //buff是否结束
             if (isOver) return;
             //计时
-            durationTime -= Global.FixedFrameTimeMS;
+            durationTime -= Global.FixedFrameTimeS;
             //能否触发
             if (CanTrigger())
             {

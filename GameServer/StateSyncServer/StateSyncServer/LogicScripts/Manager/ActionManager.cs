@@ -22,6 +22,9 @@ namespace StateSyncServer.LogicScripts.Manager
             ActionManager.GetInstance().On(ProtocolId.CLIENT_GAME_PLAYER_OPT_REQ, HandlePlayerGameOpt);
             ActionManager.GetInstance().On(ProtocolId.CLIENT_GAME_PLAYER_INPUT_REQ, HandlePlayerInput);
             ActionManager.GetInstance().On(ProtocolId.CLENT_GET_GAME_DATA_REQ, HandleGetGameDataReq);
+            ActionManager.GetInstance().On(ProtocolId.CLIENT_GAME_PLAYER_OPT_CMD_REQ, Handle_GamePlayerOptCmdReq);
+            ActionManager.GetInstance().On(ProtocolId.CLIENT_GAME_PLAYER_INPUT_CMD_REQ, Handle_GamePlayerInputCmdReq);
+
         }
 
         public override void RemoveEventListener()
@@ -33,6 +36,8 @@ namespace StateSyncServer.LogicScripts.Manager
             ActionManager.GetInstance().Off(ProtocolId.CLIENT_GAME_PLAYER_OPT_REQ, HandlePlayerGameOpt);
             ActionManager.GetInstance().Off(ProtocolId.CLIENT_GAME_PLAYER_INPUT_REQ, HandlePlayerInput);
             ActionManager.GetInstance().Off(ProtocolId.CLENT_GET_GAME_DATA_REQ, HandleGetGameDataReq);
+            ActionManager.GetInstance().Off(ProtocolId.CLIENT_GAME_PLAYER_OPT_CMD_REQ, Handle_GamePlayerOptCmdReq);
+            ActionManager.GetInstance().Off(ProtocolId.CLIENT_GAME_PLAYER_INPUT_CMD_REQ, Handle_GamePlayerInputCmdReq);
         }
 
         /// <summary>
@@ -194,7 +199,7 @@ namespace StateSyncServer.LogicScripts.Manager
 
             Player player = proto.GetPlayer();
             if (player == null) return;
-            player.SetInput(new Vector2(InputX, InputY));
+            //player.SetInput(new Vector2(InputX, InputY));
             //协议返回
             GamePlayerInputNtf ntf = new GamePlayerInputNtf();
             ntf.InputX = InputX;
@@ -219,7 +224,7 @@ namespace StateSyncServer.LogicScripts.Manager
             Player player = proto.GetPlayer();
             if (player != null)
             {
-                player.SetOpt(req);
+                //player.SetOpt(req);
             }
 
             //协议返回
@@ -383,6 +388,50 @@ namespace StateSyncServer.LogicScripts.Manager
             List<Player> players = SceneManager.GetInstance().GetPlayerInSceneByPid(playerId);
             if (players == null || players.Count == 0) return;
             NetManager.GetInstance().SendProtoToPlayers(players, NTF);
+        }
+
+        private void Handle_GamePlayerOptCmdReq(object[] args)
+        {
+            Protocol proto = args[0] as Protocol;
+            GamePlayerOptCmdReq req = proto.GetDataInstance<GamePlayerOptCmdReq>();
+            proto.GetPlayer().SetOpt(req);
+        }
+
+        private void Handle_GamePlayerInputCmdReq(object[] args)
+        {
+            Protocol proto = args[0] as Protocol;
+            GamePlayerInputCmdReq req = proto.GetDataInstance<GamePlayerInputCmdReq>();
+            proto.GetPlayer().SetInput(req);
+        }
+
+        public void Send_GameSyncStateChangeNtf(int playerId)
+        {
+            Player p = PlayerManager.GetInstance().FindPlayer(playerId);
+
+
+            GameSyncStateChangeNtf ntf = new GameSyncStateChangeNtf();
+            var info = new GamePlayerBaseInfo()
+            {
+                PlayerId = p.playerId,
+                CrtId = p.CrtId,
+                Pos = new Vec3() { X = p.lastStayPos.X, Y = p.lastStayPos.Y, Z = p.lastStayPos.Z },
+                Rot = 0
+            };
+
+            VirtualClient.Characters.Character c = CharacterManager.GetInstance().FindCharacter(playerId);
+
+            foreach (var item in c.fsm.myState.states)
+            {
+                info.States.Add(item.stateData.stateName);
+            }
+
+            ntf.PlayerInfo = info;
+
+            List<Player> players = SceneManager.GetInstance().GetPlayersInScene(p.SceneId);
+            if (players.Count > 0)
+            {
+                NetManager.GetInstance().SendProtoToPlayers(players, ntf);
+            }
         }
     }
 }

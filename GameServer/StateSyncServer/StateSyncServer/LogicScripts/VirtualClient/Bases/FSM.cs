@@ -86,7 +86,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bases
         {
             nextState = args;
             checkStateCanChange = true;
-            CommonUtils.Logout("nextState == args");
+            //CommonUtils.Logout("nextState == args");
         }
 
         private State StateHandler(object[] args)
@@ -274,6 +274,8 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bases
             State state = myState.AddState(stateName, stateTime, stateInfo);
             if (state != null)
             {
+                //状态发生了改变
+                StateSyncServer.LogicScripts.Manager.ActionManager.GetInstance().Send_GameSyncStateChangeNtf(character.playerId);
                 return state;
             }
             return null;

@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Assets.LogicScripts.Client.Common;
+using Assets.LogicScripts.Client.Manager;
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum GameMode
@@ -23,7 +25,9 @@ public class GameContext
     //当前操纵的角色
     public static Character CurRole
     {
-        get { return _curRole; }
+        get { 
+            return _curRole; 
+        }
         set
         {
             _curRole = value;
@@ -125,6 +129,20 @@ public class GameContext
     /// <returns></returns>
     public static bool CharacterIncludeState(string type, bool defalutCharacterIsSelf = true, Character character = null)
     {
+
+        bool result = false;
+
+        foreach (var item in Global.Self.info.States)
+        {
+            if(type == item)
+            {
+                result = true;
+                break;
+            }
+        }
+
+        return result;
+
         if (defalutCharacterIsSelf)
         {
             character = GameContext.CurRole;
@@ -141,8 +159,7 @@ public class GameContext
 
     public static int GetCharacterSkillIdByIndex(int index, Character character = null)
     {
-        if (character == null) character = GameContext.CurRole;
-        return character.characterData.GetSkillArr()[index];
+        return PlayerManager.GetInstance().Self.Crt.CrtVO.GetSkillArr()[index];
     }
 
     public static AudioSource GetLoopAudio()

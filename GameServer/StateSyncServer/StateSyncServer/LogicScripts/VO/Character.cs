@@ -42,6 +42,11 @@ namespace StateSyncServer.LogicScripts.VO
             //todo
         }
 
+        public void ApplyInput(GamePlayerInputCmdReq input)
+        {
+
+        }
+
         public void Tick()
         {
             this.Move();

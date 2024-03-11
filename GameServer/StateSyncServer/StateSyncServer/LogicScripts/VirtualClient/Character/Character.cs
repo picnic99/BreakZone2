@@ -50,7 +50,6 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Characters
         public FSM fsm { get; set; }
         //输入管理器
         public InputManager input { get; set; }
-
         //存储角色当前正在执行的Skill 有些脱手技能 不一定有那么快结束掉
         public List<Skill> SkillBehaviour;
         //存储角色当前正在执行的BUFF
@@ -82,6 +81,20 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Characters
         }
 
         /// <summary>
+        /// 应用玩家的操作
+        /// </summary>
+        public void ApplyOpt(GamePlayerOptCmdReq optCmd)
+        {
+            //todo
+            input.ApplyOpt(optCmd);
+        }
+
+        public void ApplyInput(GamePlayerInputCmdReq inputCmd)
+        {
+            input.ApplyInput(inputCmd);
+        }
+
+        /// <summary>
         /// 初始化容器
         /// </summary>
         public virtual void InitCharacter()
@@ -107,28 +120,6 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Characters
             instance.trans.Position = Vector3.Zero;
             instance.trans.Rot = 0;
             instance.trans.Scale = Vector3.One;
-
-        }
-
-        public Vector2 GetPlayerInput()
-        {
-            if (player != null)
-            {
-                return player.input;
-            }
-            return Vector2.Zero;
-        }
-
-        public GamePlayerOptReq GetOpt()
-        {
-            if (player != null)
-            {
-                if (player.optQueue.Count > 0)
-                {
-                    return player.optQueue.Dequeue();
-                }
-            }
-            return new GamePlayerOptReq();
 
         }
 
