@@ -7,6 +7,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	{
 		"DOTween.dll",
 		"Luban.Runtime.dll",
+		"Protobuf.dll",
 		"UnityEngine.CoreModule.dll",
 		"YooAsset.dll",
 		"custom.dll",
@@ -18,6 +19,22 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// }} 
 
 	// {{ AOT generic types
+	// Google.Protobuf.Collections.RepeatedField.<GetEnumerator>d__28<object>
+	// Google.Protobuf.Collections.RepeatedField<object>
+	// Google.Protobuf.FieldCodec.<>c<object>
+	// Google.Protobuf.FieldCodec.<>c__32<object>
+	// Google.Protobuf.FieldCodec.<>c__DisplayClass32_0<object>
+	// Google.Protobuf.FieldCodec.<>c__DisplayClass38_0<object>
+	// Google.Protobuf.FieldCodec.<>c__DisplayClass39_0<object>
+	// Google.Protobuf.FieldCodec.InputMerger<object>
+	// Google.Protobuf.FieldCodec.ValuesMerger<object>
+	// Google.Protobuf.FieldCodec<object>
+	// Google.Protobuf.IDeepCloneable<object>
+	// Google.Protobuf.IMessage<object>
+	// Google.Protobuf.MessageParser.<>c__DisplayClass2_0<object>
+	// Google.Protobuf.MessageParser<object>
+	// Google.Protobuf.ValueReader<object>
+	// Google.Protobuf.ValueWriter<object>
 	// System.Action<UnityEngine.Vector3>
 	// System.Action<float>
 	// System.Action<int>
@@ -42,6 +59,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// System.Collections.Generic.Dictionary.ValueCollection<object,object>
 	// System.Collections.Generic.Dictionary<int,object>
 	// System.Collections.Generic.Dictionary<object,object>
+	// System.Collections.Generic.EqualityComparer<float>
 	// System.Collections.Generic.EqualityComparer<int>
 	// System.Collections.Generic.EqualityComparer<object>
 	// System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<int,object>>
@@ -86,6 +104,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// System.Collections.Generic.ObjectComparer<float>
 	// System.Collections.Generic.ObjectComparer<int>
 	// System.Collections.Generic.ObjectComparer<object>
+	// System.Collections.Generic.ObjectEqualityComparer<float>
 	// System.Collections.Generic.ObjectEqualityComparer<int>
 	// System.Collections.Generic.ObjectEqualityComparer<object>
 	// System.Collections.Generic.Queue.Enumerator<object>
@@ -98,8 +117,10 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// System.Comparison<float>
 	// System.Comparison<int>
 	// System.Comparison<object>
+	// System.Func<object,int>
 	// System.Func<object,object>
 	// System.Func<object>
+	// System.IEquatable<object>
 	// System.Nullable<UnityEngine.Vector3>
 	// System.Predicate<UnityEngine.Vector3>
 	// System.Predicate<float>
@@ -123,6 +144,8 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 		// object DG.Tweening.TweenSettingsExtensions.SetEase<object>(object,DG.Tweening.Ease)
 		// object DG.Tweening.TweenSettingsExtensions.SetRelative<object>(object)
 		// object DG.Tweening.TweenSettingsExtensions.SetSpeedBased<object>(object)
+		// Google.Protobuf.FieldCodec<object> Google.Protobuf.FieldCodec.ForMessage<object>(uint,Google.Protobuf.MessageParser<object>)
+		// object Google.Protobuf.ProtoPreconditions.CheckNotNull<object>(object,string)
 		// string Luban.StringUtil.CollectionToString<int>(System.Collections.Generic.IEnumerable<int>)
 		// string Luban.StringUtil.CollectionToString<object>(System.Collections.Generic.IEnumerable<object>)
 		// object System.Activator.CreateInstance<object>()

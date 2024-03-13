@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniTask.TextMeshPro", "UniT
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniTask.Addressables", "UniTask.Addressables.csproj", "{0E257117-ACB7-0A8C-1DE9-ADBF26B7BC1C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Protobuf", "Protobuf.csproj", "{8FB0B405-38DA-F086-522C-C9A117A165B4}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HybridCLR.Editor", "HybridCLR.Editor.csproj", "{1A77A4D7-A3F4-D717-6452-D76959D9F441}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GBG.PlayableGraphMonitor.Editor", "GBG.PlayableGraphMonitor.Editor.csproj", "{7FC92587-5F7C-B945-441B-7E461E59C3DD}"
@@ -85,6 +87,10 @@ Global
 		{0E257117-ACB7-0A8C-1DE9-ADBF26B7BC1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0E257117-ACB7-0A8C-1DE9-ADBF26B7BC1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0E257117-ACB7-0A8C-1DE9-ADBF26B7BC1C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FB0B405-38DA-F086-522C-C9A117A165B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FB0B405-38DA-F086-522C-C9A117A165B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FB0B405-38DA-F086-522C-C9A117A165B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FB0B405-38DA-F086-522C-C9A117A165B4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1A77A4D7-A3F4-D717-6452-D76959D9F441}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1A77A4D7-A3F4-D717-6452-D76959D9F441}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1A77A4D7-A3F4-D717-6452-D76959D9F441}.Release|Any CPU.ActiveCfg = Release|Any CPU
