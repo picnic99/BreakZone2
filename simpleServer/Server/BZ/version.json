@@ -1,7 +1,0 @@
-{
-	"pkgVersion":"1.0",
-	"forceUpdate":0,
-	"updateUrl_pc":"http://192.168.1.3/Server/packge/pc/v1.0/pc_pkg.exe",
-	"updateUrl_ios":"http://192.168.1.3/Server/packge/pc/v1.0/pc_pkg.exe",
-	"updateUrl_ard":"http://192.168.1.3/Server/packge/pc/v1.0/pc_pkg.exe"
-}
