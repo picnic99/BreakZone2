@@ -15,6 +15,7 @@ public class playableAnimator
     protected PlayableGraph graph;
     private AnimationPlayableOutput output;
     private Animator _anim;
+    public Assets.LogicScripts.Client.Entity.Character Crt;
     //public Character character { get; set; }
 
     /// <summary>
@@ -25,7 +26,7 @@ public class playableAnimator
     /// <summary>
     /// 初始化动画状态机
     /// </summary>
-    public virtual void Init(Animator anim)
+    public virtual void Init(Animator anim, Assets.LogicScripts.Client.Entity.Character crt)
     {
         _anim = anim;
         //this.character = character;
@@ -34,7 +35,7 @@ public class playableAnimator
         output = AnimationPlayableOutput.Create(graph, this.GetType().Name, _anim);
         //连接分发节点 分发节点根据动画数据初始化动画树
         rootNode = new AnimDispatcherNode(graph, this);
-
+        Crt = crt;
         output.SetSourcePlayable(rootNode.GetPlayable());
         graph.Play();
     }

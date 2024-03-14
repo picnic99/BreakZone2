@@ -33,6 +33,7 @@ namespace Assets.LogicScripts.Client.Manager
             On(ProtocolId.CLIENT_GAME_PLAYER_OPT_CMD_REP, Handle_GamePlayerOptCmdRep);
             On(ProtocolId.CLIENT_GAME_PLAYER_INPUT_CMD_NTF, Handle_GamePlayerInputCmdNtf);
             On(ProtocolId.CLIENT_GAME_SYNC_STATE_CHANGE_NTF, Handle_GameSyncStateChangeNtf);
+            On(ProtocolId.CLIENT_CAN_ENTER_SCENE_REP, Handle_CanEnterSceneRep);
 
         }
 
@@ -53,6 +54,7 @@ namespace Assets.LogicScripts.Client.Manager
             Off(ProtocolId.CLIENT_GAME_PLAYER_OPT_CMD_REP, Handle_GamePlayerOptCmdRep);
             Off(ProtocolId.CLIENT_GAME_PLAYER_INPUT_CMD_NTF, Handle_GamePlayerInputCmdNtf);
             Off(ProtocolId.CLIENT_GAME_SYNC_STATE_CHANGE_NTF, Handle_GameSyncStateChangeNtf);
+            Off(ProtocolId.CLIENT_CAN_ENTER_SCENE_REP, Handle_CanEnterSceneRep);
 
 
         }
@@ -142,7 +144,7 @@ namespace Assets.LogicScripts.Client.Manager
                     CommonUtils.Logout("选择角色" + crtId + "完毕");
                     PlayerManager.GetInstance().Self.lastSelectCrtId = crtId;
                     //切换到玩家数据中
-                    SendEnterSceneReq(sceneId);
+                    SendCanEnterSceneReq(sceneId);
                 }
             }
             else
@@ -151,8 +153,48 @@ namespace Assets.LogicScripts.Client.Manager
             }
         }
 
+        public void SendCanEnterSceneReq(int sceneId)
+        {
+            var req = new CanEnterSceneReq();
+            req.SceneId = sceneId;
+            NetManager.GetInstance().SendProtocol(req);
+        }
+
+        public void Handle_CanEnterSceneRep(object[] args)
+        {
+            Protocol proto = args[0] as Protocol;
+            CanEnterSceneRep rep = proto.GetDataInstance<CanEnterSceneRep>();
+
+            var result = rep.Result;
+            var SceneId = rep.SceneId;
+
+            if (result == ProtocolResultEnum.SUCCESS)
+            {
+                CommonUtils.Logout("允许进入" + SceneId + "场景 开始切换");
+                GameSceneManager.Eventer.On(GameSceneManager.LOAD_SCENE, OnSceneEnterSuccess);
+                //后续根据场景ID来定
+                loadingScene = RegSceneClass.GameRoomScene;
+                this.SceneId = SceneId;
+                GameSceneManager.GetInstance().SwitchScene(loadingScene);
+            }
+        }
+
+        private string loadingScene;
+        private int SceneId;
+        public void OnSceneEnterSuccess(object[] args)
+        {
+            string sceneName = args[0] as string;
+            if (sceneName == loadingScene)
+            {
+                Global.InGameScene = true;
+            }
+            SendEnterSceneReq(SceneId);
+            GameSceneManager.Eventer.Off(GameSceneManager.LOAD_SCENE, OnSceneEnterSuccess);
+        }
+
         public void SendEnterSceneReq(int sceneId = 1)
         {
+            CommonUtils.Logout("场景" + SceneId + "切换完成");
             var req = new EnterSceneReq();
             req.SceneId = sceneId;
             NetManager.GetInstance().SendProtocol(req);
@@ -172,22 +214,8 @@ namespace Assets.LogicScripts.Client.Manager
 
             if (result == ProtocolResultEnum.SUCCESS)
             {
-                CommonUtils.Logout("进入场景" + SceneId + "请求成功");
-                GameSceneManager.Eventer.On(GameSceneManager.LOAD_SCENE, OnSceneEnterSuccess);
-                //后续根据场景ID来定
-                loadingScene = RegSceneClass.GameRoomScene;
-                GameSceneManager.GetInstance().SwitchScene(loadingScene);
+                CommonUtils.Logout("同步场景"+ SceneId + "数据成功");
             }
-        }
-        private string loadingScene;
-        public void OnSceneEnterSuccess(object[] args)
-        {
-            string sceneName = args[0] as string;
-            if (sceneName == loadingScene)
-            {
-                Global.InGameScene = true;
-            }
-            GameSceneManager.Eventer.Off(GameSceneManager.LOAD_SCENE, OnSceneEnterSuccess);
         }
 
         /// <summary>
@@ -201,37 +229,22 @@ namespace Assets.LogicScripts.Client.Manager
             SceneManager.GetInstance().AddPlayerToScene(ntf.PlayerInfo);
         }
 
+        public void SendGetGameSyncAOIPlayerReq()
+        {
+            NetManager.GetInstance().SendProtocol(new GetGameSyncAOIPlayerReq());
+        }
+
         /// <summary>
         /// 同步角色AOI范围内的玩家信息
         /// </summary>
         /// <param name="args"></param>
         public void Handle_GameSyncAOIPlayerNtf(object[] args)
         {
-            Action<object[]> call = null;
-            bool needWait = false;
-
-            call = (object[] args) =>
+            Protocol proto = args[0] as Protocol;
+            GameSyncAOIPlayerNtf ntf = proto.GetDataInstance<GameSyncAOIPlayerNtf>();
+            foreach (var item in ntf.PlayerInfos)
             {
-                Protocol proto = args[0] as Protocol;
-                GameSyncAOIPlayerNtf ntf = proto.GetDataInstance<GameSyncAOIPlayerNtf>();
-                foreach (var item in ntf.PlayerInfos)
-                {
-                    SceneManager.GetInstance().AddPlayerToScene(item);
-                }
-                if (needWait)
-                {
-                    GameSceneManager.Eventer.Off(GameSceneManager.LOAD_SCENE, call);
-                }
-            };
-
-            if (Global.InGameScene)
-            {
-                call(args);
-            }
-            else
-            {
-                needWait = true;
-                GameSceneManager.Eventer.On(GameSceneManager.LOAD_SCENE, call);
+                SceneManager.GetInstance().AddPlayerToScene(item);
             }
         }
 

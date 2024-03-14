@@ -38,6 +38,9 @@ namespace Assets.LogicScripts.Client.Net.PB
             RegProtocolData(ProtocolId.CLIENT_GAME_PLAYER_INPUT_CMD_REQ, typeof(GamePlayerInputCmdReq));
             RegProtocolData(ProtocolId.CLIENT_GAME_PLAYER_INPUT_CMD_NTF, typeof(GamePlayerInputCmdNtf));
             RegProtocolData(ProtocolId.CLIENT_GAME_SYNC_STATE_CHANGE_NTF, typeof(GameSyncStateChangeNtf));
+            RegProtocolData(ProtocolId.CLIENT_GET_SYNC_AOI_PLAYER_REQ, typeof(GetGameSyncAOIPlayerReq));
+            RegProtocolData(ProtocolId.CLIENT_CAN_ENTER_SCENE_REQ, typeof(CanEnterSceneReq));
+            RegProtocolData(ProtocolId.CLIENT_CAN_ENTER_SCENE_REP, typeof(CanEnterSceneRep));
         }
 
         public static Type GetProtocolType(int id)

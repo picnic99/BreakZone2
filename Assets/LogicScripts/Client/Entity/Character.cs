@@ -25,23 +25,25 @@ namespace Assets.LogicScripts.Client.Entity
 
         public bool IsSelf { get; set; }
 
-        public Character(int CrtId)
+        public int playerId;
+
+        public Character(int CrtId,int playerId)
         {
             if(CrtId > 0)
             {
                 var vo = CharacterConfiger.GetInstance().GetCharacterById(CrtId);
                 CrtVO = vo;
-
+                this.playerId = playerId;
                 CrtObj = ResourceManager.GetInstance().GetCharacterInstance<GameObject>(vo.character.ModePath);
                 var anim = CrtObj.GetComponent<Animator>();
                 CharacterAnimator = new CharacterAnimator();
-                CharacterAnimator.Init(anim);
+                CharacterAnimator.Init(anim,this);
                 //初始化角色位置
                 CrtObj.transform.position = Vector3.zero;
                 CrtObj.transform.rotation = Quaternion.identity;
                 CrtData = new CharacterDataVO();
                 //初始化角色动画 默认播放Idle
-                //AnimManager.GetInstance().PlayAnim(CharacterAnimator, "DEFAULT_IDLE");
+                AnimManager.GetInstance().PlayAnim(CharacterAnimator, "DEFAULT_IDLE");
             }
         }
 

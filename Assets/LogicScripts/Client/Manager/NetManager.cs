@@ -43,7 +43,7 @@ namespace Assets.LogicScripts.Client.Manager
                 try
                 {
                     Protocol proto = PbUtil.UnPack(client.GetStream());
-                    CommonUtils.Logout("接收到消息：" + proto.ToString());
+                    CommonUtils.Logout("接收到消息：" + ProtocolId.GetProtoName(proto.protocolId)+proto.ToString());
                     //proto.client = client;
                     GameMain.GetInstance().ProtoList.Enqueue(proto);
 
@@ -64,7 +64,7 @@ namespace Assets.LogicScripts.Client.Manager
             {
                 var data = protocol.ToByteArray();
                 var bytes = PbUtil.Pack((uint)id, data);
-                CommonUtils.Logout($"发送消息：len = {data.Length},protocolId = {id},data = {protocol.ToString()}");
+                CommonUtils.Logout($"发送消息：{ProtocolId.GetProtoName(id)}len = {data.Length},protocolId = {id},data = {protocol.ToString()}");
                 client.Client.Send(bytes);
             }
         }

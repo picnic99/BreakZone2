@@ -24,6 +24,7 @@ namespace StateSyncServer.LogicScripts.Manager
             ActionManager.GetInstance().On(ProtocolId.CLENT_GET_GAME_DATA_REQ, HandleGetGameDataReq);
             ActionManager.GetInstance().On(ProtocolId.CLIENT_GAME_PLAYER_OPT_CMD_REQ, Handle_GamePlayerOptCmdReq);
             ActionManager.GetInstance().On(ProtocolId.CLIENT_GAME_PLAYER_INPUT_CMD_REQ, Handle_GamePlayerInputCmdReq);
+            ActionManager.GetInstance().On(ProtocolId.CLIENT_CAN_ENTER_SCENE_REQ, Handle_CanEnterSceneReq);
 
         }
 
@@ -38,6 +39,7 @@ namespace StateSyncServer.LogicScripts.Manager
             ActionManager.GetInstance().Off(ProtocolId.CLENT_GET_GAME_DATA_REQ, HandleGetGameDataReq);
             ActionManager.GetInstance().Off(ProtocolId.CLIENT_GAME_PLAYER_OPT_CMD_REQ, Handle_GamePlayerOptCmdReq);
             ActionManager.GetInstance().Off(ProtocolId.CLIENT_GAME_PLAYER_INPUT_CMD_REQ, Handle_GamePlayerInputCmdReq);
+            ActionManager.GetInstance().Off(ProtocolId.CLIENT_CAN_ENTER_SCENE_REQ, Handle_CanEnterSceneReq);
         }
 
         /// <summary>
@@ -118,6 +120,28 @@ namespace StateSyncServer.LogicScripts.Manager
         }
 
         /// <summary>
+        /// 能否进入场景
+        /// </summary>
+        /// <param name="args"></param>
+        public void Handle_CanEnterSceneReq(object[] args)
+        {
+            Protocol proto = args[0] as Protocol;
+            CanEnterSceneReq req = proto.GetDataInstance<CanEnterSceneReq>();
+
+            var SceneId = req.SceneId;
+
+            if (SceneId > 0)
+            {
+                CommonUtils.Logout("允许玩家"+proto.GetPlayerId()+"进入场景" + SceneId);
+                //协议返回
+                CanEnterSceneRep rep = new CanEnterSceneRep();
+                rep.Result = ProtocolResultEnum.SUCCESS;
+                rep.SceneId = SceneId;
+                NetManager.GetInstance().SendProtocol(proto.client, rep);
+            }
+        }
+
+        /// <summary>
         /// 进入场景
         /// </summary>
         /// <param name="args"></param>
@@ -130,7 +154,7 @@ namespace StateSyncServer.LogicScripts.Manager
 
             if (SceneId > 0)
             {
-                CommonUtils.Logout("进入场景" + SceneId);
+                CommonUtils.Logout("允许玩家"+proto.GetPlayerId()+"进入场景" + SceneId);
                 SceneManager.GetInstance().AddPlayerToScene(proto.GetPlayer(), SceneId);
                 //协议返回
                 EnterSceneRep rep = new EnterSceneRep();
@@ -163,6 +187,15 @@ namespace StateSyncServer.LogicScripts.Manager
             List<Player> players = SceneManager.GetInstance().GetPlayerInSceneByPidNoSelf(p.playerId);
             NetManager.GetInstance().SendProtoToPlayers(players,ntf);
         }
+
+
+        public void Handle_GetGameAOIPlayerReq(object[] args)
+        {
+            Protocol proto = args[0] as Protocol;
+            //GetGameSyncAOIPlayerReq req = proto.GetDataInstance<GetGameSyncAOIPlayerReq>();
+            Notify_GameSyncAOIPlayerNtf(proto.GetPlayer());
+        }
+
 
         /// <summary>
         /// 同步角色AOI范围内的玩家信息
@@ -402,6 +435,18 @@ namespace StateSyncServer.LogicScripts.Manager
             Protocol proto = args[0] as Protocol;
             GamePlayerInputCmdReq req = proto.GetDataInstance<GamePlayerInputCmdReq>();
             proto.GetPlayer().SetInput(req);
+
+            GamePlayerInputCmdNtf ntf = new GamePlayerInputCmdNtf();
+            ntf.PlayerId = proto.GetPlayerId();
+            ntf.InputX = req.InputX;
+            ntf.InputY = req.InputY;
+            ntf.Rot = req.Rot;
+
+            List<Player> players = SceneManager.GetInstance().GetPlayersInScene(proto.GetPlayer().SceneId);
+            if (players.Count > 0)
+            {
+                NetManager.GetInstance().SendProtoToPlayers(players, ntf);
+            }
         }
 
         public void Send_GameSyncStateChangeNtf(int playerId)

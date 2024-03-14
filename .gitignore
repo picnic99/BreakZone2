@@ -72,6 +72,6 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
 output/*
-simpleServer/Server/BZ/CDN/pc/v1.0/*
+/GameServer/ResServer/Server/BZ/CDN/pc/v1.0/*
 Bundles/*
 HybridCLRData/*

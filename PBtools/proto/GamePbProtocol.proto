@@ -40,6 +40,15 @@ message SelectCrtRep{
 	int32 sceneId = 3;
 }
 
+message CanEnterSceneReq{
+	int32 sceneId = 1;
+}
+
+message CanEnterSceneRep{
+	int32 result = 1;
+	int32 sceneId = 2;
+}
+
 message EnterSceneReq{
 	int32 sceneId = 1;
 }
@@ -181,6 +190,10 @@ message GamePlayerBaseInfo{
  
 message GamePlayerEnterSeneNtf{
 	GamePlayerBaseInfo playerInfo = 1;
+}
+
+message GetGameSyncAOIPlayerReq{
+
 }
 
 message GameSyncAOIPlayerNtf{

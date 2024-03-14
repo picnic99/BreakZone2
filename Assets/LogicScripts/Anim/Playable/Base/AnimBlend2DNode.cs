@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using Assets.LogicScripts.Client.Manager;
+using Assets.LogicScripts.Utils;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
@@ -91,8 +93,12 @@ namespace CustomPlayable
         {
             if (enable == false) return;
 
-            var x = Input.GetAxis("Horizontal");
-            var y = Input.GetAxis("Vertical");
+            var c = rootAnimtor.Crt;
+            var x = c.CrtData.Input.x;
+            var y = c.CrtData.Input.y;
+
+            CommonUtils.Logout("playerId = " + c.playerId + "input = " + c.CrtData.Input.ToString());
+
             if (pointer.x == x && pointer.y == y)
             {
                 return;

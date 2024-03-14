@@ -18,8 +18,7 @@ namespace Assets.LogicScripts.Client.Manager
         public override void AddEventListener()
         {
             base.AddEventListener();
-            On(ENTER_SCENE_SUCCESS, InitScene);
-        }
+            On(ENTER_SCENE_SUCCESS, InitScene);        }
 
         public override void RemoveEventListener()
         {

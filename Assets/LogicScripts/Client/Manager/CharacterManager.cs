@@ -15,7 +15,7 @@ namespace Assets.LogicScripts.Client.Manager
 
         public Assets.LogicScripts.Client.Entity.Character CreateCharacter(int crtId, int playerId)
         {
-            var c = new Assets.LogicScripts.Client.Entity.Character(crtId);
+            var c = new Assets.LogicScripts.Client.Entity.Character(crtId, playerId);
             datas.Add(playerId, c);
             return c;
         }

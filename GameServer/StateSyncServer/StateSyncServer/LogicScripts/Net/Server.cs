@@ -62,7 +62,7 @@ namespace StateSyncServer.LogicScripts.Net
                 try
                 {
                     Protocol proto = PbUtil.UnPack(tcpClient.GetStream());
-                    CommonUtils.Logout("接收到消息：" + proto.ToString());
+                    CommonUtils.Logout("接收到消息："  + ProtocolId.GetProtoName(proto.protocolId) + proto.ToString());
                     proto.client = tcpClient;
                     GameMain.GetInstance().ProtoList.Enqueue(proto);
 

@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace StateSyncServer.LogicScripts.Net.PB
 {
@@ -36,6 +33,51 @@ namespace StateSyncServer.LogicScripts.Net.PB
         public static int CLIENT_GAME_PLAYER_INPUT_CMD_REQ = 20014;//发送玩家输入指令 input和rot
         public static int CLIENT_GAME_PLAYER_INPUT_CMD_NTF = 20015;//同步玩家输入指令 input和rot
         public static int CLIENT_GAME_SYNC_STATE_CHANGE_NTF = 20016;//同步状态发生改变
+        public static int CLIENT_GET_SYNC_AOI_PLAYER_REQ = 20017;//获取玩家周围的所有玩家
+        public static int CLIENT_CAN_ENTER_SCENE_REQ = 20018;//能否进入场景
+        public static int CLIENT_CAN_ENTER_SCENE_REP = 20019;//能否进入场景
 
+        public static Dictionary<int, string> protoName = new Dictionary<int, string>()
+        {
+            { CLIENT_PLAYER_LOGIN_REQ,"CLIENT_PLAYER_LOGIN_REQ"},
+            { CLIENT_PLAYER_LOGIN_REP,"CLIENT_PLAYER_LOGIN_REP"},
+            { CLIENT_PLAYER_BASE_INFO_NTF,"CLIENT_PLAYER_BASE_INFO_NTF"},
+            { CLIENT_SELECT_ROLE_REQ,"CLIENT_SELECT_ROLE_REQ"},
+            { CLIENT_SELECT_ROLE_REP,"CLIENT_SELECT_ROLE_REP"},
+            { CLIENT_ENTER_SCENE_REQ,"CLIENT_ENTER_SCENE_REQ"},
+            { CLIENT_ENTER_SCENE_REP,"CLIENT_ENTER_SCENE_REP"},
+            { CLENT_GET_GAME_DATA_REQ,"CLENT_GET_GAME_DATA_REQ"},
+            { CLENT_GET_GAME_DATA_REP,"CLENT_GET_GAME_DATA_REP"},
+            { CLENT_SYNC_GAME_DATA_NTF,"CLENT_SYNC_GAME_DATA_NTF"},
+            { CLIENT_GAME_PLAYER_OPT_REQ,"CLIENT_GAME_PLAYER_OPT_REQ"},
+            { CLIENT_GAME_PLAYER_OPT_REP,"CLIENT_GAME_PLAYER_OPT_REP"},
+            { CLIENT_OBJ_CREATE_NTF,"CLIENT_OBJ_CREATE_NTF"},
+            { CLIENT_OBJ_TRANSFORM_NTF,"CLIENT_OBJ_TRANSFORM_NTF"},
+            { CLIENT_ANIM_PLAY_NTF,"CLIENT_ANIM_PLAY_NTF"},
+            { CLIENT_AUDIO_PLAY_NTF,"CLIENT_AUDIO_PLAY_NTF"},
+            { CLIENT_PLAYER_PROPERTY_CHANGE_NTF,"CLIENT_PLAYER_PROPERTY_CHANGE_NTF"},
+            { CLIENT_GAME_PLAYER_INPUT_REQ,"CLIENT_GAME_PLAYER_INPUT_REQ"},
+            { CLIENT_GAME_PLAYER_INPUT_NTF,"CLIENT_GAME_PLAYER_INPUT_NTF"},
+            { CLIENT_GAME_PLAYER_ENTER_SCENE_NTF,"CLIENT_GAME_PLAYER_ENTER_SCENE_NTF"},
+            { CLIENT_GAME_SYNC_AOI_PLAYER_NTF,"CLIENT_GAME_SYNC_AOI_PLAYER_NTF"},
+            { CLIENT_GAME_PLAYER_OPT_CMD_REQ,"CLIENT_GAME_PLAYER_OPT_CMD_REQ"},
+            { CLIENT_GAME_PLAYER_OPT_CMD_REP,"CLIENT_GAME_PLAYER_OPT_CMD_REP"},
+            { CLIENT_GAME_PLAYER_INPUT_CMD_REQ,"CLIENT_GAME_PLAYER_INPUT_CMD_REQ"},
+            { CLIENT_GAME_PLAYER_INPUT_CMD_NTF,"CLIENT_GAME_PLAYER_INPUT_CMD_NTF"},
+            { CLIENT_GAME_SYNC_STATE_CHANGE_NTF,"CLIENT_GAME_SYNC_STATE_CHANGE_NTF"},
+            { CLIENT_GET_SYNC_AOI_PLAYER_REQ,"CLIENT_GET_SYNC_AOI_PLAYER_REQ"},
+            { CLIENT_CAN_ENTER_SCENE_REQ,"CLIENT_CAN_ENTER_SCENE_REQ"},
+            { CLIENT_CAN_ENTER_SCENE_REP,"CLIENT_CAN_ENTER_SCENE_REP"},
+        };
+
+        public static string GetProtoName(int proto)
+        {
+            if (protoName.ContainsKey(proto))
+            {
+                return protoName[proto];
+            }
+
+            return "";
+        }
     }
 }
