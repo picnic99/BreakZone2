@@ -144,6 +144,12 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.Base
             stateDurationTime = curAnimLength;
             //默认技能时间等于状态持续时间
             skillDurationTime = stateDurationTime;
+
+            StageNum++;
+            if (StageNum >= maxStageNum)
+            {
+                StageNum = 0;
+            }
         }
 
         public override void OnUpdate()
@@ -194,11 +200,6 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.Base
         public virtual void OnTrigger()
         {
             skillState = SkillInStateEnum.TRIGGER;
-            StageNum++;
-            if (StageNum >= maxStageNum)
-            {
-                StageNum = 0;
-            }
         }
         /// <summary>
         /// 后摇

@@ -119,6 +119,9 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bridge
 
         private List<PhysicAction> actionList = new List<PhysicAction>();
 
+        //变换矩阵
+        private Matrix4x4 TransformMatrix = Matrix4x4.Identity;
+
         public PhysicController(Character character)
         {
             this.character = character;

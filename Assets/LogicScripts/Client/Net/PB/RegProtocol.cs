@@ -12,7 +12,10 @@ namespace Assets.LogicScripts.Client.Net.PB
     class RegProtocol
     {
         private static Dictionary<int, Type> typeDic;
-
+        public static Dictionary<int, Type> GetDic()
+        {
+            return typeDic;
+        }
         public static void Init()
         {
             typeDic = new Dictionary<int, Type>();

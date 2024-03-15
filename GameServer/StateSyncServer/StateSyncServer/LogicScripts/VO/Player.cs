@@ -22,6 +22,8 @@ namespace StateSyncServer.LogicScripts.VO
 
         public Vector2 input = Vector2.Zero;
 
+        public VirtualClient.Characters.Character Crt => CharacterManager.GetInstance().FindCharacter(playerId);
+
         public Player()
         {
         }

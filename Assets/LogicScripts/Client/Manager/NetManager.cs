@@ -45,6 +45,8 @@ namespace Assets.LogicScripts.Client.Manager
                     Protocol proto = PbUtil.UnPack(client.GetStream());
                     CommonUtils.Logout("接收到消息：" + ProtocolId.GetProtoName(proto.protocolId)+proto.ToString());
                     //proto.client = client;
+                    Event("PROTO_TEST", ProtocolId.GetProtoName(proto.protocolId) + proto.ToString());
+                    if (GameMain.GetInstance() == null) continue;
                     GameMain.GetInstance().ProtoList.Enqueue(proto);
 
                 }
