@@ -275,7 +275,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bases
             if (state != null)
             {
                 //状态发生了改变
-                StateSyncServer.LogicScripts.Manager.ActionManager.GetInstance().Send_GameSyncStateChangeNtf(character.playerId);
+                StateSyncServer.LogicScripts.Manager.ActionManager.GetInstance().Send_GameSyncStateChangeNtf(character.PlayerId);
                 return state;
             }
             return null;

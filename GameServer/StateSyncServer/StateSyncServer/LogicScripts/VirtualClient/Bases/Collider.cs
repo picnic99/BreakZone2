@@ -11,7 +11,10 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bases
 {
     public class Collider
     {
-        public int ColliderCheckType;
+        /// <summary>
+        /// 要检查哪些类型
+        /// </summary>
+        public int ColliderCheckType { get; set; }
         /// <summary>
         /// 有物体进入范围时调用
         /// </summary>

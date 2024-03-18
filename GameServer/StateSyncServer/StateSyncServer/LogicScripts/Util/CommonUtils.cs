@@ -15,6 +15,11 @@ namespace StateSyncServer.LogicScripts.Util
             return System.DateTime.Now.ToString("HH:mm:ss:fff");
         }
 
+        public static long GetCurTimeStamp()
+        {
+            return DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+        }
+
         public static void Logout(string content)
         {
             Console.WriteLine($"[{GetCurTime()}]{content}");

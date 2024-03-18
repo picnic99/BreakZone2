@@ -179,7 +179,7 @@ namespace StateSyncServer.LogicScripts.Manager
             {
                 PlayerId = p.playerId,
                 CrtId = p.CrtId,
-                Pos = new Vec3() { X = p.lastStayPos.X, Y = p.lastStayPos.Y, Z = p.lastStayPos.Z },
+                Pos = new Vec3() { X = p.LastStayPos.X, Y = p.LastStayPos.Y, Z = p.LastStayPos.Z },
                 Rot = 0
             };
             ntf.PlayerInfo = info;
@@ -211,7 +211,7 @@ namespace StateSyncServer.LogicScripts.Manager
                 {
                     PlayerId = player.playerId,
                     CrtId = player.CrtId,
-                    Pos = new Vec3() { X = player.lastStayPos.X, Y = player.lastStayPos.Y, Z = player.lastStayPos.Z },
+                    Pos = new Vec3() { X = player.LastStayPos.X, Y = player.LastStayPos.Y, Z = player.LastStayPos.Z },
                     Rot = 0
                 };
                 ntf.PlayerInfos.Add(info);
@@ -376,21 +376,11 @@ namespace StateSyncServer.LogicScripts.Manager
             NetManager.GetInstance().SendProtoToPlayers(players, ntf);
         }
 
-        public void SendGameInstanceCreateNtf(int playerId, int instanceId, int prefabId, Vector3 initPos, Vector3 initScale, float initRot)
+        public void SendGameInstanceCreateNtf(GameInstaneInfo info)
         {
             GameInstanceCreateNtf NTF = new GameInstanceCreateNtf();
-            NTF.InstanceId = instanceId;
-            NTF.PrefabId = prefabId;
-            NTF.InitPos = new Vec3();
-            NTF.InitPos.X = initPos.X;
-            NTF.InitPos.Y = initPos.Y;
-            NTF.InitPos.Z = initPos.Z;
-            NTF.InitScale = new Vec3();
-            NTF.InitScale.X = initScale.X;
-            NTF.InitScale.Y = initScale.Y;
-            NTF.InitScale.Z = initScale.Z;
-            NTF.InitRot = initRot;
-            List<Player> players = SceneManager.GetInstance().GetPlayerInSceneByPid(playerId);
+            NTF.Info = info;
+            List<Player> players = SceneManager.GetInstance().GetPlayerInSceneByPid(info.PlayerId);
             if (players == null || players.Count == 0) return;
             NetManager.GetInstance().SendProtoToPlayers(players, NTF);
         }
@@ -398,7 +388,7 @@ namespace StateSyncServer.LogicScripts.Manager
         public void SendGameInstanceTransformNtf(int playerId, int instanceId, int trans, int transType, Vector3 target, float rotTarget, float durationTime)
         {
             GameInstanceTransformNtf ntf = new GameInstanceTransformNtf();
-            ntf.InstanceId = instanceId;
+/*            ntf.InstanceId = instanceId;
             ntf.Trans = trans;
             ntf.TransType = transType;
             ntf.Target = new Vec3();
@@ -406,7 +396,7 @@ namespace StateSyncServer.LogicScripts.Manager
             ntf.Target.Y = target.Y;
             ntf.Target.Z = target.Z;
             ntf.RotTarget = rotTarget;
-            ntf.DurationTime = durationTime;
+            ntf.DurationTime = durationTime;*/
 
             List<Player> players = SceneManager.GetInstance().GetPlayerInSceneByPid(playerId);
             if (players == null || players.Count == 0) return;
@@ -417,7 +407,7 @@ namespace StateSyncServer.LogicScripts.Manager
         {
             GameInstanceDestroyNtf NTF = new GameInstanceDestroyNtf();
             NTF.InstanceId = instanceId;
-            NTF.Delay = delay;
+            //NTF.Delay = delay;
             List<Player> players = SceneManager.GetInstance().GetPlayerInSceneByPid(playerId);
             if (players == null || players.Count == 0) return;
             NetManager.GetInstance().SendProtoToPlayers(players, NTF);
@@ -459,8 +449,12 @@ namespace StateSyncServer.LogicScripts.Manager
             {
                 PlayerId = p.playerId,
                 CrtId = p.CrtId,
-                Pos = new Vec3() { X = p.lastStayPos.X, Y = p.lastStayPos.Y, Z = p.lastStayPos.Z },
-                Rot = 0
+                Pos = new Vec3() {
+                    X = p.Crt.Trans.Position.X,
+                    Y = p.Crt.Trans.Position.Y,
+                    Z = p.Crt.Trans.Position.Z
+                },
+                Rot = p.Crt.Trans.Rot               
             };
 
             VirtualClient.Characters.Character c = CharacterManager.GetInstance().FindCharacter(playerId);

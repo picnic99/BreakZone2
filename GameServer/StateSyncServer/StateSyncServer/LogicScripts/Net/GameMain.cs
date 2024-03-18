@@ -9,6 +9,7 @@ using StateSyncServer.LogicScripts.Common;
 using StateSyncServer.LogicScripts.Manager;
 using StateSyncServer.LogicScripts.Net.PB;
 using StateSyncServer.LogicScripts.Util;
+using StateSyncServer.LogicScripts.VirtualClient.Configer;
 using StateSyncServer.LogicScripts.VirtualClient.Manager;
 using StateSyncServer.LogicScripts.VO;
 
@@ -66,6 +67,9 @@ namespace StateSyncServer.LogicScripts.Net
 
         private void Init()
         {
+            //配置初始化
+            //AnimConfiger.GetInstance();
+            //管理器初始化
             LogicScripts.Manager.ActionManager.GetInstance().Init();
             LogicScripts.Manager.CharacterManager.GetInstance().Init();
         }

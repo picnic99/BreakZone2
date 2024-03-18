@@ -1,9 +1,6 @@
 ﻿
-using StateSyncServer.LogicScripts.Manager;
-using StateSyncServer.LogicScripts.VirtualClient.Bridge;
 using StateSyncServer.LogicScripts.VirtualClient.Characters;
 using StateSyncServer.LogicScripts.VirtualClient.Configer;
-using StateSyncServer.LogicScripts.VirtualClient.Manager.Base;
 using StateSyncServer.LogicScripts.VirtualClient.VO;
 namespace StateSyncServer.LogicScripts.VirtualClient.Manager
 {
@@ -20,11 +17,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Manager
         /// <param name="v"></param>
         public void PlayAnim(Character character, string animName, float translateTime = 0.15f)
         {
-            //character.anim.Play(animName, translateTime);
-            //character.anim.SetTrigger(animName);
-            //CommonUtils.Logout(animName);
-
-            StateSyncServer.LogicScripts.Manager.ActionManager.GetInstance().SendAnimPlayNtf(character.playerId,0, animName,translateTime);
+            StateSyncServer.LogicScripts.Manager.ActionManager.GetInstance().SendAnimPlayNtf(character.PlayerId,0, animName,translateTime);
         }
 
         public void PlayStateAnim(Character character, StateVO state, float translateTime = 0.15f)
@@ -46,13 +39,10 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Manager
         /// <returns></returns>
         public float GetAnimTime(string animKey, int index = 0)
         {
-            float len = 1;
             var anim = AnimConfiger.GetInstance().GetAnimByAnimKey(animKey);
-            if(anim != null)
-            {
-                return anim.animation.Clips[index].RealLength;
-            }
-            return len;
+            var animName = anim.animation.Clips[index].AnimPath;
+            VO.Anim.AnimClipDataInfo info = AnimConfiger.GetInstance().GetClipDataByName(animName);
+            return info.time;
         }
     }
 }

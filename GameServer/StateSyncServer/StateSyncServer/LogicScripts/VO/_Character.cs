@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace StateSyncServer.LogicScripts.VO
 {
-    class Character
+    class _Character
     {
         private float lastRot = 0;
         //变换矩阵
@@ -19,7 +19,7 @@ namespace StateSyncServer.LogicScripts.VO
 
         public PlayerGameData data = new PlayerGameData();
 
-        public Character(int playerId)
+        public _Character(int playerId)
         {
             data.playerId = playerId;
         }

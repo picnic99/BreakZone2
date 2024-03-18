@@ -665,5 +665,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: Nightshade J Friedrich
       objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 76d98752b670d3840ab702282fd7de07, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 35f06da8b7d485c4ca756ec89e7bd5c2, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 76d98752b670d3840ab702282fd7de07, type: 3}

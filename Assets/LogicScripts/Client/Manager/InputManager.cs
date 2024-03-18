@@ -43,75 +43,79 @@ namespace Assets.LogicScripts.Client
             }
 
             var moveDelta = GetPlayInput();
-            /*            if (GetPlayInput().magnitude >= thresholdMove && (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D)))
-                        {
-                            if (CameraManager.GetInstance().state == CameraState.MAIN)
-                            {
-                                Vector3 angles = Global.Self.Trans.position - CameraManager.GetInstance().curCam.transform.rotation.eulerAngles;
-                                proto.Rot = angles.y;
-                            }
-                        }*/
-            if (IsValidInput(moveDelta))
+            bool rotChange = false;
+            if (GetPlayInput().magnitude >= thresholdMove && (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D)))
+            {
+                var camRot = CameraManager.GetInstance().curCam.transform.rotation.eulerAngles.y;
+                var selfRot = Global.Self.Trans.rotation.eulerAngles.y;
+
+                if (selfRot != camRot)
+                {
+                    rotChange = true;
+                }
+            }
+            if (IsValidInput(moveDelta) || rotChange)
             {
                 lastInput = moveDelta;
-                Assets.LogicScripts.Client.Manager.ActionManager.GetInstance().Send_GamePlayerInputCmdReq(moveDelta.x, moveDelta.z, Global.Self.Trans.rotation.eulerAngles.y);
+                var rot = CameraManager.GetInstance().curCam.transform.rotation.eulerAngles.y;
+                Assets.LogicScripts.Client.Manager.ActionManager.GetInstance().Send_GamePlayerInputCmdReq(moveDelta.x, moveDelta.z, rot);
             }
 
 
-                //移动与奔跑
-                if (moveDelta.magnitude >= thresholdMove && (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D)))
+            //移动与奔跑
+            if (moveDelta.magnitude >= thresholdMove && (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D)))
+            {
+                if (GameContext.CharacterIncludeState(StateType.Move))
                 {
-                    if (GameContext.CharacterIncludeState(StateType.Move))
+                    if (Input.GetKeyDown(KeyCode.LeftShift))
                     {
-                        if (Input.GetKeyDown(KeyCode.LeftShift))
-                        {
-                            if (!GameContext.CharacterIncludeState(StateType.Run))
-                            {
-                                ChangeState(StateType.Run);
-                                StopState(StateType.Move);
-                            }
-                        }
-                    }
-                    else if (GameContext.CharacterIncludeState(StateType.Run))
-                    {
-                        if (Input.GetKeyDown(KeyCode.LeftShift))
-                        {
-                            if (!GameContext.CharacterIncludeState(StateType.Move))
-                            {
-                                ChangeState(StateType.Move);
-                                StopState(StateType.Run);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        if (Input.GetKeyDown(KeyCode.LeftShift))
+                        if (!GameContext.CharacterIncludeState(StateType.Run))
                         {
                             ChangeState(StateType.Run);
-
-                        }
-                        else
-                        {
-                            ChangeState(StateType.Move);
+                            StopState(StateType.Move);
                         }
                     }
-
-                    if (!GameContext.CharacterIncludeState(StateType.Roll))
+                }
+                else if (GameContext.CharacterIncludeState(StateType.Run))
+                {
+                    if (Input.GetKeyDown(KeyCode.LeftShift))
                     {
-                        LookForward();
+                        if (!GameContext.CharacterIncludeState(StateType.Move))
+                        {
+                            ChangeState(StateType.Move);
+                            StopState(StateType.Run);
+                        }
                     }
                 }
                 else
                 {
-                    if (GameContext.CharacterIncludeState(StateType.Move))
+                    if (Input.GetKeyDown(KeyCode.LeftShift))
                     {
-                        StopState(StateType.Move);
+                        ChangeState(StateType.Run);
+
                     }
-                    if (GameContext.CharacterIncludeState(StateType.Run))
+                    else
                     {
-                        StopState(StateType.Run);
+                        ChangeState(StateType.Move);
                     }
                 }
+
+                if (!GameContext.CharacterIncludeState(StateType.Roll))
+                {
+                    LookForward();
+                }
+            }
+            else
+            {
+                if (GameContext.CharacterIncludeState(StateType.Move))
+                {
+                    StopState(StateType.Move);
+                }
+                if (GameContext.CharacterIncludeState(StateType.Run))
+                {
+                    StopState(StateType.Run);
+                }
+            }
             if (Input.GetMouseButtonDown(0))
             {
                 ChangeState(StateType.DoAtk, GameContext.GetCharacterSkillIdByIndex(0));

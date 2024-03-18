@@ -37,7 +37,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bases
         {
             CommonUtils.Logout(character.characterData.characterName + "进入" + stateData.stateName + "状态");
             //若动画超过一段 则不播放 后续会由具体skill来播放
-            AudioEventDispatcher.GetInstance().Event(MomentType.EnterState, character.characterData.id, stateData.id, "enter", character.playerId, character.InstanceId);
+            AudioEventDispatcher.GetInstance().Event(MomentType.EnterState, character.characterData.id, stateData.id, "enter", character.PlayerId, character.InstanceId);
             if (!stateData.isSkill)
             {
                 PlayStateAnim(stateData);
@@ -115,7 +115,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bases
             {
                 character.eventDispatcher.Off(EventDispatcher.OPT_REDUCE_STATE_TIME, OnOptReduceTime);
             }
-            AudioEventDispatcher.GetInstance().Event(MomentType.EnterState, character.characterData.id, stateData.id, "exit", character.playerId, character.InstanceId);
+            AudioEventDispatcher.GetInstance().Event(MomentType.EnterState, character.characterData.id, stateData.id, "exit", character.PlayerId, character.InstanceId);
             CommonUtils.Logout(character.characterData.characterName + ":" + stateData.stateName + "结束");
         }
     }

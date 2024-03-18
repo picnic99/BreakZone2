@@ -31,7 +31,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills
 
         private int GetAnimIndexByInput()
         {
-            var input = character.input.inputData;
+            var input = character.input.InputData;
             int animIndex = 0;
             if (input.Y >= 0)
             {

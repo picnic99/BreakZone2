@@ -1,4 +1,6 @@
-﻿using StateSyncServer.LogicScripts.VirtualClient.Bridge;
+﻿using Msg;
+using StateSyncServer.LogicScripts.Manager;
+using StateSyncServer.LogicScripts.VirtualClient.Bridge;
 using StateSyncServer.LogicScripts.VirtualClient.Characters;
 using StateSyncServer.LogicScripts.VirtualClient.Enum;
 using System;
@@ -62,13 +64,33 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bases
         /// </summary>
         public bool IsEnable { get; set; }
 
+        private GameInstaneInfo info;
+
 
         public GameInstance(Instance obj)
         {
             parent = obj;
 
-            trans = new Transform();
-            anim = new Animator();
+            trans = new Transform((Character)obj);
+            anim = new Animator((Character)obj);
+            info = new GameInstaneInfo();
+
+            SendCreateAction();
+        }
+
+        public GameInstaneInfo GetGameInstaneInfo()
+        {
+            info.PlayerId = parent.PlayerId;
+            info.InstanceId = 1;
+            info.Parent = 1; //等于其它的实例ID
+            info.FollowType = "Root"; // 自定义其它参数 只要客户端能够识别即可
+            info.Offset = new Vec3() { X = 0, Y = 0, Z = 0 };
+            info.Rot = 0;
+            info.PrefabKey = "Skill/GaiLunAtk";
+            info.StageNum = 1;
+            info.DurationTime = 2;
+            info.IsAutoDestroy = true;
+            return info;
         }
 
         public int GetInstanceType()
@@ -120,6 +142,11 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bases
         public void OnTriggerExit(GameInstance[] targets)
         {
             exitCall(targets);
+        }
+
+        public void SendCreateAction()
+        {
+            ActionManager.GetInstance().SendGameInstanceCreateNtf(GetGameInstaneInfo());
         }
 
     }

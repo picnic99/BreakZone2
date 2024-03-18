@@ -11,7 +11,7 @@ using static StateSyncServer.LogicScripts.VirtualClient.Manager.SkillManager;
 
 namespace StateSyncServer.LogicScripts.VO
 {
-    class Skill
+    class _Skill
     {
 /*        public int playerId;
         public int skillId;

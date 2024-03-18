@@ -6,7 +6,6 @@ using StateSyncServer.LogicScripts.VirtualClient.Enum;
 using StateSyncServer.LogicScripts.VirtualClient.States;
 using StateSyncServer.LogicScripts.VO;
 using System.Collections.Generic;
-using Character = StateSyncServer.LogicScripts.VirtualClient.Characters.Character;
 
 namespace StateSyncServer.LogicScripts.Manager
 {

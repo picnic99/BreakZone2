@@ -49,12 +49,13 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bases
                 AnimCoverVO vo = character.animCoverData.GetHead(stateName);
                 if (vo != null)
                 {
-                    AnimManager.GetInstance().PlayAnim(character, vo.animName);
+                    character.Anim.PlayAnim(vo.animName);
                 }
                 else
                 {
                     StateVO state = StateConfiger.GetInstance().GetStateByType(stateName);
-                    AnimManager.GetInstance().PlayStateAnim(character, state);
+                    character.Anim.PlayStateAnim(state);
+
                 }
             }
         }

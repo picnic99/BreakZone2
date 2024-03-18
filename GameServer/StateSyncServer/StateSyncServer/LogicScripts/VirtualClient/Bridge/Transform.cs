@@ -1,4 +1,6 @@
 ﻿using StateSyncServer.LogicScripts.Util;
+using StateSyncServer.LogicScripts.VirtualClient.Bases;
+using StateSyncServer.LogicScripts.VirtualClient.Characters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +12,8 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bridge
 {
     public class Transform
     {
+        public Instance ins;
+
         //变换矩阵
         private Matrix4x4 TransformMatrix = Matrix4x4.Identity;
         //旋转矩阵
@@ -24,8 +28,11 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bridge
         private Quaternion rotation;
         public Quaternion Rotation { get => rotation; set => rotation = value; }
 
+        private float lastRot;
         private float rot;
         public float Rot { get => rot; set => rot = value; }
+
+        public Queue<Matrix4x4> transQueue = new Queue<Matrix4x4>();
 
         public Vector3 Forward
         {
@@ -51,6 +58,10 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bridge
             }
         }
 
+        public Transform(Instance ins)
+        {
+            this.ins = ins;
+        }
 
         /// <summary>
         /// 旋转
@@ -58,7 +69,15 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bridge
         /// <param name="rot"></param>
         public void RotateTo(float rot)
         {
-
+            lastRot = this.rot;
+            this.Rot = rot;
+            var rotChange = this.Rot - this.lastRot;
+            if (rotChange != 0)
+            {
+                var rotMat = MatrixUtils.GetRotateYMatrix(rotChange);
+                RotateMatrix = rotMat;
+                transQueue.Enqueue(rotMat);
+            }
         }
 
         /// <summary>
@@ -67,7 +86,24 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bridge
         /// <param name="pos"></param>
         public void Translate(Vector3 pos)
         {
+            pos.Y = 0;
+            var moveMatrix = MatrixUtils.GetMoveMatrix(pos);
+            transQueue.Enqueue(moveMatrix);
+        }
 
+
+        public void Tick()
+        {
+            //处理队列的变换
+            while (transQueue.Count  > 0)
+            {
+                var mat = transQueue.Dequeue();
+                this.TransformMatrix = MatrixUtils.MulMatrix(this.TransformMatrix, mat);
+            }
+            //处理动画的变换
+
+
+            this.Position = MatrixUtils.MulMatrixVerctor(this.TransformMatrix, Vector3.Zero);
         }
     }
 }

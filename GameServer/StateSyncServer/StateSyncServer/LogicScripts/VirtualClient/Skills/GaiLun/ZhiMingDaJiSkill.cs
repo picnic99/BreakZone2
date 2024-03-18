@@ -29,7 +29,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
 
             InstanceManager.GetInstance().CreateEffectInstance("ZhiMingDaJi_XuLi",character.Trans.Position,character.Trans.Rot);
             //AudioManager.GetInstance().Play("sword_power", false);
-            AudioEventDispatcher.GetInstance().Event(MomentType.DoSkill, this, "weaponFillPower",character.playerId,character.InstanceId);
+            AudioEventDispatcher.GetInstance().Event(MomentType.DoSkill, this, "weaponFillPower",character.PlayerId,character.InstanceId);
 /*            obj.transform.parent = character.GetWeapon().transform;
             obj.transform.localPosition = new Vector3(-0.084F, 0, 0.033F);
             obj.transform.localRotation = Quaternion.identity;
@@ -80,7 +80,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
             character.animCoverData.Remove(StateType.DoAtk, atkCover);
             //character.animCoverData.Remove(StateType.Move, moveCover);
 
-            AudioEventDispatcher.GetInstance().Event(MomentType.DoSkill, this, "hardAtk",character.playerId,character.InstanceId);
+            AudioEventDispatcher.GetInstance().Event(MomentType.DoSkill, this, "hardAtk",character.PlayerId,character.InstanceId);
 
             new ZhiMingDaJiInstance(this, DoTrigger, 0);
             new ZhiMingDaJiInstance(this, DoTrigger, 15);
@@ -119,7 +119,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
             enterCall = call;
             this.moveOffset = moveOffset;
             //Init();
-            AudioEventDispatcher.GetInstance().Event(MomentType.DoSkill, RootSkill, "flywheel", RootSkill.character.playerId,instanceObj.InstanceId);
+            AudioEventDispatcher.GetInstance().Event(MomentType.DoSkill, RootSkill, "flywheel", RootSkill.character.PlayerId,instanceObj.InstanceId);
         }
 
         public override void AddBehaviour()

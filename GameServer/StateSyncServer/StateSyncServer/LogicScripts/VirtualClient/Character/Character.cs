@@ -9,74 +9,84 @@ using StateSyncServer.LogicScripts.VirtualClient.Enum;
 using StateSyncServer.LogicScripts.VirtualClient.Manager;
 using StateSyncServer.LogicScripts.VirtualClient.Skills.Base;
 using StateSyncServer.LogicScripts.VirtualClient.VO;
-using System;
-using System.Collections;
+using StateSyncServer.LogicScripts.VO;
 using System.Collections.Generic;
 using System.Numerics;
-using CharacterManager = StateSyncServer.LogicScripts.Manager.CharacterManager;
 using EventDispatcher = StateSyncServer.LogicScripts.VirtualClient.Manager.EventDispatcher;
 
 namespace StateSyncServer.LogicScripts.VirtualClient.Characters
 {
-
     /// <summary>
     /// 角色管理器
     /// 
     /// </summary>
     public class Character : Instance
     {
-        public int playerId;
+        public Transform Trans => instance.trans;
+        public Animator Anim => instance.anim;
+        public int InstanceId => instance.InstanceId;
 
-        public GameInstance instance;
+        public GameInstance instance { get; set; }
         /// <summary>
         /// 基础信息
         /// </summary>
         public CharacterBaseInfo baseInfo { get; set; }
         /// <summary>
+        /// 角色游戏中的数据
+        /// </summary>
+        public CharacterGameData GameData { get; private set; }
+        /// <summary>
         /// 阵营
         /// </summary>
         public CharacterState state = CharacterState.NEUTRAL;
-
-        //记录角色属性数值
+        /// <summary>
+        /// 角色属性值
+        /// </summary>
         public Property property { get; set; }
-        //物理控制器
+        /// <summary>
+        /// 物理控制器
+        /// </summary>
         public PhysicController physic { get; set; }
-
-        public Transform Trans => instance.trans;
-        public int InstanceId => instance.InstanceId;
-        //事件管理器
-        public EventDispatcher eventDispatcher;
-        //状态机 只负责角色状态之间的切换
+        /// <summary>
+        /// 事件管理
+        /// </summary>
+        public EventDispatcher eventDispatcher { get; set; }
+        /// <summary>
+        /// 状态机
+        /// </summary>
         public FSM fsm { get; set; }
-        //输入管理器
-        public InputManager input { get; set; }
-        //存储角色当前正在执行的Skill 有些脱手技能 不一定有那么快结束掉
-        public List<Skill> SkillBehaviour;
-        //存储角色当前正在执行的BUFF
-        public List<Buff> BuffBehaviour;
-        //角色的基础数据 如名字 技能id 简介 XXX的
-        public CharacterVO characterData;
+        /// <summary>
+        /// 输入控制器
+        /// </summary>
+        public InputController input { get; set; }
+        /// <summary>
+        /// 存储角色当前正在执行的Skill 有些脱手技能 不一定有那么快结束掉
+        /// </summary>
+        public List<Skill> SkillBehaviour { get; set; }
+        /// <summary>
+        /// 存储角色当前正在执行的BUFF
+        /// </summary>
+        public List<Buff> BuffBehaviour { get; set; }
+        /// <summary>
+        /// 角色的基础数据 从配置中读取
+        /// </summary>
+        public CharacterVO characterData{ get; set; }
         //TODO（不一定需要） 保持移动 考虑是比如盖伦施法E技能旋转时，假如我是ROOTMOTION的动画那么不能靠动画来改变角色 希望此时可以由程序继续控制玩家移动
-        public bool KeepMove;
+        public bool KeepMove { get; set; }
         public bool canRotate = true;
-
-        public AnimCoverData animCoverData;
-
-        public LogicScripts.VO.Player player;
+        /// <summary>
+        /// 动画覆盖数据 考虑移动到动画管理器中
+        /// </summary>
+        public AnimCoverData animCoverData { get; set; }
 
         public Character(CharacterVO vo, int playerId, CharacterBaseInfo baseInfo = null)
         {
             characterData = vo;
-            this.playerId = playerId;
-            player = PlayerManager.GetInstance().FindPlayer(playerId);
+            _playerId = playerId;
             this.baseInfo = baseInfo;
-            if (baseInfo == null)
-            {
-                this.baseInfo = new CharacterBaseInfo();
-            }
-
+            if (baseInfo == null) this.baseInfo = new CharacterBaseInfo();
             instance = new GameInstance(this);
-
+            this.GameData = new CharacterGameData();
             InitCharacter();
         }
 
@@ -94,12 +104,29 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Characters
             input.ApplyInput(inputCmd);
         }
 
+        public void GetGameData()
+        {
+            this.GameData.PlayerId = PlayerId;
+            this.GameData.CrtId = characterData.id;
+            this.GameData.Rot = Trans.Rot;
+            this.GameData.PosX = Trans.Position.X;
+            this.GameData.PosY = Trans.Position.Y;
+            this.GameData.PosZ = Trans.Position.Z;
+            this.GameData.CurAnimKey = Anim.curAnimKey;
+            this.GameData.AnimTime = Anim.animTime;
+            //this.GameData.States =
+            foreach (var item in fsm.myState.states)
+            {
+                this.GameData.States.Add(item.stateData.stateName);
+            }
+        }
+
         /// <summary>
         /// 初始化容器
         /// </summary>
         public virtual void InitCharacter()
         {
-            input = new InputManager(this);
+            input = new InputController(this);
             eventDispatcher = new EventDispatcher();
             SkillBehaviour = new List<Skill>();
             BuffBehaviour = new List<Buff>();
@@ -120,7 +147,6 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Characters
             instance.trans.Position = Vector3.Zero;
             instance.trans.Rot = 0;
             instance.trans.Scale = Vector3.One;
-
         }
 
         public void AddEventListener()
@@ -142,9 +168,10 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Characters
         /// </summary>
         public void Tick()
         {
-            input?.Tick();
-            physic?.OnUpdate();
+            //physic?.OnUpdate();
             fsm?.OnUpdate();
+            Anim.Tick();
+            Trans.Tick();
             //是否死亡
             if (property.IsDie())
             {

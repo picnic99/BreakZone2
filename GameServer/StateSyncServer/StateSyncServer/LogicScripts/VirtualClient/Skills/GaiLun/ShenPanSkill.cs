@@ -26,7 +26,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
             PlayAnim(skillData.GetAnimKey(0));
             base.OnEnter();
             skillDurationTime = stateDurationTime = 0.6f;
-            AudioEventDispatcher.GetInstance().Event(MomentType.DoSkill, this, "start", this.character.playerId, character.InstanceId);
+            AudioEventDispatcher.GetInstance().Event(MomentType.DoSkill, this, "start", this.character.PlayerId, character.InstanceId);
 
         }
 

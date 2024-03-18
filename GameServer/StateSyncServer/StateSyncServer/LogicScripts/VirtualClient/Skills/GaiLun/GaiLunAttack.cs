@@ -31,7 +31,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
               {
                   var ins = new GaiLunAtkInstance(this, index, DoDamage);
                   //instanceList.Add(ins);
-                  AudioEventDispatcher.GetInstance().Event(MomentType.DoSkill, this, "atk", character.playerId, character.instance.InstanceId);
+                  AudioEventDispatcher.GetInstance().Event(MomentType.DoSkill, this, "atk", character.PlayerId, character.instance.InstanceId);
               });
         }
 
@@ -56,12 +56,17 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
         Action<Character> call;
         public GaiLunAtkInstance(Skill skill, int index, Action<Character> call)
         {
+            _playerId = skill.character.PlayerId;
             RootSkill = skill;
             instancePath = "GaiLunAtk";
             durationTime = 1f;
             maxTriggerTarget = 99;
             IsEndRemoveObj = false;
             this.call = call;
+
+
+            curAtk = new GameInstance(this);
+
 
 
             /*            curAtk = instanceObj.transform.Find("atk" + index).gameObject;

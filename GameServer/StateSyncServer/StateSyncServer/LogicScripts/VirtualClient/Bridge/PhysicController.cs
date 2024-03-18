@@ -1,4 +1,5 @@
 ﻿using StateSyncServer.LogicScripts.Common;
+using StateSyncServer.LogicScripts.Util;
 using StateSyncServer.LogicScripts.VirtualClient.Bases;
 using StateSyncServer.LogicScripts.VirtualClient.Characters;
 using StateSyncServer.LogicScripts.VirtualClient.Manager;
@@ -127,6 +128,15 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bridge
             this.character = character;
 /*            cc = this.character.Trans.GetComponent<CharacterController>();
             cc.enabled = true;*/
+        }
+
+        public void Move(Vector3 offset)
+        {
+            //var moveMat = MatrixUtils.GetMoveMatrix(offset);
+            var moveMat = MatrixUtils.GetMoveMatrix(new Vector3(0,0,1 * Global.FixedFrameTimeS));
+            this.TransformMatrix = MatrixUtils.MulMatrix(this.TransformMatrix, moveMat);
+            var finalPos = MatrixUtils.MulMatrixVerctor(this.TransformMatrix, Vector3.Zero);
+            character.Player.LastStayPos = finalPos;
         }
 
         /// <summary>

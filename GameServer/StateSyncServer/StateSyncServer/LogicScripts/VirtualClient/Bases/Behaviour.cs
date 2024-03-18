@@ -77,23 +77,14 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bases
         {
             if (name != "")
             {
-                AnimManager.GetInstance().PlayAnim(character, name, translateTime);
+                character.Anim.PlayAnim(name, translateTime);
             }
         }
         public void PlayAnimByState(StateVO state, float translateTime = 0.3f)
         {
             if (state != null)
             {
-                AnimManager.GetInstance().PlayStateAnim(character, state, translateTime);
-                //AudioManager.GetInstance().Stop(true);
-                if (state.state.Type == StateType.Run)
-                {
-                    //AudioManager.GetInstance().Play("run", true);
-                }
-                if (state.state.Type == StateType.Move)
-                {
-                    //AudioManager.GetInstance().Play("move", true);
-                }
+                character.Anim.PlayStateAnim(state, translateTime);
             }
         }
 

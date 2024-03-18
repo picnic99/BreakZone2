@@ -20,12 +20,12 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bases
 
         public static Vector3 GetPlayerInputDirect(Player player)
         {
-            return new Vector3(player.input.X,0, player.input.Y); 
+            return new Vector3(player.Input.X, 0, player.Input.Y);
         }
 
         public static Vector3 GetDirByInput(Character character, bool defaultIsForward = true)
         {
-            Vector3 input = GetPlayerInputDirect(character.player);
+            Vector3 input = GetPlayerInputDirect(character.Player);
             Transform trans = character.Trans;
             Vector3 dir = defaultIsForward ? trans.Forward : Vector3.Zero;
             if (input.X > 0 && input.Z < 0)

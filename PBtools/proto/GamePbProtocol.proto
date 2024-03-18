@@ -148,35 +148,49 @@ message GameAudioPlayNtf{
 	int32 randomIndex = 3;
 }
 
+message GameInstaneInfo{
+	int32 instanceId = 1;
+	int32 playerId = 2;
+	int32 parent = 3;
+	string FollowType = 4;
+	Vec3 Offset = 5;
+	float Rot = 6;
+	string PrefabKey = 7;
+	int32 stageNum = 8;
+	float durationTime = 9;
+	bool IsAutoDestroy =10;
+}
+
 //游戏物体创建
 message GameInstanceCreateNtf{
-	int32 instanceId = 1;
-	int32 prefabId = 2;
-	Vec3 initPos = 3;
-	Vec3 initScale = 4;
-	float initRot = 5;
+	//int32 instanceId = 1;
+	//int32 prefabId = 2;
+	//Vec3 initPos = 3;
+	//Vec3 initScale = 4;
+	//float initRot = 5;
+	
+	GameInstaneInfo info = 1;
 }
 
 //游戏物体变换
 message GameInstanceTransformNtf{
-	int32 instanceId = 1;
+	//int32 instanceId = 1;
 	//变换的类型 1位移2旋转3缩放
-	int32 trans = 2;
+	//int32 trans = 2;
 	//变换的方式 1 指定目标 2 指定速度
-	int32 transType = 3;
+	//int32 transType = 3;
 	//位移或者缩放的目标 如 1s移动至pos或者 1s移动pos偏移
-	Vec3 target = 4;
+	//Vec3 target = 4;
 	//旋转目标
-	float rotTarget = 5;
+	//float rotTarget = 5;
 	//持续时间  s为单位
-	float durationTime = 6;
+	//float durationTime = 6;
 	
 }
 
 //游戏物体销毁
 message GameInstanceDestroyNtf{
 	int32 instanceId = 1;
-	float delay = 2;
 }
 
 
@@ -228,4 +242,16 @@ message GamePlayerInputCmdNtf{
 	float inputX = 2;
 	float inputY = 3;
 	float Rot = 4;
+}
+
+message CharacterGameData{
+	int32 playerId = 1;
+	int32 crtId = 2;
+	float posX = 3;
+	float posY = 4;
+	float posZ = 5;
+	float rot = 6;
+	repeated string states = 7;
+	string curAnimKey = 8;
+	int64 animTime = 9;
 }

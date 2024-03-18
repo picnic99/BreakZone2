@@ -34,6 +34,7 @@ namespace Assets.LogicScripts.Client.Manager
             On(ProtocolId.CLIENT_GAME_PLAYER_INPUT_CMD_NTF, Handle_GamePlayerInputCmdNtf);
             On(ProtocolId.CLIENT_GAME_SYNC_STATE_CHANGE_NTF, Handle_GameSyncStateChangeNtf);
             On(ProtocolId.CLIENT_CAN_ENTER_SCENE_REP, Handle_CanEnterSceneRep);
+            On(ProtocolId.CLIENT_OBJ_CREATE_NTF, Handle_GameInstanceCreateNtf);
 
         }
 
@@ -55,6 +56,8 @@ namespace Assets.LogicScripts.Client.Manager
             Off(ProtocolId.CLIENT_GAME_PLAYER_INPUT_CMD_NTF, Handle_GamePlayerInputCmdNtf);
             Off(ProtocolId.CLIENT_GAME_SYNC_STATE_CHANGE_NTF, Handle_GameSyncStateChangeNtf);
             Off(ProtocolId.CLIENT_CAN_ENTER_SCENE_REP, Handle_CanEnterSceneRep);
+            Off(ProtocolId.CLIENT_OBJ_CREATE_NTF, Handle_GameInstanceCreateNtf);
+
 
 
         }
@@ -400,6 +403,15 @@ namespace Assets.LogicScripts.Client.Manager
             GamePlayerBaseInfo info = ntf.PlayerInfo;
             Player p = PlayerManager.GetInstance().FindPlayer(info.PlayerId);
             p.UpdateBaseInfo(info);
+        }
+
+        private void Handle_GameInstanceCreateNtf(object[] args)
+        {
+            Protocol proto = args[0] as Protocol;
+            GameInstanceCreateNtf ntf = proto.GetDataInstance<GameInstanceCreateNtf>();
+
+            GameInstaneInfo info = ntf.Info;
+            Debug.Log(info.ToString());
         }
 
     }

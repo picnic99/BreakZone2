@@ -34,7 +34,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
         public override void OnTrigger()
         {
             base.OnTrigger();
-            AudioEventDispatcher.GetInstance().Event(MomentType.DoSkill, this, "start", this.character.playerId,character.InstanceId);
+            AudioEventDispatcher.GetInstance().Event(MomentType.DoSkill, this, "start", this.character.PlayerId,character.InstanceId);
 
             new ZhenYiInstance(this, BeTrigger);
         }
