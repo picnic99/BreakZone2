@@ -20,13 +20,8 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Characters
     /// 角色管理器
     /// 
     /// </summary>
-    public class Character : Instance
+    public class Character : GameInstance
     {
-        public Transform Trans => instance.trans;
-        public Animator Anim => instance.anim;
-        public int InstanceId => instance.InstanceId;
-
-        public GameInstance instance { get; set; }
         /// <summary>
         /// 基础信息
         /// </summary>
@@ -85,7 +80,6 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Characters
             _playerId = playerId;
             this.baseInfo = baseInfo;
             if (baseInfo == null) this.baseInfo = new CharacterBaseInfo();
-            instance = new GameInstance(this);
             this.GameData = new CharacterGameData();
             InitCharacter();
         }
@@ -144,9 +138,9 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Characters
         public void InitData()
         {
             //todo
-            instance.trans.Position = Vector3.Zero;
-            instance.trans.Rot = 0;
-            instance.trans.Scale = Vector3.One;
+            Trans.Position = Vector3.Zero;
+            Trans.Rot = 0;
+            Trans.Scale = Vector3.One;
         }
 
         public void AddEventListener()
@@ -170,8 +164,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Characters
         {
             //physic?.OnUpdate();
             fsm?.OnUpdate();
-            Anim.Tick();
-            Trans.Tick();
+            base.Tick();
             //是否死亡
             if (property.IsDie())
             {

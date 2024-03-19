@@ -68,8 +68,8 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
         public ShenPanInstance(Skill skill, Action<Character> call)
         {
             RootSkill = skill;
-            enterCall = call;
-            instancePath = "ShenPan2";
+            //enterCall = call;
+            prefabKey = "ShenPan2";
             //Init();
         }
 
@@ -77,7 +77,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
         {
             Vector3 pos = RootSkill.character.Trans.Position;
             float rot = RootSkill.character.Trans.Rot;
-            InstanceManager.GetInstance().CreateSkillInstance(instancePath, pos, rot);
+            InstanceManager.GetInstance().CreateSkillInstance(prefabKey, pos, rot);
             //挂载crt下方
         }
 

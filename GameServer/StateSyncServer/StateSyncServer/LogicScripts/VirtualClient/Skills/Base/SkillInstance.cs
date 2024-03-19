@@ -1,4 +1,5 @@
-﻿using StateSyncServer.LogicScripts.Manager;
+﻿using Msg;
+using StateSyncServer.LogicScripts.Manager;
 using StateSyncServer.LogicScripts.VirtualClient.Bases;
 using StateSyncServer.LogicScripts.VirtualClient.Characters;
 using StateSyncServer.LogicScripts.VirtualClient.Enum;
@@ -16,33 +17,21 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.Base
     /// 如何时创建什么实例 以及实例检测目标后执行什么逻辑 
     /// 击飞 击退 造成伤害恢复血量施加buff等
     /// </summary>
-    public abstract class SkillInstance : Instance
+    public abstract class SkillInstance : GameInstance
     {
-        public EventDispatcher dispatcher;
         /// <summary>
         /// 所属技能
         /// </summary>
-        public Skill RootSkill;
-        /// <summary>
-        /// 实例object
-        /// </summary>
-        public GameInstance instanceObj;
+        public Skill RootSkill { get; set; }
         /// <summary>
         /// 实例的路径
         /// </summary>
-        public string instancePath = "";
+        public string prefabKey = "";
         /// <summary>
         /// 实例持续时间
         /// </summary>
         public float durationTime = 1f;
-
         public float maxDurationTime = 10f;
-        /// <summary>
-        /// 实例的回调 可能有多个 如触碰目标的回调 如实例结束的回调 如实例开始的回调 。。。
-        /// </summary>
-        public Action<Character> enterCall;
-        public Action<Character> stayCall;
-        public Action<Character> exitCall;
         /// <summary>
         /// 角色死亡时技能移除
         /// </summary>
@@ -63,15 +52,14 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.Base
         /// 是否需要碰撞器检测
         /// </summary>
         protected bool needTriggerCheck = true;
-
+        /// <summary>
+        /// 技能结束时移除物体
+        /// </summary>
         protected bool IsEndRemoveObj = true;
-
-        public bool IsEnable = true;
 
         public virtual void Init(int checkType)
         {
             maxDurationTime = durationTime;
-            dispatcher = new EventDispatcher();
             InitTransform();
             AddBehaviour();
             if (needTriggerCheck)
@@ -130,21 +118,21 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.Base
         {
             if (enterCall != null)
             {
-                enterCall.Invoke(target);
+                //enterCall.Invoke(target);
             }
         }
         public virtual void InvokeStayTrigger(Character target)
         {
             if (stayCall != null)
             {
-                stayCall.Invoke(target);
+                //stayCall.Invoke(target);
             }
         }
         public virtual void InvokeExitTrigger(Character target)
         {
             if (exitCall != null)
             {
-                exitCall.Invoke(target);
+                //exitCall.Invoke(target);
             }
         }
 
@@ -162,14 +150,13 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.Base
             TimeManager.GetInstance().RemoveAllTimer(this);
             if (IsEndRemoveObj)
             {
-                InstanceManager.GetInstance().RemoveInstance(instanceObj);
+                InstanceManager.GetInstance().RemoveInstance(this);
             }
             else
             {
                 TimeManager.GetInstance().AddOnceTimer(this, maxDurationTime, () =>
                 {
-                    InstanceManager.GetInstance().RemoveInstance(instanceObj);
-                    instanceObj = null;
+                    InstanceManager.GetInstance().RemoveInstance(this);
                 });
             }
         }
@@ -177,7 +164,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.Base
         public void OnDestroy()
         {
             IsEnable = false;
-            InstanceManager.GetInstance().RemoveInstance(instanceObj);
+            InstanceManager.GetInstance().RemoveInstance(this);
         }
     }
 }

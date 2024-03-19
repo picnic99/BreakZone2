@@ -52,7 +52,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills
             DoDamage(target, character.property.Atk);
 
             triggered = true;
-            Vector3 v = character.instance.trans.Position;
+            Vector3 v = character.Trans.Position;
             GameInstance ins = InstanceManager.GetInstance().CreateEffectInstance("Common/BloodEffect", v, 0);
 
             character.eventDispatcher.Event(CharacterEvent.ATK, new Character[] { target });

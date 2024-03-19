@@ -25,19 +25,19 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Manager
             {
                 pos = Vector3.Zero;
             }
-            ins.trans.Position = pos;
+            ins.Trans.Position = pos;
             if (scale == default)
             {
                 scale = Vector3.One;
             }
-            ins.trans.Scale = scale;
-            ins.trans.Rot = rot;
+            ins.Trans.Scale = scale;
+            ins.Trans.Rot = rot;
             datas.Add(ins.InstanceId, ins);
         }
 
         public GameInstance CreateEffectInstance(string prefabName, Vector3 pos, float rot)
         {
-            GameInstance ins = new GameInstance(null);
+            GameInstance ins = new GameInstance();
             ins.SetInstanceType(InstanceTypeEnum.EFFECT);
             AddInstance(ins, prefabName, pos, Vector3.One, rot);
             return ins;
@@ -45,7 +45,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Manager
 
         public GameInstance CreateSkillInstance(string prefabName, Vector3 pos, float rot)
         {
-            GameInstance ins = new GameInstance(null);
+            GameInstance ins = new GameInstance();
             ins.SetInstanceType(InstanceTypeEnum.EFFECT);
             AddInstance(ins, prefabName, pos, Vector3.One, rot);
             return ins;
@@ -53,7 +53,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Manager
 
         public GameInstance CreateCrtInstance(string prefabName, Character crt)
         {
-            GameInstance ins = new GameInstance(crt);
+            GameInstance ins = new GameInstance();
             ins.SetInstanceType(InstanceTypeEnum.CHARACTER);
             AddInstance(ins, prefabName);
             return ins;

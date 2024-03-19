@@ -114,12 +114,12 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
         public ZhiMingDaJiInstance(Skill skill, Action<Character> call, float moveOffset)
         {
             RootSkill = skill;
-            instancePath = "ZhiMingDaJi";
+            prefabKey = "ZhiMingDaJi";
             durationTime = maxTime;
-            enterCall = call;
+            //enterCall = call;
             this.moveOffset = moveOffset;
             //Init();
-            AudioEventDispatcher.GetInstance().Event(MomentType.DoSkill, RootSkill, "flywheel", RootSkill.character.PlayerId,instanceObj.InstanceId);
+            AudioEventDispatcher.GetInstance().Event(MomentType.DoSkill, RootSkill, "flywheel", RootSkill.character.PlayerId,InstanceId);
         }
 
         public override void AddBehaviour()
@@ -128,7 +128,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
             {
                 if (durationTime <= 0)
                 {
-                    if (isBack && Vector3.Distance(instanceObj.trans.Position, RootSkill.character.Trans.Position) <= 0.1f)
+                    if (isBack && Vector3.Distance(Trans.Position, RootSkill.character.Trans.Position) <= 0.1f)
                     {
                         End();
                         return;
@@ -141,7 +141,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
 
         private void DoMove()
         {
-            instanceObj.SetActive(true);
+            //SetActive(true);
 
             // TODO 返回时追踪角色位置
 /*            if (durationTime <= maxTime / 2)

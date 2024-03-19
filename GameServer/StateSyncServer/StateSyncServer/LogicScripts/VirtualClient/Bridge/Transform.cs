@@ -12,7 +12,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bridge
 {
     public class Transform
     {
-        public Instance ins;
+        public GameInstance ins;
 
         //变换矩阵
         private Matrix4x4 TransformMatrix = Matrix4x4.Identity;
@@ -58,7 +58,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bridge
             }
         }
 
-        public Transform(Instance ins)
+        public Transform(GameInstance ins)
         {
             this.ins = ins;
         }

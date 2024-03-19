@@ -411,7 +411,12 @@ namespace Assets.LogicScripts.Client.Manager
             GameInstanceCreateNtf ntf = proto.GetDataInstance<GameInstanceCreateNtf>();
 
             GameInstaneInfo info = ntf.Info;
-            Debug.Log(info.ToString());
+
+            string prefabKey = info.PrefabKey;
+            int stageNum = info.StageNum;
+            Vector3 pos = new Vector3(info.Offset.X,info.Offset.Y,info.Offset.Z);
+            float rot = info.Rot;
+            InstanceManager.GetInstance().Event(InstanceManager.INSTANCE_CREATE, prefabKey, stageNum, pos, rot);
         }
 
     }

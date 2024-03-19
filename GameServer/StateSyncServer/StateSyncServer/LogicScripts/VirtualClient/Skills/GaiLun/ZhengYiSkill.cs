@@ -66,13 +66,12 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
         public ZhenYiInstance(Skill skill, Action<Character> call)
         {
             RootSkill = skill;
-            enterCall = call;
-            instancePath = "ZhenYi";
+            //enterCall = call;
+            prefabKey = "ZhenYi";
             durationTime = 5f;
 /*            instanceObj = ResourceManager.GetInstance().GetSkillInstance(instancePath);
             atkFlyCheck = instanceObj.transform.Find("atkFlyCheck").GetComponent<ColliderHelper>();
             JianWuCheck = instanceObj.transform.Find("JianWuCheck").GetComponent<ColliderHelper>();*/
-            enterCall = call;
             //Init();
         }
 

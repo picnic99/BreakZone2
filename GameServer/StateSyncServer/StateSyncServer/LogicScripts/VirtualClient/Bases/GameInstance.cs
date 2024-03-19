@@ -3,6 +3,7 @@ using StateSyncServer.LogicScripts.Manager;
 using StateSyncServer.LogicScripts.VirtualClient.Bridge;
 using StateSyncServer.LogicScripts.VirtualClient.Characters;
 using StateSyncServer.LogicScripts.VirtualClient.Enum;
+using StateSyncServer.LogicScripts.VO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,9 +15,13 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bases
     /// <summary>
     /// 对应游戏中的一个实例
     /// </summary>
-    public class GameInstance
+    public class GameInstance : EventDispatcher
     {
-        public Instance parent { get; set; }
+        protected int _playerId;
+        public int PlayerId => _playerId;
+        public Player Player => PlayerManager.GetInstance().FindPlayer(_playerId);
+
+        //public Instance parent { get; set; }
         /// <summary>
         /// 实例的唯一ID
         /// </summary>
@@ -34,11 +39,11 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bases
         /// <summary>
         /// 变换组件
         /// </summary>
-        public Transform trans { get; set; }
+        public Transform Trans { get; set; }
         /// <summary>
         /// 动画组件
         /// </summary>
-        public Animator anim { get; set; }
+        public Animator Anim { get; set; }
         /// <summary>
         /// 有物体进入范围时调用
         /// </summary>
@@ -64,23 +69,20 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bases
         /// </summary>
         public bool IsEnable { get; set; }
 
-        private GameInstaneInfo info;
+        protected GameInstaneInfo info;
 
 
-        public GameInstance(Instance obj)
+        public GameInstance()
         {
-            parent = obj;
-
-            trans = new Transform((Character)obj);
-            anim = new Animator((Character)obj);
+            Trans = new Transform(this);
+            Anim = new Animator(this);
             info = new GameInstaneInfo();
-
-            SendCreateAction();
+            //SendCreateAction();
         }
 
-        public GameInstaneInfo GetGameInstaneInfo()
+        public virtual GameInstaneInfo GetGameInstaneInfo()
         {
-            info.PlayerId = parent.PlayerId;
+/*            info.PlayerId = PlayerId;
             info.InstanceId = 1;
             info.Parent = 1; //等于其它的实例ID
             info.FollowType = "Root"; // 自定义其它参数 只要客户端能够识别即可
@@ -89,16 +91,23 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bases
             info.PrefabKey = "Skill/GaiLunAtk";
             info.StageNum = 1;
             info.DurationTime = 2;
-            info.IsAutoDestroy = true;
+            info.IsAutoDestroy = true;*/
+
+
             return info;
+        }
+
+        public virtual void SetGameInstanceInfo()
+        {
+
         }
 
         public int GetInstanceType()
         {
-            if(parent is Character)
+/*            if (parent is Character)
             {
                 return InstanceTypeEnum.CHARACTER;
-            }
+            }*/
             return 0;
         }
 
@@ -110,9 +119,9 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bases
         public void SetCollider(Collider col)
         {
             this.col = col;
-/*            this.col.enterCall += OnTriggerEnter;
-            this.col.stayCall += OnTriggerStay;
-            this.col.exitCall += OnTriggerExit;*/
+            /*            this.col.enterCall += OnTriggerEnter;
+                        this.col.stayCall += OnTriggerStay;
+                        this.col.exitCall += OnTriggerExit;*/
         }
 
         public void SetActive(bool b)
@@ -122,15 +131,12 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bases
 
         public void Tick()
         {
-            CheckCollider();
+            Anim.Tick();
+            Trans.Tick();
+            col?.Check();
         }
 
-        private void CheckCollider()
-        {
-            col.Check();
-        }
-
-        public void OnTriggerEnter(GameInstance[] targets)
+/*        public void OnTriggerEnter(GameInstance[] targets)
         {
             enterCall(targets);
         }
@@ -142,7 +148,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bases
         public void OnTriggerExit(GameInstance[] targets)
         {
             exitCall(targets);
-        }
+        }*/
 
         public void SendCreateAction()
         {

@@ -43,6 +43,7 @@ public class GameMain : MonoBehaviour
 
         Assets.LogicScripts.Client.Manager.ActionManager.GetInstance().Init();
         SceneManager.GetInstance().Init();
+        InstanceManager.GetInstance().Init();
         //CharacterManager.GetInstance().Init();
 
         GameStart();

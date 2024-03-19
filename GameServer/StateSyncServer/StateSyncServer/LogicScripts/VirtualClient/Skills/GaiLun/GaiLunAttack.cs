@@ -1,4 +1,6 @@
-﻿using StateSyncServer.LogicScripts.Util;
+﻿using Msg;
+using StateSyncServer.LogicScripts.Common;
+using StateSyncServer.LogicScripts.Util;
 using StateSyncServer.LogicScripts.VirtualClient.Bases;
 using StateSyncServer.LogicScripts.VirtualClient.Characters;
 using StateSyncServer.LogicScripts.VirtualClient.Manager;
@@ -26,12 +28,12 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
                 durationTime = 0;
                 return;
             }
-            int index = StageNum + 1;
+            //int index = StageNum + 1;
             TimeManager.GetInstance().AddOnceTimer(this, skillData.GetFrontTime(StageNum), () =>
               {
-                  var ins = new GaiLunAtkInstance(this, index, DoDamage);
+                  var ins = new GaiLunAtkInstance(this, StageNum, DoDamage);
                   //instanceList.Add(ins);
-                  AudioEventDispatcher.GetInstance().Event(MomentType.DoSkill, this, "atk", character.PlayerId, character.instance.InstanceId);
+                  AudioEventDispatcher.GetInstance().Event(MomentType.DoSkill, this, "atk", character.PlayerId, character.InstanceId);
               });
         }
 
@@ -42,7 +44,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
             AddState(target, character, StateType.Injure);
             DoDamage(target, character.property.Atk);
 
-            var dir = character.instance.trans.Forward.Normalize();
+            var dir = character.Trans.Forward.Normalize();
             dir.Y = 0;
             target.physic.Move(dir * 1f, 0.2f);
             character.eventDispatcher.Event(CharacterEvent.ATK, new Character[] { target });
@@ -52,37 +54,54 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
     class GaiLunAtkInstance : SkillInstance
     {
         public GameInstance curAtk;
-
+        public int stageNum;
         Action<Character> call;
         public GaiLunAtkInstance(Skill skill, int index, Action<Character> call)
         {
             _playerId = skill.character.PlayerId;
             RootSkill = skill;
-            instancePath = "GaiLunAtk";
+            prefabKey = "GaiLunAtk";
             durationTime = 1f;
             maxTriggerTarget = 99;
             IsEndRemoveObj = false;
             this.call = call;
+            this.stageNum = index;
 
+            SetGameInstanceInfo();
+            SendCreateAction();
+        }
 
-            curAtk = new GameInstance(this);
+        public override void SetGameInstanceInfo()
+        {
+            base.SetGameInstanceInfo();
+            Vector3 pos = RootSkill.character.Trans.Position + RootSkill.character.Trans.Forward * 1f;
+            float rot = RootSkill.character.Trans.Rot;
+            var temp = new GameInstaneInfo()
+            {
+                PlayerId = this.PlayerId,
+                Parent = 0,
+                InstanceId = this.InstanceId,
+                FollowType = "Root",
+                PrefabKey = this.prefabKey,
+                Offset = new Vec3() {X= pos.X, Y=pos.Y, Z=pos.Z },
+                Rot = rot,
+                StageNum = this.stageNum,
+                DurationTime = durationTime,
+                IsAutoDestroy = true,
+            };
 
-
-
-            /*            curAtk = instanceObj.transform.Find("atk" + index).gameObject;
-                        curAtk.SetActive(true);
-                        Init();*/
+            this.info = temp;
         }
 
         public override void OnEnterTrigger(Character col)
         {
-            base.OnEnterTrigger(col);
+/*            base.OnEnterTrigger(col);
             Vector3 v = RootSkill.character.Trans.Position;
             GameInstance ins = InstanceManager.GetInstance().CreateEffectInstance("Common/BloodEffect", v, 0);
             TimeManager.GetInstance().AddOnceTimer(this, 0.5f, () =>
             {
                 InstanceManager.GetInstance().RemoveInstance(ins);
-            });
+            });*/
         }
 
         public override void InvokeEnterTrigger(Character target)
@@ -94,7 +113,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
         {
             Vector3 pos = RootSkill.character.Trans.Position + RootSkill.character.Trans.Forward * 1f;
             float rot = RootSkill.character.Trans.Rot;
-            InstanceManager.GetInstance().CreateSkillInstance(instancePath, pos, rot);
+            InstanceManager.GetInstance().CreateSkillInstance(prefabKey, pos, rot);
         }
 
         public override void AddBehaviour()
@@ -106,8 +125,8 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
                     End();
                     return;
                 }
-                durationTime -= 0.02f;
-            }, 0.02f);
+                durationTime -= Global.FixedFrameTimeS;
+            }, Global.FixedFrameTimeS);
         }
     }
 }

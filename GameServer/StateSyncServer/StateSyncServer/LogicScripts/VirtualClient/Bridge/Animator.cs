@@ -1,4 +1,5 @@
 ﻿using StateSyncServer.LogicScripts.Util;
+using StateSyncServer.LogicScripts.VirtualClient.Bases;
 using StateSyncServer.LogicScripts.VirtualClient.Characters;
 using StateSyncServer.LogicScripts.VirtualClient.Configer;
 using StateSyncServer.LogicScripts.VirtualClient.Manager;
@@ -15,7 +16,8 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bridge
 {
     public class Animator
     {
-        private Character crt { get; set; }
+        private Character crt => ins != null && ins is Character ? (Character)ins : null;
+        private GameInstance ins { get; set; }
         public string curAnimKey = "";
         public long animTime = 0;
 
@@ -25,9 +27,9 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bridge
         private bool IsBlend = false;
 
         public AnimClipDataInfo info;
-        public Animator(Character crt)
+        public Animator(GameInstance ins)
         {
-            this.crt = crt;
+            this.ins = ins;
         }
 
         public void PlayAnim(string animName, float translateTime = 0.15f)

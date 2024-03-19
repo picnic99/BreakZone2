@@ -74,7 +74,11 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Manager
                 {
                     t.Stop();
                     t.Dispose();
-                    timers.Remove(t);
+                    int v = timers.IndexOf(t);
+                    if (v >= 0)
+                    {
+                        timers.RemoveAt(v);
+                    }
                 }
             }
         }
@@ -87,15 +91,15 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Manager
                 return null;
             }
             Timer t = new Timer();
-            t.Interval = delayTime;
+            t.Interval = delayTime; 
             ElapsedEventHandler func = null;
             func = (sender, args) =>
             {
                 call.Invoke();
-                RemoveTimer(call, t);
+                RemoveTimer(caller, t);
             };
-            t.Elapsed += func;
             RegisterTimer(caller, t);
+            t.Elapsed += func;
             return t;
         }
 
@@ -122,7 +126,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Manager
                 curCtn++;
                 if (ctn != -1 && curCtn >= ctn)
                 {
-                    RemoveTimer(call, t);
+                    RemoveTimer(caller, t);
                 }
             };
             t.Elapsed += func;
