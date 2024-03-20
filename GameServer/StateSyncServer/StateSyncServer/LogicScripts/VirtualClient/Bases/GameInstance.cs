@@ -133,7 +133,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bases
         {
             Anim.Tick();
             Trans.Tick();
-            col?.Check();
+            //col?.Check();
         }
 
 /*        public void OnTriggerEnter(GameInstance[] targets)
@@ -155,5 +155,9 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bases
             ActionManager.GetInstance().SendGameInstanceCreateNtf(GetGameInstaneInfo());
         }
 
+        public void ColCheck()
+        {
+            col.Check();
+        }
     }
 }

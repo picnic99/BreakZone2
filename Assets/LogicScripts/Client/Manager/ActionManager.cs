@@ -7,6 +7,7 @@ using Assets.LogicScripts.Utils;
 using Assets.LogicScripts.Client.Entity;
 using Assets.LogicScripts.Client.Common;
 using System;
+using Assets.LogicScripts.Client.CSkill;
 
 namespace Assets.LogicScripts.Client.Manager
 {
@@ -35,6 +36,7 @@ namespace Assets.LogicScripts.Client.Manager
             On(ProtocolId.CLIENT_GAME_SYNC_STATE_CHANGE_NTF, Handle_GameSyncStateChangeNtf);
             On(ProtocolId.CLIENT_CAN_ENTER_SCENE_REP, Handle_CanEnterSceneRep);
             On(ProtocolId.CLIENT_OBJ_CREATE_NTF, Handle_GameInstanceCreateNtf);
+            On(ProtocolId.CLIENT_GAME_DO_SKILL_NTF, Handle_GameDoSkillNtf);
 
         }
 
@@ -57,6 +59,7 @@ namespace Assets.LogicScripts.Client.Manager
             Off(ProtocolId.CLIENT_GAME_SYNC_STATE_CHANGE_NTF, Handle_GameSyncStateChangeNtf);
             Off(ProtocolId.CLIENT_CAN_ENTER_SCENE_REP, Handle_CanEnterSceneRep);
             Off(ProtocolId.CLIENT_OBJ_CREATE_NTF, Handle_GameInstanceCreateNtf);
+            Off(ProtocolId.CLIENT_GAME_DO_SKILL_NTF, Handle_GameDoSkillNtf);
 
 
 
@@ -419,5 +422,14 @@ namespace Assets.LogicScripts.Client.Manager
             InstanceManager.GetInstance().Event(InstanceManager.INSTANCE_CREATE, prefabKey, stageNum, pos, rot);
         }
 
+        private void Handle_GameDoSkillNtf(object[] args)
+        {
+            Protocol proto = args[0] as Protocol;
+            GameDoSkillNtf ntf = proto.GetDataInstance<GameDoSkillNtf>();
+
+            var atk = new GaiLunAtkSkill();
+            atk.Init(ntf.SkillInfo);
+            atk.DoBehaviour();
+        }
     }
 }

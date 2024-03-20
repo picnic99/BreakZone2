@@ -15,7 +15,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bridge
         public GameInstance ins;
 
         //变换矩阵
-        private Matrix4x4 TransformMatrix = Matrix4x4.Identity;
+        public Matrix4x4 TransformMatrix = Matrix4x4.Identity;
         //旋转矩阵
         private Matrix4x4 RotateMatrix = Matrix4x4.Identity;
 

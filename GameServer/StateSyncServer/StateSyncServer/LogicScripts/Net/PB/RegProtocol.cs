@@ -43,6 +43,7 @@ namespace StateSyncServer.LogicScripts.Net.PB
             RegProtocolData(ProtocolId.CLIENT_CAN_ENTER_SCENE_REP, typeof(CanEnterSceneRep));
 
             RegProtocolData(ProtocolId.CLIENT_OBJ_CREATE_NTF, typeof(GameInstanceCreateNtf));
+            RegProtocolData(ProtocolId.CLIENT_GAME_DO_SKILL_NTF, typeof(GameDoSkillNtf));
         }
 
         public static Type GetProtocolType(int id)

@@ -472,5 +472,18 @@ namespace StateSyncServer.LogicScripts.Manager
                 NetManager.GetInstance().SendProtoToPlayers(players, ntf);
             }
         }
+
+        public void Send_GameDoSkillNtf(SkillDataInfo info)
+        {
+            GameDoSkillNtf ntf = new GameDoSkillNtf();
+            ntf.SkillInfo = info;
+
+            Player p = PlayerManager.GetInstance().FindPlayer(info.PlayerId);
+            List<Player> players = SceneManager.GetInstance().GetPlayersInScene(p.SceneId);
+            if (players.Count > 0)
+            {
+                NetManager.GetInstance().SendProtoToPlayers(players, ntf);
+            }
+        }
     }
 }

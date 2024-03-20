@@ -255,3 +255,13 @@ message CharacterGameData{
 	string curAnimKey = 8;
 	int64 animTime = 9;
 }
+
+message SkillDataInfo{
+	int32 playerId = 1;
+	int32 skillId = 2;
+	int32 stageNum = 3;
+}
+
+message GameDoSkillNtf{
+	SkillDataInfo skillInfo = 1;
+}

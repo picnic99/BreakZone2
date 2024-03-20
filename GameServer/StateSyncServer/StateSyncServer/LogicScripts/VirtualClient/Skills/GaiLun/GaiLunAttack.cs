@@ -1,5 +1,6 @@
 ﻿using Msg;
 using StateSyncServer.LogicScripts.Common;
+using StateSyncServer.LogicScripts.Manager;
 using StateSyncServer.LogicScripts.Util;
 using StateSyncServer.LogicScripts.VirtualClient.Bases;
 using StateSyncServer.LogicScripts.VirtualClient.Characters;
@@ -14,7 +15,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
     public class GaiLunAttack : BaseAttack
     {
         public string effectPath = "";
-
+        public GameInstance atkInstance;
         public GaiLunAttack() : base()
         {
 
@@ -22,6 +23,14 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
 
         public override void OnEnter()
         {
+            SkillDataInfo info = new SkillDataInfo()
+            {
+                PlayerId = character.PlayerId,
+                SkillId = skillData.Id,
+                StageNum = this.StageNum,
+
+            };
+            ActionManager.GetInstance().Send_GameDoSkillNtf(info);
             base.OnEnter();
             if (Character.GetSkill(SkillEnum.ZHIMINGDAJI) != null)
             {
@@ -31,10 +40,22 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
             //int index = StageNum + 1;
             TimeManager.GetInstance().AddOnceTimer(this, skillData.GetFrontTime(StageNum), () =>
               {
-                  var ins = new GaiLunAtkInstance(this, StageNum, DoDamage);
+                  atkInstance = new GaiLunAtkInstance(this, StageNum, DoDamage);
                   //instanceList.Add(ins);
                   AudioEventDispatcher.GetInstance().Event(MomentType.DoSkill, this, "atk", character.PlayerId, character.InstanceId);
               });
+        }
+
+        public override void OnTrigger()
+        {
+            base.OnTrigger();
+            //开始范围检测
+            if(atkInstance != null)
+            {
+                var col = new BoxCollider(character.PlayerId);
+                atkInstance.SetCollider(col);
+                atkInstance.ColCheck();
+            }
         }
 
         public void DoDamage(Character target)
@@ -67,8 +88,8 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
             this.call = call;
             this.stageNum = index;
 
-            SetGameInstanceInfo();
-            SendCreateAction();
+            //SetGameInstanceInfo();
+            //SendCreateAction();
         }
 
         public override void SetGameInstanceInfo()

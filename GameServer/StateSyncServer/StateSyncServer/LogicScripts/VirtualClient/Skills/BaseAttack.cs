@@ -25,11 +25,11 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills
             AnimCoverVO vo = character.animCoverData.GetHead(belongState);
             if (vo != null)
             {
-                PlayAnim(vo.animName);
+                PlayAnim(vo.animName,0.15f, false);
             }
             else
             {
-                PlayAnim(skillData.GetAnimKey(StageNum));
+                PlayAnim(skillData.GetAnimKey(StageNum),0.15f,false);
             }
             base.OnEnter();
 

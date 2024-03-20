@@ -42,13 +42,13 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bases
 
         public void DoDamage(Character[] targets, float value)
         {
-            ActionManager.GetInstance().AddDamageAction(character, targets, value, this);
+            _ActionManager.GetInstance().AddDamageAction(character, targets, value, this);
         }
 
         public void DoDamage(Character target, float value)
         {
             var targets = new Character[] { target };
-            ActionManager.GetInstance().AddDamageAction(character, targets, value, this);
+            _ActionManager.GetInstance().AddDamageAction(character, targets, value, this);
         }
 
         public void AddState(Character[] targets, params object[] args)
@@ -73,11 +73,11 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bases
             BuffManager.GetInstance().AddBuffGroup(this, targets, vo, initCall, endBuffCall);
         }
 
-        public void PlayAnim(string name, float translateTime = 0.15f)
+        public void PlayAnim(string name, float translateTime = 0.15f,bool needSync = true)
         {
             if (name != "")
             {
-                character.Anim.PlayAnim(name, translateTime);
+                character.Anim.PlayAnim(name, translateTime,needSync);
             }
         }
         public void PlayAnimByState(StateVO state, float translateTime = 0.3f)

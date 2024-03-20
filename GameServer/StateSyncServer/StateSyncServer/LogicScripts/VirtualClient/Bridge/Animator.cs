@@ -32,18 +32,18 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bridge
             this.ins = ins;
         }
 
-        public void PlayAnim(string animName, float translateTime = 0.15f)
+        public void PlayAnim(string animName, float translateTime = 0.15f,bool needSync = true)
         {
-            AnimManager.GetInstance().PlayAnim(crt, animName, translateTime);
+            if(needSync)AnimManager.GetInstance().PlayAnim(crt, animName, translateTime);
             curAnimKey = animName;
             animTime = CommonUtils.GetCurTimeStamp();
             SetCurPlayAnimName(curAnimKey);
         }
 
-        public void PlayStateAnim(StateVO state, float translateTime = 0.15f)
+        public void PlayStateAnim(StateVO state, float translateTime = 0.15f,bool needSync = true)
         {
             var animKey = crt.characterData.GetStateAnimKey(state.stateName);
-            PlayAnim(animKey, translateTime);
+            PlayAnim(animKey, translateTime,needSync);
         }
 
         /// <summary>

@@ -39,6 +39,7 @@ namespace Assets.LogicScripts.Client.Net.PB
         public static int CLIENT_GET_SYNC_AOI_PLAYER_REQ = 20017;//获取玩家周围的所有玩家
         public static int CLIENT_CAN_ENTER_SCENE_REQ = 20018;//能否进入场景
         public static int CLIENT_CAN_ENTER_SCENE_REP = 20019;//能否进入场景
+        public static int CLIENT_GAME_DO_SKILL_NTF = 20020;//施放技能
 
         public static Dictionary<int, string> protoName = new Dictionary<int, string>()
         {
@@ -71,6 +72,8 @@ namespace Assets.LogicScripts.Client.Net.PB
             { CLIENT_GET_SYNC_AOI_PLAYER_REQ,"CLIENT_GET_SYNC_AOI_PLAYER_REQ"},
             { CLIENT_CAN_ENTER_SCENE_REQ,"CLIENT_CAN_ENTER_SCENE_REQ"},
             { CLIENT_CAN_ENTER_SCENE_REP,"CLIENT_CAN_ENTER_SCENE_REP"},
+            { CLIENT_GAME_DO_SKILL_NTF,"CLIENT_GAME_DO_SKILL_NTF"},
+
         };
 
         public static string GetProtoName(int proto)
