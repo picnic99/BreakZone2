@@ -37,6 +37,7 @@ namespace Assets.LogicScripts.Client.Manager
             On(ProtocolId.CLIENT_CAN_ENTER_SCENE_REP, Handle_CanEnterSceneRep);
             On(ProtocolId.CLIENT_OBJ_CREATE_NTF, Handle_GameInstanceCreateNtf);
             On(ProtocolId.CLIENT_GAME_DO_SKILL_NTF, Handle_GameDoSkillNtf);
+            On(ProtocolId.CLIENT_GAME_DRAW_BOX_RANGE_NTF, Handle_GameDrawBoxRangeNtf);
 
         }
 
@@ -60,6 +61,7 @@ namespace Assets.LogicScripts.Client.Manager
             Off(ProtocolId.CLIENT_CAN_ENTER_SCENE_REP, Handle_CanEnterSceneRep);
             Off(ProtocolId.CLIENT_OBJ_CREATE_NTF, Handle_GameInstanceCreateNtf);
             Off(ProtocolId.CLIENT_GAME_DO_SKILL_NTF, Handle_GameDoSkillNtf);
+            Off(ProtocolId.CLIENT_GAME_DRAW_BOX_RANGE_NTF, Handle_GameDrawBoxRangeNtf);
 
 
 
@@ -430,6 +432,26 @@ namespace Assets.LogicScripts.Client.Manager
             var atk = new GaiLunAtkSkill();
             atk.Init(ntf.SkillInfo);
             atk.DoBehaviour();
+        }
+
+
+        private void Handle_GameDrawBoxRangeNtf(object[] args)
+        {
+            Protocol proto = args[0] as Protocol;
+            GameDrawBoxRengeNtf ntf = proto.GetDataInstance<GameDrawBoxRengeNtf>();
+
+            Vector3 LT = new Vector3(ntf.LT.X, ntf.LT.Y, ntf.LT.Z);
+            Vector3 RT = new Vector3(ntf.RT.X, ntf.RT.Y, ntf.RT.Z);
+            Vector3 LB = new Vector3(ntf.LB.X, ntf.LB.Y, ntf.LB.Z);
+            Vector3 RB = new Vector3(ntf.RB.X, ntf.RB.Y, ntf.RB.Z);
+
+            GameObject obj = new GameObject("Range");
+            obj.transform.position = Vector3.zero;
+            obj.transform.rotation = Quaternion.identity;
+            obj.transform.localScale = Vector3.one;
+
+            DrawRangeManager draw = obj.AddComponent<DrawRangeManager>();
+            draw.SetRange(LT, RT, LB, RB);
         }
     }
 }

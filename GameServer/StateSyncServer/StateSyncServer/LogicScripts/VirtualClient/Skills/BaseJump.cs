@@ -15,7 +15,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills
             PlayAnim(skillData.GetAnimKey(0));
             AudioEventDispatcher.GetInstance().Event(MomentType.DoSkill, this, "jumpStart", character.PlayerId,this.character.InstanceId);
             float len = AnimManager.GetInstance().GetAnimTime(skillData.GetAnimKey(0));
-            TimeManager.GetInstance().AddOnceTimer(this, len, () =>
+            TimeManager.GetInstance().AddOnceTime(this, (int)(len * 1000), () =>
             {
                 PlayAnim(skillData.GetAnimKey(1));
             });
@@ -51,7 +51,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills
             //AudioManager.GetInstance().Play("jump_end", false);
             skillDurationTime = 0.5f;
             EventDispatcher.GetInstance().Off(EventDispatcher.PLAYER_JUMPED, EndJump);
-            TimeManager.GetInstance().AddOnceTimer(this, 0.2f, () =>
+            TimeManager.GetInstance().AddOnceTime(this, 200, () =>
             {
                 //CameraManager.GetInstance().EventImpulse(0.5f);
             });

@@ -129,13 +129,13 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.Base
 
             CommonUtils.Logout($"当前技能为：{skillData.skill.Name},前摇：{skillData.GetFrontTime(StageNum)},后摇：{skillData.GetBackTime(StageNum)}");
             //技能触发 已经算在施放技能了
-            TimeManager.GetInstance().AddOnceTimer(this, animTime * skillData.GetFrontTime(StageNum), () =>
+            TimeManager.GetInstance().AddOnceTime(this, (int)(animTime * skillData.GetFrontTime(StageNum) * 1000), () =>
             {
                 OnTrigger();
             });
 
             //后摇时间 处于后摇时间的话可以通过其它技能打断当前收尾动画 快速施放下一个动画 TODO：控制哪些技能可以打断收尾动画
-            TimeManager.GetInstance().AddOnceTimer(this, animTime * skillData.GetBackTime(StageNum), () =>
+            TimeManager.GetInstance().AddOnceTime(this, (int)(animTime * skillData.GetBackTime(StageNum) * 1000), () =>
             {
                 OnBack();
             });

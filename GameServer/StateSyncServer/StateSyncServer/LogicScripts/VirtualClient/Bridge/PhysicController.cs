@@ -261,7 +261,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bridge
         {
             StopMove();
             CanMove = false;
-            TimeManager.GetInstance().AddOnceTimer(this, maxTime, () =>
+            TimeManager.GetInstance().AddOnceTime(this, (int)(maxTime * 1000), () =>
             {
                 GravityOffset = 0;
                 CanMove = true;

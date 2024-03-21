@@ -116,6 +116,14 @@ MonoBehaviour:
         FilterRuleName: CollectAll
         AssetTags: 
         UserData: 
+      - CollectPath: Assets/Res/MyShaderVariants.shadervariants
+        CollectorGUID: b79fce32dc3ca3643b83e981d46512f0
+        CollectorType: 0
+        AddressRuleName: AddressByFileName
+        PackRuleName: PackDirectory
+        FilterRuleName: CollectAll
+        AssetTags: 
+        UserData: 
     - GroupName: Font
       GroupDesc: "\u5B57\u4F53"
       AssetTags: 

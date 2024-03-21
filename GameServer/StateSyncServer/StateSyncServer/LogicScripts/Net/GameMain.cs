@@ -32,14 +32,32 @@ namespace StateSyncServer.LogicScripts.Net
         {
             Init();
             long lastTimestamp = 0;
+            long lastTimer_10 = 0;
+
             while (true)
             {
                 DateTimeOffset now = DateTimeOffset.Now;
                 long curStamp = now.Ticks / 10000;
-                if (curStamp - lastTimestamp < Global.FixedFrameTimeMS)
+
+                //10ms的定时器
+                if (curStamp - lastTimer_10 >= Global.FixedTimerMS_10)
                 {
-                    continue;
+                    lastTimer_10 = curStamp;
+                    TimeManager.GetInstance().Tick(curStamp);
                 }
+
+                //50ms的定时器
+                if (curStamp - lastTimestamp >= Global.FixedFrameTimeMS)
+                {
+                    lastTimestamp = curStamp;
+                    //协议处理
+                    while (ProtoList.Count > 0)
+                    {
+                        Handle(ProtoList.Dequeue());
+                    }
+                    Update();
+                }
+
 /*                if (watch.IsRunning)
                 {
                     watch.Stop();
@@ -53,14 +71,6 @@ namespace StateSyncServer.LogicScripts.Net
                 {
                     watch.Start();
                 }*/
-
-                lastTimestamp = curStamp;
-                //协议处理
-                while (ProtoList.Count > 0)
-                {
-                    Handle(ProtoList.Dequeue());
-                }
-                Update(null);
             }
 
         }
@@ -77,7 +87,7 @@ namespace StateSyncServer.LogicScripts.Net
 
         private Stopwatch watch = new Stopwatch();
 
-        public void Update(object state)
+        public void Update()
         {
             LogicScripts.Manager.CharacterManager.GetInstance().Tick();
         }

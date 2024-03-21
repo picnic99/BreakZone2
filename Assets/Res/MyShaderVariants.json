@@ -1,0 +1,1398 @@
+{
+    "ShaderTotalCount": 21,
+    "VariantTotalCount": 128,
+    "ShaderVariantInfos": [
+        {
+            "AssetPath": "Resources/unity_builtin_extra",
+            "ShaderName": "Hidden/Internal-ScreenSpaceShadows",
+            "ShaderVariantCount": 1,
+            "ShaderVariantElements": [
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "SHADOWS_SINGLE_CASCADE",
+                        "SHADOWS_SPLIT_SPHERES"
+                    ]
+                }
+            ]
+        },
+        {
+            "AssetPath": "Resources/unity_builtin_extra",
+            "ShaderName": "Hidden/BlitCopy",
+            "ShaderVariantCount": 1,
+            "ShaderVariantElements": [
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        ""
+                    ]
+                }
+            ]
+        },
+        {
+            "AssetPath": "Resources/unity_builtin_extra",
+            "ShaderName": "Standard (Specular setup)",
+            "ShaderVariantCount": 3,
+            "ShaderVariantElements": [
+                {
+                    "PassType": 4,
+                    "Keywords": [
+                        "DIRECTIONAL",
+                        "LIGHTPROBE_SH",
+                        "SHADOWS_SCREEN",
+                        "_NORMALMAP"
+                    ]
+                },
+                {
+                    "PassType": 8,
+                    "Keywords": [
+                        ""
+                    ]
+                },
+                {
+                    "PassType": 8,
+                    "Keywords": [
+                        "SHADOWS_DEPTH"
+                    ]
+                }
+            ]
+        },
+        {
+            "AssetPath": "Resources/unity_builtin_extra",
+            "ShaderName": "Standard",
+            "ShaderVariantCount": 14,
+            "ShaderVariantElements": [
+                {
+                    "PassType": 4,
+                    "Keywords": [
+                        "DIRECTIONAL",
+                        "LIGHTPROBE_SH",
+                        "SHADOWS_SCREEN"
+                    ]
+                },
+                {
+                    "PassType": 4,
+                    "Keywords": [
+                        "DIRECTIONAL",
+                        "LIGHTPROBE_SH",
+                        "SHADOWS_SCREEN",
+                        "_EMISSION"
+                    ]
+                },
+                {
+                    "PassType": 4,
+                    "Keywords": [
+                        "DIRECTIONAL",
+                        "LIGHTPROBE_SH",
+                        "SHADOWS_SCREEN",
+                        "_EMISSION",
+                        "_NORMALMAP"
+                    ]
+                },
+                {
+                    "PassType": 4,
+                    "Keywords": [
+                        "DIRECTIONAL",
+                        "LIGHTPROBE_SH",
+                        "SHADOWS_SCREEN",
+                        "_NORMALMAP"
+                    ]
+                },
+                {
+                    "PassType": 4,
+                    "Keywords": [
+                        "DIRECTIONAL",
+                        "LIGHTPROBE_SH",
+                        "SHADOWS_SCREEN",
+                        "_SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A"
+                    ]
+                },
+                {
+                    "PassType": 4,
+                    "Keywords": [
+                        "DIRECTIONAL",
+                        "LIGHTPROBE_SH",
+                        "_ALPHAPREMULTIPLY_ON"
+                    ]
+                },
+                {
+                    "PassType": 4,
+                    "Keywords": [
+                        "DIRECTIONAL",
+                        "LIGHTPROBE_SH",
+                        "_ALPHAPREMULTIPLY_ON",
+                        "_SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A"
+                    ]
+                },
+                {
+                    "PassType": 8,
+                    "Keywords": [
+                        ""
+                    ]
+                },
+                {
+                    "PassType": 8,
+                    "Keywords": [
+                        "SHADOWS_DEPTH"
+                    ]
+                },
+                {
+                    "PassType": 8,
+                    "Keywords": [
+                        "SHADOWS_DEPTH",
+                        "_ALPHAPREMULTIPLY_ON"
+                    ]
+                },
+                {
+                    "PassType": 8,
+                    "Keywords": [
+                        "SHADOWS_DEPTH",
+                        "_ALPHAPREMULTIPLY_ON",
+                        "_SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A"
+                    ]
+                },
+                {
+                    "PassType": 8,
+                    "Keywords": [
+                        "SHADOWS_DEPTH",
+                        "_SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A"
+                    ]
+                },
+                {
+                    "PassType": 8,
+                    "Keywords": [
+                        "_ALPHAPREMULTIPLY_ON"
+                    ]
+                },
+                {
+                    "PassType": 8,
+                    "Keywords": [
+                        "_ALPHAPREMULTIPLY_ON",
+                        "_SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A"
+                    ]
+                }
+            ]
+        },
+        {
+            "AssetPath": "Resources/unity_builtin_extra",
+            "ShaderName": "Legacy Shaders/VertexLit",
+            "ShaderVariantCount": 2,
+            "ShaderVariantElements": [
+                {
+                    "PassType": 8,
+                    "Keywords": [
+                        ""
+                    ]
+                },
+                {
+                    "PassType": 8,
+                    "Keywords": [
+                        "SHADOWS_DEPTH"
+                    ]
+                }
+            ]
+        },
+        {
+            "AssetPath": "Resources/unity_builtin_extra",
+            "ShaderName": "Legacy Shaders/Bumped Diffuse",
+            "ShaderVariantCount": 1,
+            "ShaderVariantElements": [
+                {
+                    "PassType": 4,
+                    "Keywords": [
+                        "DIRECTIONAL",
+                        "LIGHTPROBE_SH",
+                        "SHADOWS_SCREEN"
+                    ]
+                }
+            ]
+        },
+        {
+            "AssetPath": "Resources/unity_builtin_extra",
+            "ShaderName": "Legacy Shaders/Transparent/Bumped Diffuse",
+            "ShaderVariantCount": 1,
+            "ShaderVariantElements": [
+                {
+                    "PassType": 4,
+                    "Keywords": [
+                        "DIRECTIONAL",
+                        "LIGHTPROBE_SH"
+                    ]
+                }
+            ]
+        },
+        {
+            "AssetPath": "Resources/unity_builtin_extra",
+            "ShaderName": "Skybox/Procedural",
+            "ShaderVariantCount": 1,
+            "ShaderVariantElements": [
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "_SUNDISK_SIMPLE"
+                    ]
+                }
+            ]
+        },
+        {
+            "AssetPath": "Resources/unity_builtin_extra",
+            "ShaderName": "Hidden/Internal-GUITextureClip",
+            "ShaderVariantCount": 1,
+            "ShaderVariantElements": [
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        ""
+                    ]
+                }
+            ]
+        },
+        {
+            "AssetPath": "Resources/unity_builtin_extra",
+            "ShaderName": "Hidden/Internal-GUITextureClipText",
+            "ShaderVariantCount": 1,
+            "ShaderVariantElements": [
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        ""
+                    ]
+                }
+            ]
+        },
+        {
+            "AssetPath": "Resources/unity_builtin_extra",
+            "ShaderName": "Hidden/Internal-GUITexture",
+            "ShaderVariantCount": 1,
+            "ShaderVariantElements": [
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        ""
+                    ]
+                }
+            ]
+        },
+        {
+            "AssetPath": "Resources/unity_builtin_extra",
+            "ShaderName": "Hidden/Internal-GUITextureBlit",
+            "ShaderVariantCount": 1,
+            "ShaderVariantElements": [
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        ""
+                    ]
+                }
+            ]
+        },
+        {
+            "AssetPath": "Resources/unity_builtin_extra",
+            "ShaderName": "Hidden/Internal-GUIRoundedRect",
+            "ShaderVariantCount": 1,
+            "ShaderVariantElements": [
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        ""
+                    ]
+                }
+            ]
+        },
+        {
+            "AssetPath": "Resources/unity_builtin_extra",
+            "ShaderName": "Hidden/Internal-GUIRoundedRectWithColorPerBorder",
+            "ShaderVariantCount": 1,
+            "ShaderVariantElements": [
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        ""
+                    ]
+                }
+            ]
+        },
+        {
+            "AssetPath": "Resources/unity_builtin_extra",
+            "ShaderName": "Hidden/Internal-UIRAtlasBlitCopy",
+            "ShaderVariantCount": 1,
+            "ShaderVariantElements": [
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        ""
+                    ]
+                }
+            ]
+        },
+        {
+            "AssetPath": "Resources/unity_builtin_extra",
+            "ShaderName": "Hidden/UIElements/EditorUIE",
+            "ShaderVariantCount": 1,
+            "ShaderVariantElements": [
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        ""
+                    ]
+                }
+            ]
+        },
+        {
+            "AssetPath": "Assets/Res/Materials/shader/rangeDrawer.shader",
+            "ShaderName": "Custom/Indicator",
+            "ShaderVariantCount": 1,
+            "ShaderVariantElements": [
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        ""
+                    ]
+                }
+            ]
+        },
+        {
+            "AssetPath": "Assets/Res/Shader/Shader_ForEffects/Shader_IntegratedEffect.shader",
+            "ShaderName": "GAPH Custom Shader/Shader_IntegradedEffect",
+            "ShaderVariantCount": 89,
+            "ShaderVariantElements": [
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_ALL_TEXTURE_STRAIGHT_MOVE",
+                        "IS_MASK_FADE",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_NORMAL_DISTORTION",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXTURE_ANIMATE"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_ALL_TEXTURE_STRAIGHT_MOVE",
+                        "IS_MASK_FADE",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_NORMAL_DISTORTION",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXTURE_ANIMATE",
+                        "IS_VERTEXANIMATION"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_ALL_TEXTURE_STRAIGHT_MOVE",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_NORMAL_DISTORTION",
+                        "IS_RIMLIGHT",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXTURE_ANIMATE",
+                        "IS_TEXTURE_BLEND",
+                        "IS_USE_SECOND_COLOR"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_IMPACT",
+                        "IS_MASK_FADE",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_NORMAL_DISTORTION",
+                        "IS_SOFT_PARTICLES"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_IMPACT",
+                        "IS_MASK_FADE",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_NORMAL_DISTORTION",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXTURE_ANIMATE"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_IMPACT",
+                        "IS_MASK_FADE",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXTURE_ANIMATE"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_LINEPASS",
+                        "IS_MASK_FADE",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_NORMAL_DISTORTION",
+                        "IS_SOFT_PARTICLES"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_LINEPASS",
+                        "IS_MASK_FADE",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_NORMAL_DISTORTION",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXTURE_ANIMATE"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_LINEPASS",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_NORMAL_DISTORTION",
+                        "IS_SOFT_PARTICLES"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_LINEPASS",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_NORMAL_DISTORTION",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXTURE_ANIMATE"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_MASK_FADE",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_NORMAL_DISTORTION",
+                        "IS_SOFT_PARTICLES"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_MASK_FADE",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_NORMAL_DISTORTION",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXCOORD_MOVE"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_MASK_FADE",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_NORMAL_DISTORTION",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXCOORD_MOVE",
+                        "IS_TEXCOORD_MOVE_USING_CUSTOM"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_MASK_FADE",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_NORMAL_DISTORTION",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXCOORD_MOVE",
+                        "IS_TEXCOORD_MOVE_USING_CUSTOM",
+                        "IS_TEXTURE_ANIMATE"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_MASK_FADE",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_NORMAL_DISTORTION",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXCOORD_MOVE",
+                        "IS_TEXTURE_ANIMATE"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_MASK_FADE",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_NORMAL_DISTORTION",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXCOORD_MOVE",
+                        "IS_TEXTURE_ANIMATE",
+                        "IS_TEXTURE_ANIMATE_ADVANCED"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_MASK_FADE",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_NORMAL_DISTORTION",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXCOORD_MOVE",
+                        "IS_TEXTURE_ANIMATE",
+                        "IS_TEXTURE_ANIMATE_ADVANCED",
+                        "IS_USE_TEXANIMATION"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_MASK_FADE",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_NORMAL_DISTORTION",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXCOORD_MOVE",
+                        "IS_TEXTURE_ANIMATE",
+                        "IS_TEXTURE_BLEND",
+                        "IS_USE_TEXANIMATION"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_MASK_FADE",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_NORMAL_DISTORTION",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXCOORD_MOVE",
+                        "IS_TEXTURE_ANIMATE",
+                        "IS_USE_TEXANIMATION"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_MASK_FADE",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_NORMAL_DISTORTION",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXCOORD_MOVE",
+                        "IS_TEXTURE_ANIMATE",
+                        "IS_USE_TEXANIMATION",
+                        "IS_VERTEXANIMATION"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_MASK_FADE",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_NORMAL_DISTORTION",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXCOORD_MOVE",
+                        "IS_TEXTURE_ANIMATE",
+                        "IS_VERTEXANIMATION"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_MASK_FADE",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_NORMAL_DISTORTION",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXCOORD_MOVE",
+                        "IS_USE_TEXANIMATION"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_MASK_FADE",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_NORMAL_DISTORTION",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXCOORD_MOVE_USING_CUSTOM"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_MASK_FADE",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_NORMAL_DISTORTION",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXCOORD_MOVE_USING_CUSTOM",
+                        "IS_TEXTURE_ANIMATE",
+                        "IS_TEXTURE_NOISE"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_MASK_FADE",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_NORMAL_DISTORTION",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXCOORD_MOVE_USING_CUSTOM",
+                        "IS_TEXTURE_ANIMATE",
+                        "IS_USE_TEXANIMATION"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_MASK_FADE",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_NORMAL_DISTORTION",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXCOORD_MOVE_USING_CUSTOM",
+                        "IS_USE_SECOND_COLOR"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_MASK_FADE",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_NORMAL_DISTORTION",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXCOORD_MOVE_USING_CUSTOM",
+                        "IS_USE_TEXANIMATION"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_MASK_FADE",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_NORMAL_DISTORTION",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXTURE_ANIMATE"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_MASK_FADE",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_NORMAL_DISTORTION",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXTURE_ANIMATE",
+                        "IS_TEXTURE_ANIMATE_ADVANCED"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_MASK_FADE",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_NORMAL_DISTORTION",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXTURE_ANIMATE",
+                        "IS_TEXTURE_BLEND"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_MASK_FADE",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_NORMAL_DISTORTION",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXTURE_ANIMATE",
+                        "IS_TEXTURE_BLEND",
+                        "IS_USE_TEXANIMATION"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_MASK_FADE",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_NORMAL_DISTORTION",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXTURE_BLEND"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_MASK_FADE",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_NORMAL_DISTORTION",
+                        "IS_SOFT_PARTICLES",
+                        "IS_USE_TEXANIMATION",
+                        "IS_VERTEXANIMATION"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_MASK_FADE",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_NORMAL_DISTORTION",
+                        "IS_SOFT_PARTICLES",
+                        "IS_VERTEXANIMATION"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_MASK_FADE",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_SOFT_PARTICLES"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_MASK_FADE",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXCOORD_MOVE"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_MASK_FADE",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXCOORD_MOVE",
+                        "IS_TEXCOORD_MOVE_USING_CUSTOM"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_MASK_FADE",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXCOORD_MOVE",
+                        "IS_TEXTURE_ANIMATE",
+                        "IS_TEXTURE_ANIMATE_ADVANCED",
+                        "IS_USE_TEXANIMATION"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_MASK_FADE",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXCOORD_MOVE",
+                        "IS_USE_TEXANIMATION"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_MASK_FADE",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXCOORD_MOVE_USING_CUSTOM"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_MASK_FADE",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXCOORD_MOVE_USING_CUSTOM",
+                        "IS_USE_SECOND_COLOR",
+                        "IS_USE_TEXANIMATION"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_MASK_FADE",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXCOORD_MOVE_USING_CUSTOM",
+                        "IS_USE_TEXANIMATION"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_MASK_FADE",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXTURE_ANIMATE"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_MASK_FADE",
+                        "IS_NORMAL_DISTORTION",
+                        "IS_SOFT_PARTICLES"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_MASK_FADE",
+                        "IS_NORMAL_DISTORTION",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXCOORD_MOVE",
+                        "IS_TEXTURE_ANIMATE",
+                        "IS_TEXTURE_ANIMATE_ADVANCED"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_MASK_FADE",
+                        "IS_NORMAL_DISTORTION",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXTURE_ANIMATE"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_MASK_FADE",
+                        "IS_NORMAL_DISTORTION",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXTURE_ANIMATE",
+                        "IS_TEXTURE_ANIMATE_ADVANCED"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_MASK_FADE",
+                        "IS_SOFT_PARTICLES"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_MASK_FADE",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXCOORD_MOVE"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_MASK_FADE",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXCOORD_MOVE",
+                        "IS_TEXTURE_ANIMATE",
+                        "IS_USE_TEXANIMATION"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_MASK_FADE",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXCOORD_MOVE",
+                        "IS_USE_TEXANIMATION"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_NORMAL_DISTORTION",
+                        "IS_RIMLIGHT",
+                        "IS_SOFT_PARTICLES"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_NORMAL_DISTORTION",
+                        "IS_RIMLIGHT",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXCOORD_MOVE",
+                        "IS_TEXTURE_ANIMATE"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_NORMAL_DISTORTION",
+                        "IS_RIMLIGHT",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXTURE_ANIMATE"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_NORMAL_DISTORTION",
+                        "IS_RIMLIGHT",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXTURE_ANIMATE",
+                        "IS_TEXTURE_BLEND"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_NORMAL_DISTORTION",
+                        "IS_RIMLIGHT",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXTURE_ANIMATE",
+                        "IS_TEXTURE_BLEND",
+                        "IS_USE_SECOND_COLOR"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_NORMAL_DISTORTION",
+                        "IS_RIMLIGHT",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXTURE_ANIMATE",
+                        "IS_USE_SECOND_COLOR"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_NORMAL_DISTORTION",
+                        "IS_SOFT_PARTICLES"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_NORMAL_DISTORTION",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXCOORD_MOVE"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_NORMAL_DISTORTION",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXCOORD_MOVE",
+                        "IS_TEXTURE_ANIMATE"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_NORMAL_DISTORTION",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXCOORD_MOVE",
+                        "IS_TEXTURE_ANIMATE",
+                        "IS_USE_SECOND_COLOR"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_NORMAL_DISTORTION",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXCOORD_MOVE",
+                        "IS_TEXTURE_ANIMATE",
+                        "IS_VERTEXANIMATION"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_NORMAL_DISTORTION",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXCOORD_MOVE_USING_CUSTOM"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_NORMAL_DISTORTION",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXCOORD_MOVE_USING_CUSTOM",
+                        "IS_TEXTURE_ANIMATE",
+                        "IS_TEXTURE_ANIMATE_ADVANCED",
+                        "IS_TEXTURE_NOISE"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_NORMAL_DISTORTION",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXCOORD_MOVE_USING_CUSTOM",
+                        "IS_TEXTURE_ANIMATE",
+                        "IS_TEXTURE_NOISE"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_NORMAL_DISTORTION",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXTURE_ANIMATE"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_NORMAL_DISTORTION",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXTURE_ANIMATE",
+                        "IS_USE_SECOND_COLOR"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_NORMAL_DISTORTION",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXTURE_ANIMATE",
+                        "IS_VERTEXANIMATION"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_NORMAL_DISTORTION",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXTURE_BLEND"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_SOFT_PARTICLES"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXCOORD_MOVE"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXCOORD_MOVE",
+                        "IS_TEXCOORD_MOVE_USING_CUSTOM"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXCOORD_MOVE_USING_CUSTOM"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXTURE_ANIMATE"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXTURE_ANIMATE",
+                        "IS_TEXTURE_BLEND"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXTURE_BLEND"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_NORMAL_DISTORTION",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXCOORD_MOVE"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_NORMAL_DISTORTION",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXCOORD_MOVE",
+                        "IS_TEXTURE_ANIMATE",
+                        "IS_TEXTURE_ANIMATE_ADVANCED"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_NORMAL_DISTORTION",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXTURE_BLEND"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_NORMAL_DISTORTION",
+                        "IS_SOFT_PARTICLES",
+                        "IS_USE_SECOND_COLOR"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_SOFT_PARTICLES"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXTURE_BLEND"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXTURE_BLEND",
+                        "IS_USE_SECOND_COLOR"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "INSTANCING_ON",
+                        "IS_TEXTURE_BLEND"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "IS_MASK_FADE",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_NORMAL_DISTORTION",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXCOORD_MOVE",
+                        "IS_TEXCOORD_MOVE_USING_CUSTOM",
+                        "IS_TEXTURE_ANIMATE"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "IS_MASK_FADE",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_NORMAL_DISTORTION",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXTURE_ANIMATE"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "IS_MASK_FADE",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_NORMAL_DISTORTION",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXTURE_ANIMATE",
+                        "IS_TEXTURE_ANIMATE_ADVANCED"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "IS_MASK_FADE",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_NORMAL_DISTORTION",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXTURE_ANIMATE",
+                        "IS_USE_TEXANIMATION"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "IS_NORMAL_ANIMATE",
+                        "IS_NORMAL_DISTORTION",
+                        "IS_SOFT_PARTICLES",
+                        "IS_TEXTURE_ANIMATE"
+                    ]
+                }
+            ]
+        },
+        {
+            "AssetPath": "Assets/Res/Shader/Shader_ForEffects/Shader_Decal.shader",
+            "ShaderName": "GAPH Custom Shader/Shader_Decal",
+            "ShaderVariantCount": 2,
+            "ShaderVariantElements": [
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "IS_MASK_FADE",
+                        "IS_NORMAL_ANIMATE",
+                        "IS_NORMAL_DISTORTION",
+                        "IS_TEXTURE_ANIMATE"
+                    ]
+                },
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        "IS_USE_SECOND_COLOR"
+                    ]
+                }
+            ]
+        },
+        {
+            "AssetPath": "Assets/Res/Shader/Shader_ForEffects/Shader_DistortionEffect.shader",
+            "ShaderName": "GAPH Custom Shader/Distortion Effect",
+            "ShaderVariantCount": 1,
+            "ShaderVariantElements": [
+                {
+                    "PassType": 0,
+                    "Keywords": [
+                        ""
+                    ]
+                }
+            ]
+        },
+        {
+            "AssetPath": "Assets/Res/FBX/AscendantOne_Chr_Hebe/hair.shader",
+            "ShaderName": "hair",
+            "ShaderVariantCount": 3,
+            "ShaderVariantElements": [
+                {
+                    "PassType": 4,
+                    "Keywords": [
+                        "DIRECTIONAL",
+                        "LIGHTPROBE_SH",
+                        "SHADOWS_SCREEN"
+                    ]
+                },
+                {
+                    "PassType": 8,
+                    "Keywords": [
+                        ""
+                    ]
+                },
+                {
+                    "PassType": 8,
+                    "Keywords": [
+                        "SHADOWS_DEPTH"
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -147,14 +147,14 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.Base
                             collider.OnTriggerExitCall -= OnExitTrigger;
                             collider.SetActive(false);
                         }*/
-            TimeManager.GetInstance().RemoveAllTimer(this);
+            TimeManager.GetInstance().ClearAllTimer(this);
             if (IsEndRemoveObj)
             {
                 InstanceManager.GetInstance().RemoveInstance(this);
             }
             else
             {
-                TimeManager.GetInstance().AddOnceTimer(this, maxDurationTime, () =>
+                TimeManager.GetInstance().AddOnceTime(this, (int)(maxDurationTime * 1000), () =>
                 {
                     InstanceManager.GetInstance().RemoveInstance(this);
                 });

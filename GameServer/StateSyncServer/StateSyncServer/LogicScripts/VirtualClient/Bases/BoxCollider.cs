@@ -23,14 +23,18 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bases
 
         public List<Character> checkResults = new List<Character>();
 
-        public BoxCollider(int playerId)
+        public bool IsColTarget => checkResults.Count > 0;
+
+        public BoxCollider(int playerId,Vector4 rect)
         {
             this.playerId = playerId;
+            this.rect = rect;
         }
 
         public override void Check()
         {
             base.Check();
+            checkResults.Clear();
             List<Player> players = SceneManager.GetInstance().GetPlayerInSceneByPidNoSelf(playerId);
             foreach (var p in players)
             {
@@ -45,6 +49,22 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bases
                     CommonUtils.Logout("碰撞检测检测到：" + p.playerId + "在范围内");
                 }
             }
+
+            Player player = PlayerManager.GetInstance().FindPlayer(playerId);
+
+            Vector3 LT = new Vector3(rect.X,0,rect.Y);
+            Vector3 RT = new Vector3(rect.Z,0,rect.Y);
+            Vector3 LB = new Vector3(rect.X,0,rect.W);
+            Vector3 RB = new Vector3(rect.Z,0,rect.W);
+
+            LT = MatrixUtils.MulMatrixVerctor(player.Crt.Trans.TransformMatrix,LT);
+            RT = MatrixUtils.MulMatrixVerctor(player.Crt.Trans.TransformMatrix, RT);
+            LB = MatrixUtils.MulMatrixVerctor(player.Crt.Trans.TransformMatrix, LB);
+            RB = MatrixUtils.MulMatrixVerctor(player.Crt.Trans.TransformMatrix, RB);
+
+            ActionManager.GetInstance().Send_GameDrawBoxRangeNtf(playerId, LT, RT, LB, RB);
+
+
         }
 
         public static bool IsPointInsideRectangle(float px, float py, float x1, float y1, float x2, float y2)

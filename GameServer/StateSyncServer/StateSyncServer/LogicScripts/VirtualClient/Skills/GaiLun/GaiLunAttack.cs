@@ -38,7 +38,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
                 return;
             }
             //int index = StageNum + 1;
-            TimeManager.GetInstance().AddOnceTimer(this, skillData.GetFrontTime(StageNum), () =>
+            TimeManager.GetInstance().AddOnceTime(this, (int)(skillData.GetFrontTime(StageNum)*1000), () =>
               {
                   atkInstance = new GaiLunAtkInstance(this, StageNum, DoDamage);
                   //instanceList.Add(ins);
@@ -49,26 +49,41 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
         public override void OnTrigger()
         {
             base.OnTrigger();
+            CommonUtils.Logout(character.PlayerId + "触发ATK 开始检测");
             //开始范围检测
-            if(atkInstance != null)
+            if (atkInstance != null)
             {
-                var col = new BoxCollider(character.PlayerId);
+                var col = new BoxCollider(character.PlayerId , new Vector4(-1,2,1,0));
                 atkInstance.SetCollider(col);
                 atkInstance.ColCheck();
+                if (col.IsColTarget)
+                {
+                    CommonUtils.Logout(character.PlayerId + " ATK 检测到"+ col.checkResults .Count+ "个目标");
+                    foreach (var item in col.checkResults)
+                    {
+                        DoAtkDamage(item);
+                    }
+                }
+                else
+                {
+                    CommonUtils.Logout(character.PlayerId + " ATK 未检测到目标");
+                }
             }
         }
 
-        public void DoDamage(Character target)
+        public void DoAtkDamage(Character target)
         {
             if (target.fsm.InState(StateType.Die)) return;
 
             AddState(target, character, StateType.Injure);
             DoDamage(target, character.property.Atk);
 
-            var dir = character.Trans.Forward.Normalize();
-            dir.Y = 0;
-            target.physic.Move(dir * 1f, 0.2f);
-            character.eventDispatcher.Event(CharacterEvent.ATK, new Character[] { target });
+            CommonUtils.Logout(target.PlayerId + "收到ATK伤害");
+
+            //var dir = character.Trans.Forward.Normalize();
+            //dir.Y = 0;
+            //target.physic.Move(dir * 1f, 0.2f);
+            //character.eventDispatcher.Event(CharacterEvent.ATK, new Character[] { target });
         }
     }
 
@@ -139,15 +154,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
 
         public override void AddBehaviour()
         {
-            TimeManager.GetInstance().AddLoopTimer(this, () =>
-            {
-                if (durationTime <= 0)
-                {
-                    End();
-                    return;
-                }
-                durationTime -= Global.FixedFrameTimeS;
-            }, Global.FixedFrameTimeS);
+            TimeManager.GetInstance().AddOnceTime(this, (int)(durationTime * 1000), End);
         }
     }
 }

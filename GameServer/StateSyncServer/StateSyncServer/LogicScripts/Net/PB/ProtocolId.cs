@@ -37,6 +37,7 @@ namespace StateSyncServer.LogicScripts.Net.PB
         public static int CLIENT_CAN_ENTER_SCENE_REQ = 20018;//能否进入场景
         public static int CLIENT_CAN_ENTER_SCENE_REP = 20019;//能否进入场景
         public static int CLIENT_GAME_DO_SKILL_NTF = 20020;//施放技能
+        public static int CLIENT_GAME_DRAW_BOX_RANGE_NTF = 20021;//绘制矩形范围
 
         public static Dictionary<int, string> protoName = new Dictionary<int, string>()
         {
@@ -70,6 +71,7 @@ namespace StateSyncServer.LogicScripts.Net.PB
             { CLIENT_CAN_ENTER_SCENE_REQ,"CLIENT_CAN_ENTER_SCENE_REQ"},
             { CLIENT_CAN_ENTER_SCENE_REP,"CLIENT_CAN_ENTER_SCENE_REP"},
             { CLIENT_GAME_DO_SKILL_NTF,"CLIENT_GAME_DO_SKILL_NTF"},
+            { CLIENT_GAME_DRAW_BOX_RANGE_NTF,"CLIENT_GAME_DRAW_BOX_RANGE_NTF"},
         };
 
         public static string GetProtoName(int proto)

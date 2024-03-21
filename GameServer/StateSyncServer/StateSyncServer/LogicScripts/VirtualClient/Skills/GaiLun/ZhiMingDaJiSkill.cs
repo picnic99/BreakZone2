@@ -124,19 +124,21 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
 
         public override void AddBehaviour()
         {
-            TimeManager.GetInstance().AddLoopTimer(this, () =>
-            {
-                if (durationTime <= 0)
-                {
-                    if (isBack && Vector3.Distance(Trans.Position, RootSkill.character.Trans.Position) <= 0.1f)
-                    {
-                        End();
-                        return;
-                    }
-                }
-                DoMove();
-                durationTime -= Global.FixedFrameTimeS;
-            }, 0.25f);
+            /*            TimeManager.GetInstance()._AddLoopTimer(this, () =>
+                        {
+                            if (durationTime <= 0)
+                            {
+                                if (isBack && Vector3.Distance(Trans.Position, RootSkill.character.Trans.Position) <= 0.1f)
+                                {
+                                    End();
+                                    return;
+                                }
+                            }
+                            DoMove();
+                            durationTime -= Global.FixedFrameTimeS;
+                        }, 0.25f);*/
+            End();
+
         }
 
         private void DoMove()

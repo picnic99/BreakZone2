@@ -83,27 +83,29 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
 
         public override void AddBehaviour()
         {
-            var crt = RootSkill.character;
-            crt.physic.Move(crt.Trans.Forward.Normalize() * 2.5f, 0.3f);
-            var t = TimeManager.GetInstance().AddLoopTimer(this, () =>
-            {
-                if (skillDurationTime1 > 0)
-                {
-                    //skillDurationTime1 -= Time.deltaTime;
-                }
-                else if (skillDurationTime2 > 0)
-                {
-                    /*                    instanceObj.transform.SetParent(null);
-                                        instanceObj.transform.position += instanceObj.transform.forward * Time.deltaTime * 20f;*/
-                    //取消挂载crt
-                    //向前位移
-                }
-            }, 0f);
-            TimeManager.GetInstance().AddOnceTimer(this, skillDurationTime1 + skillDurationTime2, () =>
-            {
-                End();
-                TimeManager.GetInstance().RemoveAllTimer(this);
-            });
+            /*            var crt = RootSkill.character;
+                        crt.physic.Move(crt.Trans.Forward.Normalize() * 2.5f, 0.3f);
+                        var t = TimeManager.GetInstance().AddLoopTime(this, () =>
+                        {
+                            if (skillDurationTime1 > 0)
+                            {
+                                //skillDurationTime1 -= Time.deltaTime;
+                            }
+                            else if (skillDurationTime2 > 0)
+                            {
+                                *//*                    instanceObj.transform.SetParent(null);
+                                                    instanceObj.transform.position += instanceObj.transform.forward * Time.deltaTime * 20f;*//*
+                                //取消挂载crt
+                                //向前位移
+                            }
+                        }, 0f);
+                        TimeManager.GetInstance().AddOnceTime(this,(int)( (skillDurationTime1 + skillDurationTime2) * 1000), () =>
+                        {
+                            End();
+                            TimeManager.GetInstance()._RemoveAllTimer(this);
+                        });*/
+            End();
+
         }
 
         public override void InvokeEnterTrigger(Character target)

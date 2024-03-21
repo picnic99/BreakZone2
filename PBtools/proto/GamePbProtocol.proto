@@ -265,3 +265,10 @@ message SkillDataInfo{
 message GameDoSkillNtf{
 	SkillDataInfo skillInfo = 1;
 }
+
+message GameDrawBoxRengeNtf{
+	Vec3 LT = 1;
+	Vec3 RT = 2;
+	Vec3 LB = 3;
+	Vec3 RB = 4;	
+}

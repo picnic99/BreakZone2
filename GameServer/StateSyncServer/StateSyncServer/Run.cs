@@ -17,12 +17,12 @@ namespace StateSyncServer
     {
         static void Main(string[] args)
         {
-            //RegProtocol.Init();
-            //new Server().RunServer();
-            //GameMain.GetInstance().Run();
+            RegProtocol.Init();
+            new Server().RunServer();
+            GameMain.GetInstance().Run();
             //MatrixUtils.Test();
-            BoxCollider.Test();
-            Console.ReadLine();
+            //BoxCollider.Test();
+            //Console.ReadLine();
         }
     }
 }

@@ -57,7 +57,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills
 
             character.eventDispatcher.Event(CharacterEvent.ATK, new Character[] { target });
 
-            TimeManager.GetInstance().AddOnceTimer(this, 0.5f, () =>
+            TimeManager.GetInstance().AddOnceTime(this, 500, () =>
             {
                 InstanceManager.GetInstance().RemoveInstance(ins);
             });

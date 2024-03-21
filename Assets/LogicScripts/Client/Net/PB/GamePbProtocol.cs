@@ -89,7 +89,10 @@ namespace Msg {
             "VGltZRgJIAEoAyJECg1Ta2lsbERhdGFJbmZvEhAKCHBsYXllcklkGAEgASgF",
             "Eg8KB3NraWxsSWQYAiABKAUSEAoIc3RhZ2VOdW0YAyABKAUiNwoOR2FtZURv",
             "U2tpbGxOdGYSJQoJc2tpbGxJbmZvGAEgASgLMhIubXNnLlNraWxsRGF0YUlu",
-            "Zm9CCgoIZ2FtZS5tc2diBnByb3RvMw=="));
+            "Zm8icQoTR2FtZURyYXdCb3hSZW5nZU50ZhIVCgJMVBgBIAEoCzIJLm1zZy5W",
+            "ZWMzEhUKAlJUGAIgASgLMgkubXNnLlZlYzMSFQoCTEIYAyABKAsyCS5tc2cu",
+            "VmVjMxIVCgJSQhgEIAEoCzIJLm1zZy5WZWMzQgoKCGdhbWUubXNnYgZwcm90",
+            "bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
@@ -131,7 +134,8 @@ namespace Msg {
             new pbr::GeneratedClrTypeInfo(typeof(global::Msg.GamePlayerInputCmdNtf), global::Msg.GamePlayerInputCmdNtf.Parser, new[]{ "PlayerId", "InputX", "InputY", "Rot" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Msg.CharacterGameData), global::Msg.CharacterGameData.Parser, new[]{ "PlayerId", "CrtId", "PosX", "PosY", "PosZ", "Rot", "States", "CurAnimKey", "AnimTime" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Msg.SkillDataInfo), global::Msg.SkillDataInfo.Parser, new[]{ "PlayerId", "SkillId", "StageNum" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Msg.GameDoSkillNtf), global::Msg.GameDoSkillNtf.Parser, new[]{ "SkillInfo" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Msg.GameDoSkillNtf), global::Msg.GameDoSkillNtf.Parser, new[]{ "SkillInfo" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Msg.GameDrawBoxRengeNtf), global::Msg.GameDrawBoxRengeNtf.Parser, new[]{ "LT", "RT", "LB", "RB" }, null, null, null, null)
           }));
     }
     #endregion
@@ -10179,6 +10183,342 @@ namespace Msg {
               SkillInfo = new global::Msg.SkillDataInfo();
             }
             input.ReadMessage(SkillInfo);
+            break;
+          }
+        }
+      }
+    }
+    #endif
+
+  }
+
+  public sealed partial class GameDrawBoxRengeNtf : pb::IMessage<GameDrawBoxRengeNtf>
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      , pb::IBufferMessage
+  #endif
+  {
+    private static readonly pb::MessageParser<GameDrawBoxRengeNtf> _parser = new pb::MessageParser<GameDrawBoxRengeNtf>(() => new GameDrawBoxRengeNtf());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pb::MessageParser<GameDrawBoxRengeNtf> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Msg.GamePbProtocolReflection.Descriptor.MessageTypes[39]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public GameDrawBoxRengeNtf() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public GameDrawBoxRengeNtf(GameDrawBoxRengeNtf other) : this() {
+      lT_ = other.lT_ != null ? other.lT_.Clone() : null;
+      rT_ = other.rT_ != null ? other.rT_.Clone() : null;
+      lB_ = other.lB_ != null ? other.lB_.Clone() : null;
+      rB_ = other.rB_ != null ? other.rB_.Clone() : null;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public GameDrawBoxRengeNtf Clone() {
+      return new GameDrawBoxRengeNtf(this);
+    }
+
+    /// <summary>Field number for the "LT" field.</summary>
+    public const int LTFieldNumber = 1;
+    private global::Msg.Vec3 lT_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::Msg.Vec3 LT {
+      get { return lT_; }
+      set {
+        lT_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "RT" field.</summary>
+    public const int RTFieldNumber = 2;
+    private global::Msg.Vec3 rT_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::Msg.Vec3 RT {
+      get { return rT_; }
+      set {
+        rT_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "LB" field.</summary>
+    public const int LBFieldNumber = 3;
+    private global::Msg.Vec3 lB_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::Msg.Vec3 LB {
+      get { return lB_; }
+      set {
+        lB_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "RB" field.</summary>
+    public const int RBFieldNumber = 4;
+    private global::Msg.Vec3 rB_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::Msg.Vec3 RB {
+      get { return rB_; }
+      set {
+        rB_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override bool Equals(object other) {
+      return Equals(other as GameDrawBoxRengeNtf);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool Equals(GameDrawBoxRengeNtf other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (!object.Equals(LT, other.LT)) return false;
+      if (!object.Equals(RT, other.RT)) return false;
+      if (!object.Equals(LB, other.LB)) return false;
+      if (!object.Equals(RB, other.RB)) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (lT_ != null) hash ^= LT.GetHashCode();
+      if (rT_ != null) hash ^= RT.GetHashCode();
+      if (lB_ != null) hash ^= LB.GetHashCode();
+      if (rB_ != null) hash ^= RB.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void WriteTo(pb::CodedOutputStream output) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      output.WriteRawMessage(this);
+    #else
+      if (lT_ != null) {
+        output.WriteRawTag(10);
+        output.WriteMessage(LT);
+      }
+      if (rT_ != null) {
+        output.WriteRawTag(18);
+        output.WriteMessage(RT);
+      }
+      if (lB_ != null) {
+        output.WriteRawTag(26);
+        output.WriteMessage(LB);
+      }
+      if (rB_ != null) {
+        output.WriteRawTag(34);
+        output.WriteMessage(RB);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      if (lT_ != null) {
+        output.WriteRawTag(10);
+        output.WriteMessage(LT);
+      }
+      if (rT_ != null) {
+        output.WriteRawTag(18);
+        output.WriteMessage(RT);
+      }
+      if (lB_ != null) {
+        output.WriteRawTag(26);
+        output.WriteMessage(LB);
+      }
+      if (rB_ != null) {
+        output.WriteRawTag(34);
+        output.WriteMessage(RB);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(ref output);
+      }
+    }
+    #endif
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int CalculateSize() {
+      int size = 0;
+      if (lT_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(LT);
+      }
+      if (rT_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(RT);
+      }
+      if (lB_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(LB);
+      }
+      if (rB_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(RB);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(GameDrawBoxRengeNtf other) {
+      if (other == null) {
+        return;
+      }
+      if (other.lT_ != null) {
+        if (lT_ == null) {
+          LT = new global::Msg.Vec3();
+        }
+        LT.MergeFrom(other.LT);
+      }
+      if (other.rT_ != null) {
+        if (rT_ == null) {
+          RT = new global::Msg.Vec3();
+        }
+        RT.MergeFrom(other.RT);
+      }
+      if (other.lB_ != null) {
+        if (lB_ == null) {
+          LB = new global::Msg.Vec3();
+        }
+        LB.MergeFrom(other.LB);
+      }
+      if (other.rB_ != null) {
+        if (rB_ == null) {
+          RB = new global::Msg.Vec3();
+        }
+        RB.MergeFrom(other.RB);
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(pb::CodedInputStream input) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      input.ReadRawMessage(this);
+    #else
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            if (lT_ == null) {
+              LT = new global::Msg.Vec3();
+            }
+            input.ReadMessage(LT);
+            break;
+          }
+          case 18: {
+            if (rT_ == null) {
+              RT = new global::Msg.Vec3();
+            }
+            input.ReadMessage(RT);
+            break;
+          }
+          case 26: {
+            if (lB_ == null) {
+              LB = new global::Msg.Vec3();
+            }
+            input.ReadMessage(LB);
+            break;
+          }
+          case 34: {
+            if (rB_ == null) {
+              RB = new global::Msg.Vec3();
+            }
+            input.ReadMessage(RB);
+            break;
+          }
+        }
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+            break;
+          case 10: {
+            if (lT_ == null) {
+              LT = new global::Msg.Vec3();
+            }
+            input.ReadMessage(LT);
+            break;
+          }
+          case 18: {
+            if (rT_ == null) {
+              RT = new global::Msg.Vec3();
+            }
+            input.ReadMessage(RT);
+            break;
+          }
+          case 26: {
+            if (lB_ == null) {
+              LB = new global::Msg.Vec3();
+            }
+            input.ReadMessage(LB);
+            break;
+          }
+          case 34: {
+            if (rB_ == null) {
+              RB = new global::Msg.Vec3();
+            }
+            input.ReadMessage(RB);
             break;
           }
         }

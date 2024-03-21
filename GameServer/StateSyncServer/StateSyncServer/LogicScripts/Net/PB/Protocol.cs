@@ -45,7 +45,7 @@ namespace StateSyncServer.LogicScripts.Net.PB
         public IMessage GetDataInstance()
         {
             Type type = RegProtocol.GetProtocolType(protocolId);
-        MessageParser parser = (MessageParser)type.GetProperty("Parser").GetValue(null);
+            MessageParser parser = (MessageParser)type.GetProperty("Parser").GetValue(null);
             return parser.ParseFrom(data);
         }
 

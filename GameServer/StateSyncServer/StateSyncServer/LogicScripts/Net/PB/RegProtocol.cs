@@ -44,6 +44,7 @@ namespace StateSyncServer.LogicScripts.Net.PB
 
             RegProtocolData(ProtocolId.CLIENT_OBJ_CREATE_NTF, typeof(GameInstanceCreateNtf));
             RegProtocolData(ProtocolId.CLIENT_GAME_DO_SKILL_NTF, typeof(GameDoSkillNtf));
+            RegProtocolData(ProtocolId.CLIENT_GAME_DRAW_BOX_RANGE_NTF, typeof(GameDrawBoxRengeNtf));
         }
 
         public static Type GetProtocolType(int id)
