@@ -429,9 +429,10 @@ namespace Assets.LogicScripts.Client.Manager
             Protocol proto = args[0] as Protocol;
             GameDoSkillNtf ntf = proto.GetDataInstance<GameDoSkillNtf>();
 
-            var atk = new GaiLunAtkSkill();
-            atk.Init(ntf.SkillInfo);
-            atk.DoBehaviour();
+            Type type = CSkillRegClass.GetInstance().GetType(ntf.SkillInfo.SkillId);
+            CSkillBase skill = (CSkillBase)type.Assembly.CreateInstance(type.FullName);
+            skill.Init(ntf.SkillInfo);
+            skill.DoBehaviour();
         }
 
 

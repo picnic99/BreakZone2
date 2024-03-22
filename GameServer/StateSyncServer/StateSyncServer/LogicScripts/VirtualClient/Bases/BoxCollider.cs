@@ -25,9 +25,8 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bases
 
         public bool IsColTarget => checkResults.Count > 0;
 
-        public BoxCollider(int playerId,Vector4 rect)
+        public BoxCollider(int playerId,Vector4 rect,int maxTriggerNum = 1):base(playerId,maxTriggerNum)
         {
-            this.playerId = playerId;
             this.rect = rect;
         }
 
@@ -38,6 +37,8 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bases
             List<Player> players = SceneManager.GetInstance().GetPlayerInSceneByPidNoSelf(playerId);
             foreach (var p in players)
             {
+                if (triggeredList.Contains(p.Crt)) continue;
+
                 Vector3 pos = p.Crt.Trans.Position;
 
                 GetInvertMartix();
@@ -46,21 +47,20 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bases
                 if (IsPointInsideRectangle(finalPos.X, finalPos.Z, rect.X, rect.Y, rect.Z, rect.W))
                 {
                     checkResults.Add(p.Crt);
+                    triggeredList.Add(p.Crt);
                     CommonUtils.Logout("碰撞检测检测到：" + p.playerId + "在范围内");
                 }
             }
-
-            Player player = PlayerManager.GetInstance().FindPlayer(playerId);
 
             Vector3 LT = new Vector3(rect.X,0,rect.Y);
             Vector3 RT = new Vector3(rect.Z,0,rect.Y);
             Vector3 LB = new Vector3(rect.X,0,rect.W);
             Vector3 RB = new Vector3(rect.Z,0,rect.W);
 
-            LT = MatrixUtils.MulMatrixVerctor(player.Crt.Trans.TransformMatrix,LT);
-            RT = MatrixUtils.MulMatrixVerctor(player.Crt.Trans.TransformMatrix, RT);
-            LB = MatrixUtils.MulMatrixVerctor(player.Crt.Trans.TransformMatrix, LB);
-            RB = MatrixUtils.MulMatrixVerctor(player.Crt.Trans.TransformMatrix, RB);
+            LT = MatrixUtils.MulMatrixVerctor(Trans.TransformMatrix,LT);
+            RT = MatrixUtils.MulMatrixVerctor(Trans.TransformMatrix, RT);
+            LB = MatrixUtils.MulMatrixVerctor(Trans.TransformMatrix, LB);
+            RB = MatrixUtils.MulMatrixVerctor(Trans.TransformMatrix, RB);
 
             ActionManager.GetInstance().Send_GameDrawBoxRangeNtf(playerId, LT, RT, LB, RB);
 

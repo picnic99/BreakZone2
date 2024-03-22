@@ -1,8 +1,12 @@
-﻿using StateSyncServer.LogicScripts.Util;
+﻿using Msg;
+using StateSyncServer.LogicScripts.Common;
+using StateSyncServer.LogicScripts.Manager;
+using StateSyncServer.LogicScripts.Util;
 using StateSyncServer.LogicScripts.VirtualClient.Bases;
 using StateSyncServer.LogicScripts.VirtualClient.Characters;
 using StateSyncServer.LogicScripts.VirtualClient.Manager;
 using StateSyncServer.LogicScripts.VirtualClient.Skills.Base;
+using StateSyncServer.LogicScripts.VirtualClient.States;
 using System;
 using System.Collections.Generic;
 using System.Numerics;
@@ -23,17 +27,54 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
 
         public override void OnEnter()
         {
-            PlayAnim(skillData.GetAnimKey(0));
-            base.OnEnter();
-            skillDurationTime = stateDurationTime = 0.6f;
-            AudioEventDispatcher.GetInstance().Event(MomentType.DoSkill, this, "start", this.character.PlayerId, character.InstanceId);
+            SkillDataInfo info = new SkillDataInfo()
+            {
+                PlayerId = character.PlayerId,
+                SkillId = skillData.Id,
+                StageNum = 0,
+            };
+            ActionManager.GetInstance().Send_GameDoSkillNtf(info);
 
+            //PlayAnim(skillData.GetAnimKey(0));
+            base.OnEnter();
+            skillDurationTime = stateDurationTime = 0.4f;
+            AudioEventDispatcher.GetInstance().Event(MomentType.DoSkill, this, "start", this.character.PlayerId, character.InstanceId);
         }
 
         public override void OnTrigger()
         {
             base.OnTrigger();
-            new ShenPanInstance(this, BeTrigger);
+            //位移逻辑
+            TimeManager.GetInstance().AddLoopTime(this, 0, Global.FixedTimerMS_10, () =>
+            {
+                character.Trans.Translate(new Vector3(0, 0, 5 * 0.01f));
+            }, 40);
+
+            GameInstance shenPanIns = new GameInstance();
+            shenPanIns.Trans.TransformMatrix = character.Trans.TransformMatrix;
+            var col = new BoxCollider(character.PlayerId, new Vector4(-1, 2, 1, 0));
+            shenPanIns.SetCollider(col);
+
+            //伤害检测逻辑
+            TimeManager.GetInstance().AddLoopTime(this, 400, Global.FixedFrameTimeMS, () => {
+                
+                shenPanIns.Trans.Tick();
+                shenPanIns.Trans.Translate(new Vector3(0, 0, 20 * 0.05f));
+                shenPanIns.ColCheck();
+
+                if (col.IsColTarget)
+                {
+                    CommonUtils.Logout(character.PlayerId + " ATK 检测到" + col.checkResults.Count + "个目标");
+                    foreach (var item in col.checkResults)
+                    {
+                        BeTrigger(item);
+                    }
+                }
+                else
+                {
+                    CommonUtils.Logout(character.PlayerId + " ATK 未检测到目标");
+                }
+            }, 600 / Global.FixedFrameTimeMS);
         }
 
         /// <summary>
@@ -42,82 +83,16 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
         /// <param name="target"></param>
         public void BeTrigger(Character target)
         {
-            float damageValue = 50;// baseDamage[skillLevel] + 0.5f * character.property.atk;
-            DoDamage(target, damageValue);
-            target.physic.AtkFly(5f, 1f);
-        }
+            //float damageValue = 50;// baseDamage[skillLevel] + 0.5f * character.property.atk;
+            //DoDamage(target, damageValue);
+            AddState(target, character, StateType.Injure);
 
-        protected override void OnEnd()
-        {
-            character.KeepMove = false;
-            base.OnEnd();
-        }
+            //target.physic.AtkFly(5f, 1f);
+        } 
 
         public override string GetDesc()
         {
             return "当前技能为：审判，剩余时间为：" + skillDurationTime.ToString("F2");
-        }
-    }
-
-    class ShenPanInstance : SkillInstance
-    {
-        float skillDurationTime1 = 0.4f;
-        float skillDurationTime2 = 0.6f;
-
-        List<Character> triggeredTargets = new List<Character>();
-        public ShenPanInstance(Skill skill, Action<Character> call)
-        {
-            RootSkill = skill;
-            //enterCall = call;
-            prefabKey = "ShenPan2";
-            //Init();
-        }
-
-        public override void InitTransform()
-        {
-            Vector3 pos = RootSkill.character.Trans.Position;
-            float rot = RootSkill.character.Trans.Rot;
-            InstanceManager.GetInstance().CreateSkillInstance(prefabKey, pos, rot);
-            //挂载crt下方
-        }
-
-        public override void AddBehaviour()
-        {
-            /*            var crt = RootSkill.character;
-                        crt.physic.Move(crt.Trans.Forward.Normalize() * 2.5f, 0.3f);
-                        var t = TimeManager.GetInstance().AddLoopTime(this, () =>
-                        {
-                            if (skillDurationTime1 > 0)
-                            {
-                                //skillDurationTime1 -= Time.deltaTime;
-                            }
-                            else if (skillDurationTime2 > 0)
-                            {
-                                *//*                    instanceObj.transform.SetParent(null);
-                                                    instanceObj.transform.position += instanceObj.transform.forward * Time.deltaTime * 20f;*//*
-                                //取消挂载crt
-                                //向前位移
-                            }
-                        }, 0f);
-                        TimeManager.GetInstance().AddOnceTime(this,(int)( (skillDurationTime1 + skillDurationTime2) * 1000), () =>
-                        {
-                            End();
-                            TimeManager.GetInstance()._RemoveAllTimer(this);
-                        });*/
-            End();
-
-        }
-
-        public override void InvokeEnterTrigger(Character target)
-        {
-            var crt = RootSkill.character;
-            if (target == null || target == crt) return;
-            if (triggeredTargets.IndexOf(target) != -1)
-            {
-                return;
-            }
-            triggeredTargets.Add(target);
-            base.InvokeEnterTrigger(target);
         }
     }
 }

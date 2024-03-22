@@ -44,6 +44,7 @@ namespace StateSyncServer.LogicScripts.Net
                 {
                     lastTimer_10 = curStamp;
                     TimeManager.GetInstance().Tick(curStamp);
+                    SkillManager.GetInstance().UpdateCD();
                 }
 
                 //50ms的定时器

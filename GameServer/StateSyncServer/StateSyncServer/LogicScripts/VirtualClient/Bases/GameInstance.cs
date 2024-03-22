@@ -119,6 +119,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bases
         public void SetCollider(Collider col)
         {
             this.col = col;
+            this.col.Trans = Trans;
             /*            this.col.enterCall += OnTriggerEnter;
                         this.col.stayCall += OnTriggerStay;
                         this.col.exitCall += OnTriggerExit;*/

@@ -25,8 +25,6 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
 
         public void ShowWeaponEffect()
         {
-
-
             InstanceManager.GetInstance().CreateEffectInstance("ZhiMingDaJi_XuLi",character.Trans.Position,character.Trans.Rot);
             //AudioManager.GetInstance().Play("sword_power", false);
             AudioEventDispatcher.GetInstance().Event(MomentType.DoSkill, this, "weaponFillPower",character.PlayerId,character.InstanceId);

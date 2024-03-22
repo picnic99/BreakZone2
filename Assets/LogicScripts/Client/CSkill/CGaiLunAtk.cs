@@ -10,23 +10,10 @@ using UnityEngine;
 
 namespace Assets.LogicScripts.Client.CSkill
 {
-    class GaiLunAtkSkill
-    {
-        private int PlayerId;
-        public Player Player => PlayerManager.GetInstance().FindPlayer(PlayerId);
+    class CGaiLunAtk : CSkillBase
+    { 
 
-        private int skillId;
-
-        private int stageNum;
-
-        public void Init(SkillDataInfo info)
-        {
-            PlayerId = info.PlayerId;
-            skillId = info.SkillId;
-            stageNum = info.StageNum;
-        }
-
-        public void DoBehaviour()
+        public override void DoBehaviour()
         {
             //播放动画
             var skillVO = SkillConfiger.GetInstance().GetSkillById(skillId);

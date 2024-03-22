@@ -48,7 +48,11 @@ class DrawRangeManager : MonoBehaviour
 
     private void OnRenderObject()
     {
-        if (!IsDraw || color.a<=0) return;
+        if (!IsDraw) return;
+        if(color.a <= 0)
+        {
+            MonoBridge.GetInstance().DestroyOBJ(gameObject);
+        }
         color.a -= 0.5f * Time.deltaTime;
         // 保存当前的渲染状态  
         lineMaterial.SetPass(0);

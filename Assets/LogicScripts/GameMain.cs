@@ -6,6 +6,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 using Assets.LogicScripts.Client.Manager;
+using Assets.LogicScripts.Client.CSkill;
 
 public class GameMain : MonoBehaviour
 {

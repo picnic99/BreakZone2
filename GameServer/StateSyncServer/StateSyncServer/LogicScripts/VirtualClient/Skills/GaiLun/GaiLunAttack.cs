@@ -28,22 +28,21 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
                 PlayerId = character.PlayerId,
                 SkillId = skillData.Id,
                 StageNum = this.StageNum,
-
             };
             ActionManager.GetInstance().Send_GameDoSkillNtf(info);
+
             base.OnEnter();
+
             if (Character.GetSkill(SkillEnum.ZHIMINGDAJI) != null)
             {
                 durationTime = 0;
                 return;
             }
-            //int index = StageNum + 1;
-            TimeManager.GetInstance().AddOnceTime(this, (int)(skillData.GetFrontTime(StageNum)*1000), () =>
-              {
-                  atkInstance = new GaiLunAtkInstance(this, StageNum, DoDamage);
-                  //instanceList.Add(ins);
-                  AudioEventDispatcher.GetInstance().Event(MomentType.DoSkill, this, "atk", character.PlayerId, character.InstanceId);
-              });
+
+            atkInstance = new GameInstance();
+            atkInstance.Trans.TransformMatrix = character.Trans.TransformMatrix;
+
+            AudioEventDispatcher.GetInstance().Event(MomentType.DoSkill, this, "atk", character.PlayerId, character.InstanceId);
         }
 
         public override void OnTrigger()
@@ -53,7 +52,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
             //开始范围检测
             if (atkInstance != null)
             {
-                var col = new BoxCollider(character.PlayerId , new Vector4(-1,2,1,0));
+                var col = new BoxCollider(character.PlayerId, new Vector4(-1, 2, 1, 0));
                 atkInstance.SetCollider(col);
                 atkInstance.ColCheck();
                 if (col.IsColTarget)
