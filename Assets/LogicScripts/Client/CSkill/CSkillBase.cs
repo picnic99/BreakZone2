@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace Assets.LogicScripts.Client.CSkill
 {
@@ -13,6 +14,7 @@ namespace Assets.LogicScripts.Client.CSkill
     {
         protected int PlayerId;
         public Player Player => PlayerManager.GetInstance().FindPlayer(PlayerId);
+        protected GameObject CrtObj => Player.Crt.CrtObj;
 
         protected int skillId;
 

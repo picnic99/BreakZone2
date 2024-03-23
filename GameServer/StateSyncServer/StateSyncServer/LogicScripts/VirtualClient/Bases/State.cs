@@ -44,7 +44,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bases
             }
             if (stateData.exitType == cfg.StateExitType.CHANGE_TIME_EXIT)
             {
-                character.eventDispatcher.On(EventDispatcher.OPT_REDUCE_STATE_TIME, OnOptReduceTime);
+                character.eventDispatcher.On(_EventDispatcher.OPT_REDUCE_STATE_TIME, OnOptReduceTime);
             }
             CommonUtils.Logout(stateData.stateName + "OnEnter持续时间剩余" + durationTime);
         }
@@ -113,7 +113,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bases
         {
             if (stateData.exitType == cfg.StateExitType.CHANGE_TIME_EXIT)
             {
-                character.eventDispatcher.Off(EventDispatcher.OPT_REDUCE_STATE_TIME, OnOptReduceTime);
+                character.eventDispatcher.Off(_EventDispatcher.OPT_REDUCE_STATE_TIME, OnOptReduceTime);
             }
             AudioEventDispatcher.GetInstance().Event(MomentType.EnterState, character.characterData.id, stateData.id, "exit", character.PlayerId, character.InstanceId);
             CommonUtils.Logout(character.characterData.characterName + ":" + stateData.stateName + "结束");

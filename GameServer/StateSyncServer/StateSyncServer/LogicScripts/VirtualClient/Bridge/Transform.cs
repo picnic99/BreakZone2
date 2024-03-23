@@ -67,7 +67,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bridge
         /// 旋转
         /// </summary>
         /// <param name="rot"></param>
-        public void RotateTo(float rot)
+        public void Rotate(float rot)
         {
             lastRot = this.rot;
             this.Rot = rot;
@@ -80,6 +80,18 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bridge
             }
         }
 
+        public void RotateTo(float rot)
+        {
+
+            var invert = MatrixUtils.GetRotateYMatrix(-this.Rot);
+            transQueue.Enqueue(invert);
+            var rotMat = MatrixUtils.GetRotateYMatrix(rot);
+            transQueue.Enqueue(rotMat);
+            RotateMatrix = rotMat;
+            lastRot = rot;
+            this.Rot = rot;
+        }
+
         /// <summary>
         /// 移动
         /// </summary>
@@ -89,6 +101,11 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bridge
             pos.Y = 0;
             var moveMatrix = MatrixUtils.GetMoveMatrix(pos);
             transQueue.Enqueue(moveMatrix);
+        }
+
+        public void AddMatrix(Matrix4x4 m)
+        {
+            transQueue.Enqueue(m);
         }
 
 

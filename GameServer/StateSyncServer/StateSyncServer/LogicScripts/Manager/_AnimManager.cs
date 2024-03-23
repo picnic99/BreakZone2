@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace StateSyncServer.LogicScripts.Manager
 {
-    class AnimManager
+    class _AnimManager
     {
         //跳跃动画的位移数据 TODO：旋转数据 如 ROOT_POS ROOT_ROTATE
         //在播放动画时根据这些数据以及动画播放速度 能够推测出 角色的实际位移量 有精度要求

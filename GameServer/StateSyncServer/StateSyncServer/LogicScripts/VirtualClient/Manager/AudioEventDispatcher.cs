@@ -9,7 +9,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Manager
 {
     public class AudioEventDispatcher : VirtualClient.Bases.Singleton<AudioEventDispatcher>
     {
-        public EventDispatcher dispatcher;
+        public _EventDispatcher dispatcher;
 
         public void On(string eventName, Action<object[]> callback)
         {
@@ -28,7 +28,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Manager
 
         public void Init()
         {
-            dispatcher = new EventDispatcher();
+            dispatcher = new _EventDispatcher();
             dispatcher.On(MomentType.DoSkill, Handle_DoSkill);
             dispatcher.On(MomentType.EnterState, Handle_EnterState);
         }

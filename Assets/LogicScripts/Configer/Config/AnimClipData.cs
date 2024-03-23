@@ -18,6 +18,7 @@ public sealed partial class AnimClipData : Luban.BeanBase
     public AnimClipData(JSONNode _buf) 
     {
         { if(!_buf["animPath"].IsString) { throw new SerializationException(); }  AnimPath = _buf["animPath"]; }
+        { if(!_buf["realLength"].IsNumber) { throw new SerializationException(); }  RealLength = _buf["realLength"]; }
         { if(!_buf["x"].IsNumber) { throw new SerializationException(); }  X = _buf["x"]; }
         { if(!_buf["y"].IsNumber) { throw new SerializationException(); }  Y = _buf["y"]; }
     }
@@ -28,6 +29,7 @@ public sealed partial class AnimClipData : Luban.BeanBase
     }
 
     public readonly string AnimPath;
+    public readonly float RealLength;
     public readonly int X;
     public readonly int Y;
    
@@ -39,12 +41,14 @@ public sealed partial class AnimClipData : Luban.BeanBase
         
         
         
+        
     }
 
     public override string ToString()
     {
         return "{ "
         + "animPath:" + AnimPath + ","
+        + "realLength:" + RealLength + ","
         + "x:" + X + ","
         + "y:" + Y + ","
         + "}";

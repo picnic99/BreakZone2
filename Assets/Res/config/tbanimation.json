@@ -5,6 +5,7 @@
     "clips": [
       {
         "animPath": "Default/idle",
+        "realLength": 1,
         "x": 0,
         "y": 0
       }
@@ -22,6 +23,7 @@
     "clips": [
       {
         "animPath": "Default/die/die",
+        "realLength": 1,
         "x": 0,
         "y": 0
       }
@@ -39,6 +41,7 @@
     "clips": [
       {
         "animPath": "Default/jump/startJump",
+        "realLength": 1,
         "x": 0,
         "y": 0
       }
@@ -56,6 +59,7 @@
     "clips": [
       {
         "animPath": "Default/jump/keepJump",
+        "realLength": 1,
         "x": 0,
         "y": 0
       }
@@ -73,6 +77,7 @@
     "clips": [
       {
         "animPath": "Default/jump/endJump",
+        "realLength": 1,
         "x": 0,
         "y": 0
       }
@@ -90,6 +95,7 @@
     "clips": [
       {
         "animPath": "Default/injure/8_injure",
+        "realLength": 1,
         "x": 0,
         "y": 0
       }
@@ -107,6 +113,7 @@
     "clips": [
       {
         "animPath": "Default/atk/atk1",
+        "realLength": 1,
         "x": 0,
         "y": 0
       }
@@ -124,6 +131,7 @@
     "clips": [
       {
         "animPath": "Default/atk/atk2",
+        "realLength": 1,
         "x": 0,
         "y": 0
       }
@@ -141,6 +149,7 @@
     "clips": [
       {
         "animPath": "Default/atk/atk3",
+        "realLength": 1,
         "x": 0,
         "y": 0
       }
@@ -158,41 +167,49 @@
     "clips": [
       {
         "animPath": "Default/move/2_move_front",
+        "realLength": 1,
         "x": 0,
         "y": 1
       },
       {
         "animPath": "Default/move/2_move_back",
+        "realLength": 1,
         "x": 0,
         "y": -1
       },
       {
         "animPath": "Default/move/2_move_front_left",
+        "realLength": 1,
         "x": -1,
         "y": 0
       },
       {
         "animPath": "Default/move/2_move_front_right",
+        "realLength": 1,
         "x": 1,
         "y": 0
       },
       {
         "animPath": "Default/move/2_move_front_right45",
+        "realLength": 1,
         "x": 1,
         "y": 1
       },
       {
         "animPath": "Default/move/2_move_back_right45",
+        "realLength": 1,
         "x": 1,
         "y": -1
       },
       {
         "animPath": "Default/move/2_move_front_left45",
+        "realLength": 1,
         "x": -1,
         "y": 1
       },
       {
         "animPath": "Default/move/2_move_back_left45",
+        "realLength": 1,
         "x": -1,
         "y": -1
       }
@@ -210,41 +227,49 @@
     "clips": [
       {
         "animPath": "Default/run/3_run_front",
+        "realLength": 1,
         "x": 0,
         "y": 1
       },
       {
         "animPath": "Default/run/3_run_back",
+        "realLength": 1,
         "x": 0,
         "y": -1
       },
       {
         "animPath": "Default/run/3_run_front_left",
+        "realLength": 1,
         "x": -1,
         "y": 0
       },
       {
         "animPath": "Default/run/3_run_front_right",
+        "realLength": 1,
         "x": 1,
         "y": 0
       },
       {
         "animPath": "Default/run/3_run_front_right45",
+        "realLength": 1,
         "x": 1,
         "y": 1
       },
       {
         "animPath": "Default/run/3_run_back_right45",
+        "realLength": 1,
         "x": 1,
         "y": -1
       },
       {
         "animPath": "Default/run/3_run_front_left45",
+        "realLength": 1,
         "x": -1,
         "y": 1
       },
       {
         "animPath": "Default/run/3_run_back_left45",
+        "realLength": 1,
         "x": -1,
         "y": -1
       }
@@ -262,41 +287,49 @@
     "clips": [
       {
         "animPath": "Default/roll/Esc_StandRoll_Front_Root",
+        "realLength": 0.83,
         "x": 0,
         "y": 1
       },
       {
         "animPath": "Default/roll/Esc_StandRoll_Back_Root",
+        "realLength": 1,
         "x": 0,
         "y": -1
       },
       {
         "animPath": "Default/roll/Esc_StandRoll_Left_Root",
+        "realLength": 1,
         "x": -1,
         "y": 0
       },
       {
         "animPath": "Default/roll/Esc_StandRoll_Right_Root",
+        "realLength": 1,
         "x": 1,
         "y": 0
       },
       {
         "animPath": "Default/roll/Esc_StandRoll_Right_Root",
+        "realLength": 1,
         "x": 1,
         "y": 1
       },
       {
         "animPath": "Default/roll/Esc_StandRoll_Right_Root",
+        "realLength": 1,
         "x": 1,
         "y": -1
       },
       {
         "animPath": "Default/roll/Esc_StandRoll_Left_Root",
+        "realLength": 1,
         "x": -1,
         "y": 1
       },
       {
         "animPath": "Default/roll/Esc_StandRoll_Left_Root",
+        "realLength": 1,
         "x": -1,
         "y": -1
       }
@@ -314,6 +347,7 @@
     "clips": [
       {
         "animPath": "GaiLun/1_idle",
+        "realLength": 1,
         "x": 0,
         "y": 0
       }
@@ -331,6 +365,7 @@
     "clips": [
       {
         "animPath": "GaiLun/Light_Attk_1",
+        "realLength": 0.76,
         "x": 0,
         "y": 0
       }
@@ -348,6 +383,7 @@
     "clips": [
       {
         "animPath": "GaiLun/Light_Attk_2",
+        "realLength": 0.78,
         "x": 0,
         "y": 0
       }
@@ -365,6 +401,7 @@
     "clips": [
       {
         "animPath": "GaiLun/Light_Attk_3",
+        "realLength": 1.06,
         "x": 0,
         "y": 0
       }
@@ -382,6 +419,7 @@
     "clips": [
       {
         "animPath": "GaiLun/Run_Sword",
+        "realLength": 1,
         "x": 0,
         "y": 0
       }
@@ -399,6 +437,7 @@
     "clips": [
       {
         "animPath": "GaiLun/Run_Hard_Attk",
+        "realLength": 1,
         "x": 0,
         "y": 0
       }
@@ -416,6 +455,7 @@
     "clips": [
       {
         "animPath": "GaiLun/Hard_Attk_5",
+        "realLength": 1,
         "x": 0,
         "y": 0
       }
@@ -433,6 +473,7 @@
     "clips": [
       {
         "animPath": "GaiLun/Hard_Attk_4",
+        "realLength": 1,
         "x": 0,
         "y": 0
       }
@@ -450,6 +491,7 @@
     "clips": [
       {
         "animPath": "Default/atk/atk1",
+        "realLength": 1,
         "x": 0,
         "y": 0
       }
@@ -467,6 +509,7 @@
     "clips": [
       {
         "animPath": "tyb_2",
+        "realLength": 1,
         "x": 0,
         "y": 0
       }
@@ -484,6 +527,7 @@
     "clips": [
       {
         "animPath": "cjdg",
+        "realLength": 1,
         "x": 0,
         "y": 0
       }
@@ -501,6 +545,7 @@
     "clips": [
       {
         "animPath": "slbw",
+        "realLength": 1,
         "x": 0,
         "y": 0
       }
@@ -518,6 +563,7 @@
     "clips": [
       {
         "animPath": "Default/roll/Esc_StandRoll_Front_Root",
+        "realLength": 1,
         "x": 0,
         "y": 0
       }
@@ -535,6 +581,7 @@
     "clips": [
       {
         "animPath": "Default/roll/Esc_StandRoll_Back_Root",
+        "realLength": 1,
         "x": 0,
         "y": 0
       }
@@ -552,6 +599,7 @@
     "clips": [
       {
         "animPath": "Default/roll/Esc_StandRoll_Left_Root",
+        "realLength": 1,
         "x": 0,
         "y": 0
       }
@@ -569,6 +617,7 @@
     "clips": [
       {
         "animPath": "Default/roll/Esc_StandRoll_Right_Root",
+        "realLength": 1,
         "x": 0,
         "y": 0
       }

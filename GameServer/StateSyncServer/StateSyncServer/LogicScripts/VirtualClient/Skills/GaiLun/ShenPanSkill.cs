@@ -20,6 +20,27 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
     /// </summary>
     public class ShenPanSkill : Skill
     {
+        /// <summary>
+        /// 玩家移动时的速度
+        /// </summary>
+        private float crtMoveSpeed = 5f;
+        /// <summary>
+        /// 龙卷风移动速度
+        /// </summary>
+        private float ljfMoveSpeed = 20f;
+        /// <summary>
+        /// 龙卷风检测范围
+        /// </summary>
+        private Vector4 colRangeRect = new Vector4(-1, 2, 1, 0);
+        /// <summary>
+        /// 第一段 玩家跟随龙卷风一起移动
+        /// </summary>
+        private int time1 = 400;
+        /// <summary>
+        /// 第二段 龙卷风向前移动 玩家脱手
+        /// </summary>
+        private int time2 = 600;
+
         public ShenPanSkill()
         {
 
@@ -27,15 +48,6 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
 
         public override void OnEnter()
         {
-            SkillDataInfo info = new SkillDataInfo()
-            {
-                PlayerId = character.PlayerId,
-                SkillId = skillData.Id,
-                StageNum = 0,
-            };
-            ActionManager.GetInstance().Send_GameDoSkillNtf(info);
-
-            //PlayAnim(skillData.GetAnimKey(0));
             base.OnEnter();
             skillDurationTime = stateDurationTime = 0.4f;
             AudioEventDispatcher.GetInstance().Event(MomentType.DoSkill, this, "start", this.character.PlayerId, character.InstanceId);
@@ -45,23 +57,21 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
         {
             base.OnTrigger();
             //位移逻辑
-            TimeManager.GetInstance().AddLoopTime(this, 0, Global.FixedTimerMS_10, () =>
+            TimeManager.GetInstance().AddLoopTime(this, 0, Global.FixedFrameTimeMS, () =>
             {
-                character.Trans.Translate(new Vector3(0, 0, 5 * 0.01f));
-            }, 40);
+                character.Trans.Translate(new Vector3(0, 0, crtMoveSpeed * Global.FixedFrameTimeS));
+            }, time1/ Global.FixedFrameTimeMS);
 
             GameInstance shenPanIns = new GameInstance();
             shenPanIns.Trans.TransformMatrix = character.Trans.TransformMatrix;
-            var col = new BoxCollider(character.PlayerId, new Vector4(-1, 2, 1, 0));
+            var col = new BoxCollider(character.PlayerId, colRangeRect);
             shenPanIns.SetCollider(col);
 
             //伤害检测逻辑
-            TimeManager.GetInstance().AddLoopTime(this, 400, Global.FixedFrameTimeMS, () => {
-                
+            TimeManager.GetInstance().AddLoopTime(this, time1, Global.FixedFrameTimeMS, () => {
                 shenPanIns.Trans.Tick();
-                shenPanIns.Trans.Translate(new Vector3(0, 0, 20 * 0.05f));
+                shenPanIns.Trans.Translate(new Vector3(0, 0, ljfMoveSpeed * Global.FixedFrameTimeS));
                 shenPanIns.ColCheck();
-
                 if (col.IsColTarget)
                 {
                     CommonUtils.Logout(character.PlayerId + " ATK 检测到" + col.checkResults.Count + "个目标");
@@ -70,11 +80,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
                         BeTrigger(item);
                     }
                 }
-                else
-                {
-                    CommonUtils.Logout(character.PlayerId + " ATK 未检测到目标");
-                }
-            }, 600 / Global.FixedFrameTimeMS);
+            }, time2 / Global.FixedFrameTimeMS);
         }
 
         /// <summary>
@@ -83,8 +89,8 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
         /// <param name="target"></param>
         public void BeTrigger(Character target)
         {
-            //float damageValue = 50;// baseDamage[skillLevel] + 0.5f * character.property.atk;
-            //DoDamage(target, damageValue);
+            float damageValue = 50;// baseDamage[skillLevel] + 0.5f * character.property.atk;
+            DoDamage(target, damageValue);
             AddState(target, character, StateType.Injure);
 
             //target.physic.AtkFly(5f, 1f);

@@ -15,7 +15,9 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
     public class GaiLunAttack : BaseAttack
     {
         public string effectPath = "";
+
         public GameInstance atkInstance;
+
         public GaiLunAttack() : base()
         {
 
@@ -23,14 +25,6 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
 
         public override void OnEnter()
         {
-            SkillDataInfo info = new SkillDataInfo()
-            {
-                PlayerId = character.PlayerId,
-                SkillId = skillData.Id,
-                StageNum = this.StageNum,
-            };
-            ActionManager.GetInstance().Send_GameDoSkillNtf(info);
-
             base.OnEnter();
 
             if (Character.GetSkill(SkillEnum.ZHIMINGDAJI) != null)
@@ -86,7 +80,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
         }
     }
 
-    class GaiLunAtkInstance : SkillInstance
+/*    class GaiLunAtkInstance : SkillInstance
     {
         public GameInstance curAtk;
         public int stageNum;
@@ -130,13 +124,13 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
 
         public override void OnEnterTrigger(Character col)
         {
-/*            base.OnEnterTrigger(col);
+            base.OnEnterTrigger(col);
             Vector3 v = RootSkill.character.Trans.Position;
             GameInstance ins = InstanceManager.GetInstance().CreateEffectInstance("Common/BloodEffect", v, 0);
             TimeManager.GetInstance().AddOnceTimer(this, 0.5f, () =>
             {
                 InstanceManager.GetInstance().RemoveInstance(ins);
-            });*/
+            });
         }
 
         public override void InvokeEnterTrigger(Character target)
@@ -155,5 +149,5 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
         {
             TimeManager.GetInstance().AddOnceTime(this, (int)(durationTime * 1000), End);
         }
-    }
+    }*/
 }

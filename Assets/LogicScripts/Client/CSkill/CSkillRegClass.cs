@@ -29,10 +29,10 @@ namespace Assets.LogicScripts.Client.CSkill
             dic.Add(SkillEnum.BASE_ROLL, typeof(BaseRoll));
 
             dic.Add(SkillEnum.GAILUN_ATK, typeof(CGaiLunAtk));
-            dic.Add(SkillEnum.ZHIMINGDAJI, typeof(ZhiMingDaJiSkill));
+            dic.Add(SkillEnum.ZHIMINGDAJI, typeof(CZhiMingDaJiSkill));
             dic.Add(SkillEnum.YONGQI, typeof(YongQiSkill));
             dic.Add(SkillEnum.SHENPAN, typeof(CShenPanSkill));
-            dic.Add(SkillEnum.ZHENGYI, typeof(ZhengYiSkill));
+            dic.Add(SkillEnum.ZHENGYI, typeof(CZhenYiSkill));
 
 
             dic.Add(SkillEnum.CHAOFUHE, typeof(ChaoFuHeSkill));

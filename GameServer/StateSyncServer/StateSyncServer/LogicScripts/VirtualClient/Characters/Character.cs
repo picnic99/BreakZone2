@@ -12,7 +12,7 @@ using StateSyncServer.LogicScripts.VirtualClient.VO;
 using StateSyncServer.LogicScripts.VO;
 using System.Collections.Generic;
 using System.Numerics;
-using EventDispatcher = StateSyncServer.LogicScripts.VirtualClient.Manager.EventDispatcher;
+using _EventDispatcher = StateSyncServer.LogicScripts.VirtualClient.Manager._EventDispatcher;
 
 namespace StateSyncServer.LogicScripts.VirtualClient.Characters
 {
@@ -45,7 +45,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Characters
         /// <summary>
         /// 事件管理
         /// </summary>
-        public EventDispatcher eventDispatcher { get; set; }
+        public _EventDispatcher eventDispatcher { get; set; }
         /// <summary>
         /// 状态机
         /// </summary>
@@ -121,7 +121,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Characters
         public virtual void InitCharacter()
         {
             input = new InputController(this);
-            eventDispatcher = new EventDispatcher();
+            eventDispatcher = new _EventDispatcher();
             SkillBehaviour = new List<Skill>();
             BuffBehaviour = new List<Buff>();
             property = new Property(this);

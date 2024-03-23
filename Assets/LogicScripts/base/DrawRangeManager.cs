@@ -14,12 +14,22 @@ class DrawRangeManager : MonoBehaviour
     public Vector3 LB = Vector3.zero;
     public Vector3 RB = Vector3.zero;
 
-    private Color color = new Color(0, 1, 0, 0.5F);
+    private Color triggerColor;
+    private Color missColor;
+    private Color color;
+
+    private float alpha = 0.5f;
 
     public bool IsDraw = false;
 
     private void Awake()
     {
+        triggerColor = new Color(0, 1, 0, alpha);
+
+        missColor = new Color(1, 0, 0, alpha);
+
+        color = triggerColor;
+
         if (!lineMaterial)
         {
             //Unity内置着色器，用于绘制简单色彩
@@ -49,11 +59,20 @@ class DrawRangeManager : MonoBehaviour
     private void OnRenderObject()
     {
         if (!IsDraw) return;
+        if(alpha >= 0.4f)
+        {
+            color = triggerColor;
+        }
+        else
+        {
+            color = missColor;
+        }
+        color.a = alpha;
         if(color.a <= 0)
         {
             MonoBridge.GetInstance().DestroyOBJ(gameObject);
         }
-        color.a -= 0.5f * Time.deltaTime;
+        alpha -= 0.5f * Time.deltaTime;
         // 保存当前的渲染状态  
         lineMaterial.SetPass(0);
         GL.PushMatrix();

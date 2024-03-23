@@ -41,7 +41,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills
                             durationTime = 0.5f;
                         }
                     });*/
-            EventDispatcher.GetInstance().On(EventDispatcher.PLAYER_JUMPED, EndJump);
+            _EventDispatcher.GetInstance().On(_EventDispatcher.PLAYER_JUMPED, EndJump);
         }
 
         public void EndJump(object[] args)
@@ -50,7 +50,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills
             AudioEventDispatcher.GetInstance().Event(MomentType.DoSkill, this, "jumpEnd", character.PlayerId,character.InstanceId);
             //AudioManager.GetInstance().Play("jump_end", false);
             skillDurationTime = 0.5f;
-            EventDispatcher.GetInstance().Off(EventDispatcher.PLAYER_JUMPED, EndJump);
+            _EventDispatcher.GetInstance().Off(_EventDispatcher.PLAYER_JUMPED, EndJump);
             TimeManager.GetInstance().AddOnceTime(this, 200, () =>
             {
                 //CameraManager.GetInstance().EventImpulse(0.5f);
@@ -61,7 +61,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills
         {
             base.OnExit();
             StopAnim(skillData.GetAnimKey(2));
-            EventDispatcher.GetInstance().Off(EventDispatcher.PLAYER_JUMPED, EndJump);
+            _EventDispatcher.GetInstance().Off(_EventDispatcher.PLAYER_JUMPED, EndJump);
         }
     }
 }

@@ -20,6 +20,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills
 
         public override void OnEnter()
         {
+            base.OnEnter();
             //播放动画前 考虑动画覆盖问题
             //动画覆盖分为两种 1 状态动画 2 技能动画
             AnimCoverVO vo = character.animCoverData.GetHead(belongState);
@@ -31,7 +32,6 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills
             {
                 PlayAnim(skillData.GetAnimKey(StageNum),0.15f,false);
             }
-            base.OnEnter();
 
             skillDurationTime = stateDurationTime + maxWaitTime;
         }

@@ -5,7 +5,7 @@ using StateSyncServer.LogicScripts.VirtualClient.Characters;
 using StateSyncServer.LogicScripts.VirtualClient.Enum;
 using StateSyncServer.LogicScripts.VirtualClient.Manager;
 using System;
-using EventDispatcher = StateSyncServer.LogicScripts.VirtualClient.Manager.EventDispatcher;
+using EventDispatcher = StateSyncServer.LogicScripts.VirtualClient.Manager._EventDispatcher;
 
 namespace StateSyncServer.LogicScripts.VirtualClient.Skills.Base
 {

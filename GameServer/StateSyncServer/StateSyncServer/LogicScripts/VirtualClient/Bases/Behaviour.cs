@@ -73,11 +73,11 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bases
             BuffManager.GetInstance().AddBuffGroup(this, targets, vo, initCall, endBuffCall);
         }
 
-        public void PlayAnim(string name, float translateTime = 0.15f,bool needSync = true)
+        public void PlayAnim(string name, float translateTime = 0.15f,bool needSync = true,bool isLoop = true)
         {
             if (name != "")
             {
-                character.Anim.PlayAnim(name, translateTime,needSync);
+                character.Anim.PlayAnim(name, translateTime,needSync, isLoop);
             }
         }
         public void PlayAnimByState(StateVO state, float translateTime = 0.3f)

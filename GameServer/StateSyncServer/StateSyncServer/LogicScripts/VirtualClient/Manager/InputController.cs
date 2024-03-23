@@ -51,7 +51,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Manager
         /// </summary>
         private void LookForward(float rot)
         {
-            crt.Trans.RotateTo(rot);
+            crt.Trans.Rotate(rot);
         }
 
         /// <summary>

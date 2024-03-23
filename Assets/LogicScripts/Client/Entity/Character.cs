@@ -12,6 +12,8 @@ namespace Assets.LogicScripts.Client.Entity
         /// 具体控制的角色
         /// </summary>
         public GameObject CrtObj { get; set; }
+
+        private Binding bind;
         /// <summary>
         /// 角色的动画状态机
         /// </summary>
@@ -36,6 +38,7 @@ namespace Assets.LogicScripts.Client.Entity
                 this.playerId = playerId;
                 CrtObj = ResourceManager.GetInstance().GetCharacterInstance<GameObject>(vo.character.ModePath);
                 var anim = CrtObj.GetComponent<Animator>();
+                CrtObj.TryGetComponent<Binding>(out bind);
                 CharacterAnimator = new CharacterAnimator();
                 CharacterAnimator.Init(anim,this);
                 //初始化角色位置
@@ -45,6 +48,18 @@ namespace Assets.LogicScripts.Client.Entity
                 //初始化角色动画 默认播放Idle
                 AnimManager.GetInstance().PlayAnim(CharacterAnimator, "DEFAULT_IDLE");
             }
+        }
+
+        public GameObject GetWeaponObj()
+        {
+            if(bind != null)
+            {
+                if(bind.weapons.Count > 0)
+                {
+                    return bind.weapons[0];
+                }
+            }
+            return null;
         }
 
         public void SetActive(bool b)

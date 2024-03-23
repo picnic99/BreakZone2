@@ -349,7 +349,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bridge
                     {
                         //取消跳跃状态
                         IsJump = false;
-                        EventDispatcher.GetInstance().Event(EventDispatcher.PLAYER_JUMPED);
+                        _EventDispatcher.GetInstance().Event(_EventDispatcher.PLAYER_JUMPED);
                     }
                     RemoveActionAxis(false, true, false);
                 }

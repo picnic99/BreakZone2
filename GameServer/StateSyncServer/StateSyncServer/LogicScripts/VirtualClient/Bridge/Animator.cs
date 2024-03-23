@@ -25,6 +25,8 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bridge
         private int maxFrameCtn = 0;
         private string curAnimName = "";
         private bool IsBlend = false;
+        private bool IsLoop = true;
+        private int loopNum = 0;
 
         public AnimClipDataInfo info;
         public Animator(GameInstance ins)
@@ -32,12 +34,13 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bridge
             this.ins = ins;
         }
 
-        public void PlayAnim(string animName, float translateTime = 0.15f,bool needSync = true)
+        public void PlayAnim(string animName, float translateTime = 0.15f,bool needSync = true , bool IsLoop = true)
         {
             if(needSync)AnimManager.GetInstance().PlayAnim(crt, animName, translateTime);
             curAnimKey = animName;
             animTime = CommonUtils.GetCurTimeStamp();
             SetCurPlayAnimName(curAnimKey);
+            this.IsLoop = IsLoop;
         }
 
         public void PlayStateAnim(StateVO state, float translateTime = 0.15f,bool needSync = true)
@@ -63,9 +66,11 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bridge
                 {
                     curAnimName = animationVO.animation.Clips[0].AnimPath;
                     frameCtn = 0;
+                    loopNum = 0;
                     info = AnimConfiger.GetInstance().GetClipDataByName(curAnimName);
                     maxFrameCtn = info.curves.Count - 1;
                     IsBlend = false;
+
                 }
                 else
                 {
@@ -74,6 +79,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bridge
                 }
             }
         }
+
         public void SetAnimNameByInput(Vector2 input, AnimationVO vo)
         {
             float x = input.X;
@@ -100,6 +106,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bridge
                 {
                     curAnimName = item.AnimPath;
                     frameCtn = 0;
+                    loopNum = 0;
                     info = AnimConfiger.GetInstance().GetClipDataByName(curAnimName);
                     maxFrameCtn = info.curves.Count - 1;
                     return;
@@ -123,6 +130,10 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bridge
 
             //添加位移
             Vector3 v = calculateOffset();
+            if(curAnimName != "GaiLun/1_idle")
+            {
+                CommonUtils.Logout(frameCtn + "当前动画: " + curAnimName + "当前帧偏移:" + v.ToString());
+            }
             crt.Trans.Translate(v);
         }
 
@@ -133,7 +144,11 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bridge
         {
             if (info == null) return Vector3.Zero;
             var frame = frameCtn % (maxFrameCtn + 1);
-            if (frame == 0) frame++;
+            if (frame == 0) {
+                frame++;
+                loopNum++;
+            }
+            if (loopNum >= 1 && !IsLoop) return Vector3.Zero;
             var curCurveData = info.curves[frame];
             var lastCurveData = info.curves[frame - 1];
             return curCurveData - lastCurveData;

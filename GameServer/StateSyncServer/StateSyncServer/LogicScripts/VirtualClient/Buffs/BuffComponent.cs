@@ -9,7 +9,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Buffs
     public abstract class BuffComponent : Buff
     {
         public BuffGroup group;
-        public EventDispatcher eventDispatcher = new EventDispatcher();
+        public _EventDispatcher eventDispatcher = new _EventDispatcher();
         /// <summary>
         /// buff标签
         /// </summary>

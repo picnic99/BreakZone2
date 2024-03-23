@@ -1,4 +1,6 @@
+using Msg;
 using StateSyncServer.LogicScripts.Common;
+using StateSyncServer.LogicScripts.Manager;
 using StateSyncServer.LogicScripts.Util;
 using StateSyncServer.LogicScripts.VirtualClient.Bases;
 using StateSyncServer.LogicScripts.VirtualClient.Characters;
@@ -6,6 +8,7 @@ using StateSyncServer.LogicScripts.VirtualClient.Configer;
 using StateSyncServer.LogicScripts.VirtualClient.Enum;
 using StateSyncServer.LogicScripts.VirtualClient.Manager;
 using StateSyncServer.LogicScripts.VirtualClient.VO;
+using System;
 using System.Collections.Generic;
 
 namespace StateSyncServer.LogicScripts.VirtualClient.Skills.Base
@@ -24,15 +27,16 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.Base
     /// </summary>
     public abstract class Skill : Behaviour
     {
-        private EventDispatcher eventDispatcher;
-        public EventDispatcher EventDispatcher
+        private _EventDispatcher eventDispatcher;
+        public _EventDispatcher EventDispatcher
         {
             get
             {
-                if (eventDispatcher == null) eventDispatcher = new EventDispatcher();
+                if (eventDispatcher == null) eventDispatcher = new _EventDispatcher();
                 return eventDispatcher;
             }
         }
+
         //技能数据 保存必要信息 支持配置
         public SkillVO skillData;
         //技能持续时间
@@ -114,36 +118,37 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.Base
                 OnBack();
                 //抛出事件移除技能状态
                 EndState();
-                return;
+                stateDurationTime = 0;
             }
-
-            var cur_animName = skillData.GetAnimKeyBySkillIndex(StageNum);
-            float animTime = AnimManager.GetInstance().GetAnimTime(cur_animName);
-            var animCfg = AnimConfiger.GetInstance().GetAnimByAnimKey(cur_animName);
-            animTime = animTime * animCfg.animation.ValidLength;
-            curAnimLength = animTime;
-            if (animTime == 0) animTime = stateDurationTime;
-            //前摇时间 此时一般在播放抬手动画 抬手动画可以通过
-            //暂时先不考虑抬手动作吧 理由：没有合适的取消施放按键
-            //OnFront();   
-
-            CommonUtils.Logout($"当前技能为：{skillData.skill.Name},前摇：{skillData.GetFrontTime(StageNum)},后摇：{skillData.GetBackTime(StageNum)}");
-            //技能触发 已经算在施放技能了
-            TimeManager.GetInstance().AddOnceTime(this, (int)(animTime * skillData.GetFrontTime(StageNum) * 1000), () =>
+            else
             {
-                OnTrigger();
-            });
+                var cur_animName = skillData.GetAnimKeyBySkillIndex(StageNum);
+                float animTime = AnimManager.GetInstance().GetAnimTime(cur_animName);
+                var animCfg = AnimConfiger.GetInstance().GetAnimByAnimKey(cur_animName);
+                animTime = animTime * animCfg.animation.ValidLength;
+                curAnimLength = animTime;
+                if (animTime == 0) animTime = stateDurationTime;
+                //前摇时间 此时一般在播放抬手动画 抬手动画可以通过
+                //暂时先不考虑抬手动作吧 理由：没有合适的取消施放按键
+                //OnFront();   
 
-            //后摇时间 处于后摇时间的话可以通过其它技能打断当前收尾动画 快速施放下一个动画 TODO：控制哪些技能可以打断收尾动画
-            TimeManager.GetInstance().AddOnceTime(this, (int)(animTime * skillData.GetBackTime(StageNum) * 1000), () =>
-            {
-                OnBack();
-            });
+                CommonUtils.Logout($"当前技能为：{skillData.skill.Name},前摇：{skillData.GetFrontTime(StageNum)},后摇：{skillData.GetBackTime(StageNum)}");
+                //技能触发 已经算在施放技能了
+                TimeManager.GetInstance().AddOnceTime(this, (int)(animTime * skillData.GetFrontTime(StageNum) * 1000), () =>
+                {
+                    OnTrigger();
+                });
 
-            //默认状态时间等于当前阶段的动画时间
-            stateDurationTime = curAnimLength;
-            //默认技能时间等于状态持续时间
-            skillDurationTime = stateDurationTime;
+                //后摇时间 处于后摇时间的话可以通过其它技能打断当前收尾动画 快速施放下一个动画 TODO：控制哪些技能可以打断收尾动画
+                TimeManager.GetInstance().AddOnceTime(this, (int)(animTime * skillData.GetBackTime(StageNum) * 1000), () =>
+                {
+                    OnBack();
+                });
+                //默认状态时间等于当前阶段的动画时间
+                stateDurationTime = curAnimLength;
+                //默认技能时间等于状态持续时间
+                skillDurationTime = stateDurationTime;
+            }
 
             StageNum++;
             if (StageNum >= maxStageNum)

@@ -10,7 +10,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Manager
     /// 事件管理器
     /// 实现基础的监听触发功能
     /// </summary>
-    public class EventDispatcher : VirtualClient.Bases.Singleton<EventDispatcher>
+    public class _EventDispatcher : VirtualClient.Bases.Singleton<_EventDispatcher>
     {
         public static string ADD_RECORD { get { return GetInstance().GetType().Name + "ADD_RECORD"; } }
 

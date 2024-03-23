@@ -135,6 +135,27 @@
     "extraParams": ""
   },
   {
+    "id": 10011,
+    "name": "致命打击-下劈",
+    "cd": 2,
+    "isShow": true,
+    "desc": "这是致命打击的描述",
+    "icon": "",
+    "tags": [],
+    "IsInstantSkill": false,
+    "IsOnly": true,
+    "mutexState": [],
+    "backBreakSkills": [],
+    "valueRules": "",
+    "animKeys": [
+      "GAILUN_SWORD_HARD_ATK",
+      "GAILUN_SWORD_HARD_ATK"
+    ],
+    "sounds": "",
+    "effects": "",
+    "extraParams": ""
+  },
+  {
     "id": 1002,
     "name": "勇气",
     "cd": 2,

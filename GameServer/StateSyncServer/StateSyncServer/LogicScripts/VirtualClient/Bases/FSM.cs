@@ -1,10 +1,13 @@
 ﻿
+using Msg;
+using StateSyncServer.LogicScripts.Manager;
 using StateSyncServer.LogicScripts.Util;
 using StateSyncServer.LogicScripts.VirtualClient.Characters;
 using StateSyncServer.LogicScripts.VirtualClient.Configer;
 using StateSyncServer.LogicScripts.VirtualClient.Manager;
 using StateSyncServer.LogicScripts.VirtualClient.Skills.Base;
 using StateSyncServer.LogicScripts.VirtualClient.States;
+using System;
 
 namespace StateSyncServer.LogicScripts.VirtualClient.Bases
 {
@@ -68,7 +71,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bases
 
         public void OnUpdate()
         {
-            if (myState.states.Count <= 0 && nextState == null)
+            if (myState.states.Count <= 0 && nextState == null)              
             {
                 AddState(StateType.Idle);
             }
@@ -199,8 +202,25 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bases
         {
             //实例化技能
             Skill skill;
+
+            SkillDataInfo info = new SkillDataInfo()
+            {
+                PlayerId = character.PlayerId,
+                SkillId = skillId,
+                StageNum = existSkill != null? existSkill.StageNum:0,
+            };
+            ActionManager.GetInstance().Send_GameDoSkillNtf(info);
+
             if (existSkill != null)
             {
+                if (existSkill.StageNum > 0)
+                {
+                    var stageSkill = SkillConfiger.GetInstance().GetSkillById(Convert.ToInt32(skillId.ToString() + existSkill.StageNum));
+                    if (stageSkill != null)
+                    {
+                        existSkill.skillData = stageSkill;
+                    }
+                }
                 skill = existSkill;
             }
             else
