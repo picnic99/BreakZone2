@@ -228,6 +228,7 @@ public class PhysicController
         AddAction(new PhysicAction(offset, 1, PhysicActionType.ADD));
         GravityOffset = 0;
         IsJump = true;
+        CommonUtils.Logout(character.PlayerId + " 跳跃开始！");
     }
 
     /// <summary>
@@ -371,7 +372,7 @@ public class PhysicController
     {
         lastIsGround = isGround;
         //var raycastAll = Physics.OverlapBox(character.CrtObj.transform.position, new Vector3(0.3f, 0.3f, 0.3f), Quaternion.identity, 1 << LayerMask.NameToLayer("Build"));
-        var raycastAll = character.Trans.Position.Y <= 0;
+        var raycastAll = character.Trans.Position.Y <= 0.1f;
         CommonUtils.Logout(character.PlayerId + " CheckIsGround Y = " + character.Trans.Position.Y);
         if (raycastAll)
         {
