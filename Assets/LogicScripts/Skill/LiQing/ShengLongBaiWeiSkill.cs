@@ -29,7 +29,7 @@ public class ShengLongBaiWeiSkill : Skill
     /// 被触发 超负荷在飞行过程中碰到敌人后会调用这里
     /// </summary>
     /// <param name="target"></param>
-    public void BeTrigger(Character[] target)
+    public void BeTrigger(_Character[] target)
     {
         DoDamage(target, 150);
         foreach (var item in target)
@@ -40,8 +40,8 @@ public class ShengLongBaiWeiSkill : Skill
 
     class ShengLongBaiWei : SkillInstance
     {
-        Action<Character[]> call;
-        public ShengLongBaiWei(Skill skill, Action<Character[]> call)
+        Action<_Character[]> call;
+        public ShengLongBaiWei(Skill skill, Action<_Character[]> call)
         {
             this.RootSkill = skill;
             this.instancePath = "ShengLongBaiWei";
@@ -54,9 +54,9 @@ public class ShengLongBaiWeiSkill : Skill
             this.Init();
         }
 
-        public override void InvokeEnterTrigger(Character target)
+        public override void InvokeEnterTrigger(_Character target)
         {
-            call.Invoke(new Character[] { target });
+            call.Invoke(new _Character[] { target });
         }
 
         public override void InitTransform()

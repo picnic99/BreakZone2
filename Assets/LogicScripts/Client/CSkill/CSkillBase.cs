@@ -15,6 +15,8 @@ namespace Assets.LogicScripts.Client.CSkill
         protected int PlayerId;
         public Player Player => PlayerManager.GetInstance().FindPlayer(PlayerId);
         protected GameObject CrtObj => Player.Crt.CrtObj;
+        protected Character Crt => Player.Crt;
+        protected SkillVO SkillData => SkillConfiger.GetInstance().GetSkillById(skillId);
 
         protected int skillId;
 

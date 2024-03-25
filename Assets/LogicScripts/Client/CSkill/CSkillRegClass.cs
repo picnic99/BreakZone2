@@ -25,7 +25,7 @@ namespace Assets.LogicScripts.Client.CSkill
         private void Init()
         {
             dic.Add(SkillEnum.BASE_ATK, typeof(BaseAttack));
-            dic.Add(SkillEnum.BASE_JUMP, typeof(BaseJump));
+            dic.Add(SkillEnum.BASE_JUMP, typeof(CBaseJump));
             dic.Add(SkillEnum.BASE_ROLL, typeof(BaseRoll));
 
             dic.Add(SkillEnum.GAILUN_ATK, typeof(CGaiLunAtk));

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DebugSkillView
 {
-    public Character character;
+    public _Character character;
     public GameObject tmp_skillItem;
     private List<DebugSkillItem> skillItems;
 
@@ -14,7 +14,7 @@ public class DebugSkillView
         skillItems = new List<DebugSkillItem>();
     }
 
-    public void SetCharacter(Character character)
+    public void SetCharacter(_Character character)
     {
         this.character = character;
         UpdateSkillItems();

@@ -72,11 +72,12 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bases
         protected GameInstaneInfo info;
 
 
-        public GameInstance()
+        public GameInstance(int playerId)
         {
             Trans = new Transform(this);
             Anim = new Animator(this);
             info = new GameInstaneInfo();
+            _playerId = playerId;
             //SendCreateAction();
         }
 

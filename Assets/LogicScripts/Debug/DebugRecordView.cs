@@ -20,12 +20,12 @@ public class DebugRecordView
 
     private void AddEventListener()
     {
-        EventDispatcher.GetInstance().On(EventDispatcher.ADD_RECORD, AddRecord);
+        _EventDispatcher.GetInstance().On(_EventDispatcher.ADD_RECORD, AddRecord);
     }
 
     private void RemoveEventListener()
     {
-        EventDispatcher.GetInstance().Off(EventDispatcher.ADD_RECORD, AddRecord);
+        _EventDispatcher.GetInstance().Off(_EventDispatcher.ADD_RECORD, AddRecord);
     }
 
     private void AddRecord(object[] msg)

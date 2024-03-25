@@ -13,7 +13,7 @@ public class YongQiSkill : Skill
     {
         base.OnTrigger();
         //AddCustomBuff(new Character[] { character }, typeof(GeDangFanJiBuff));  //格挡反击buff测试
-        AddBuff(new Character[] { character }, new BuffVO("勇气减伤与护盾", skillDurationTime), (buff) =>
+        AddBuff(new _Character[] { character }, new BuffVO("勇气减伤与护盾", skillDurationTime), (buff) =>
         {
             buff.AddBuffComponent(buff.AddPropertyBuff(skillDurationTime, new PropertyBuffVO(PropertyType.PCTDEFEND, false, 0.3f)));
             buff.AddBuffComponent(buff.AddPropertyBuff(1f, new PropertyBuffVO(PropertyType.SHIELD, false, 200f)));

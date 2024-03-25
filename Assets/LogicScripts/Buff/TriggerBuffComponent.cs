@@ -185,7 +185,7 @@ public class TriggerBuffComponent : BuffComponent
     /// <param name="type">数值类型</param>
     /// <param name="mathType">比较方式</param>
     /// <param name="value">目标数值</param>
-    public void AddTrigger_PROPERTY_CHANGE(Character c, PropertyType type, MathType mathType, float value)
+    public void AddTrigger_PROPERTY_CHANGE(_Character c, PropertyType type, MathType mathType, float value)
     {
         Action<object[]> fun = null;
         fun = (args) =>
@@ -254,7 +254,7 @@ public class TriggerBuffComponent : BuffComponent
     /// </summary>
     /// <param name="c">目标角色</param>
     /// <param name="type">欲监听的状态列表 eg：toAtk dizzy ...</param>
-    public void AddTrigger_STATE_CHANGE(Character c, string[] type)
+    public void AddTrigger_STATE_CHANGE(_Character c, string[] type)
     {
         List<string> types = new List<string>(type);
         Action<object[]> fun = null;

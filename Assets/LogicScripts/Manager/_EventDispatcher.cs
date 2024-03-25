@@ -6,7 +6,7 @@ using UnityEngine;
 /// 事件管理器
 /// 实现基础的监听触发功能
 /// </summary>
-public class EventDispatcher : Singleton<EventDispatcher>
+public class _EventDispatcher : Singleton<_EventDispatcher>
 {
     public static string ADD_RECORD { get { return GetInstance().GetType().Name + "ADD_RECORD"; } }
 

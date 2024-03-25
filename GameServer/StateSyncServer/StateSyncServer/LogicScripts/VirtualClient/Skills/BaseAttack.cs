@@ -53,13 +53,13 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills
 
             triggered = true;
             Vector3 v = character.Trans.Position;
-            GameInstance ins = InstanceManager.GetInstance().CreateEffectInstance("Common/BloodEffect", v, 0);
+            //GameInstance ins = InstanceManager.GetInstance().CreateEffectInstance("Common/BloodEffect", v, 0);
 
             character.eventDispatcher.Event(CharacterEvent.ATK, new Character[] { target });
 
             TimeManager.GetInstance().AddOnceTime(this, 500, () =>
             {
-                InstanceManager.GetInstance().RemoveInstance(ins);
+                //InstanceManager.GetInstance().RemoveInstance(ins);
             });
         }
 

@@ -31,7 +31,7 @@ public class ChaoFuHeSkill : Skill
     /// 被触发 超负荷在飞行过程中碰到敌人后会调用这里
     /// </summary>
     /// <param name="target"></param>
-    public void BeTrigger(Character[] target)
+    public void BeTrigger(_Character[] target)
     {
         DoDamage(target, 60);
         foreach (var item in target)
@@ -48,12 +48,12 @@ public class ChaoFuHeSkill : Skill
 
     class ChaoFuHe
     {
-        Character character;
+        _Character character;
         GameObject skillInstance;
-        Action<Character[]> call;
+        Action<_Character[]> call;
         string path = "ChaoFuHe";
         float skillDurationTime = 3f;
-        public ChaoFuHe(Character character,Action<Character[]> call)
+        public ChaoFuHe(_Character character,Action<_Character[]> call)
         {
             this.character = character;
             this.call = call;
@@ -91,7 +91,7 @@ public class ChaoFuHeSkill : Skill
             var target = GameContext.GetCharacterByObj(col.gameObject);
             if (target == null || target == character) return;
 
-            call.Invoke( new Character[] { target });
+            call.Invoke( new _Character[] { target });
 
             skillDurationTime = 0;
             triggered = true;

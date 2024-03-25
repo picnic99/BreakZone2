@@ -16,9 +16,9 @@ public enum RangeType
 /// </summary>
 public class RangeScan
 {
-    private Character character;
+    private _Character character;
     private RangeDrawer drawer;
-    public RangeScan(Character character)
+    public RangeScan(_Character character)
     {
         this.character = character;
         InitDrawer();
@@ -29,7 +29,7 @@ public class RangeScan
         if (this.character == null || this.character.trans == null) return;
         drawer = this.character.trans.gameObject.AddComponent<RangeDrawer>();
         drawer.color = RangeDrawer.FRIEND_COLOR;
-        EventDispatcher.GetInstance().On(EventDispatcher.MAIN_ROLE_CHANGE, UpdateRangeScan);
+        _EventDispatcher.GetInstance().On(_EventDispatcher.MAIN_ROLE_CHANGE, UpdateRangeScan);
         HideRange();
     }
 
@@ -51,13 +51,13 @@ public class RangeScan
     /// <param name="radius">半径</param>
     /// <param name="type">检测类型</param>
     /// <returns></returns>
-    public Character[] CheckShphere(Vector3 pos, Vector3 dir, string degree, float radius, RangeType type)
+    public _Character[] CheckShphere(Vector3 pos, Vector3 dir, string degree, float radius, RangeType type)
     {
         float[] degs = new float[2]; int i = 0;
         foreach (var item in degree.Split(',')) degs[i++] = Convert.ToSingle(item);
         var left_border = Quaternion.AngleAxis(degs[0], Vector3.up) * dir;
         var right_border = Quaternion.AngleAxis(degs[1], Vector3.up) * dir;
-        List<Character> result = new List<Character>();
+        List<_Character> result = new List<_Character>();
         foreach (var target in GameContext.AllCharacter)
         {
             if (target != character)

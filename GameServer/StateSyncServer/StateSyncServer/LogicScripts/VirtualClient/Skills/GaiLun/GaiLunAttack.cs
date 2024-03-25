@@ -33,7 +33,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
                 return;
             }
 
-            atkInstance = new GameInstance();
+            atkInstance = new GameInstance(character.PlayerId);
             atkInstance.Trans.TransformMatrix = character.Trans.TransformMatrix;
 
             AudioEventDispatcher.GetInstance().Event(MomentType.DoSkill, this, "atk", character.PlayerId, character.InstanceId);

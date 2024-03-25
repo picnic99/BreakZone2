@@ -67,7 +67,7 @@ public class BaseInfoOptUI : UIBase
     {
         PropertyType type = (PropertyType)args[0];
         PropertyValue value = args[1] as PropertyValue;
-        Character crt = args[2] as Character;
+        _Character crt = args[2] as _Character;
 
         new PopValue(PopValuePanel,crt.trans,value.finalValue);
     }

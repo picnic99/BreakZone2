@@ -34,7 +34,7 @@ public class ShenPanSkill : Skill
     /// 被触发 超负荷在飞行过程中碰到敌人后会调用这里
     /// </summary>
     /// <param name="target"></param>
-    public void BeTrigger(Character target)
+    public void BeTrigger(_Character target)
     {
         float damageValue = 50;// baseDamage[skillLevel] + 0.5f * character.property.atk;
         DoDamage(target, damageValue);
@@ -58,8 +58,8 @@ class ShenPanInstance : SkillInstance
     float skillDurationTime1 = 0.4f;
     float skillDurationTime2 = 0.6f;
 
-    List<Character> triggeredTargets = new List<Character>();
-    public ShenPanInstance(Skill skill, Action<Character> call)
+    List<_Character> triggeredTargets = new List<_Character>();
+    public ShenPanInstance(Skill skill, Action<_Character> call)
     {
         this.RootSkill = skill;
         this.enterCall = call;
@@ -96,7 +96,7 @@ class ShenPanInstance : SkillInstance
         End);
     }
 
-    public override void InvokeEnterTrigger(Character target)
+    public override void InvokeEnterTrigger(_Character target)
     {
         var crt = RootSkill.character;
         if (target == null || target == crt) return;

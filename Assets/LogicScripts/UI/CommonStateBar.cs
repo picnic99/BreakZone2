@@ -8,9 +8,9 @@ public class CommonStateBar:UIBase
     private TextMeshProUGUI simpleStateTxt { get { return UIBase.GetBind<TextMeshProUGUI>(Root, "simpleStateTxt"); } }
     private TextMeshProUGUI fullMsg { get { return UIBase.GetBind<TextMeshProUGUI>(Root, "fullTxt"); } }
 
-    private Character character;
+    private _Character character;
 
-    public CommonStateBar(Character character)
+    public CommonStateBar(_Character character)
     {
         uiPath = "stateBar/CommonStateBar";
         this.character = character;

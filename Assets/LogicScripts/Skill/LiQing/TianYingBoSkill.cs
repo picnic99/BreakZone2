@@ -13,7 +13,7 @@ public class TianYingBoSkill : Skill
 {
     public static string HUIYINJI_TRIGGERED = "TianYingBoSkill_HUIYINJI_TRIGGERED";
 
-    private Character target;
+    private _Character target;
 
     public TianYingBoSkill()
     {
@@ -64,7 +64,7 @@ public class TianYingBoSkill : Skill
     /// 第一段触发 检测目标
     /// </summary>
     /// <param name="target"></param>
-    public void BeTrigger1(Character[] target)
+    public void BeTrigger1(_Character[] target)
     {
         DoDamage(target, 50);
         this.target = target[0];
@@ -90,9 +90,9 @@ public class TianYingBoSkill : Skill
 class TianYingBo : SkillInstance
 {
     Transform triggerEffect;
-    Action<Character[]> call;
+    Action<_Character[]> call;
 
-    public TianYingBo(Skill skill, Action<Character[]> call)
+    public TianYingBo(Skill skill, Action<_Character[]> call)
     {
         this.instancePath = "TianYinBo";
         this.RootSkill = skill;
@@ -128,10 +128,10 @@ class TianYingBo : SkillInstance
         });
     }
 
-    public override void InvokeEnterTrigger(Character target)
+    public override void InvokeEnterTrigger(_Character target)
     {
         //通知技能击中
-        call.Invoke(new Character[] { target });
+        call.Invoke(new _Character[] { target });
 
         //展示击中特效
         triggerEffectObj = GameObject.Instantiate<GameObject>(triggerEffect.gameObject, target.trans);
@@ -162,10 +162,10 @@ class TianYingBo : SkillInstance
 
 class HuiYinJi: SkillInstance
 {
-    Character target;
+    _Character target;
     Action call;
 
-    public HuiYinJi(Skill skill,Character target, Action flyEndCall)
+    public HuiYinJi(Skill skill,_Character target, Action flyEndCall)
     {
         this.RootSkill = skill;
         this.target = target;

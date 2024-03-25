@@ -9,7 +9,7 @@ using System.Reflection;
 /// </summary>
 public class BuffManager : Manager<BuffManager>
 {
-    public void RemoveBuff(Character character)
+    public void RemoveBuff(_Character character)
     {
 
     }
@@ -32,7 +32,7 @@ public class BuffManager : Manager<BuffManager>
     /// </summary>
     /// <param name="targets"></param>
     /// <param name="buff"></param>
-    public void AddCustomBuffGroup(Behaviour from,Character[] targets, Type buff,Action<object[]> endBuffCall)
+    public void AddCustomBuffGroup(Behaviour from,_Character[] targets, Type buff,Action<object[]> endBuffCall)
     {
         foreach (var target in targets)
         {
@@ -51,7 +51,7 @@ public class BuffManager : Manager<BuffManager>
     /// <param name="targets"></param>
     /// <param name="buff"></param>
     /// <param name="vo"></param>
-    public void AddBuffGroup(Behaviour from,Character[] targets,BuffVO vo,Action<BuffGroup> initCall,Action<object[]> endBuffCall)
+    public void AddBuffGroup(Behaviour from,_Character[] targets,BuffVO vo,Action<BuffGroup> initCall,Action<object[]> endBuffCall)
     {
         foreach (var target in targets)
         {
@@ -92,7 +92,7 @@ public class BuffManager : Manager<BuffManager>
     }
 
     //移除目标角色身上的所有BUFF
-    public void RemoveAllBuffByCharacter(Character target)
+    public void RemoveAllBuffByCharacter(_Character target)
     {
         foreach (var item in target.BuffBehaviour)
         {
@@ -102,11 +102,11 @@ public class BuffManager : Manager<BuffManager>
 
     public void OnRemoveAllBuffByCharacter(object[] args)
     {
-        Character c = args[0] as Character;
+        _Character c = args[0] as _Character;
         RemoveAllBuffByCharacter(c);
     }
 
-    internal void RemoveAllBuffFromSkill(Character character, Skill yongQiSkill)
+    internal void RemoveAllBuffFromSkill(_Character character, Skill yongQiSkill)
     {
 
     }

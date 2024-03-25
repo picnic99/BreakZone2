@@ -2,7 +2,7 @@
 
 public class DataDriverSkill
 {
-    public Character character;
+    public _Character character;
     public SkillDriverData driverData;
 
     public void DoSkill()
@@ -89,7 +89,7 @@ public class DataDriverSkill
             {
                 Debug.Log("本次触发："+ item.name);
             }
-            ActionManager.GetInstance().AddDamageAction(character, new Character[] { }, action.inTime, null);
+            ActionManager.GetInstance().AddDamageAction(character, new _Character[] { }, action.inTime, null);
             TimeManager.GetInstance().AddOnceTimer(this, action.duration, () =>
             {
                 GameObject.Destroy(obj);

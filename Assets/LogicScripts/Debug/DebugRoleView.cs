@@ -14,7 +14,7 @@ public class DebugRoleView
         roles = new List<DebugCharacter>();
     }
 
-    public void AddRole(Character character)
+    public void AddRole(_Character character)
     {
         GameObject obj = GameObject.Instantiate<GameObject>(tmp_role, tmp_role.transform.parent);
         obj.SetActive(true);

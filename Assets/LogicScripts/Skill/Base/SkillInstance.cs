@@ -10,7 +10,7 @@ using UnityEngine;
 /// </summary>
 public abstract class SkillInstance
 {
-    public EventDispatcher dispatcher;
+    public _EventDispatcher dispatcher;
     /// <summary>
     /// 所属技能
     /// </summary>
@@ -32,9 +32,9 @@ public abstract class SkillInstance
     /// <summary>
     /// 实例的回调 可能有多个 如触碰目标的回调 如实例结束的回调 如实例开始的回调 。。。
     /// </summary>
-    public Action<Character> enterCall;
-    public Action<Character> stayCall;
-    public Action<Character> exitCall;
+    public Action<_Character> enterCall;
+    public Action<_Character> stayCall;
+    public Action<_Character> exitCall;
     /// <summary>
     /// 实例的范围检测碰撞器 也可能有多个
     /// </summary>
@@ -67,7 +67,7 @@ public abstract class SkillInstance
     public virtual void Init(string layerName = "Character", CharacterState TriggerType = CharacterState.ENEMY)
     {
         maxDurationTime = durationTime;
-        dispatcher = new EventDispatcher();
+        dispatcher = new _EventDispatcher();
         InitTransform();
         AddBehaviour();
         if (needTriggerCheck)
@@ -133,19 +133,19 @@ public abstract class SkillInstance
 
     }
 
-    public virtual void InvokeEnterTrigger(Character target) {
+    public virtual void InvokeEnterTrigger(_Character target) {
         if(enterCall != null)
         {
             enterCall.Invoke(target);
         }
     }
-    public virtual void InvokeStayTrigger(Character target) {
+    public virtual void InvokeStayTrigger(_Character target) {
         if (stayCall != null)
         {
             stayCall.Invoke(target);
         }
     }
-    public virtual void InvokeExitTrigger(Character target) {
+    public virtual void InvokeExitTrigger(_Character target) {
         if (exitCall != null)
         {
             exitCall.Invoke(target);

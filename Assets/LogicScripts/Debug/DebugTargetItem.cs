@@ -5,12 +5,12 @@ using UnityEngine.UI;
 
 public class DebugTargetItem
 {
-    public Character character;
+    public _Character character;
     public GameObject Root;
     public Button removeBtn;
     public Text nameTxt;
 
-    public DebugTargetItem(GameObject Root,Character character)
+    public DebugTargetItem(GameObject Root,_Character character)
     {
         this.Root = Root;
         this.character = character;

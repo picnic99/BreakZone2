@@ -11,7 +11,7 @@ public class LimitTimePracticeUI : UIBase
 
     private float remainTime = 20;
 
-    private Character testCrt;
+    private _Character testCrt;
 
     private bool isStart = false;
     private bool isEnd = false;

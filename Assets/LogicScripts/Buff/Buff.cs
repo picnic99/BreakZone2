@@ -22,7 +22,7 @@ public abstract class Buff : Behaviour
     public bool IsEnable = true;
 
     //为该buff指定作用角色
-    public virtual Character Character
+    public virtual _Character Character
     {
         get { return character; }
         set

@@ -19,8 +19,8 @@ public class ZDMJbuff : BuffGroup
         buff.AddEnd_DURATION_TIME(durationTime);
         buff.doBuffCall = (args) =>
         {
-            AddState(new Character[] { character }, character, StateType.Dizzy, 1.5f);
-            DoDamage(new Character[] { character }, 100);
+            AddState(new _Character[] { character }, character, StateType.Dizzy, 1.5f);
+            DoDamage(new _Character[] { character }, 100);
         };
         AddBuffComponent(buff);
     }

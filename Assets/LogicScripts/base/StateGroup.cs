@@ -9,13 +9,13 @@ using UnityEngine;
 public class StateGroup
 {
     //归属角色
-    private Character character;
+    private _Character character;
     //状态列表
     public List<State> states = new List<State>();
     //默认状态 状态列表为空时加入列表中
     public State defaultState;
 
-    public StateGroup(Character character)
+    public StateGroup(_Character character)
     {
         this.character = character;
         AddEventListener();

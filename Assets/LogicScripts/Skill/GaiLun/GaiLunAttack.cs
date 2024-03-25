@@ -27,7 +27,7 @@ public class GaiLunAttack : BaseAttack
           });
     }
 
-    public void DoDamage(Character target)
+    public void DoDamage(_Character target)
     {
         if (target.IsDestroyed) return;
         AddState(target, character, StateType.Injure);
@@ -45,7 +45,7 @@ public class GaiLunAttack : BaseAttack
         var dir = (character.trans.forward).normalized;
         dir.y = 0;
         target.physic.Move(dir.normalized * 1f, 0.2f);
-        character.eventDispatcher.Event(CharacterEvent.ATK, new Character[] { target });
+        character.eventDispatcher.Event(CharacterEvent.ATK, new _Character[] { target });
     }
 }
 
@@ -53,8 +53,8 @@ class GaiLunAtkInstance : SkillInstance
 {
     public GameObject curAtk;
 
-    Action<Character> call;
-    public GaiLunAtkInstance(Skill skill, int index, Action<Character> call)
+    Action<_Character> call;
+    public GaiLunAtkInstance(Skill skill, int index, Action<_Character> call)
     {
         this.RootSkill = skill;
         this.instancePath = "GaiLunAtk";
@@ -89,7 +89,7 @@ class GaiLunAtkInstance : SkillInstance
         });
     }
 
-    public override void InvokeEnterTrigger(Character target)
+    public override void InvokeEnterTrigger(_Character target)
     {
         call.Invoke(target);
         //特效顿帧

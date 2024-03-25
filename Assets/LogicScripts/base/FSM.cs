@@ -5,7 +5,7 @@ using UnityEngine;
 public class FSM
 {
     //归属角色
-    public Character character;
+    public _Character character;
     //状态组
     public StateGroup myState;
 
@@ -16,7 +16,7 @@ public class FSM
 
     public object[] nextState;
 
-    public FSM(Character c)
+    public FSM(_Character c)
     {
         character = c;
         myState = new StateGroup(character);
@@ -90,7 +90,7 @@ public class FSM
     private State StateHandler(object[] args)
     {
         //改变者
-        Character changeFrom = (Character)args[0];
+        _Character changeFrom = (_Character)args[0];
         //状态名称
         string stateName = (string)args[1];
 

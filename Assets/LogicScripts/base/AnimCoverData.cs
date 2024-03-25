@@ -18,10 +18,10 @@ public class AnimCoverVO
 /// </summary>
 public class AnimCoverData
 {
-    public Character character;
+    public _Character character;
     public Dictionary<string, List<AnimCoverVO>> coverDatas;
 
-    public AnimCoverData(Character character)
+    public AnimCoverData(_Character character)
     {
         this.character = character;
         coverDatas = new Dictionary<string, List<AnimCoverVO>>();

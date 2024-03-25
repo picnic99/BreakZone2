@@ -23,7 +23,7 @@ public class CuiJingDuanGuSkill : Skill
     /// 被触发 超负荷在飞行过程中碰到敌人后会调用这里
     /// </summary>
     /// <param name="target"></param>
-    public void BeTrigger(Character[] target)
+    public void BeTrigger(_Character[] target)
     {
         DoDamage(target, 60);
         foreach (var item in target)
@@ -35,9 +35,9 @@ public class CuiJingDuanGuSkill : Skill
 
     class CuiJingDuanGu : SkillInstance
     {
-        Action<Character[]> call;
+        Action<_Character[]> call;
 
-        public CuiJingDuanGu(Skill skill,Action<Character[]> call)
+        public CuiJingDuanGu(Skill skill,Action<_Character[]> call)
         {
             this.instancePath = "CuiJingDuanGu";
             this.durationTime = 2f;
@@ -69,9 +69,9 @@ public class CuiJingDuanGuSkill : Skill
             });
         }
 
-        public override void InvokeEnterTrigger(Character target)
+        public override void InvokeEnterTrigger(_Character target)
         {
-            call.Invoke(new Character[] { target });
+            call.Invoke(new _Character[] { target });
         }
     }
 

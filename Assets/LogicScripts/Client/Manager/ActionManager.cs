@@ -445,6 +445,7 @@ namespace Assets.LogicScripts.Client.Manager
             Vector3 RT = new Vector3(ntf.RT.X, ntf.RT.Y, ntf.RT.Z);
             Vector3 LB = new Vector3(ntf.LB.X, ntf.LB.Y, ntf.LB.Z);
             Vector3 RB = new Vector3(ntf.RB.X, ntf.RB.Y, ntf.RB.Z);
+            int type = ntf.Type;
 
             GameObject obj = new GameObject("Range");
             obj.transform.position = Vector3.zero;
@@ -452,6 +453,7 @@ namespace Assets.LogicScripts.Client.Manager
             obj.transform.localScale = Vector3.one;
 
             DrawRangeManager draw = obj.AddComponent<DrawRangeManager>();
+            draw.type = type;
             draw.SetRange(LT, RT, LB, RB);
         }
     }

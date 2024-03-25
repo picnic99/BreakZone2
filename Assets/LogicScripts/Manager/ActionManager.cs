@@ -16,7 +16,7 @@ public class ActionManager : Manager<ActionManager>
 
     //public Queue<BaseAction> actionQueue = new Queue<BaseAction>();
 
-    public void AddDamageAction(Character character,Character[] targets,float value,Behaviour from)
+    public void AddDamageAction(_Character character,_Character[] targets,float value,Behaviour from)
     {
         DamageAction action =new DamageAction();
         action.Init(character, targets, value, from);

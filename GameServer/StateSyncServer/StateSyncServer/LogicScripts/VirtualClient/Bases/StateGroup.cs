@@ -150,6 +150,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bases
         private void Add(State state)
         {
             states.Add(state);
+            character.Anim.StopMove();
             state.OnEnter();
         }
 

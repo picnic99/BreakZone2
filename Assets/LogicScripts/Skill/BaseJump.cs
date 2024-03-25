@@ -36,7 +36,7 @@ public class BaseJump : Skill
                         durationTime = 0.5f;
                     }
                 });*/
-        EventDispatcher.GetInstance().On(EventDispatcher.PLAYER_JUMPED, EndJump);
+        _EventDispatcher.GetInstance().On(_EventDispatcher.PLAYER_JUMPED, EndJump);
     }
 
     public void EndJump(object[] args)
@@ -45,7 +45,7 @@ public class BaseJump : Skill
         AudioEventDispatcher.GetInstance().Event(MomentType.DoSkill, this, "jumpEnd", this.character.trans.gameObject);
         //AudioManager.GetInstance().Play("jump_end", false);
         skillDurationTime = 0.5f;
-        EventDispatcher.GetInstance().Off(EventDispatcher.PLAYER_JUMPED, EndJump);
+        _EventDispatcher.GetInstance().Off(_EventDispatcher.PLAYER_JUMPED, EndJump);
         TimeManager.GetInstance().AddOnceTimer(this, 0.2f, () => {
             CameraManager.GetInstance().EventImpulse(0.5f);           
         });
@@ -55,6 +55,6 @@ public class BaseJump : Skill
     {
         base.OnExit();
         StopAnim(skillData.GetAnimKey(2));
-        EventDispatcher.GetInstance().Off(EventDispatcher.PLAYER_JUMPED, EndJump);
+        _EventDispatcher.GetInstance().Off(_EventDispatcher.PLAYER_JUMPED, EndJump);
     }
 }

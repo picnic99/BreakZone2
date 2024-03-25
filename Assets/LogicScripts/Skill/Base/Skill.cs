@@ -15,11 +15,11 @@ using UnityEngine;
 /// </summary>
 public abstract class Skill : Behaviour
 {
-    private EventDispatcher eventDispatcher;
-    public EventDispatcher EventDispatcher {
+    private _EventDispatcher eventDispatcher;
+    public _EventDispatcher EventDispatcher {
         get
         {
-            if (eventDispatcher == null) eventDispatcher = new EventDispatcher();
+            if (eventDispatcher == null) eventDispatcher = new _EventDispatcher();
             return eventDispatcher;
         }
     }
@@ -49,7 +49,7 @@ public abstract class Skill : Behaviour
     public SkillInStateEnum skillState = SkillInStateEnum.FRONT;
 
     public float curAnimLength = 0;
-    public Character Character
+    public _Character Character
     {
         get { return character; }
         set

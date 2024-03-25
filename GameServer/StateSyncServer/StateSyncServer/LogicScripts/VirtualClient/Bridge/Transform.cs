@@ -1,4 +1,5 @@
-﻿using StateSyncServer.LogicScripts.Util;
+﻿using StateSyncServer.LogicScripts.Manager;
+using StateSyncServer.LogicScripts.Util;
 using StateSyncServer.LogicScripts.VirtualClient.Bases;
 using StateSyncServer.LogicScripts.VirtualClient.Characters;
 using System;
@@ -20,7 +21,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bridge
         private Matrix4x4 RotateMatrix = Matrix4x4.Identity;
 
         private Vector3 position;
-        public Vector3 Position { get => position; set => position = value; }
+        public Vector3 Position { get => MatrixUtils.MulMatrixVerctor(this.TransformMatrix, Vector3.Zero); set => position = value; }
 
         private Vector3 scale;
         public Vector3 Scale { get => scale; set => scale = value; }
@@ -98,7 +99,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bridge
         /// <param name="pos"></param>
         public void Translate(Vector3 pos)
         {
-            pos.Y = 0;
+            //pos.Y = 0;
             var moveMatrix = MatrixUtils.GetMoveMatrix(pos);
             transQueue.Enqueue(moveMatrix);
         }
@@ -119,8 +120,34 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bridge
             }
             //处理动画的变换
 
-
             this.Position = MatrixUtils.MulMatrixVerctor(this.TransformMatrix, Vector3.Zero);
+            if (this.Position.Y < 0)
+            {
+                Matrix4x4 m = MatrixUtils.GetMoveMatrix(new Vector3(0, -this.Position.Y, 0));
+                this.TransformMatrix = MatrixUtils.MulMatrix(this.TransformMatrix, m);
+                this.Position = MatrixUtils.MulMatrixVerctor(this.TransformMatrix, Vector3.Zero);
+            }
+
+            if (ins is Character)
+            {
+                Debug_ShowRange();
+            }
+        }
+
+        public void Debug_ShowRange()
+        {
+            var rect = new Vector4(-0.25f, 0.25f, 0.25f, -0.25f);
+            Vector3 LT = new Vector3(rect.X, Position.Y, rect.Y);
+            Vector3 RT = new Vector3(rect.Z, Position.Y, rect.Y);
+            Vector3 LB = new Vector3(rect.X, Position.Y, rect.W);
+            Vector3 RB = new Vector3(rect.Z, Position.Y, rect.W);
+
+            LT = MatrixUtils.MulMatrixVerctor(TransformMatrix, LT);
+            RT = MatrixUtils.MulMatrixVerctor(TransformMatrix, RT);
+            LB = MatrixUtils.MulMatrixVerctor(TransformMatrix, LB);
+            RB = MatrixUtils.MulMatrixVerctor(TransformMatrix, RB);
+
+            ActionManager.GetInstance().Send_GameDrawBoxRangeNtf(ins.PlayerId, LT, RT, LB, RB,2);
         }
     }
 }

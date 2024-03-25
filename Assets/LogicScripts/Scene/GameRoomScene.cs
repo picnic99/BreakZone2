@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class GameRoomScene : GameScene
 {
-    private Character crt;
+    private _Character crt;
 
     public GameRoomScene()
     {

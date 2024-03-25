@@ -40,7 +40,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
 
         public void MoveWheel(float initRot)
         {
-            GameInstance zmdjIns = new GameInstance();
+            GameInstance zmdjIns = new GameInstance(character.PlayerId);
             zmdjIns.Trans.TransformMatrix = character.Trans.TransformMatrix;
 
             zmdjIns.Trans.Rotate(initRot);

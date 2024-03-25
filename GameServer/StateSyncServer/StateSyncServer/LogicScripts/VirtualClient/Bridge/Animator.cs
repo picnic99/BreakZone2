@@ -27,6 +27,8 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bridge
         private bool IsBlend = false;
         private bool IsLoop = true;
         private int loopNum = 0;
+        private bool IsRootMotion = true;
+        private bool IsPlay = true;
 
         public AnimClipDataInfo info;
         public Animator(GameInstance ins)
@@ -34,13 +36,15 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bridge
             this.ins = ins;
         }
 
-        public void PlayAnim(string animName, float translateTime = 0.15f,bool needSync = true , bool IsLoop = true)
+        public void PlayAnim(string animName, float translateTime = 0.15f,bool needSync = true , bool IsLoop = true,bool IsRootMotion = true)
         {
             if(needSync)AnimManager.GetInstance().PlayAnim(crt, animName, translateTime);
             curAnimKey = animName;
             animTime = CommonUtils.GetCurTimeStamp();
             SetCurPlayAnimName(curAnimKey);
             this.IsLoop = IsLoop;
+            this.IsRootMotion = IsRootMotion;
+            this.IsPlay = true;
         }
 
         public void PlayStateAnim(StateVO state, float translateTime = 0.15f,bool needSync = true)
@@ -116,6 +120,8 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bridge
         }
         public void Tick()
         {
+            if (!IsPlay) return;
+            if (!IsRootMotion) return;
             if (IsBlend)
             {
                 Vector2 inputData = crt.input.InputData;
@@ -152,6 +158,11 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bridge
             var curCurveData = info.curves[frame];
             var lastCurveData = info.curves[frame - 1];
             return curCurveData - lastCurveData;
+        }
+
+        public void StopMove()
+        {
+            IsPlay = false;
         }
     }
 }

@@ -2,12 +2,12 @@
 
 public class Manager<T> : Singleton<T>, IManager where T : new()
 {
-    private static EventDispatcher _eventer;
-    public static EventDispatcher Eventer
+    private static _EventDispatcher _eventer;
+    public static _EventDispatcher Eventer
     {
         get
         {
-            if (_eventer == null) _eventer = new EventDispatcher();
+            if (_eventer == null) _eventer = new _EventDispatcher();
             return _eventer;
         }
     }

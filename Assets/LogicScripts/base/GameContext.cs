@@ -1,4 +1,5 @@
 ﻿using Assets.LogicScripts.Client.Common;
+using Assets.LogicScripts.Client.Entity;
 using Assets.LogicScripts.Client.Manager;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,9 +22,9 @@ public class GameContext
 
     public static int SelectCrtId = 1;
 
-    private static Character _curRole;
+    private static _Character _curRole;
     //当前操纵的角色
-    public static Character CurRole
+    public static _Character CurRole
     {
         get { 
             return _curRole; 
@@ -36,7 +37,7 @@ public class GameContext
     }
 
     //场景中全部角色
-    public static List<Character> AllCharacter = new List<Character>();
+    public static List<_Character> AllCharacter = new List<_Character>();
 
     private static GameScene _curScene;
     public static GameScene LastScene;
@@ -50,12 +51,12 @@ public class GameContext
                 LastScene = _curScene;
             }
             _curScene = value;
-            EventDispatcher.GetInstance().Event(EventDispatcher.SCENE_CHANGE, value);
+            _EventDispatcher.GetInstance().Event(_EventDispatcher.SCENE_CHANGE, value);
         }
     }
 
 
-    public static Character GetCharacterByObj(GameObject obj)
+    public static _Character GetCharacterByObj(GameObject obj)
     {
         for (int i = 0; i < AllCharacter.Count; i++)
         {
@@ -75,7 +76,53 @@ public class GameContext
         return new Vector3(x, 0, z).normalized;
     }
 
-    public static Vector3 GetDirByInput(Character character, bool defaultIsForward = true)
+    public static Vector3 GetInputDir(Character crt , bool defaultIsForward = true)
+    {
+        Vector3 input = new Vector3(crt.CrtData.Input.x,0, crt.CrtData.Input.y);
+        Transform trans = crt.CrtObj.transform;
+        Vector3 dir = defaultIsForward ? trans.forward.normalized : Vector3.zero;
+        if (input.x > 0 && input.z < 0)
+        {
+            dir = (-trans.forward + trans.right).normalized;
+        }
+        else if (input.x > 0 && input.z > 0)
+        {
+            dir = (trans.forward + trans.right).normalized;
+
+        }
+        else if (input.x < 0 && input.z > 0)
+        {
+            dir = (trans.forward - trans.right).normalized;
+
+        }
+        else if (input.x < 0 && input.z < 0)
+        {
+            dir = (-trans.forward - trans.right).normalized;
+
+        }
+        else if (input.x == 0 && input.z < 0)
+        {
+            dir = -trans.forward.normalized;
+
+        }
+        else if (input.x == 0 && input.z > 0)
+        {
+            dir = trans.forward.normalized;
+
+        }
+        else if (input.x > 0 && input.z == 0)
+        {
+            dir = trans.right.normalized;
+
+        }
+        else if (input.x < 0 && input.z == 0)
+        {
+            dir = -trans.right.normalized;
+        }
+        return dir;
+    }
+
+    public static Vector3 GetDirByInput(_Character character, bool defaultIsForward = true)
     {
         Vector3 input = GetPlayerInputDirect();
         Transform trans = character.trans;
@@ -127,7 +174,7 @@ public class GameContext
     /// <param name="character"></param>
     /// <param name="type"></param>
     /// <returns></returns>
-    public static bool CharacterIncludeState(string type, bool defalutCharacterIsSelf = true, Character character = null)
+    public static bool CharacterIncludeState(string type, bool defalutCharacterIsSelf = true, _Character character = null)
     {
 
         bool result = false;
@@ -157,7 +204,7 @@ public class GameContext
     }
 
 
-    public static int GetCharacterSkillIdByIndex(int index, Character character = null)
+    public static int GetCharacterSkillIdByIndex(int index, _Character character = null)
     {
         return PlayerManager.GetInstance().Self.Crt.CrtVO.GetSkillArr()[index];
     }

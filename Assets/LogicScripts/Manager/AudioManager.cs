@@ -129,13 +129,13 @@ public class AudioManager :Manager<AudioManager>
                      if (obj == target)
                      {
                          pool.Recover(audioSource);
-                         EventDispatcher.GetInstance().Off(EventDispatcher.OBJ_DESTROY, objDestroyCall);
+                         _EventDispatcher.GetInstance().Off(_EventDispatcher.OBJ_DESTROY, objDestroyCall);
                      }
                  }
 
              };
 
-            EventDispatcher.GetInstance().On(EventDispatcher.OBJ_DESTROY, objDestroyCall);
+            _EventDispatcher.GetInstance().On(_EventDispatcher.OBJ_DESTROY, objDestroyCall);
         }
 
         //注册移除时机
@@ -146,7 +146,7 @@ public class AudioManager :Manager<AudioManager>
             TimeManager.GetInstance().AddOnceTimer(this, playTime, () =>
             {
                 pool.Recover(audioSource);
-                EventDispatcher.GetInstance().Off(EventDispatcher.OBJ_DESTROY, objDestroyCall);
+                _EventDispatcher.GetInstance().Off(_EventDispatcher.OBJ_DESTROY, objDestroyCall);
             });
         }
         else
@@ -157,7 +157,7 @@ public class AudioManager :Manager<AudioManager>
                 TimeManager.GetInstance().AddOnceTimer(this, data.MaxLoopTime, () =>
                 {
                     pool.Recover(audioSource);
-                    EventDispatcher.GetInstance().Off(EventDispatcher.OBJ_DESTROY, objDestroyCall);
+                    _EventDispatcher.GetInstance().Off(_EventDispatcher.OBJ_DESTROY, objDestroyCall);
                 });
             }
         }

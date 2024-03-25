@@ -23,13 +23,13 @@ public class QuJinZheYueSkill : Skill
 
     class QuJingZheYue
     {
-        Character character;
+        _Character character;
         GameObject skillInstance;
         Transform inObj;
         Transform outObj;
         string path = "QuJingZheYue";
         float skillDurationTime = 5f;
-        public QuJingZheYue(Character character)
+        public QuJingZheYue(_Character character)
         {
             this.character = character;
             skillInstance = ResourceManager.GetInstance().GetSkillInstance(path);

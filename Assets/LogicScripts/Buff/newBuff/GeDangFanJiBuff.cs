@@ -41,7 +41,7 @@ public class GeDangFanJiBuff : BuffGroup
                 PropertyValue value = (PropertyValue)args[1];
                 float damage = value.finalValue;
                 value.AddExAddValue(-value.finalValue);
-                DoDamage(new Character[] { from.character }, 100);
+                DoDamage(new _Character[] { from.character }, 100);
                 Debug.Log("格挡了"+ damage +"点伤害，并回敬对方100点");
             }
         };

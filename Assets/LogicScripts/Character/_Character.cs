@@ -37,7 +37,7 @@ public class CharacterBaseInfo
 /// 角色管理器
 /// 
 /// </summary>
-public class Character
+public class _Character
 {
     public CharacterBaseInfo baseInfo { get; set; }
 
@@ -55,7 +55,7 @@ public class Character
 
     public CharacterAnimator characterAnimator { get; set; }
     //事件管理器
-    public EventDispatcher eventDispatcher;
+    public _EventDispatcher eventDispatcher;
     //状态机 只负责角色状态之间的切换
     public FSM fsm { get; set; }
     //StateBar
@@ -81,7 +81,7 @@ public class Character
 
     public bool IsDestroyed = false;
 
-    public Character(CharacterVO vo, GameObject obj, CharacterBaseInfo baseInfo = null)
+    public _Character(CharacterVO vo, GameObject obj, CharacterBaseInfo baseInfo = null)
     {
         characterData = vo;
         this.baseInfo = baseInfo;
@@ -105,11 +105,11 @@ public class Character
     /// </summary>
     public virtual void InitCharacter()
     {
-        eventDispatcher = new EventDispatcher();
+        eventDispatcher = new _EventDispatcher();
         SkillBehaviour = new List<Skill>();
         BuffBehaviour = new List<Buff>();
         property = new Property(this);
-        if (baseInfo.needControl) physic = new PhysicController(this);
+        //if (baseInfo.needControl) physic = new PhysicController(this);
         characterAnimator = new CharacterAnimator();
         characterAnimator.Init(anim,null);
         fsm = new FSM(this);

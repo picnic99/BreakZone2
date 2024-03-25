@@ -13,7 +13,7 @@ public class DebugTargetView
         targets = new List<DebugTargetItem>();
     }
 
-    public void AddTarget(Character character)
+    public void AddTarget(_Character character)
     {
         GameObject obj = GameObject.Instantiate<GameObject>(tmp_target, tmp_target.transform.parent);
         obj.SetActive(true);
@@ -26,7 +26,7 @@ public class DebugTargetView
         targets.Remove(item);
     }
 
-    public DebugTargetItem GetTarget(Character character)
+    public DebugTargetItem GetTarget(_Character character)
     {
         return targets.Find((DebugTargetItem item) =>
         {
@@ -38,9 +38,9 @@ public class DebugTargetView
     /// ��ȡ����Ŀ��
     /// </summary>
     /// <returns></returns>
-    public List<Character> GetTargets()
+    public List<_Character> GetTargets()
     {
-        List<Character> result = new List<Character>();
+        List<_Character> result = new List<_Character>();
         foreach (var item in targets)
         {
             result.Add(item.character);

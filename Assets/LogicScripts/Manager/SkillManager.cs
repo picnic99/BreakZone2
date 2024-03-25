@@ -35,7 +35,7 @@ public class SkillManager : Manager<SkillManager>
 
     private Dictionary<int, skillCD> skillCDRecordDic = new Dictionary<int, skillCD>();
 
-    public Skill CreateSkill(int skillId, Character character = null,string stateName = null)
+    public Skill CreateSkill(int skillId, _Character character = null,string stateName = null)
     {
         Type type = RegSkillClass.GetInstance().GetType(skillId);
         Skill skill = (Skill)type.Assembly.CreateInstance(type.Name);

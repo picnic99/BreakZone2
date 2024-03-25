@@ -115,7 +115,7 @@ public class DebugManager : Manager<DebugManager>
     /// <summary>
     /// ���һ����ɫ
     /// </summary>
-    public Character AddRoleReturn()
+    public _Character AddRoleReturn()
     {
         var idInput = globalOptView.Find("characterIdInput").GetComponent<InputField>().text;
 
@@ -124,10 +124,10 @@ public class DebugManager : Manager<DebugManager>
         var obj = ResourceManager.GetInstance().GetCharacterInstance<GameObject>(vo.modelName);
         //if (vo.id == 99)obj = tmp_fakeMan_obj;
         var c_obj = obj;
-        var character = new Character(vo, c_obj);
+        var character = new _Character(vo, c_obj);
         debugRoleView.AddRole(character);
         GameContext.AllCharacter.Add(character);
-        EventDispatcher.GetInstance().Event(EventDispatcher.MAIN_ROLE_CHANGE);
+        _EventDispatcher.GetInstance().Event(_EventDispatcher.MAIN_ROLE_CHANGE);
         return character;
     }
 
@@ -140,7 +140,7 @@ public class DebugManager : Manager<DebugManager>
         var obj = ResourceManager.GetInstance().GetCharacterInstance<GameObject>(vo.modelName);
         //if (vo.id == 99) obj = tmp_fakeMan_obj;
         var c_obj = obj;
-        var character = new Character(vo, c_obj);
+        var character = new _Character(vo, c_obj);
         if (vo.id == 99 && GameContext.CurRole != null)
         {
             character.physic.Move(GameContext.CurRole.trans.position + GameContext.CurRole.trans.forward * 3f,0.1f);
@@ -149,7 +149,7 @@ public class DebugManager : Manager<DebugManager>
         character.trans.gameObject.AddComponent<GrounderFBBIK>();*/
         debugRoleView.AddRole(character);
         GameContext.AllCharacter.Add(character);
-        EventDispatcher.GetInstance().Event(EventDispatcher.MAIN_ROLE_CHANGE);
+        _EventDispatcher.GetInstance().Event(_EventDispatcher.MAIN_ROLE_CHANGE);
     }
 
     public override void OnUpdate()
@@ -182,13 +182,13 @@ public class DebugManager : Manager<DebugManager>
 
     private void OnCreateCrt(object[] args)
     {
-        Character crt = args[0] as Character;
+        _Character crt = args[0] as _Character;
         debugRoleView.AddRole(crt);
     }
 
     private void OnDelCrt(object[] args)
     {
-        Character crt = args[0] as Character;
+        _Character crt = args[0] as _Character;
         for (int i = 0; i < debugRoleView.roles.Count; i++)
         {
             var item = debugRoleView.roles[i];
@@ -230,12 +230,12 @@ public class DebugManager : Manager<DebugManager>
         debugTargetView.RemoveTarget(item);
     }
 
-    public void SelectTarget(Character character)
+    public void SelectTarget(_Character character)
     {
         debugTargetView.AddTarget(character);
     }
 
-    public Character[] GetTargets()
+    public _Character[] GetTargets()
     {
         return debugTargetView.GetTargets().ToArray();
     }

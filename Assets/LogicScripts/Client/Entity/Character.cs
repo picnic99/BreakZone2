@@ -1,3 +1,4 @@
+using Assets.LogicScripts.Client.Manager;
 using Assets.LogicScripts.Client.VO;
 using UnityEngine;
 
@@ -6,8 +7,10 @@ namespace Assets.LogicScripts.Client.Entity
     /// <summary>
     /// 角色实体
     /// </summary>
-    public class Character
+    public class Character : EventDispatcher
     {
+        public static string JUMP_END = "JUMP_END";
+
         /// <summary>
         /// 具体控制的角色
         /// </summary>
@@ -22,6 +25,8 @@ namespace Assets.LogicScripts.Client.Entity
         /// 角色的数据
         /// </summary>
         public CharacterDataVO CrtData { get; set; }
+
+        public PhysicController physic { get; set; }
 
         public CharacterVO CrtVO { get; set; }
 
@@ -45,6 +50,7 @@ namespace Assets.LogicScripts.Client.Entity
                 CrtObj.transform.position = Vector3.zero;
                 CrtObj.transform.rotation = Quaternion.identity;
                 CrtData = new CharacterDataVO();
+                physic = new PhysicController(this);
                 //初始化角色动画 默认播放Idle
                 AnimManager.GetInstance().PlayAnim(CharacterAnimator, "DEFAULT_IDLE");
             }

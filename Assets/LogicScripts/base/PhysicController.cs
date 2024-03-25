@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.LogicScripts.Client.Entity;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -115,17 +116,19 @@ public class PhysicController
     public PhysicController(Character character)
     {
         this.character = character;
-        cc = this.character.trans.GetComponent<CharacterController>();
-        cc.enabled = true;
-        if (GameContext.GameMode == GameMode.DEBUG)
-        {
-            DebugManager.GetInstance().AddMonitor(() => { return "[PhysicController]frameActionOffset：" + GetFrameAction().ToString(); });
-            DebugManager.GetInstance().AddMonitor(() => { return "[PhysicController]IsJump：" + IsJump; });
-            DebugManager.GetInstance().AddMonitor(() => { return "[PhysicController]GravityOffset：" + GravityOffset; });
-            DebugManager.GetInstance().AddMonitor(() => { return "[PhysicController]isGround：" + isGround; });
-            DebugManager.GetInstance().AddMonitor(() => { return "[PhysicController]totalMove：" + totalMove.ToString(); });
-            DebugManager.GetInstance().AddMonitor(() => { return "[PhysicController]velocity：" + cc.velocity; });
-        }
+        /*        cc = this.character.trans.GetComponent<CharacterController>();
+                cc.enabled = true;*/
+        /*        if (GameContext.GameMode == GameMode.DEBUG)
+                {
+                    DebugManager.GetInstance().AddMonitor(() => { return "[PhysicController]frameActionOffset：" + GetFrameAction().ToString(); });
+                    DebugManager.GetInstance().AddMonitor(() => { return "[PhysicController]IsJump：" + IsJump; });
+                    DebugManager.GetInstance().AddMonitor(() => { return "[PhysicController]GravityOffset：" + GravityOffset; });
+                    DebugManager.GetInstance().AddMonitor(() => { return "[PhysicController]isGround：" + isGround; });
+                    DebugManager.GetInstance().AddMonitor(() => { return "[PhysicController]totalMove：" + totalMove.ToString(); });
+                    DebugManager.GetInstance().AddMonitor(() => { return "[PhysicController]velocity：" + cc.velocity; });
+                }*/
+
+        MonoBridge.GetInstance().AddCall(OnUpdate);
     }
 
     /// <summary>
@@ -280,14 +283,14 @@ public class PhysicController
     /// 跟随目标位移 按速度来 默认每秒位移1m
     /// </summary>
     /// <param name="speed"></param>
-    public void MoveFollow(Character target, float speed = 1, Action endCall = null)
+    public void MoveFollow(_Character target, float speed = 1, Action endCall = null)
     {
         Action fun = null;
         fun = () =>
         {
-            Vector3 dir = target.trans.position - character.trans.position;
+            Vector3 dir = target.trans.position - character.CrtObj.transform.position;
             cc.Move(dir.normalized * speed * Time.deltaTime);
-            if (Vector3.Distance(target.trans.position, character.trans.position) <= character.physic.cc.radius + target.physic.cc.radius + 0.2f || Math.Abs(cc.velocity.magnitude) <= 0.1f)
+            if (Vector3.Distance(target.trans.position, character.CrtObj.transform.position) <= character.physic.cc.radius + target.physic.cc.radius + 0.2f || Math.Abs(cc.velocity.magnitude) <= 0.1f)
             {
                 TimeManager.GetInstance().RemoveTimer(this, fun);
                 endCall();
@@ -299,7 +302,7 @@ public class PhysicController
 
     public void OnUpdate()
     {
-        if (character.IsDestroyed) return;
+        //if (character.IsDestroyed) return;
         Vector3 actionOffset = GetFrameAction();
         CheckIsGround();
         if (!isGround)
@@ -337,12 +340,13 @@ public class PhysicController
                 {
                     //取消跳跃状态
                     IsJump = false;
-                    EventDispatcher.GetInstance().Event(EventDispatcher.PLAYER_JUMPED);
+                    //_EventDispatcher.GetInstance().Event(_EventDispatcher.PLAYER_JUMPED);
+                    character.Event(Character.JUMP_END);
                 }
                 RemoveActionAxis(false, true, false);
             }
             //重力偏移重置
-            //GravityOffset = 0;
+            GravityOffset = 0;
         }
 
 
@@ -350,15 +354,16 @@ public class PhysicController
 
         Vector3 dir = Vector3.zero;
         //滞空移动
-        if (CanControl && !isGround && actionOffset.magnitude > 0 && GameContext.CurRole == character)
+        if (CanControl && !isGround && actionOffset.magnitude > 0)
         {
-            dir = GameContext.GetDirByInput(character, false) * 5f;
+            dir = GameContext.GetInputDir(character, false) * 5f;
         }
 
         //当前帧总偏移 = （行为总偏移 + 重力偏移 + 滞空移动偏移） * 当前帧时间 * 倍数
         totalMove = (actionOffset + new Vector3(0, GravityOffset, 0) + dir) * Time.deltaTime * multiply;
 
-        cc.Move(totalMove);
+        //cc.Move(totalMove);
+        character.CrtObj.transform.position += totalMove;
 
     }
 
@@ -368,7 +373,7 @@ public class PhysicController
     private void CheckIsGround()
     {
         lastIsGround = isGround;
-        var raycastAll = Physics.OverlapBox(character.trans.position, new Vector3(0.3f, 0.1f, 0.3f), Quaternion.identity, 1 << LayerMask.NameToLayer("Build"));
+        var raycastAll = Physics.OverlapBox(character.CrtObj.transform.position, new Vector3(0.3f, 0.3f, 0.3f), Quaternion.identity, 1 << LayerMask.NameToLayer("Build"));
         if (raycastAll.Length > 0)
         {
             // 在地面

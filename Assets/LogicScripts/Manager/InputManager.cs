@@ -149,7 +149,7 @@ public class InputManager : Manager<InputManager>
     /// </summary>
     /// <param name="character"></param>
     /// <param name="args"></param>
-    public void ChangeState(Character character, params object[] args)
+    public void ChangeState(_Character character, params object[] args)
     {
         int len = args.Length + 1;
         object[] objs = new object[len];

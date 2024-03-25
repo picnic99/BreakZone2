@@ -24,7 +24,7 @@ namespace StateSyncServer.LogicScripts.Manager
                 var bytes = PbUtil.Pack((uint)id, data);
                 CommonUtils.Logout($"发送消息：{ProtocolId.GetProtoName(id)}len = {data.Length},protocolId = {id},data = {protocol.ToString()}");
 
-                client.Client.Send(bytes);
+                 client.Client.Send(bytes);
             }
         }
 

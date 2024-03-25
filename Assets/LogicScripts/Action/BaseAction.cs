@@ -1,9 +1,9 @@
 ﻿public abstract class BaseAction
 {
     //行为发出者
-    public Character owner;
+    public _Character owner;
     //行为接收者
-    public Character[] targets;
+    public _Character[] targets;
     //数值
     public PropertyValue value;
     //来源
@@ -11,7 +11,7 @@
     //来源描述
     public string fromStr;
 
-    public void Init(Character character, Character[] targets, float value, Behaviour from)
+    public void Init(_Character character, _Character[] targets, float value, Behaviour from)
     {
         this.owner = character;
         this.targets = targets;

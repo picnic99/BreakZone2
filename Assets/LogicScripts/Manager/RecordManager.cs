@@ -2,6 +2,6 @@
 {
     public void AddRecord(string msg)
     {
-        EventDispatcher.GetInstance().Event(EventDispatcher.ADD_RECORD, msg);
+        _EventDispatcher.GetInstance().Event(_EventDispatcher.ADD_RECORD, msg);
     }
 }

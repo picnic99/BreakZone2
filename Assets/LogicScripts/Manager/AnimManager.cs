@@ -12,7 +12,7 @@ public class AnimManager : Manager<AnimManager>
     /// </summary>
     /// <param name="character"></param>
     /// <param name="v"></param>
-	public void PlayAnim(Character character, string animName,float translateTime = 0.15f)
+	public void PlayAnim(_Character character, string animName,float translateTime = 0.15f)
     {
         character.characterAnimator.Play(animName, translateTime);
         //character.anim.SetTrigger(animName);
@@ -24,14 +24,14 @@ public class AnimManager : Manager<AnimManager>
         anim.Play(animName, translateTime);
     }
 
-    public void PlayStateAnim(Character character, StateVO state, float translateTime = 0.15f)
+    public void PlayStateAnim(_Character character, StateVO state, float translateTime = 0.15f)
     {
         //查找是否有状态动画覆盖
         var animKey = character.characterData.GetStateAnimKey(state.stateName);
         PlayAnim(character, animKey, translateTime);
     }
 
-    public void StopAnim(Character character, string animName)
+    public void StopAnim(_Character character, string animName)
     {
         //character.anim.ResetTrigger(animName);
     }

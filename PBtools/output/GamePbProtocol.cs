@@ -89,10 +89,10 @@ namespace Msg {
             "VGltZRgJIAEoAyJECg1Ta2lsbERhdGFJbmZvEhAKCHBsYXllcklkGAEgASgF",
             "Eg8KB3NraWxsSWQYAiABKAUSEAoIc3RhZ2VOdW0YAyABKAUiNwoOR2FtZURv",
             "U2tpbGxOdGYSJQoJc2tpbGxJbmZvGAEgASgLMhIubXNnLlNraWxsRGF0YUlu",
-            "Zm8icQoTR2FtZURyYXdCb3hSZW5nZU50ZhIVCgJMVBgBIAEoCzIJLm1zZy5W",
+            "Zm8ifwoTR2FtZURyYXdCb3hSZW5nZU50ZhIVCgJMVBgBIAEoCzIJLm1zZy5W",
             "ZWMzEhUKAlJUGAIgASgLMgkubXNnLlZlYzMSFQoCTEIYAyABKAsyCS5tc2cu",
-            "VmVjMxIVCgJSQhgEIAEoCzIJLm1zZy5WZWMzQgoKCGdhbWUubXNnYgZwcm90",
-            "bzM="));
+            "VmVjMxIVCgJSQhgEIAEoCzIJLm1zZy5WZWMzEgwKBFR5cGUYBSABKAVCCgoI",
+            "Z2FtZS5tc2diBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
@@ -135,7 +135,7 @@ namespace Msg {
             new pbr::GeneratedClrTypeInfo(typeof(global::Msg.CharacterGameData), global::Msg.CharacterGameData.Parser, new[]{ "PlayerId", "CrtId", "PosX", "PosY", "PosZ", "Rot", "States", "CurAnimKey", "AnimTime" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Msg.SkillDataInfo), global::Msg.SkillDataInfo.Parser, new[]{ "PlayerId", "SkillId", "StageNum" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Msg.GameDoSkillNtf), global::Msg.GameDoSkillNtf.Parser, new[]{ "SkillInfo" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Msg.GameDrawBoxRengeNtf), global::Msg.GameDrawBoxRengeNtf.Parser, new[]{ "LT", "RT", "LB", "RB" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Msg.GameDrawBoxRengeNtf), global::Msg.GameDrawBoxRengeNtf.Parser, new[]{ "LT", "RT", "LB", "RB", "Type" }, null, null, null, null)
           }));
     }
     #endregion
@@ -10230,6 +10230,7 @@ namespace Msg {
       rT_ = other.rT_ != null ? other.rT_.Clone() : null;
       lB_ = other.lB_ != null ? other.lB_.Clone() : null;
       rB_ = other.rB_ != null ? other.rB_.Clone() : null;
+      type_ = other.type_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -10287,6 +10288,18 @@ namespace Msg {
       }
     }
 
+    /// <summary>Field number for the "Type" field.</summary>
+    public const int TypeFieldNumber = 5;
+    private int type_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int Type {
+      get { return type_; }
+      set {
+        type_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -10306,6 +10319,7 @@ namespace Msg {
       if (!object.Equals(RT, other.RT)) return false;
       if (!object.Equals(LB, other.LB)) return false;
       if (!object.Equals(RB, other.RB)) return false;
+      if (Type != other.Type) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -10317,6 +10331,7 @@ namespace Msg {
       if (rT_ != null) hash ^= RT.GetHashCode();
       if (lB_ != null) hash ^= LB.GetHashCode();
       if (rB_ != null) hash ^= RB.GetHashCode();
+      if (Type != 0) hash ^= Type.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -10351,6 +10366,10 @@ namespace Msg {
         output.WriteRawTag(34);
         output.WriteMessage(RB);
       }
+      if (Type != 0) {
+        output.WriteRawTag(40);
+        output.WriteInt32(Type);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -10377,6 +10396,10 @@ namespace Msg {
         output.WriteRawTag(34);
         output.WriteMessage(RB);
       }
+      if (Type != 0) {
+        output.WriteRawTag(40);
+        output.WriteInt32(Type);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -10398,6 +10421,9 @@ namespace Msg {
       }
       if (rB_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(RB);
+      }
+      if (Type != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Type);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -10434,6 +10460,9 @@ namespace Msg {
           RB = new global::Msg.Vec3();
         }
         RB.MergeFrom(other.RB);
+      }
+      if (other.Type != 0) {
+        Type = other.Type;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -10478,6 +10507,10 @@ namespace Msg {
             input.ReadMessage(RB);
             break;
           }
+          case 40: {
+            Type = input.ReadInt32();
+            break;
+          }
         }
       }
     #endif
@@ -10519,6 +10552,10 @@ namespace Msg {
               RB = new global::Msg.Vec3();
             }
             input.ReadMessage(RB);
+            break;
+          }
+          case 40: {
+            Type = input.ReadInt32();
             break;
           }
         }

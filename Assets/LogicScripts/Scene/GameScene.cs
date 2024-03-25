@@ -13,7 +13,7 @@ public class GameScene : Base
     public bool IsFightScene = false;
 
     public List<string> SceneUIs = new List<string>();
-    public List<Character> SceneCrts = new List<Character>();
+    public List<_Character> SceneCrts = new List<_Character>();
 
     public virtual void OnEnter()
     {

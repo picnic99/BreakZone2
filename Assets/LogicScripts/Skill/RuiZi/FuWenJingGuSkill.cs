@@ -26,14 +26,14 @@ public class FuWenJingGuSkill : Skill
     /// 
     /// </summary>
     /// <param name="target"></param>
-    public void BeTrigger(Character[] target)
+    public void BeTrigger(_Character[] target)
     {
         DoDamage(target, 60);
     }
 
     class FuWenJingGu
     {
-        Character character;
+        _Character character;
         GameObject skillInstance;
         Transform slowEffect;
         Transform dizzyEffect;
@@ -41,7 +41,7 @@ public class FuWenJingGuSkill : Skill
         Skill skill;
         string path = "FuWenJingGu";
         float skillDurationTime = 5f;
-        public FuWenJingGu(Character character, Skill skill)
+        public FuWenJingGu(_Character character, Skill skill)
         {
             this.character = character;
             this.skill = skill;

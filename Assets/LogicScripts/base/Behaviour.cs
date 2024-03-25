@@ -3,7 +3,7 @@ using UnityEngine;
 
 public abstract class Behaviour
 {
-    public Character character;
+    public _Character character;
     public float durationTime = 0;
     /// <summary>
     /// 创建后执行
@@ -28,36 +28,36 @@ public abstract class Behaviour
     /// </summary>
     protected abstract void OnEnd();
 
-    public void DoDamage(Character[] targets, float value)
+    public void DoDamage(_Character[] targets, float value)
     {
         ActionManager.GetInstance().AddDamageAction(character, targets, value, this);
     }
 
-    public void DoDamage(Character target, float value)
+    public void DoDamage(_Character target, float value)
     {
-        var targets = new Character[] { target };
+        var targets = new _Character[] { target };
         ActionManager.GetInstance().AddDamageAction(character, targets, value, this);
     }
 
-    public void AddState(Character[] targets, params object[] args)
+    public void AddState(_Character[] targets, params object[] args)
     {
         StateManager.GetInstance().AddState(character,targets, args);
     }
     
-    public void AddState(Character target, params object[] args)
+    public void AddState(_Character target, params object[] args)
     {
-        var targets = new Character[] { target };
+        var targets = new _Character[] { target };
         StateManager.GetInstance().AddState(character, targets, args);
     }
 
 
-    public void AddBuff(Character[] targets, BuffVO vo, Action<BuffGroup> initCall,Action<object[]> endBuffCall = null)
+    public void AddBuff(_Character[] targets, BuffVO vo, Action<BuffGroup> initCall,Action<object[]> endBuffCall = null)
     {
         BuffManager.GetInstance().AddBuffGroup(this, targets, vo, initCall,endBuffCall);
     }
-    public void AddBuff(Character target, BuffVO vo, Action<BuffGroup> initCall,Action<object[]> endBuffCall = null)
+    public void AddBuff(_Character target, BuffVO vo, Action<BuffGroup> initCall,Action<object[]> endBuffCall = null)
     {
-        var targets = new Character[] { target };
+        var targets = new _Character[] { target };
         BuffManager.GetInstance().AddBuffGroup(this, targets, vo, initCall,endBuffCall);
     }
 
@@ -95,16 +95,16 @@ public abstract class Behaviour
 
     public void AddBuffToSelf(BuffVO vo, Action<BuffGroup> initCall, Action<object[]> endBuffCall = null)
     {
-        BuffManager.GetInstance().AddBuffGroup(this, new Character[] { character }, vo, initCall,endBuffCall);
+        BuffManager.GetInstance().AddBuffGroup(this, new _Character[] { character }, vo, initCall,endBuffCall);
     }
 
-    public void AddCustomBuff(Character[] targets, Type buffType, Action<object[]> endBuffCall = null)
+    public void AddCustomBuff(_Character[] targets, Type buffType, Action<object[]> endBuffCall = null)
     {
         BuffManager.GetInstance().AddCustomBuffGroup(this, targets, buffType,endBuffCall);
     }
     public void AddCustomBuffToSelf(Type buffType, Action<object[]> endBuffCall = null)
     {
-        BuffManager.GetInstance().AddCustomBuffGroup(this, new Character[] { character }, buffType,endBuffCall);
+        BuffManager.GetInstance().AddCustomBuffGroup(this, new _Character[] { character }, buffType,endBuffCall);
     }
 
     public virtual string GetDesc()

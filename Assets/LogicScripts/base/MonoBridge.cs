@@ -37,7 +37,7 @@ public class MonoBridge : MonoBehaviour
 
     public void DestroyOBJ(UnityEngine.Object obj)
     {
-        EventDispatcher.GetInstance().Event(EventDispatcher.OBJ_DESTROY, obj);
+        _EventDispatcher.GetInstance().Event(_EventDispatcher.OBJ_DESTROY, obj);
         GameObject.Destroy(obj);
     }
 

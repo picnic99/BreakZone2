@@ -486,13 +486,14 @@ namespace StateSyncServer.LogicScripts.Manager
             }
         }
 
-        public void Send_GameDrawBoxRangeNtf(int playerId,Vector3 LT,Vector3 RT,Vector3 LB,Vector3 RB)
+        public void Send_GameDrawBoxRangeNtf(int playerId,Vector3 LT,Vector3 RT,Vector3 LB,Vector3 RB,int type = 1)
         {
             GameDrawBoxRengeNtf ntf = new GameDrawBoxRengeNtf();
             ntf.LT = new Vec3() { X = LT.X, Y = LT.Y, Z = LT.Z };
             ntf.RT = new Vec3() { X = RT.X, Y = RT.Y, Z = RT.Z };
             ntf.LB = new Vec3() { X = LB.X, Y = LB.Y, Z = LB.Z };
             ntf.RB = new Vec3() { X = RB.X, Y = RB.Y, Z = RB.Z };
+            ntf.Type = type;
 
             Player p = PlayerManager.GetInstance().FindPlayer(playerId);
             List<Player> players = SceneManager.GetInstance().GetPlayersInScene(p.SceneId);

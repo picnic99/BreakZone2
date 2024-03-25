@@ -37,7 +37,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Manager
 
         public GameInstance CreateEffectInstance(string prefabName, Vector3 pos, float rot)
         {
-            GameInstance ins = new GameInstance();
+            GameInstance ins = new GameInstance(1);
             ins.SetInstanceType(InstanceTypeEnum.EFFECT);
             AddInstance(ins, prefabName, pos, Vector3.One, rot);
             return ins;
@@ -45,7 +45,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Manager
 
         public GameInstance CreateSkillInstance(string prefabName, Vector3 pos, float rot)
         {
-            GameInstance ins = new GameInstance();
+            GameInstance ins = new GameInstance(1);
             ins.SetInstanceType(InstanceTypeEnum.EFFECT);
             AddInstance(ins, prefabName, pos, Vector3.One, rot);
             return ins;
@@ -53,7 +53,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Manager
 
         public GameInstance CreateCrtInstance(string prefabName, Character crt)
         {
-            GameInstance ins = new GameInstance();
+            GameInstance ins = new GameInstance(1);
             ins.SetInstanceType(InstanceTypeEnum.CHARACTER);
             AddInstance(ins, prefabName);
             return ins;

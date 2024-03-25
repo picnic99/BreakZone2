@@ -12,7 +12,7 @@ public enum PropertyType
 /// </summary>
 public class Property
 {
-    private Character character;
+    private _Character character;
     //生命值
     public PropertyValue hp = new PropertyValue(1000);
     //护盾
@@ -28,7 +28,7 @@ public class Property
     //移动速度
     public PropertyValue moveSpeed = new PropertyValue(1);
 
-    public Property(Character character)
+    public Property(_Character character)
     {
         this.character = character;
         initProperty();

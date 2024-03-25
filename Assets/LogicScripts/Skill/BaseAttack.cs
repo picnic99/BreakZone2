@@ -63,7 +63,7 @@ public class BaseAttack : Skill
 
         var bloodEffect = ResourceManager.GetInstance().GetEffectInstance("Common/BloodEffect");
         bloodEffect.transform.position = v;
-        character.eventDispatcher.Event(CharacterEvent.ATK, new Character[] { target });
+        character.eventDispatcher.Event(CharacterEvent.ATK, new _Character[] { target });
         //顿帧
         //character.anim.speed = 0f;
         TimeManager.GetInstance().AddOnceTimer(this, 0.05f, () =>

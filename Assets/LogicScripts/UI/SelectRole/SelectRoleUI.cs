@@ -22,7 +22,7 @@ public class SelectRoleUI : UIBase
 
     private List<RoleTabItem> roleTabs;
 
-    private Character curCrt;
+    private _Character curCrt;
 
     public SelectRoleUI()
     {
@@ -89,7 +89,7 @@ public class SelectRoleUI : UIBase
     private void updateRole(CharacterVO vo)
     {
         curCrt?.OnDestory();
-        Character crt = CharacterManager.GetInstance().CreateCharacter(vo);
+        _Character crt = CharacterManager.GetInstance().CreateCharacter(vo);
         curCrt = crt;
         curCrt.trans.SetParent(GameObject.Find("RolePos").transform);
         curCrt.trans.localPosition = Vector3.zero;

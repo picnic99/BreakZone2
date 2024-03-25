@@ -32,10 +32,10 @@ public class ZhengYiSkill : Skill
         new ZhenYiInstance(this, BeTrigger);
     }
 
-    public void BeTrigger(Character target)
+    public void BeTrigger(_Character target)
     {
         DoDamage(target, 25);
-        AudioManager.GetInstance().Play("sword_damage1", false);
+        //AudioManager.GetInstance().Play("sword_damage1", false);
         var dir = (target.trans.position - character.trans.position).normalized;
         dir.y = 2f;
         target.physic.Move(dir.normalized * 0.2f, 0.1f);
@@ -55,7 +55,7 @@ class ZhenYiInstance : SkillInstance
     private ColliderHelper atkFlyCheck;
     private ColliderHelper JianWuCheck;
 
-    public ZhenYiInstance(Skill skill, Action<Character> call)
+    public ZhenYiInstance(Skill skill, Action<_Character> call)
     {
         this.RootSkill = skill;
         this.enterCall = call;

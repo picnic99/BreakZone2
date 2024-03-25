@@ -24,7 +24,7 @@ public class CameraManager : Manager<CameraManager>
 
     public Camera CamRoot { get { return camRoot.GetComponent<Camera>(); } }
 
-    public Character curLookCharacter;
+    public _Character curLookCharacter;
 
     public Transform CurLookTarget;
 

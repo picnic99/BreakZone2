@@ -25,7 +25,7 @@ public class FaShuYongDongSkill : Skill
     /// 被触发 超负荷在飞行过程中碰到敌人后会调用这里
     /// </summary>
     /// <param name="target"></param>
-    public void BeTrigger(Character[] target)
+    public void BeTrigger(_Character[] target)
     {
         AddBuff(target, new BuffVO("法术涌动标记", 5f), (buff) =>
         {
@@ -37,12 +37,12 @@ public class FaShuYongDongSkill : Skill
 
     class FaShuYongDong
     {
-        Character character;
+        _Character character;
         GameObject skillInstance;
-        Action<Character[]> call;
+        Action<_Character[]> call;
         string path = "FaShuYongDong";
         float skillDurationTime = 5f;
-        public FaShuYongDong(Character character, Action<Character[]> call)
+        public FaShuYongDong(_Character character, Action<_Character[]> call)
         {
             this.character = character;
             this.call = call;
@@ -80,7 +80,7 @@ public class FaShuYongDongSkill : Skill
             var target = GameContext.GetCharacterByObj(col.gameObject);
             if (target == null || target == character) return;
 
-            call.Invoke(new Character[] { target });
+            call.Invoke(new _Character[] { target });
 
             skillDurationTime = 0;
             triggered = true;

@@ -57,6 +57,10 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.Base
         /// </summary>
         protected bool IsEndRemoveObj = true;
 
+        public SkillInstance():base(1)
+        {
+
+        }
         public virtual void Init(int checkType)
         {
             maxDurationTime = durationTime;

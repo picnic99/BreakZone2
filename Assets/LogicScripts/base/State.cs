@@ -20,7 +20,7 @@ public class State : Behaviour
 
     public bool stateEnd = false;
     public State() { }
-    public State(Character character, StateVO vo, float time = 1)
+    public State(_Character character, StateVO vo, float time = 1)
     {
         this.character = character;
         stateData = vo;
@@ -38,7 +38,7 @@ public class State : Behaviour
         }
         if (stateData.exitType == cfg.StateExitType.CHANGE_TIME_EXIT)
         {
-            character.eventDispatcher.On(EventDispatcher.OPT_REDUCE_STATE_TIME, OnOptReduceTime);
+            character.eventDispatcher.On(_EventDispatcher.OPT_REDUCE_STATE_TIME, OnOptReduceTime);
         }
     }
 
@@ -104,7 +104,7 @@ public class State : Behaviour
     {
         if (stateData.exitType == cfg.StateExitType.CHANGE_TIME_EXIT)
         {
-            character.eventDispatcher.Off(EventDispatcher.OPT_REDUCE_STATE_TIME, OnOptReduceTime);
+            character.eventDispatcher.Off(_EventDispatcher.OPT_REDUCE_STATE_TIME, OnOptReduceTime);
         }
         AudioEventDispatcher.GetInstance().Event(MomentType.EnterState, character.characterData.id, stateData.id, "exit", this.character.trans.gameObject);
         Debug.Log(character.characterData.characterName + ":" + stateData.stateName + "结束");

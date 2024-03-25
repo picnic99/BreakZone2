@@ -18,7 +18,7 @@ public class CharacterManager : Manager<CharacterManager>
     /// <summary>
     /// 场景对应角色
     /// </summary>
-    public Dictionary<string, List<Character>> sceneCrtDic = new Dictionary<string, List<Character>>();
+    public Dictionary<string, List<_Character>> sceneCrtDic = new Dictionary<string, List<_Character>>();
 
     public override void AddEventListener()
     {
@@ -38,7 +38,7 @@ public class CharacterManager : Manager<CharacterManager>
 
     public void OnCharacterDie(object[] args)
     {
-        Character crt = args[0] as Character;
+        _Character crt = args[0] as _Character;
         if (crt != null)
         {
             crt.eventDispatcher.Event(CharacterEvent.CHANGE_STATE, crt, StateType.Die);
@@ -56,7 +56,7 @@ public class CharacterManager : Manager<CharacterManager>
 
         if (sceneCrtDic.ContainsKey(scene))
         {
-            List<Character> crts = sceneCrtDic[scene];
+            List<_Character> crts = sceneCrtDic[scene];
             foreach (var item in crts)
             {
                 RemoveCharacter(item);
@@ -69,7 +69,7 @@ public class CharacterManager : Manager<CharacterManager>
     /// 添加角色与场景映射
     /// </summary>
     /// <param name="c"></param>
-    public void AddCrtToScene(Character c)
+    public void AddCrtToScene(_Character c)
     {
         string sceneName = "emptyScene";
         if (GameContext.CurScene != null)
@@ -82,7 +82,7 @@ public class CharacterManager : Manager<CharacterManager>
         }
         else
         {
-            List<Character> crts = new List<Character>() { c };
+            List<_Character> crts = new List<_Character>() { c };
             sceneCrtDic.Add(sceneName, crts);
         }
     }
@@ -93,15 +93,15 @@ public class CharacterManager : Manager<CharacterManager>
     /// <param name="vo">角色信息</param>
     /// <param name="info">参数</param>
     /// <returns></returns>
-    public Character CreateCharacter(CharacterVO vo, CharacterBaseInfo info = null)
+    public _Character CreateCharacter(CharacterVO vo, CharacterBaseInfo info = null)
     {
         GameObject characterObj = ResourceManager.GetInstance().GetCharacterInstance<GameObject>(vo.character.ModePath);
-        Character c = new Character(vo, characterObj, info);
+        _Character c = new _Character(vo, characterObj, info);
         AddCrtToScene(c);
         Eventer.Event(CREATE_CHARACTER, c);
         return c;
     }
-    public Character CreateCharacter(int id)
+    public _Character CreateCharacter(int id)
     {
         var vo = CharacterConfiger.GetInstance().GetCharacterById(id);
         if (vo != null)
@@ -116,13 +116,13 @@ public class CharacterManager : Manager<CharacterManager>
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public Character CreateFightCharacter(int id)
+    public _Character CreateFightCharacter(int id)
     {
         var vo = CharacterConfiger.GetInstance().GetCharacterById(id);
         if (vo != null)
         {
             GameObject characterObj = ResourceManager.GetInstance().GetCharacterInstance<GameObject>(vo.character.ModePath);
-            Character c = new Character(vo, characterObj, CharacterBaseInfo.GetFightBaseInfo());
+            _Character c = new _Character(vo, characterObj, CharacterBaseInfo.GetFightBaseInfo());
             AddCrtToScene(c);
             Eventer.Event(CREATE_CHARACTER, c);
             return c;
@@ -134,13 +134,13 @@ public class CharacterManager : Manager<CharacterManager>
     /// 创建木桩类型角色
     /// </summary>
     /// <returns></returns>
-    public Character CreateTestCharacter()
+    public _Character CreateTestCharacter()
     {
         return CreateFightCharacter(98);
 
     }
 
-    public List<Character> GetSceneCrts(string sceneName)
+    public List<_Character> GetSceneCrts(string sceneName)
     {
         if (sceneCrtDic.ContainsKey(sceneName))
         {
@@ -149,7 +149,7 @@ public class CharacterManager : Manager<CharacterManager>
         return null;
     }
 
-    public List<Character> GetCurSceneCrts()
+    public List<_Character> GetCurSceneCrts()
     {
         if (GameContext.CurScene == null) return null;
         return GetSceneCrts(GameContext.CurScene.SceneName);
@@ -159,10 +159,10 @@ public class CharacterManager : Manager<CharacterManager>
     /// 移除角色
     /// </summary>
     /// <param name="c"></param>
-    public void RemoveCharacter(Character c)
+    public void RemoveCharacter(_Character c)
     {
         c.OnDestory();
-        List<Character> characters = GetCurSceneCrts();
+        List<_Character> characters = GetCurSceneCrts();
         if (characters != null)
         {
             characters.Remove(c);
@@ -176,7 +176,7 @@ public class CharacterManager : Manager<CharacterManager>
     public override void OnUpdate()
     {
         base.OnUpdate();
-        List<Character> characters = GetCurSceneCrts();
+        List<_Character> characters = GetCurSceneCrts();
         if (characters == null) return;
         foreach (var item in characters)
         {

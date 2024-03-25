@@ -62,7 +62,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
                 character.Trans.Translate(new Vector3(0, 0, crtMoveSpeed * Global.FixedFrameTimeS));
             }, time1/ Global.FixedFrameTimeMS);
 
-            GameInstance shenPanIns = new GameInstance();
+            GameInstance shenPanIns = new GameInstance(character.PlayerId);
             shenPanIns.Trans.TransformMatrix = character.Trans.TransformMatrix;
             var col = new BoxCollider(character.PlayerId, colRangeRect);
             shenPanIns.SetCollider(col);

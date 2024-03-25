@@ -74,7 +74,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Characters
         /// </summary>
         public AnimCoverData animCoverData { get; set; }
 
-        public Character(CharacterVO vo, int playerId, CharacterBaseInfo baseInfo = null)
+        public Character(CharacterVO vo, int playerId, CharacterBaseInfo baseInfo = null):base(playerId)
         {
             characterData = vo;
             _playerId = playerId;
@@ -162,8 +162,8 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Characters
         /// </summary>
         public void Tick()
         {
-            //physic?.OnUpdate();
             fsm?.OnUpdate();
+            physic?.OnUpdate();
             base.Tick();
             // «∑ÒÀ¿Õˆ
             if (property.IsDie())

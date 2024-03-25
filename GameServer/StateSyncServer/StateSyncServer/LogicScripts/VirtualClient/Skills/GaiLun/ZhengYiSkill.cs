@@ -34,7 +34,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Skills.GaiLun
             stateDurationTime = skillDurationTime = 2f;
 
             //第一段击飞
-            GameInstance zyIns = new GameInstance();
+            GameInstance zyIns = new GameInstance(character.PlayerId);
             var col = new BoxCollider(character.PlayerId, new Vector4(-4f, 11f, 4f, 3f),10);
             TimeManager.GetInstance().AddOnceTime(this, (int)(skillData.GetFrontTime(0) * 1000) + 300, () =>
             {

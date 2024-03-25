@@ -42,7 +42,7 @@ public class ZhiMingDaJiSkill : Skill
 
         //character.animCoverData.Add(StateType.Move, moveCover);
         character.animCoverData.Add(StateType.DoAtk, atkCover);
-        AddBuff(new Character[] { character }, new BuffVO("致命打击加移速", skillDurationTime), (buff) =>
+        AddBuff(new _Character[] { character }, new BuffVO("致命打击加移速", skillDurationTime), (buff) =>
         {
             buff.AddBuffComponent(buff.AddPropertyBuff(skillDurationTime, new PropertyBuffVO(PropertyType.MOVESPEED, false, 0.35f)));
         }, (args) =>
@@ -78,9 +78,9 @@ public class ZhiMingDaJiSkill : Skill
         skillDurationTime = 0f;
     }
 
-    public void DoTrigger(Character target)
+    public void DoTrigger(_Character target)
     {
-        DoDamage(new Character[] { target }, 25);
+        DoDamage(new _Character[] { target }, 25);
     }
 
     public override string GetDesc()
@@ -92,14 +92,14 @@ public class ZhiMingDaJiSkill : Skill
 public class ZhiMingDaJiInstance : SkillInstance
 {
     //飞轮有两道伤害
-    List<Character> triggeredTargets = new List<Character>();
+    List<_Character> triggeredTargets = new List<_Character>();
 
     float moveOffset = 0;
     float maxTime = 2;
 
     bool isBack = false;
 
-    public ZhiMingDaJiInstance(Skill skill, Action<Character> call, float moveOffset)
+    public ZhiMingDaJiInstance(Skill skill, Action<_Character> call, float moveOffset)
     {
         this.RootSkill = skill;
         this.instancePath = "ZhiMingDaJi";
@@ -162,7 +162,7 @@ public class ZhiMingDaJiInstance : SkillInstance
         instanceObj.transform.RotateAround(instanceObj.transform.position, Vector3.up, moveOffset);
     }
 
-    public override void InvokeEnterTrigger(Character target)
+    public override void InvokeEnterTrigger(_Character target)
     {
         var crt = RootSkill.character;
         if (target == null || target == crt) return;

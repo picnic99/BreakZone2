@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class DebugCharacter
 {
     public GameObject Root;
-    public Character character;
+    public _Character character;
 
     public Text msg;
     public Button changeBtn;
@@ -31,7 +31,7 @@ public class DebugCharacter
         applyBtn.onClick.AddListener(ApplyGM);
     }
 
-    public void UpdateData(Character character = null)
+    public void UpdateData(_Character character = null)
     {
         if (character == null && this.character == null) return;
 
