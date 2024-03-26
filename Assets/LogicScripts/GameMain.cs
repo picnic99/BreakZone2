@@ -62,6 +62,11 @@ public class GameMain : MonoBehaviour
         UpdateManager();
     }
 
+    private void LateUpdate()
+    {
+        LaterUpdateManager();
+    }
+
 
     public void UpdateManager()
     {
@@ -69,6 +74,14 @@ public class GameMain : MonoBehaviour
         foreach (var item in managers)
         {
             item.OnUpdate();
+        }
+    }
+
+    public void LaterUpdateManager()
+    {
+        foreach (var item in managers)
+        {
+            item.OnLaterUpdate();
         }
     }
 

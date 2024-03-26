@@ -25,6 +25,7 @@ namespace StateSyncServer.LogicScripts.Manager
             ActionManager.GetInstance().On(ProtocolId.CLIENT_GAME_PLAYER_OPT_CMD_REQ, Handle_GamePlayerOptCmdReq);
             ActionManager.GetInstance().On(ProtocolId.CLIENT_GAME_PLAYER_INPUT_CMD_REQ, Handle_GamePlayerInputCmdReq);
             ActionManager.GetInstance().On(ProtocolId.CLIENT_CAN_ENTER_SCENE_REQ, Handle_CanEnterSceneReq);
+            ActionManager.GetInstance().On(ProtocolId.CLIENT_GAME_PLAYER_POS_SYNC_REQ, Handle_GamePlayerPosSyncReq);
 
         }
 
@@ -40,6 +41,8 @@ namespace StateSyncServer.LogicScripts.Manager
             ActionManager.GetInstance().Off(ProtocolId.CLIENT_GAME_PLAYER_OPT_CMD_REQ, Handle_GamePlayerOptCmdReq);
             ActionManager.GetInstance().Off(ProtocolId.CLIENT_GAME_PLAYER_INPUT_CMD_REQ, Handle_GamePlayerInputCmdReq);
             ActionManager.GetInstance().Off(ProtocolId.CLIENT_CAN_ENTER_SCENE_REQ, Handle_CanEnterSceneReq);
+            ActionManager.GetInstance().Off(ProtocolId.CLIENT_GAME_PLAYER_POS_SYNC_REQ, Handle_GamePlayerPosSyncReq);
+
         }
 
         /// <summary>
@@ -454,7 +457,12 @@ namespace StateSyncServer.LogicScripts.Manager
                     Y = p.Crt.Trans.Position.Y,
                     Z = p.Crt.Trans.Position.Z
                 },
-                Rot = p.Crt.Trans.Rot               
+                Rot = p.Crt.Trans.Rot,
+                Property = new GamePlayerProperty()
+                {
+                    MaxHp = (int)p.Crt.property.hp.baseValue,
+                    CurHp = (int)p.Crt.property.hp.finalValue
+                }
             };
 
             VirtualClient.Characters.Character c = CharacterManager.GetInstance().FindCharacter(playerId);
@@ -496,6 +504,30 @@ namespace StateSyncServer.LogicScripts.Manager
             ntf.Type = type;
 
             Player p = PlayerManager.GetInstance().FindPlayer(playerId);
+            List<Player> players = SceneManager.GetInstance().GetPlayersInScene(p.SceneId);
+            if (players.Count > 0)
+            {
+                NetManager.GetInstance().SendProtoToPlayers(players, ntf);
+            }
+        }
+
+        private void Handle_GamePlayerPosSyncReq(object[] args)
+        {
+            Protocol proto = args[0] as Protocol;
+            GamePlayerPosSyncReq req = proto.GetDataInstance<GamePlayerPosSyncReq>();
+
+            int playerId = req.PlayerId;
+            Vector3 pos = new Vector3(req.Pos.X, req.Pos.Y, req.Pos.Z);
+
+            GamePlayerPosSyncNtf ntf = new GamePlayerPosSyncNtf();
+            ntf.PlayerId = playerId;
+            Player p = PlayerManager.GetInstance().FindPlayer(playerId);
+            ntf.Pos = new Vec3() 
+            { 
+                X = p.Crt.Trans.Position.X, 
+                Y = p.Crt.Trans.Position.Y, 
+                Z = p.Crt.Trans.Position.Z 
+            };
             List<Player> players = SceneManager.GetInstance().GetPlayersInScene(p.SceneId);
             if (players.Count > 0)
             {

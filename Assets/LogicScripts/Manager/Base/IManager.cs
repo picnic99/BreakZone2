@@ -3,5 +3,6 @@
 
     void Init();
     void OnUpdate();
+    void OnLaterUpdate();
     void Clear();
 }

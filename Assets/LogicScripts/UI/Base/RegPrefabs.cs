@@ -11,4 +11,6 @@ public class RegPrefabs
     public static string PopValue = "Base/PopValue";
     public static string LimitTimePracticeUI = "Base/LimitTimePracticeUI";
     public static string LoginUI = "Login/LoginUI";
+    public static string StateBarUI = "StateBar/StateBarUI";
+    public static string StateBarItem = "StateBar/StateBarItem";
 }

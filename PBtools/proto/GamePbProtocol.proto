@@ -193,6 +193,10 @@ message GameInstanceDestroyNtf{
 	int32 instanceId = 1;
 }
 
+message GamePlayerProperty{
+	int32 maxHp = 1;
+	int32 curHp = 2;
+}
 
 message GamePlayerBaseInfo{
 	int32 playerId = 1;
@@ -200,6 +204,7 @@ message GamePlayerBaseInfo{
 	Vec3 pos = 3;
 	float rot = 4;
 	repeated string states = 5;
+	GamePlayerProperty property = 6;
 }
  
 message GamePlayerEnterSeneNtf{
@@ -272,4 +277,14 @@ message GameDrawBoxRengeNtf{
 	Vec3 LB = 3;
 	Vec3 RB = 4;	
 	int32 Type = 5;
+}
+
+message GamePlayerPosSyncReq{
+	int32 playerId = 1;
+	Vec3 pos = 2;
+}
+
+message GamePlayerPosSyncNtf{
+	int32 playerId = 1;
+	Vec3 pos = 2;
 }

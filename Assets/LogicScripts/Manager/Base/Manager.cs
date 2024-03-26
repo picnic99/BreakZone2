@@ -42,4 +42,9 @@ public class Manager<T> : Singleton<T>, IManager where T : new()
     {
 
     }
+
+    public virtual void OnLaterUpdate()
+    {
+
+    }
 }

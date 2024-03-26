@@ -95,7 +95,8 @@ namespace StateSyncServer.LogicScripts.Net
 
         public void Handle(Protocol protocol)
         {
-            LogicScripts.Manager.ActionManager.GetInstance().Event(protocol.protocolId,protocol);
+            if(protocol != null)
+                LogicScripts.Manager.ActionManager.GetInstance().Event(protocol.protocolId,protocol);
         }
     }
 }

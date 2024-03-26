@@ -59,6 +59,8 @@ namespace Assets.LogicScripts.Client.Entity
         {
             this.info = info;
             Crt.ApplyTransform(new Vector3(info.Pos.X,info.Pos.Y,info.Pos.Z),info.Rot);
+            //更新血条信息
+
         }
 
         public void Clear()

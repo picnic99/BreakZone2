@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Assets.LogicScripts.Client.Manager;
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class UIBase
+public class UIBase : EventDispatcher
 {
     /// <summary>
     /// 所属场景
@@ -44,10 +45,12 @@ public class UIBase
     }
 
     public virtual void OnUpdate() { }
+    public virtual void OnLaterUpdate() { }
 
     public virtual void OnLoad()
     {
         Show();
+        AddEventListener();
     }
 
     public virtual void OnUnLoad()
@@ -56,6 +59,7 @@ public class UIBase
         {
             MonoBridge.GetInstance().DestroyOBJ(this.root);
         }
+        RemoveEventListener();
     }
 
     public virtual void Show()
@@ -74,7 +78,18 @@ public class UIBase
         }
     }
 
-    public static void AddClick(GameObject obj, Action<object[]> call,params object[] args)
+    public virtual void AddEventListener()
+    {
+
+    }
+
+
+    public virtual void RemoveEventListener()
+    {
+
+    }
+
+    public static void AddClick(GameObject obj, Action<object[]> call, params object[] args)
     {
         if (obj != null)
         {

@@ -60,6 +60,11 @@ public class UIManager : Manager<UIManager>
         }
     }
 
+    public void OnLaterUpdate()
+    {
+         
+    }
+
     public UIBase ShowUI(object[] args)
     {
         string uiName = (string)args[0];

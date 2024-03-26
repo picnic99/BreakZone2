@@ -10,6 +10,7 @@ public class RegUIClass : RegisterBase<RegUIClass, string, Type>
     public static string BaseInfoOptUI = "BaseInfoOptUI";
     public static string LimitTimePracticeUI = "LimitTimePracticeUI";
     public static string LoginUI = "LoginUI";
+    public static string StateBarUI = "StateBarUI";
     //public static string CommonStateBar = "CommonStateBar";
 
     public override void Init()
@@ -19,6 +20,7 @@ public class RegUIClass : RegisterBase<RegUIClass, string, Type>
         regDic.Add(RegUIClass.DebugUI, typeof(DebugUI));
         regDic.Add(RegUIClass.BaseInfoOptUI, typeof(BaseInfoOptUI));
         regDic.Add(RegUIClass.LimitTimePracticeUI, typeof(LimitTimePracticeUI));
+        regDic.Add(RegUIClass.LoginUI, typeof(LoginUI));
         regDic.Add(RegUIClass.LoginUI, typeof(LoginUI));
         //regDic.Add(RegUIClass.CommonStateBar, typeof(CommonStateBar));
     }

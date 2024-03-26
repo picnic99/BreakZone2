@@ -38,6 +38,7 @@ namespace Assets.LogicScripts.Client.Manager
             On(ProtocolId.CLIENT_OBJ_CREATE_NTF, Handle_GameInstanceCreateNtf);
             On(ProtocolId.CLIENT_GAME_DO_SKILL_NTF, Handle_GameDoSkillNtf);
             On(ProtocolId.CLIENT_GAME_DRAW_BOX_RANGE_NTF, Handle_GameDrawBoxRangeNtf);
+            On(ProtocolId.CLIENT_GAME_PLAYER_POS_SYNC_NTF, Handle_GamePlayerPosSyncNtf);
 
         }
 
@@ -62,6 +63,7 @@ namespace Assets.LogicScripts.Client.Manager
             Off(ProtocolId.CLIENT_OBJ_CREATE_NTF, Handle_GameInstanceCreateNtf);
             Off(ProtocolId.CLIENT_GAME_DO_SKILL_NTF, Handle_GameDoSkillNtf);
             Off(ProtocolId.CLIENT_GAME_DRAW_BOX_RANGE_NTF, Handle_GameDrawBoxRangeNtf);
+            Off(ProtocolId.CLIENT_GAME_PLAYER_POS_SYNC_NTF, Handle_GamePlayerPosSyncNtf);
 
 
 
@@ -222,7 +224,7 @@ namespace Assets.LogicScripts.Client.Manager
 
             if (result == ProtocolResultEnum.SUCCESS)
             {
-                CommonUtils.Logout("同步场景"+ SceneId + "数据成功");
+                CommonUtils.Logout("同步场景" + SceneId + "数据成功");
             }
         }
 
@@ -419,7 +421,7 @@ namespace Assets.LogicScripts.Client.Manager
 
             string prefabKey = info.PrefabKey;
             int stageNum = info.StageNum;
-            Vector3 pos = new Vector3(info.Offset.X,info.Offset.Y,info.Offset.Z);
+            Vector3 pos = new Vector3(info.Offset.X, info.Offset.Y, info.Offset.Z);
             float rot = info.Rot;
             InstanceManager.GetInstance().Event(InstanceManager.INSTANCE_CREATE, prefabKey, stageNum, pos, rot);
         }
@@ -455,6 +457,30 @@ namespace Assets.LogicScripts.Client.Manager
             DrawRangeManager draw = obj.AddComponent<DrawRangeManager>();
             draw.type = type;
             draw.SetRange(LT, RT, LB, RB);
+        }
+
+        public void Send_GamePlayerPosSyncReq(Vector3 pos)
+        {
+            GamePlayerPosSyncReq req = new GamePlayerPosSyncReq();
+            req.PlayerId = Global.SelfPlayerId;
+            req.Pos = new Vec3()
+            {
+                X = pos.x,
+                Y = pos.y,
+                Z = pos.z
+            };
+
+            NetManager.GetInstance().SendProtocol(req);
+        }
+
+        private void Handle_GamePlayerPosSyncNtf(object[] args)
+        {
+            Protocol proto = args[0] as Protocol;
+            GamePlayerPosSyncNtf ntf = proto.GetDataInstance<GamePlayerPosSyncNtf>();
+            Vector3 pos = new Vector3(ntf.Pos.X, ntf.Pos.Y, ntf.Pos.Z);
+
+            Player p = PlayerManager.GetInstance().FindPlayer(ntf.PlayerId);
+            p.Crt.CorrectPos(pos);
         }
     }
 }

@@ -89,7 +89,7 @@ public class DataDriverSkill
             {
                 Debug.Log("本次触发："+ item.name);
             }
-            ActionManager.GetInstance().AddDamageAction(character, new _Character[] { }, action.inTime, null);
+            _ActionManager.GetInstance().AddDamageAction(character, new _Character[] { }, action.inTime, null);
             TimeManager.GetInstance().AddOnceTimer(this, action.duration, () =>
             {
                 GameObject.Destroy(obj);

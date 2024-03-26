@@ -372,7 +372,7 @@ public class PhysicController
     {
         lastIsGround = isGround;
         //var raycastAll = Physics.OverlapBox(character.CrtObj.transform.position, new Vector3(0.3f, 0.3f, 0.3f), Quaternion.identity, 1 << LayerMask.NameToLayer("Build"));
-        var raycastAll = character.Trans.Position.Y <= 0.1f;
+        var raycastAll = character.Trans.Position.Y <= 0.15f;
         CommonUtils.Logout(character.PlayerId + " CheckIsGround Y = " + character.Trans.Position.Y);
         if (raycastAll)
         {

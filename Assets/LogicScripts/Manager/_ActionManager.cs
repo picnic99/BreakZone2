@@ -11,7 +11,7 @@
 /// 然后再去问一下接收者 是否有buff或者属性能够减少该数值？ 如我的属性有30%的伤害减免，又或者我有一个buff可以免疫下一次受到的伤害
 /// 然后两者进行结合 得到最终伤害数值，写入接收者的属性中
 /// </summary>
-public class ActionManager : Manager<ActionManager>
+public class _ActionManager : Manager<_ActionManager>
 {
 
     //public Queue<BaseAction> actionQueue = new Queue<BaseAction>();

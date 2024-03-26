@@ -303,7 +303,6 @@ public class PhysicController
     public void OnUpdate()
     {
         //if (character.IsDestroyed) return;
-        Vector3 actionOffset = GetFrameAction();
         CheckIsGround();
         if (!isGround)
         {
@@ -320,14 +319,14 @@ public class PhysicController
                 GravityOffset -= gravity * Time.deltaTime * multiply;
             }
 
-            if (actionOffset.y >= GravityOffset)
+/*            if (actionOffset.y >= GravityOffset)
             {
                 //上升状态
             }
             else if (IsGravityEffect)
             {
                 //下降状态
-            }
+            }*/
         }
         else
         {
@@ -352,9 +351,10 @@ public class PhysicController
 
         if (!CanMove) return;
 
+        Vector3 actionOffset = GetFrameAction();
         Vector3 dir = Vector3.zero;
         //滞空移动
-        if (CanControl && !isGround && actionOffset.magnitude > 0)
+        if (CanControl && !isGround && actionOffset.magnitude > 0 && IsJump)
         {
             dir = GameContext.GetInputDir(character, false) * 5f;
         }

@@ -30,13 +30,13 @@ public abstract class Behaviour
 
     public void DoDamage(_Character[] targets, float value)
     {
-        ActionManager.GetInstance().AddDamageAction(character, targets, value, this);
+        _ActionManager.GetInstance().AddDamageAction(character, targets, value, this);
     }
 
     public void DoDamage(_Character target, float value)
     {
         var targets = new _Character[] { target };
-        ActionManager.GetInstance().AddDamageAction(character, targets, value, this);
+        _ActionManager.GetInstance().AddDamageAction(character, targets, value, this);
     }
 
     public void AddState(_Character[] targets, params object[] args)
