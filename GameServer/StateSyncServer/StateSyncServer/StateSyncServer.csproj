@@ -1,0 +1,250 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{0F3EA6AD-53A0-4A79-8099-9E18293EF731}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>StateSyncServer</RootNamespace>
+    <AssemblyName>StateSyncServer</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Google.Protobuf">
+      <HintPath>..\..\..\..\Assets\Plugins\Google.Protobuf.dll</HintPath>
+    </Reference>
+    <Reference Include="MathNet.Numerics, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MathNet.Numerics.5.0.0\lib\net461\MathNet.Numerics.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.8.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.NET.StringTools, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\LubanTools\Luban\Microsoft.NET.StringTools.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core" />
+    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Encodings.Web, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encodings.Web.8.0.0\lib\net462\System.Text.Encodings.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Json, Version=8.0.0.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Json.8.0.2\lib\net462\System.Text.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="LogicScripts\Common\Global.cs" />
+    <Compile Include="LogicScripts\Manager\ActionManager.cs" />
+    <Compile Include="LogicScripts\Manager\_AnimManager.cs" />
+    <Compile Include="LogicScripts\Manager\EventDispatcher.cs" />
+    <Compile Include="LogicScripts\Manager\GameEventDispatcher.cs" />
+    <Compile Include="LogicScripts\Manager\Manager.cs" />
+    <Compile Include="LogicScripts\Manager\NetManager.cs" />
+    <Compile Include="LogicScripts\Manager\CharacterManager.cs" />
+    <Compile Include="LogicScripts\Manager\PlayerManager.cs" />
+    <Compile Include="LogicScripts\Manager\ResourceManager.cs" />
+    <Compile Include="LogicScripts\Manager\SceneManager.cs" />
+    <Compile Include="LogicScripts\Net\GameMain.cs" />
+    <Compile Include="LogicScripts\Net\PB\Enum\LoginTypeEnum.cs" />
+    <Compile Include="LogicScripts\Net\PB\Enum\PlayerOptEnum.cs" />
+    <Compile Include="LogicScripts\Net\PB\Enum\ProtocolResultEnum.cs" />
+    <Compile Include="LogicScripts\Net\PB\ProtocolId.cs" />
+    <Compile Include="LogicScripts\Net\PB\GamePbProtocol.cs" />
+    <Compile Include="LogicScripts\Net\PB\PbUtil.cs" />
+    <Compile Include="LogicScripts\Net\PB\Protocol.cs" />
+    <Compile Include="LogicScripts\Net\PB\RegProtocol.cs" />
+    <Compile Include="LogicScripts\Net\Server.cs" />
+    <Compile Include="LogicScripts\Util\LubanLib\BeanBase.cs" />
+    <Compile Include="LogicScripts\Util\LubanLib\ByteBuf.cs" />
+    <Compile Include="LogicScripts\Util\LubanLib\ITypeId.cs" />
+    <Compile Include="LogicScripts\Util\LubanLib\StringUtil.cs" />
+    <Compile Include="LogicScripts\Util\MathUtils.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Actions\BaseAction.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Actions\DamageAction.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Bases\AnimCoverData.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Bases\Base.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Bases\Behaviour.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Bases\BoxCollider.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Bases\Collider.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Bases\FSM.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Bases\GameContext.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Bases\GameInstance.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Bases\MomentType.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Bridge\PhysicController.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Bases\Property.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Bases\PropertyValue.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Bases\RangeScan.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Bases\RegisterBase.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Bases\Singleton.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Bases\State.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Bases\StateGroup.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Bases\TypeClassEnum.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Buffs\Buff.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Buffs\BuffComponent.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Buffs\newBuff\BuffGroup.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Buffs\newBuff\CuiRenQiangJiBuff.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Buffs\newBuff\GeDangFanJiBuff.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Buffs\newBuff\GuRuoJingTangBuff.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Buffs\newBuff\ShiXueQianNengBuff.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Buffs\newBuff\XunJieTuXiBuff.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Buffs\newBuff\YanMieBuff.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Buffs\newBuff\ZDMJbuff.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Buffs\PropertyBuffComponent.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Buffs\TagBuffComponent.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Buffs\TriggerBuffComponent.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Characters\Character.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Characters\CharacterEvent.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Characters\CharacterFigure.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Configer\AnimConfiger.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Configer\AudioConfiger.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Configer\CharacterConfiger.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Configer\Configer.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Configer\SkillConfiger.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Configer\StateConfiger.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Effect\EffectPosType.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Enum\CharacterState.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Enum\InstanceTypeEnum.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Enum\SkillInStateEnum.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Manager\_ActionManager.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Manager\AnimManager.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Manager\AudioEventDispatcher.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Manager\AudioManager.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Manager\Base\IManager.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Manager\Base\Manager.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Manager\BuffManager.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Manager\CameraManager.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Manager\EffectManager.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Manager\_EventDispatcher.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Manager\InputController.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Manager\InstanceManager.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Manager\RecordManager.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Manager\SkillManager.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Manager\StateManager.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Manager\TimeManager.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Scene\GameRoomScene.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Scene\GameScene.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Scene\RegSceneClass.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Skills\BaseAttack.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Skills\BaseJump.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Skills\BaseRoll.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Skills\Base\RegSkillClass.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Skills\Base\Skill.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Skills\Base\SkillEnum.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Skills\Base\SkillInstance.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Skills\GaiLun\GaiLunAttack.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Skills\GaiLun\ShenPanSkill.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Skills\GaiLun\YongQiSkill.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Skills\GaiLun\ZhengYiSkill.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Skills\GaiLun\ZhiMingDaJiSkill.cs" />
+    <Compile Include="LogicScripts\VirtualClient\States\StateType.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Utils\ObjPool.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Value\ModifierGroup.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Value\ValueBase.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Value\ValueModifier.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Value\VectorValue.cs" />
+    <Compile Include="LogicScripts\VirtualClient\VO\AnimationVO.cs" />
+    <Compile Include="LogicScripts\VirtualClient\VO\Anim\AnimClipDataInfo.cs" />
+    <Compile Include="LogicScripts\VirtualClient\VO\AudioVO.cs" />
+    <Compile Include="LogicScripts\VirtualClient\VO\BuffVO.cs" />
+    <Compile Include="LogicScripts\VirtualClient\VO\CharacterBaseInfo.cs" />
+    <Compile Include="LogicScripts\VirtualClient\VO\CharacterVO.cs" />
+    <Compile Include="LogicScripts\VirtualClient\VO\PropertyVO.cs" />
+    <Compile Include="LogicScripts\VirtualClient\VO\SkillVO.cs" />
+    <Compile Include="LogicScripts\VirtualClient\VO\StateVO.cs" />
+    <Compile Include="LogicScripts\Util\CommonUtils.cs" />
+    <Compile Include="LogicScripts\Util\MatrixUtils.cs" />
+    <Compile Include="LogicScripts\Util\Singleton.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Bridge\Animator.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Bridge\Transform.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Configer\Config\Animation.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Configer\Config\AnimClipData.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Configer\Config\Audio.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Configer\Config\AudioData.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Configer\Config\AudioSourceType.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Configer\Config\Character.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Configer\Config\Property.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Configer\Config\Skill.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Configer\Config\SkillTags.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Configer\Config\State.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Configer\Config\StateExitType.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Configer\Config\Tables.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Configer\Config\TbAnimation.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Configer\Config\TbAudio.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Configer\Config\TbCharacter.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Configer\Config\TbProperty.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Configer\Config\TbSkill.cs" />
+    <Compile Include="LogicScripts\VirtualClient\Configer\Config\TbState.cs" />
+    <Compile Include="LogicScripts\VO\_Character.cs" />
+    <Compile Include="LogicScripts\VO\Player.cs" />
+    <Compile Include="LogicScripts\VO\PlayerGameData.cs" />
+    <Compile Include="LogicScripts\VO\Scene.cs" />
+    <Compile Include="LogicScripts\VO\_Skill.cs" />
+    <Compile Include="Run.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="CustomConfig\animData.json" />
+    <None Include="packages.config" />
+    <None Include="Config\tbanimation.json" />
+    <None Include="Config\tbaudio.json" />
+    <None Include="Config\tbcharacter.json" />
+    <None Include="Config\tbproperty.json" />
+    <None Include="Config\tbskill.json" />
+    <None Include="Config\tbstate.json" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
