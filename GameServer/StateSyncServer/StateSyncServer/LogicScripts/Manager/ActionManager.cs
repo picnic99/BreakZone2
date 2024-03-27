@@ -519,9 +519,10 @@ namespace StateSyncServer.LogicScripts.Manager
             int playerId = req.PlayerId;
             Vector3 pos = new Vector3(req.Pos.X, req.Pos.Y, req.Pos.Z);
 
+            Player p = PlayerManager.GetInstance().FindPlayer(playerId);
+            if (Vector3.Distance(pos, p.Crt.Trans.Position) <= 0.3f) return;
             GamePlayerPosSyncNtf ntf = new GamePlayerPosSyncNtf();
             ntf.PlayerId = playerId;
-            Player p = PlayerManager.GetInstance().FindPlayer(playerId);
             ntf.Pos = new Vec3() 
             { 
                 X = p.Crt.Trans.Position.X, 

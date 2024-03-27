@@ -7,6 +7,19 @@ public class UIItemBase
     public GameObject Root;
     public UIBinding Bind;
 
+    private RectTransform rootRect;
+    public RectTransform RootRect
+    {
+        get
+        {
+            if (rootRect == null)
+            {
+                rootRect = Root.GetComponent<RectTransform>();
+            }
+            return rootRect;
+        }
+    }
+
     public UIItemBase()
     {
     }

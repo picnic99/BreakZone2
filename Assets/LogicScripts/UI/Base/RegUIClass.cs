@@ -1,3 +1,4 @@
+using Assets.LogicScripts.UI.StateBar;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -21,7 +22,7 @@ public class RegUIClass : RegisterBase<RegUIClass, string, Type>
         regDic.Add(RegUIClass.BaseInfoOptUI, typeof(BaseInfoOptUI));
         regDic.Add(RegUIClass.LimitTimePracticeUI, typeof(LimitTimePracticeUI));
         regDic.Add(RegUIClass.LoginUI, typeof(LoginUI));
-        regDic.Add(RegUIClass.LoginUI, typeof(LoginUI));
+        regDic.Add(RegUIClass.StateBarUI, typeof(StateBarUI));
         //regDic.Add(RegUIClass.CommonStateBar, typeof(CommonStateBar));
     }
 }

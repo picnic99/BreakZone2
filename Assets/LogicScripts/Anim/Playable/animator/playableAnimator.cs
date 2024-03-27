@@ -15,6 +15,7 @@ public class playableAnimator
     protected PlayableGraph graph;
     private AnimationPlayableOutput output;
     private Animator _anim;
+    public Animator Anim => _anim;
     public Assets.LogicScripts.Client.Entity.Character Crt;
     //public Character character { get; set; }
 

@@ -106,7 +106,7 @@ namespace Assets.LogicScripts.Client.Entity
                         {
                             InLerp = true;
                         }*/
-            CrtObj.transform.position = targetPos;
+            CorrectPos(pos);
             CrtObj.transform.rotation = Quaternion.AngleAxis(rot, Vector3.up);
         }
         public void ApplyAnim()

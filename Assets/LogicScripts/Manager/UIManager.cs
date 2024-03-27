@@ -60,9 +60,13 @@ public class UIManager : Manager<UIManager>
         }
     }
 
-    public void OnLaterUpdate()
+    public override void OnLaterUpdate()
     {
-         
+        base.OnLaterUpdate();
+        foreach (var item in UIDic)
+        {
+            item.Value.OnLaterUpdate();
+        }
     }
 
     public UIBase ShowUI(object[] args)
@@ -72,7 +76,7 @@ public class UIManager : Manager<UIManager>
         Type type = ((RegUIClass)RegUIClass.GetInstance()).Get(uiName);
         if (type != null)
         {
-            UIBase ui = (UIBase)type.Assembly.CreateInstance(type.Name);
+            UIBase ui = (UIBase)type.Assembly.CreateInstance(type.FullName);
             var cvs = rootCvs.GetCvsByLayer(ui.layer);
             ui.Root.transform.SetParent(cvs.Root.transform);
             ui.Root.GetComponent<RectTransform>().offsetMax = new Vector2(0, 0);

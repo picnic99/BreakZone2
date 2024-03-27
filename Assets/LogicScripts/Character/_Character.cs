@@ -59,7 +59,7 @@ public class _Character
     //状态机 只负责角色状态之间的切换
     public FSM fsm { get; set; }
     //StateBar
-    public CommonStateBar stateBar { get; set; }
+    //public CommonStateBar stateBar { get; set; }
     //输入管理器
     public InputManager input { get; set; }
 
@@ -115,7 +115,7 @@ public class _Character
         fsm = new FSM(this);
         msg = new MSG();
         animCoverData = new AnimCoverData(this);
-        stateBar = new CommonStateBar(this);
+        //stateBar = new CommonStateBar(this);
 
         weapons = trans.GetComponent<Binding>().weapons;
         if (characterData.id == 99) property.hp.AddExAddValue(999999);
@@ -148,13 +148,13 @@ public class _Character
             {
                 hadDie = true;
                 physic.cc.enabled = false;
-                stateBar.Hide();
+                //stateBar.Hide();
                 CharacterManager.Eventer.Event(CharacterManager.CHARACTER_DIE, this);
             }
             return;
         }
 
-        if (baseInfo.isNeedStateBar)
+/*        if (baseInfo.isNeedStateBar)
         {
             if (!stateBar.Root.activeSelf)
             {
@@ -168,7 +168,7 @@ public class _Character
             {
                 stateBar.Hide();
             }
-        }
+        }*/
 
         //msg 信息记录
         msg.characterProperty = property.GetDesc();

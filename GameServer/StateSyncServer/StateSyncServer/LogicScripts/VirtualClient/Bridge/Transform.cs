@@ -130,7 +130,7 @@ namespace StateSyncServer.LogicScripts.VirtualClient.Bridge
 
             if (ins is Character)
             {
-                Debug_ShowRange();
+                //Debug_ShowRange();
             }
         }
 

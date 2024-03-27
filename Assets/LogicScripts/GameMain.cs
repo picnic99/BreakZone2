@@ -105,5 +105,17 @@ public class GameMain : MonoBehaviour
                 CharacterManager.GetInstance().RemoveCharacter(item);
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.F11))
+        {
+            if(Screen.width == 800 && Screen.width == 600)
+            {
+                Screen.SetResolution(1920, 1080, false);
+            }
+            else
+            {
+                Screen.SetResolution(800, 600, false);
+            }
+        }
     }
 } 

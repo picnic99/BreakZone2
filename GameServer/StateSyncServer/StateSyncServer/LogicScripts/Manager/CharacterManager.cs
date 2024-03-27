@@ -33,7 +33,7 @@ namespace StateSyncServer.LogicScripts.Manager
             //On(PLAYER_OPT_CHANGE, OnPlayeOptChange);
             //On(PLAYER_ADD_TO_SCENE, OnPlayerAddToScene);
             On(CHARACTER_DIE, OnCharacterDie);
-            On(CharacterEvent.PROPERTY_CHANGE, OnCharacterDie);
+            On(CharacterEvent.PROPERTY_CHANGE, OnPropertyChange);
         }
 
         public override void RemoveEventListener()
@@ -42,7 +42,7 @@ namespace StateSyncServer.LogicScripts.Manager
             //Off(PLAYER_OPT_CHANGE, OnPlayeOptChange);
             //Off(PLAYER_ADD_TO_SCENE, OnPlayerAddToScene);
             Off(CHARACTER_DIE, OnCharacterDie);
-            Off(CharacterEvent.PROPERTY_CHANGE, OnCharacterDie);
+            Off(CharacterEvent.PROPERTY_CHANGE, OnPropertyChange);
 
         }
 
@@ -69,7 +69,7 @@ namespace StateSyncServer.LogicScripts.Manager
             PropertyValue value = (PropertyValue)args[1];
             Character crt = (Character)args[2];
 
-
+            ActionManager.GetInstance().Send_GameSyncStateChangeNtf(crt.PlayerId);
         }
 
         /// <summary>

@@ -1,4 +1,5 @@
 ﻿using Assets.LogicScripts.Client.Common;
+using Assets.LogicScripts.UI.StateBar;
 using Msg;
 using System;
 using System.Collections.Generic;
@@ -47,7 +48,8 @@ namespace Assets.LogicScripts.Client.Entity
                         if (playerId == Global.SelfPlayerId)
                         {
                             _crt.IsSelf = true;
-                            CameraManager.GetInstance().SetTarget(_crt.CrtObj.transform);
+                            var trans = _crt.CharacterAnimator.Anim.GetBoneTransform(HumanBodyBones.Chest);
+                            CameraManager.GetInstance().SetTarget(trans);
                         }
                     }
                 }
@@ -60,7 +62,10 @@ namespace Assets.LogicScripts.Client.Entity
             this.info = info;
             Crt.ApplyTransform(new Vector3(info.Pos.X,info.Pos.Y,info.Pos.Z),info.Rot);
             //更新血条信息
-
+            if(info.Property != null)
+            {
+                UIManager.Eventer.Event(StateBarUI.UPDATE_STATE_BAR, playerId,info.Property);
+            }
         }
 
         public void Clear()

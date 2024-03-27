@@ -24,6 +24,7 @@ public class GameRoomScene : GameScene
         GameContext.CurRole = crt;*/
         CameraManager.GetInstance().OpenCam();
         UIManager.GetInstance().ShowUI(RegUIClass.BaseInfoOptUI);
+        UIManager.GetInstance().ShowUI(RegUIClass.StateBarUI);
         //生成NPC
         
         //同步其它角色

@@ -42,8 +42,11 @@ public class BaseInfoOptUI : UIBase
 
     public void InitUI()
     {
-        return;
-        vo = PlayerManager.GetInstance().Self.Crt.CrtVO;
+        //vo = PlayerManager.GetInstance().Self.Crt.CrtVO;
+
+        int id = PlayerManager.GetInstance().Self.CrtId;
+        vo = CharacterConfiger.GetInstance().GetCharacterById(id);
+
         //更新头像与昵称
         crtName.text = vo.character.Name;
         //技能信息
